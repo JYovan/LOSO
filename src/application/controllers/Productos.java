@@ -14,15 +14,15 @@ import java.awt.Toolkit;
  */
 public class Productos {
 
-    vProductos auto;
+    vProductos producto;
 
     public Productos() {
-        auto = new vProductos();
+        producto = new vProductos();
     }
 
     public void setVisible() {
-        auto.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("com/st/media/sticon.png")));
-        auto.setLocationRelativeTo(null);
-        auto.setVisible(true);
+        producto.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/96/icons8_Idea_96px.png")));
+        producto.setLocationRelativeTo(null);
+        producto.setVisible(true);
     }
 }

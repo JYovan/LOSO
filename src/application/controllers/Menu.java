@@ -26,16 +26,22 @@ public class Menu {
                 System.exit(0);
             }
         });
-        menu.btnProducto.addMouseListener(new MouseAdapter() {
+        menu.btnProductos.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 (new Productos()).setVisible();
             }
         });
+        menu.btnUsuarios.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                (new Usuarios()).setVisible();
+            }
+        });
     }
 
     public void setVisible() {
-        menu.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("com/st/media/sticon.png")));
+        menu.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/gears.png")));
         menu.setLocationRelativeTo(null);
         menu.setVisible(true);
     }
