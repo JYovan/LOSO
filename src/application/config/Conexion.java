@@ -21,7 +21,7 @@ import org.apache.commons.dbcp.BasicDataSource;
  *
  * @author Administrator Gio
  */
-public final class CtrlConexion {
+public final class Conexion {
 
     private static Connection conn;
     private static String header;
@@ -32,9 +32,9 @@ public final class CtrlConexion {
     private static int time = 0;// Tiempo de espera
     //BasicDataSource 
     final BasicDataSource bds = new BasicDataSource();
-    private static final CtrlConexion cc = new CtrlConexion();
+    private static final Conexion cc = new Conexion();
 
-    private CtrlConexion() {
+    private Conexion() {
         try {
             loadSettings();
             //Incializa las propiedades de la conexion
@@ -46,7 +46,7 @@ public final class CtrlConexion {
             bds.setMaxIdle(time);
             conn = getConnectionPool().getConnection();
         } catch (Exception ex) {
-            Logger.getLogger(CtrlConexion.class.getName()).log(Level.SEVERE,
+            Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE,
                     null, ex);
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
@@ -118,7 +118,7 @@ public final class CtrlConexion {
         return null;
     }
 
-    public static CtrlConexion getCurrentInstance() {
+    public static Conexion getCurrentInstance() {
         return cc;
     }
 
