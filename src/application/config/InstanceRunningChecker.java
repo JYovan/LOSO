@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.st.app.config;
+package application.config;
 
 import java.io.IOException;
 import java.net.BindException;
@@ -22,7 +22,6 @@ public class InstanceRunningChecker {
 	try {
 	    socket = new ServerSocket(PORT, 0,
 		    InetAddress.getByAddress(new byte[] { 127, 0, 0, 1 }));
-
 	} catch (BindException e) {
 	    System.exit(0);
 	} catch (IOException e) {
