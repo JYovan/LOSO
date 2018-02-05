@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="EmpleadoTodosReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="688eea00-8b36-42ea-bb9c-1b9a755c63df">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     usuario.`u_ncuenta` AS usuario_u_ncuenta,
+     usuario.`u_estatus` AS usuario_u_estatus,
+     u_rol.`urol_desc` AS u_rol_urol_desc,
+     modulos.`mod_nombre` AS modulos_mod_nombre,
+     permisos.`perm_nombre` AS permisos_perm_nombre
+FROM
+     `u_rol` u_rol INNER JOIN `usuario` usuario ON u_rol.`urol_id` = usuario.`fk_urol_u`
+     INNER JOIN `u_has_mod` u_has_mod ON usuario.`u_id` = u_has_mod.`uhm_u`
+     INNER JOIN `modulos` modulos ON u_has_mod.`uhm_mod` = modulos.`mod_id`
+     INNER JOIN `permisos` permisos ON u_has_mod.`uhm_perm` = permisos.`perm_id`;]]>
+	</queryString>
+	<field name="usuario_u_ncuenta" class="java.lang.String"/>
+	<field name="u_rol_urol_desc" class="java.lang.String"/>
+	<field name="permisos_perm_nombre" class="java.lang.String"/>
+	<field name="modulos_mod_nombre" class="java.lang.String"/>
+	<field name="usuario_u_estatus" class="java.lang.String"/>
+	<group name="usuario_u_ncuenta">
+		<groupExpression><![CDATA[$F{usuario_u_ncuenta}]]></groupExpression>
+		<groupHeader>
+			<band height="31">
+				<textField>
+					<reportElement uuid="ff6a60e6-1986-4a35-861b-0d12fae9bb95" style="SubTitle" x="0" y="0" width="506" height="24" forecolor="#D6A90E"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{usuario_u_ncuenta}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="6"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="81" splitType="Stretch">
+			<image>
+				<reportElement uuid="54f4e671-42f0-4701-87cd-a3a46f59c89a" x="0" y="1" width="555" height="77"/>
+				<imageExpression><![CDATA["jrxml\\franja2.gif"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="1cb15445-a693-4101-b6d4-200f8531b7a8" style="SubTitle" x="450" y="12" width="91" height="33" forecolor="#FFFFFF"/>
+				<textElement/>
+				<text><![CDATA[Empleados]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="624a0b7e-8d2b-4d62-8d37-f42e7a2a8bdb" style="Title" x="71" y="12" width="126" height="33" forecolor="#D6A90E"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[SIGESUM]]></text>
+			</staticText>
+			<image>
+				<reportElement uuid="3eafdcc0-5407-4537-812c-071165b8ea6b" x="36" y="12" width="35" height="33"/>
+				<imageExpression><![CDATA["jrxml\\favicon.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="22" splitType="Stretch">
+			<line>
+				<reportElement uuid="ffd66e7b-77ce-44de-9bfe-b06ea774cd4d" positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement uuid="bf90b586-7bce-4197-8d82-3315ca2b8f6c" style="Column header" x="0" y="0" width="138" height="15" forecolor="#112752"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Rol]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ad9d9a7e-dd1b-43cf-a5f0-e4bcc9e981e8" style="Column header" x="138" y="0" width="138" height="15" forecolor="#112752"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Permisos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1ecce9a9-3b02-4d1d-8f31-783e97c93714" style="Column header" x="276" y="0" width="138" height="15" forecolor="#112752"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Modulos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="64cc9f55-3498-4873-b065-0cf475dbf314" style="Column header" x="414" y="0" width="138" height="15" forecolor="#112752"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Estatus]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<line>
+				<reportElement uuid="333c4bf5-52b0-4820-bba0-c83a79b4a5e5" positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement uuid="9d3187ba-9aaa-43b5-87f5-0711d617f193" style="Detail" x="0" y="0" width="138" height="15"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{u_rol_urol_desc}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="8fde639a-a7fe-4f71-91f9-b2049d91960d" style="Detail" x="138" y="0" width="138" height="15"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{permisos_perm_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a96f2c76-7051-4452-9da3-dd06a9f1a1f1" style="Detail" x="276" y="0" width="138" height="15"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{modulos_mod_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="85ba425c-c882-45c1-a71e-2024ce72c62f" style="Detail" x="414" y="0" width="138" height="15"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{usuario_u_estatus}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<line>
+				<reportElement uuid="556f13af-a79b-4836-87a6-27bb27130c17" positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement uuid="3499d1e9-9b90-4b12-b943-c0e371daff90" style="Column header" x="433" y="0" width="80" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="e8c48744-4d4e-4fba-a6a3-d735a264485f" style="Column header" x="513" y="0" width="40" height="20"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement uuid="31a6aeaf-b229-4f94-93b3-6f642735d4cb" style="Column header" x="0" y="0" width="197" height="20"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

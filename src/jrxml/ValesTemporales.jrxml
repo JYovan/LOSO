@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ValesTemporales" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="dd07b0d2-3e85-444d-b5fe-e8bf497ed8b5">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     vale_m_kit.`vmk_id` AS vale_m_kit_vmk_id,
+     vale_m_kit.`vmk_ncuenta` AS vale_m_kit_vmk_ncuenta,
+     vale_m_kit.`vmk_cantidad` AS vale_m_kit_vmk_cantidad,
+     vale_m_kit.`vmk_estatus` AS vale_m_kit_vmk_estatus,
+     vale_m_kit.`vmk_registro` AS vale_m_kit_vmk_registro,
+     kit.`kit_nombre` AS kit_kit_nombre
+FROM
+     `kit` kit INNER JOIN `vale_m_kit` vale_m_kit ON kit.`kit_id` = vale_m_kit.`fk_kit_vmk`]]>
+	</queryString>
+	<field name="vale_m_kit_vmk_id" class="java.lang.Integer"/>
+	<field name="kit_kit_nombre" class="java.lang.String"/>
+	<field name="vale_m_kit_vmk_ncuenta" class="java.lang.Integer"/>
+	<field name="vale_m_kit_vmk_cantidad" class="java.lang.Integer"/>
+	<field name="vale_m_kit_vmk_estatus" class="java.lang.String"/>
+	<field name="vale_m_kit_vmk_registro" class="java.sql.Timestamp"/>
+	<group name="vale_m_kit_vmk_id">
+		<groupExpression><![CDATA[$F{vale_m_kit_vmk_id}]]></groupExpression>
+		<groupHeader>
+			<band height="26">
+				<textField pattern="" isBlankWhenNull="false">
+					<reportElement uuid="041d8d63-dd3d-4989-9560-4c676eb68184" style="Detail" mode="Transparent" x="0" y="0" width="111" height="15" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Arial" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{kit_kit_nombre}]]></textFieldExpression>
+				</textField>
+				<textField pattern="" isBlankWhenNull="false">
+					<reportElement uuid="85784218-4832-4e9d-b394-fe6447ecacaf" style="Detail" mode="Transparent" x="111" y="0" width="111" height="15" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Arial" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{vale_m_kit_vmk_ncuenta}]]></textFieldExpression>
+				</textField>
+				<textField pattern="" isBlankWhenNull="false">
+					<reportElement uuid="e58e8511-a67a-42e9-8109-14a9cd0dbaef" style="Detail" mode="Transparent" x="222" y="0" width="111" height="15" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Arial" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{vale_m_kit_vmk_cantidad}]]></textFieldExpression>
+				</textField>
+				<textField pattern="" isBlankWhenNull="false">
+					<reportElement uuid="9aff47bb-49b6-4eff-8994-5f1c05e56a6f" style="Detail" mode="Transparent" x="333" y="0" width="111" height="15" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Arial" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{vale_m_kit_vmk_estatus}]]></textFieldExpression>
+				</textField>
+				<textField pattern="" isBlankWhenNull="false">
+					<reportElement uuid="9c1fbffb-5481-44c8-8e68-4b3a109eb02e" style="Detail" mode="Transparent" x="444" y="0" width="111" height="15" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Arial" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{vale_m_kit_vmk_registro}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="6"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="92" splitType="Stretch">
+			<image>
+				<reportElement uuid="6a36495f-de13-4382-91af-f39776caf4b7" x="0" y="0" width="555" height="87"/>
+				<imageExpression><![CDATA["jrxml\\franja2.gif"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="dc18d309-2161-456e-bc2a-034c8d95636c" style="SubTitle" x="423" y="11" width="120" height="22" forecolor="#FFFFFF"/>
+				<textElement/>
+				<text><![CDATA[Vale Temporal]]></text>
+			</staticText>
+			<image>
+				<reportElement uuid="fbd65387-d8fe-4135-8582-09dcf8a66742" x="14" y="11" width="35" height="33"/>
+				<imageExpression><![CDATA["jrxml\\favicon.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="bfff3a1b-22f7-4a03-8eb0-defea738d8c3" style="Title" x="49" y="11" width="126" height="33" forecolor="#D6A90E"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[SIGESUM]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="49" splitType="Stretch">
+			<line>
+				<reportElement uuid="fc5ec1dc-f16f-4286-9ce1-66c5d6396af7" positionType="FixRelativeToBottom" x="0" y="44" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement uuid="3347f642-52b2-402b-aa4d-e90ae37f1117" style="Column header" mode="Transparent" x="0" y="0" width="111" height="15" forecolor="#112752" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Arial" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Nombre del kit]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="877a8a36-656c-4454-926d-e564fd52afc2" style="Column header" mode="Transparent" x="111" y="0" width="111" height="15" forecolor="#112752" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Arial" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[N. de cuenta]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3c30a4b8-205e-4ae2-8f29-f905569d32b7" style="Column header" mode="Transparent" x="222" y="0" width="111" height="15" forecolor="#112752" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Arial" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Cantidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="857c6f07-ecec-46d7-bb04-dcc354731649" style="Column header" mode="Transparent" x="333" y="0" width="111" height="15" forecolor="#112752" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Arial" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Estatus]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c2450efa-be5a-4402-b651-843b0bdfc38b" style="Column header" mode="Transparent" x="444" y="0" width="111" height="15" forecolor="#112752" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Arial" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Registro]]></text>
+			</staticText>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement uuid="82b63128-ccc4-44da-9977-e314f8766e65" style="SubTitle" mode="Transparent" x="0" y="15" width="506" height="24" forecolor="#D6A90E" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Arial" size="14" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vale_m_kit_vmk_id}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<line>
+				<reportElement uuid="ff5b89bc-d3ad-4446-8e19-bce280272848" positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<line>
+				<reportElement uuid="5ec8a0b4-4e1d-4097-8dd8-f8873ea20803" positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement uuid="ef89f5fe-ea1f-458c-a464-2edd943ce950" style="Column header" x="433" y="0" width="80" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="01d90658-903f-481b-9528-50e82e154483" style="Column header" x="513" y="0" width="40" height="20"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement uuid="3fa13007-5d7e-42f7-9b52-ebf312f6e768" style="Column header" x="0" y="0" width="197" height="20"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

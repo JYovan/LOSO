@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="LugarDeTrabajoByDepen" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f953181a-6e4c-4328-bc98-0071dbb2d94b">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     lugar_trabajo.`lugt_tipo` AS lugar_trabajo_lugt_tipo,
+     lugar_trabajo.`lugt_nombre` AS lugar_trabajo_lugt_nombre,
+     lugar_trabajo.`lugt_estatus` AS lugar_trabajo_lugt_estatus,
+     lugar_trabajo.`lugt_observ` AS lugar_trabajo_lugt_observ,
+     dependencias.`dp_campus` AS dependencias_dp_campus,
+     dependencias.`dp_nombre` AS dependencias_dp_nombre,
+     dependencias.`dp_desc` AS dependencias_dp_desc,
+     dependencias.`dp_estatus` AS dependencias_dp_estatus,
+     lugar_trabajo.`lugt_id` AS lugar_trabajo_lugt_id
+FROM
+     `lugt_tipo` lugt_tipo INNER JOIN `lugar_trabajo` lugar_trabajo ON lugt_tipo.`lugttip_id` = lugar_trabajo.`lugt_tipo`
+     INNER JOIN `dependencias` dependencias ON lugar_trabajo.`fk_dp_lugt` = dependencias.`dp_id`]]>
+	</queryString>
+	<field name="lugar_trabajo_lugt_id" class="java.lang.Integer"/>
+	<field name="lugar_trabajo_lugt_nombre" class="java.lang.String"/>
+	<field name="lugar_trabajo_lugt_tipo" class="java.lang.String"/>
+	<field name="lugar_trabajo_lugt_estatus" class="java.lang.String"/>
+	<field name="lugar_trabajo_lugt_observ" class="java.lang.String"/>
+	<field name="dependencias_dp_campus" class="java.lang.Integer"/>
+	<field name="dependencias_dp_nombre" class="java.lang.String"/>
+	<field name="dependencias_dp_desc" class="java.lang.String"/>
+	<field name="dependencias_dp_estatus" class="java.lang.String"/>
+	<group name="lugar_trabajo_lugt_id">
+		<groupExpression><![CDATA[$F{lugar_trabajo_lugt_id}]]></groupExpression>
+		<groupHeader>
+			<band height="16">
+				<textField pattern="" isBlankWhenNull="false">
+					<reportElement uuid="a881dcde-3d47-45f7-8546-cbaaa5901a92" style="SubTitle" mode="Transparent" x="0" y="0" width="506" height="15" forecolor="#D6A90E" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Arial" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{lugar_trabajo_lugt_id}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="6"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="92" splitType="Stretch">
+			<image>
+				<reportElement uuid="9b084f51-8a6e-473c-a7c9-7b7d6c3f5659" x="0" y="2" width="555" height="87"/>
+				<imageExpression><![CDATA["jrxml\\franja2.gif"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="f56c9b71-5ba8-4240-ad0b-6b3fe04beeea" style="Title" x="71" y="12" width="126" height="33" forecolor="#D6A90E"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[SIGESUM]]></text>
+			</staticText>
+			<image>
+				<reportElement uuid="cf305143-4b5d-4c5e-bd37-aedd53d5ddd5" x="34" y="12" width="35" height="33"/>
+				<imageExpression><![CDATA["jrxml\\favicon.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="5dec4b3b-b3ce-4a51-8443-4cea90801421" style="SubTitle" x="244" y="12" width="311" height="22" forecolor="#FFFFFF"/>
+				<textElement/>
+				<text><![CDATA[Lugares de Trabajo por Dependencias]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="22" splitType="Stretch">
+			<line>
+				<reportElement uuid="a69dfd89-15aa-49ac-bd63-33873f2f8f86" positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement uuid="d09343cf-1543-49e7-ae44-051ddc03a554" style="Column header" mode="Transparent" x="0" y="0" width="69" height="15" forecolor="#112752" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Arial" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Lugar]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7ae75f11-a9b3-491d-b1bc-4c7a0a819a6d" style="Column header" mode="Transparent" x="69" y="0" width="69" height="15" forecolor="#112752" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Arial" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Tipo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="bd3d5273-6ebb-48c5-a307-5986d475d995" style="Column header" mode="Transparent" x="138" y="0" width="69" height="15" forecolor="#112752" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Arial" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Estatus]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d3132679-0d63-4294-879d-786b2e1d7d69" style="Column header" mode="Transparent" x="207" y="0" width="69" height="15" forecolor="#112752" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Arial" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Observación]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8f2294b5-7a28-4175-9fcb-79fd868abe9f" style="Column header" mode="Transparent" x="276" y="0" width="69" height="15" forecolor="#112752" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Arial" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Campus]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2ee31a5b-eb9f-4e32-9ee0-e00801d313ed" style="Column header" mode="Transparent" x="345" y="0" width="69" height="15" forecolor="#112752" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Arial" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Dependencia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0bebd7e8-4d91-4c33-99f5-f24b485161f5" style="Column header" mode="Transparent" x="414" y="0" width="69" height="15" forecolor="#112752" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Arial" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Desc]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3cc056b3-fc96-4495-9faa-8b142f626e1a" style="Column header" mode="Transparent" x="483" y="0" width="69" height="15" forecolor="#112752" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Arial" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Estatus]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<line>
+				<reportElement uuid="1fb0f4ad-43a2-4155-97f6-bab390613ab2" positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement uuid="632bee3a-b670-4558-a364-0c450cea8761" style="Detail" x="0" y="0" width="69" height="15"/>
+				<textElement textAlignment="Center">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{lugar_trabajo_lugt_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="126f5fbd-8dc6-4676-ab5b-9041fa7b5503" style="Detail" x="69" y="0" width="69" height="15"/>
+				<textElement textAlignment="Center">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{lugar_trabajo_lugt_tipo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b758239c-d297-458e-b4c2-5a84ab99dd6d" style="Detail" x="138" y="0" width="69" height="15"/>
+				<textElement textAlignment="Center">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{lugar_trabajo_lugt_estatus}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="5285c530-d80d-4160-8e30-de9daeb0697d" style="Detail" x="207" y="0" width="69" height="15"/>
+				<textElement textAlignment="Center">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{lugar_trabajo_lugt_observ}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="301fdb1e-c5d5-4a49-842c-85ada7806aaa" style="Detail" x="276" y="0" width="69" height="15"/>
+				<textElement textAlignment="Center">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dependencias_dp_campus}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="e7aa1617-09eb-4197-ba58-3a41d6ac3c42" style="Detail" x="345" y="0" width="69" height="15"/>
+				<textElement textAlignment="Center">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dependencias_dp_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="3e540fd3-a055-468a-b5f1-5e250955a7f6" style="Detail" x="414" y="0" width="69" height="15"/>
+				<textElement textAlignment="Center">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dependencias_dp_desc}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0a4b67f4-8a06-4fca-95cb-dad2bfc68306" style="Detail" x="483" y="0" width="69" height="15"/>
+				<textElement textAlignment="Center">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dependencias_dp_estatus}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<line>
+				<reportElement uuid="501e0065-d12f-4c92-944f-d342443e2ec3" positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement uuid="6cb97b79-c292-495e-be90-ba702aeccacd" style="Column header" x="433" y="0" width="80" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="0b1b018c-ad68-4710-8fe4-3dc5615bb268" style="Column header" x="513" y="0" width="40" height="20"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement uuid="90a6048f-2e1c-4f61-aab5-4e3bf9639141" style="Column header" x="0" y="0" width="197" height="20"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
