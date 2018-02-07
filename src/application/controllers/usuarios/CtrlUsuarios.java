@@ -6,6 +6,7 @@
 package application.controllers.usuarios;
 
 import application.config.Generic;
+import application.controllers.Usuarios;
 import application.views.usuarios.mdlNuevo;
 import java.awt.Toolkit;
 import java.text.DateFormat;
@@ -23,13 +24,15 @@ public class CtrlUsuarios {
 
     mdlNuevo usuario;
     Generic g;
+    Usuarios usr;
 
-    public CtrlUsuarios(JFrame parent, Generic g) {
+    public CtrlUsuarios(JFrame parent, Generic g, Usuarios usr) {
         usuario = new mdlNuevo(parent, true);
         this.g = g;
         usuario.btnGuardar.addActionListener((e) -> {
             onGuardar();
         });
+        this.usr = usr;
     }
 
     public void setVisible() {
@@ -51,6 +54,7 @@ public class CtrlUsuarios {
             if (!usuario.Usuario.getText().equals("") && g.addUpdateOrDelete("SP_AGREGAR_USUARIO", a)) {
                 JOptionPane.showMessageDialog(null, "USUARIO AGREGADO");
                 usuario.dispose();
+                usr.getRecords();
             } else {
                 JOptionPane.showMessageDialog(null, "NO SE HA PODIDO AGREGAR EL USUARIO", "NO SE HA PODIDO AGREGAR EL USUARIO", JOptionPane.ERROR_MESSAGE);
             }
