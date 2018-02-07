@@ -121,8 +121,7 @@ public class vLogin extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-<<<<<<< HEAD
+ 
     private void panel1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel1MouseDragged
         this.setLocation(evt.getXOnScreen(), evt.getYOnScreen());
         // TODO add your handling code here:
@@ -144,10 +143,10 @@ public class vLogin extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_panel1MouseEntered
 
-    private void txtContrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtContrasenaActionPerformed
-=======
+    private void txtContrasenaActionPerformed(java.awt.event.ActionEvent evt) {                                              
+    }
     private void txtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuarioActionPerformed
->>>>>>> 7db3f56dece8fda664c9da7b9745743e9a8d3321
+
         // TODO add your handling code here:
     }//GEN-LAST:event_txtUsuarioActionPerformed
 
