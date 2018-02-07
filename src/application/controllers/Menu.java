@@ -25,28 +25,12 @@ public class Menu {
         menu.mProveedores.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                
+
             }
         });
-
-//        menu.btnSalir.addMouseListener(new MouseAdapter() {
-//            @Override
-//            public void mouseClicked(MouseEvent e) {
-//                System.exit(0);
-//            }
-//        });
-//        menu.btnProductos.addMouseListener(new MouseAdapter() {
-//            @Override
-//            public void mouseClicked(MouseEvent e) {
-//                (new Productos()).setVisible();
-//            }
-//        });
-//        menu.btnUsuarios.addMouseListener(new MouseAdapter() {
-//            @Override
-//            public void mouseClicked(MouseEvent e) {
-//                (new Usuarios()).setVisible();
-//            }
-//        });
+        menu.mnuUsuarios.addActionListener((e) -> {
+            (new Usuarios()).setVisible();
+        });
     }
 
     public void setVisible() {

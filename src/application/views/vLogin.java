@@ -127,8 +127,32 @@ public class vLogin extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+ 
+    private void panel1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel1MouseDragged
+        this.setLocation(evt.getXOnScreen(), evt.getYOnScreen());
+        // TODO add your handling code here:
+    }//GEN-LAST:event_panel1MouseDragged
 
+    private void panel1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel1MouseMoved
+//
+//        System.out.println("X: " + evt.getX() + ", Y: " + evt.getY());
+        // TODO add your handling code here:
+    }//GEN-LAST:event_panel1MouseMoved
+
+    private void panel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel1MouseClicked
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_panel1MouseClicked
+
+    private void panel1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel1MouseEntered
+        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_panel1MouseEntered
+
+    private void txtContrasenaActionPerformed(java.awt.event.ActionEvent evt) {                                              
+    }
     private void txtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuarioActionPerformed
+
         // TODO add your handling code here:
     }//GEN-LAST:event_txtUsuarioActionPerformed
 
