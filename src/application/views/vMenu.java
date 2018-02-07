@@ -5,6 +5,8 @@
  */
 package application.views;
 
+import javax.swing.JFrame;
+
 /**
  *
  * @author Administrador
@@ -28,8 +30,6 @@ public class vMenu extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
         jPanel2 = new javax.swing.JPanel();
         btnProveedores = new org.edisoncor.gui.button.ButtonIpod();
         jPanel3 = new javax.swing.JPanel();
@@ -44,17 +44,24 @@ public class vMenu extends javax.swing.JFrame {
         btnUsuarios = new org.edisoncor.gui.button.ButtonIpod();
         jPanel8 = new javax.swing.JPanel();
         btnSalir = new org.edisoncor.gui.button.ButtonIpod();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        mProveedores = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
+        jMenu3 = new javax.swing.JMenu();
+        jMenu5 = new javax.swing.JMenu();
+        jMenu6 = new javax.swing.JMenu();
+        jMenu13 = new javax.swing.JMenu();
+        jMenu12 = new javax.swing.JMenu();
+        jMenu11 = new javax.swing.JMenu();
+        jMenu7 = new javax.swing.JMenu();
+        jMenu8 = new javax.swing.JMenu();
+        jMenu9 = new javax.swing.JMenu();
+        jMenu10 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-
-        jLabel1.setFont(new java.awt.Font("Open Sans", 1, 36)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("MENU");
-
-        jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -186,8 +193,6 @@ public class vMenu extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -213,10 +218,7 @@ public class vMenu extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(61, 61, 61)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -232,6 +234,44 @@ public class vMenu extends javax.swing.JFrame {
         );
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jPanel2, jPanel3, jPanel4, jPanel5, jPanel6, jPanel7, jPanel8});
+
+        mProveedores.setText("Proveedores");
+        jMenuBar1.add(mProveedores);
+
+        jMenu2.setText("Pedidos");
+        jMenuBar1.add(jMenu2);
+
+        jMenu3.setText("Compras");
+        jMenuBar1.add(jMenu3);
+
+        jMenu5.setText("Artículos");
+        jMenuBar1.add(jMenu5);
+
+        jMenu6.setText("Fichas Técnicas");
+        jMenuBar1.add(jMenu6);
+
+        jMenu13.setText("Fracciones");
+        jMenuBar1.add(jMenu13);
+
+        jMenu12.setText("Producción");
+        jMenuBar1.add(jMenu12);
+
+        jMenu11.setText("Precios y Costos");
+        jMenuBar1.add(jMenu11);
+
+        jMenu7.setText("Ventas");
+        jMenuBar1.add(jMenu7);
+
+        jMenu8.setText("Contabilidad");
+        jMenuBar1.add(jMenu8);
+
+        jMenu9.setText("Finanzas");
+        jMenuBar1.add(jMenu9);
+
+        jMenu10.setText("Usuarios");
+        jMenuBar1.add(jMenu10);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -251,22 +291,33 @@ public class vMenu extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public org.edisoncor.gui.button.ButtonIpod btnAlmacen;
-    public org.edisoncor.gui.button.ButtonIpod btnCompras;
-    public org.edisoncor.gui.button.ButtonIpod btnPrecios;
-    public org.edisoncor.gui.button.ButtonIpod btnProductos;
-    public org.edisoncor.gui.button.ButtonIpod btnProveedores;
-    public org.edisoncor.gui.button.ButtonIpod btnSalir;
-    public org.edisoncor.gui.button.ButtonIpod btnUsuarios;
-    private javax.swing.JLabel jLabel1;
+    private org.edisoncor.gui.button.ButtonIpod btnAlmacen;
+    private org.edisoncor.gui.button.ButtonIpod btnCompras;
+    private org.edisoncor.gui.button.ButtonIpod btnPrecios;
+    private org.edisoncor.gui.button.ButtonIpod btnProductos;
+    private org.edisoncor.gui.button.ButtonIpod btnProveedores;
+    private org.edisoncor.gui.button.ButtonIpod btnSalir;
+    private org.edisoncor.gui.button.ButtonIpod btnUsuarios;
+    private javax.swing.JMenu jMenu10;
+    private javax.swing.JMenu jMenu11;
+    private javax.swing.JMenu jMenu12;
+    private javax.swing.JMenu jMenu13;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenu jMenu6;
+    private javax.swing.JMenu jMenu7;
+    private javax.swing.JMenu jMenu8;
+    private javax.swing.JMenu jMenu9;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
-    public javax.swing.JPanel jPanel2;
-    public javax.swing.JPanel jPanel3;
-    public javax.swing.JPanel jPanel4;
-    public javax.swing.JPanel jPanel5;
-    public javax.swing.JPanel jPanel6;
-    public javax.swing.JPanel jPanel7;
-    public javax.swing.JPanel jPanel8;
-    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
+    public javax.swing.JMenu mProveedores;
     // End of variables declaration//GEN-END:variables
 }

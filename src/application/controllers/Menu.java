@@ -4,11 +4,12 @@
  * and open the template in the editor.
  */
 package application.controllers;
- 
+
 import application.views.vMenu;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JFrame;
 
 /**
  *
@@ -20,29 +21,38 @@ public class Menu {
 
     public Menu() {
         menu = new vMenu();
-        menu.btnSalir.addMouseListener(new MouseAdapter() {
+
+        menu.mProveedores.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                System.exit(0);
+                
             }
         });
-        menu.btnProductos.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                (new Productos()).setVisible();
-            }
-        });
-        menu.btnUsuarios.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                (new Usuarios()).setVisible();
-            }
-        });
+
+//        menu.btnSalir.addMouseListener(new MouseAdapter() {
+//            @Override
+//            public void mouseClicked(MouseEvent e) {
+//                System.exit(0);
+//            }
+//        });
+//        menu.btnProductos.addMouseListener(new MouseAdapter() {
+//            @Override
+//            public void mouseClicked(MouseEvent e) {
+//                (new Productos()).setVisible();
+//            }
+//        });
+//        menu.btnUsuarios.addMouseListener(new MouseAdapter() {
+//            @Override
+//            public void mouseClicked(MouseEvent e) {
+//                (new Usuarios()).setVisible();
+//            }
+//        });
     }
 
     public void setVisible() {
         menu.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/gears.png")));
         menu.setLocationRelativeTo(null);
         menu.setVisible(true);
+        menu.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 }
