@@ -132,8 +132,8 @@ public class vLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_panel1MouseDragged
 
     private void panel1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel1MouseMoved
-
-        System.out.println("X: " + evt.getX() + ", Y: " + evt.getY());
+//
+//        System.out.println("X: " + evt.getX() + ", Y: " + evt.getY());
         // TODO add your handling code here:
     }//GEN-LAST:event_panel1MouseMoved
 

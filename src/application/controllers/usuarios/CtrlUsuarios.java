@@ -3,29 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package application.controllers;
+package application.controllers.usuarios;
 
-import application.config.Generic;
-import application.controllers.usuarios.CtrlUsuarios;
-import application.views.vUsuarios;
+import application.views.usuarios.mdlNuevo; 
 import java.awt.Toolkit;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Administrador
  */
-public class Usuarios {
+public class CtrlUsuarios {
 
-    vUsuarios usuario;
-    Generic g = new Generic();
-    
-    public Usuarios() {
-        usuario = new vUsuarios();
-        usuario.btnNuevo.addActionListener((e) -> {
-            (new CtrlUsuarios(usuario)).setVisible();
-        });
+    mdlNuevo usuario;
+
+    public CtrlUsuarios(JFrame parent) {
+        usuario = new mdlNuevo(parent,true); 
     }
 
     public void setVisible() {
@@ -36,7 +30,6 @@ public class Usuarios {
 
     public void getRecords() {
         try {
-            DefaultTableModel dtm = new DefaultTableModel(); 
             
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
