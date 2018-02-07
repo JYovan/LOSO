@@ -5,6 +5,7 @@
  */
 package application.views;
 
+import application.controllers.ManejadorTecla;
 import java.awt.Color;
 
 /**
@@ -16,8 +17,12 @@ public class vLogin extends javax.swing.JFrame {
     /**
      * Creates new form Sesion
      */
+    
+    ManejadorTecla manejador = new ManejadorTecla();
     public vLogin() {
         initComponents();
+        txtUsuario.addKeyListener(manejador);
+        txtContrasena.addKeyListener(manejador);
      
     }
 
@@ -40,7 +45,8 @@ public class vLogin extends javax.swing.JFrame {
         txtContrasena = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Acceso Lobo Solo");
+        setTitle("Acceso al Sistema");
+        setAlwaysOnTop(true);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
