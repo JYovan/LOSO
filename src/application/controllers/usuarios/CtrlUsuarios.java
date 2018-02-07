@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -26,6 +27,9 @@ public class CtrlUsuarios {
     public CtrlUsuarios(JFrame parent, Generic g) {
         usuario = new mdlNuevo(parent, true);
         this.g = g;
+        usuario.btnGuardar.addActionListener((e) -> {
+            onGuardar();
+        });
     }
 
     public void setVisible() {
@@ -40,10 +44,16 @@ public class CtrlUsuarios {
             a.add(usuario.Usuario.getText());
             a.add(String.valueOf(usuario.Contrasena.getPassword()));
             a.add(usuario.Correo.getText());
-            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
             Date date = new Date();
             System.out.println(dateFormat.format(date));
-//            g.addUpdateOrDelete("SP_AGREGAR_USUARIO", a);
+            a.add(dateFormat.format(date));
+            if (!usuario.Usuario.getText().equals("") && g.addUpdateOrDelete("SP_AGREGAR_USUARIO", a)) {
+                JOptionPane.showMessageDialog(null, "USUARIO AGREGADO");
+                usuario.dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "NO SE HA PODIDO AGREGAR EL USUARIO", "NO SE HA PODIDO AGREGAR EL USUARIO", JOptionPane.ERROR_MESSAGE);
+            }
         } catch (Exception e) {
         }
     }

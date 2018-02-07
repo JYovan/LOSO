@@ -37,7 +37,7 @@ public class Usuarios {
     public void getRecords() {
         try {
             DefaultTableModel dtm = new DefaultTableModel();
-
+            System.out.println("");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
