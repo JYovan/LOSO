@@ -5,10 +5,14 @@
  */
 package application.controllers.usuarios;
 
-import application.views.usuarios.mdlNuevo; 
+import application.config.Generic;
+import application.views.usuarios.mdlNuevo;
 import java.awt.Toolkit;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -17,9 +21,11 @@ import javax.swing.JOptionPane;
 public class CtrlUsuarios {
 
     mdlNuevo usuario;
+    Generic g;
 
-    public CtrlUsuarios(JFrame parent) {
-        usuario = new mdlNuevo(parent,true); 
+    public CtrlUsuarios(JFrame parent, Generic g) {
+        usuario = new mdlNuevo(parent, true);
+        this.g = g;
     }
 
     public void setVisible() {
@@ -28,11 +34,17 @@ public class CtrlUsuarios {
         usuario.setVisible(true);
     }
 
-    public void getRecords() {
+    public void onGuardar() {
         try {
-            
+            ArrayList<Object> a = new ArrayList<>();
+            a.add(usuario.Usuario.getText());
+            a.add(String.valueOf(usuario.Contrasena.getPassword()));
+            a.add(usuario.Correo.getText());
+            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            Date date = new Date();
+            System.out.println(dateFormat.format(date));
+//            g.addUpdateOrDelete("SP_AGREGAR_USUARIO", a);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
 }

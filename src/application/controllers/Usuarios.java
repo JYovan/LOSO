@@ -20,11 +20,11 @@ public class Usuarios {
 
     vUsuarios usuario;
     Generic g = new Generic();
-    
+
     public Usuarios() {
         usuario = new vUsuarios();
         usuario.btnNuevo.addActionListener((e) -> {
-            (new CtrlUsuarios(usuario)).setVisible();
+            (new CtrlUsuarios(usuario, g)).setVisible();
         });
     }
 
@@ -36,8 +36,8 @@ public class Usuarios {
 
     public void getRecords() {
         try {
-            DefaultTableModel dtm = new DefaultTableModel(); 
-            
+            DefaultTableModel dtm = new DefaultTableModel();
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
