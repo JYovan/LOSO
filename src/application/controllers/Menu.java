@@ -10,6 +10,7 @@ import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -21,6 +22,16 @@ public class Menu {
 
     public Menu() {
         menu = new vMenu();
+
+        menu.mSalir.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int i = JOptionPane.showConfirmDialog(null, "¿Realmente Desea Salir?", "Confirmar Salida", JOptionPane.YES_NO_OPTION);
+                if (i == 0) {
+                    System.exit(0);
+                }
+            }
+        });
 
         menu.mProveedores.addMouseListener(new MouseAdapter() {
             @Override

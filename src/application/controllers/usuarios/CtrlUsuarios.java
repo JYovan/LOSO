@@ -9,6 +9,8 @@ import application.config.Generic;
 import application.controllers.Usuarios;
 import application.views.usuarios.mdlNuevo;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,6 +31,23 @@ public class CtrlUsuarios {
     public CtrlUsuarios(JFrame parent, Generic g, Usuarios usr) {
         usuario = new mdlNuevo(parent, true);
         this.g = g;
+        
+        usuario.btnGuardar.addKeyListener(new KeyListener() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    onGuardar();
+                }
+            }
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });
+        
         usuario.btnGuardar.addActionListener((e) -> {
             onGuardar();
         });

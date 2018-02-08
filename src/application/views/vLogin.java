@@ -4,9 +4,7 @@
  * and open the template in the editor.
  */
 package application.views;
-
 import application.controllers.ManejadorTecla;
-import java.awt.Color;
 
 /**
  *
@@ -23,7 +21,6 @@ public class vLogin extends javax.swing.JFrame {
         initComponents();
         txtUsuario.addKeyListener(manejador);
         txtContrasena.addKeyListener(manejador);
-     
     }
 
     /**

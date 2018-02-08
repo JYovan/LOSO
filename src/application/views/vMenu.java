@@ -45,9 +45,11 @@ public class vMenu extends javax.swing.JFrame {
         jMenu9 = new javax.swing.JMenu();
         jMenu10 = new javax.swing.JMenu();
         mnuUsuarios = new javax.swing.JMenuItem();
-        jMenu1 = new javax.swing.JMenu();
+        jMenu4 = new javax.swing.JMenu();
+        mSalir = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Calzado Lobo Solo v.1.0.0");
         setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -121,8 +123,11 @@ public class vMenu extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu10);
 
-        jMenu1.setText("Salir");
-        jMenuBar1.add(jMenu1);
+        jMenu4.setText("Configuración");
+        jMenuBar1.add(jMenu4);
+
+        mSalir.setText("Salir");
+        jMenuBar1.add(mSalir);
 
         setJMenuBar(jMenuBar1);
 
@@ -144,13 +149,13 @@ public class vMenu extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu10;
     private javax.swing.JMenu jMenu11;
     private javax.swing.JMenu jMenu12;
     private javax.swing.JMenu jMenu13;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenu jMenu7;
@@ -160,6 +165,7 @@ public class vMenu extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     public javax.swing.JPanel jPanel8;
     public javax.swing.JMenu mProveedores;
+    public javax.swing.JMenu mSalir;
     public javax.swing.JMenuItem mnuUsuarios;
     // End of variables declaration//GEN-END:variables
 }
