@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package application.views.usuarios;
-import application.controllers.ManejadorTecla;
+import application.config.ManejadorTecla;
 import javax.swing.JFrame;
 
 /**

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package application.controllers;
+package application.config;
 
 import java.awt.AWTException;
 import java.awt.Robot;
