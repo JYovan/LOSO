@@ -30,9 +30,15 @@ public class ManejadorTecla implements KeyListener {
     }
 
     @Override
-    public void keyReleased(KeyEvent arg0) {
+    public void keyReleased(KeyEvent e) {
+
     }
 
-    public void keyTyped(KeyEvent arg0) {
+    @Override
+    public void keyTyped(KeyEvent e) {
+        Character c = e.getKeyChar();
+        if (Character.isLetter(c)) {
+            e.setKeyChar(Character.toUpperCase(c));
+        }
     }
 }

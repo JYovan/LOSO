@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package application.views.usuarios;
-
+import application.controllers.ManejadorTecla;
 import javax.swing.JFrame;
 
 /**
@@ -16,10 +16,15 @@ public class mdlNuevo extends javax.swing.JDialog {
     /**
      * Creates new form mdlNuevo
      */
+    ManejadorTecla manejador = new ManejadorTecla();
+    
     public mdlNuevo(JFrame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         setTitle("NUEVO USUARIO");
+        Usuario.addKeyListener(manejador);
+        Contrasena.addKeyListener(manejador);
+        Correo.addKeyListener(manejador);
     }
 
     /**

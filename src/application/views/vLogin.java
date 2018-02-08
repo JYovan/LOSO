@@ -4,8 +4,11 @@
  * and open the template in the editor.
  */
 package application.views;
-
 import application.controllers.ManejadorTecla;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 86588aa300667fb18d82f2ff936c11fa3efa5c9f
 /**
  *
  * @author Administrador
@@ -21,7 +24,6 @@ public class vLogin extends javax.swing.JFrame {
         initComponents();
         txtUsuario.addKeyListener(manejador);
         txtContrasena.addKeyListener(manejador);
-     
     }
 
     /**
