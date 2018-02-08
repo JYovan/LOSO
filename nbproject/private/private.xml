@@ -3,11 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/Christian/Documents/GitHub/LOSO/src/application/controllers/Usuarios.java</file>
+            <file>file:/C:/Users/Christian/Documents/GitHub/LOSO/src/application/views/vUsuarios.java</file>
+            <file>file:/C:/Users/Christian/Documents/GitHub/LOSO/src/application/views/usuarios/mdlNuevo.java</file>
             <file>file:/C:/Users/Christian/Documents/GitHub/LOSO/src/application/views/vLogin.java</file>
-            <file>file:/C:/Users/Christian/Documents/GitHub/LOSO/src/application/controllers/ManejadorTecla.java</file>
+            <file>file:/C:/Users/Christian/Documents/GitHub/LOSO/src/application/controllers/usuarios/CtrlUsuarios.java</file>
             <file>file:/C:/Users/Christian/Documents/GitHub/LOSO/src/application/controllers/Login.java</file>
-            <file>file:/C:/Users/Christian/Documents/GitHub/LOSO/src/application/views/vMenu.java</file>
-            <file>file:/C:/Users/Christian/Documents/GitHub/LOSO/src/application/controllers/Menu.java</file>
         </group>
     </open-files>
 </project-private>

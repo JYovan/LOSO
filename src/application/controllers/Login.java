@@ -13,7 +13,12 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import org.jvnet.substance.SubstanceLookAndFeel;
 
 /**
  *
@@ -75,5 +80,14 @@ public class Login {
 
     public static void main(String[] args) {
         (new Login()).setVisible();
+       
+        try {
+            UIManager.setLookAndFeel("com.jtattoo.plaf.acryl.AcrylLookAndFeel");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+            
+        
     }
 }
