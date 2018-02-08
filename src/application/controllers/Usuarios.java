@@ -9,6 +9,7 @@ import application.config.Generic;
 import application.controllers.usuarios.CtrlUsuarios;
 import application.views.vUsuarios;
 import java.awt.Toolkit;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -24,8 +25,9 @@ public class Usuarios {
     public Usuarios() {
         usuario = new vUsuarios();
         usuario.btnNuevo.addActionListener((e) -> {
-            (new CtrlUsuarios(usuario, g)).setVisible();
+            (new CtrlUsuarios(usuario, g, this)).setVisible();
         });
+        getRecords();
     }
 
     public void setVisible() {
@@ -36,8 +38,9 @@ public class Usuarios {
 
     public void getRecords() {
         try {
-            DefaultTableModel dtm = new DefaultTableModel();
-            System.out.println("");
+            ArrayList<Object[][]> a = g.findAll("SP_GETUSUARIOS");
+            DefaultTableModel dtm = g.getModelFill(a.get(0), g.getDimensional(a.get(1)));
+            usuario.tblUsuarios.setModel(dtm);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
