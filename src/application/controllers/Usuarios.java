@@ -36,7 +36,7 @@ public class Usuarios {
         usuario.setVisible(true);
     }
 
-    public void getRecords() {
+    public final void getRecords() {
         try {
             ArrayList<Object[][]> a = g.findAll("SP_GETUSUARIOS");
             DefaultTableModel dtm = g.getModelFill(a.get(0), g.getDimensional(a.get(1)));
