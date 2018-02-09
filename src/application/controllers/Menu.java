@@ -5,6 +5,7 @@
  */
 package application.controllers;
 
+import application.third_party.Resources;
 import application.views.vMenu;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
@@ -19,10 +20,11 @@ import javax.swing.JOptionPane;
 public class Menu {
 
     vMenu menu;
+    Resources src = new Resources();
 
     public Menu() {
         menu = new vMenu();
-
+        src.toSysTray(menu);
         menu.mSalir.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -47,7 +49,6 @@ public class Menu {
     public void setVisible() {
         menu.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/gears.png")));
         menu.setLocationRelativeTo(null);
-        menu.setVisible(true);
-        menu.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        menu.setVisible(true); 
     }
 }

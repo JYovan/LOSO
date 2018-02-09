@@ -13,8 +13,10 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
-import org.jvnet.substance.SubstanceLookAndFeel;
+import javax.swing.UIManager;
+import de.javasoft.plaf.synthetica.SyntheticaClassyLookAndFeel;
+import java.text.ParseException;
+import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
@@ -27,10 +29,6 @@ public class Login {
     public Login() {
 
         login = new vLogin();
-        /**
-         *
-         */
-
         login.btnEntrar.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -65,6 +63,28 @@ public class Login {
             public void keyReleased(KeyEvent e) {
             }
         });
+        login.txtContrasena.addKeyListener(new KeyListener() {
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    if (!"".equals(login.txtUsuario.getText()) && !"".equals(String.valueOf(login.txtContrasena.getPassword()))) {
+                        login.dispose();
+                        (new Menu()).setVisible();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "DEBE DE INTRODUCIR SUS CREDENCIALES", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });
 
     }
 
@@ -75,16 +95,12 @@ public class Login {
     }
 
     public static void main(String[] args) {
+        try {
+            UIManager.setLookAndFeel(new SyntheticaClassyLookAndFeel());
+        } catch (ParseException | UnsupportedLookAndFeelException e) {
+            JOptionPane.showMessageDialog(null, "Error en Look an Feel" + e.getMessage(), null, JOptionPane.ERROR_MESSAGE);
+        }
         JFrame.setDefaultLookAndFeelDecorated(true);
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    SubstanceLookAndFeel.setSkin("org.jvnet.substance.skin.BusinessBlackSteelSkin");
-                } catch (Exception e) {
-                    System.out.println("Substance Graphite failed to initialize");
-                }
-                (new Login()).setVisible();
-            }
-        });
+        (new Login()).setVisible();
     }
 }

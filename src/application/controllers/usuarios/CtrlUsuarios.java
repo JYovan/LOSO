@@ -7,10 +7,15 @@ package application.controllers.usuarios;
 
 import application.config.Generic;
 import application.controllers.Usuarios;
+import application.views.usuarios.mdlEditar;
 import application.views.usuarios.mdlNuevo;
+import application.views.vUsuarios;
+import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -24,15 +29,20 @@ import javax.swing.JOptionPane;
  */
 public class CtrlUsuarios {
 
-    mdlNuevo usuario;
+    mdlNuevo nuevo;
+    mdlEditar editar;
     Generic g;
-    Usuarios usr;
+    Usuarios usuarios;
+    vUsuarios vusuarios;
+    int temp = 0;
 
-    public CtrlUsuarios(JFrame parent, Generic g, Usuarios usr) {
-        usuario = new mdlNuevo(parent, true);
+    public CtrlUsuarios(JFrame parent, Generic g, Usuarios usuarios) {
+        nuevo = new mdlNuevo(parent, true);
+        editar = new mdlEditar(parent, true);
+        this.vusuarios = (vUsuarios) parent;
         this.g = g;
-        
-        usuario.btnGuardar.addKeyListener(new KeyListener() {
+        this.usuarios = usuarios;
+        nuevo.btnGuardar.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -47,37 +57,122 @@ public class CtrlUsuarios {
             public void keyReleased(KeyEvent e) {
             }
         });
-        
-        usuario.btnGuardar.addActionListener((e) -> {
+        nuevo.btnGuardar.addActionListener((e) -> {
             onGuardar();
         });
-        this.usr = usr;
+        editar.btnGuardar.addActionListener((e) -> {
+            onModificar();
+        });
+
+        nuevo.Correo.addKeyListener(new KeyListener() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                   onGuardar();
+                }
+            }
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        }); 
+        editar.Correo.addKeyListener(new KeyListener() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                   onModificar();
+                }
+            }
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        }); 
     }
 
     public void setVisible() {
-        usuario.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/96/icons8_Idea_96px.png")));
-        usuario.setLocationRelativeTo(null);
-        usuario.setVisible(true);
+        nuevo.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/96/icons8_Idea_96px.png")));
+        nuevo.setLocationRelativeTo(null);
+        nuevo.setVisible(true);
     }
 
     public void onGuardar() {
         try {
             ArrayList<Object> a = new ArrayList<>();
-            a.add(usuario.Usuario.getText());
-            a.add(String.valueOf(usuario.Contrasena.getPassword()));
-            a.add(usuario.Correo.getText());
+            a.add(nuevo.Usuario.getText());
+            a.add(String.valueOf(nuevo.Contrasena.getPassword()));
+            a.add(nuevo.Correo.getText());
             DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
             Date date = new Date();
             System.out.println(dateFormat.format(date));
             a.add(dateFormat.format(date));
-            if (!usuario.Usuario.getText().equals("") && g.addUpdateOrDelete("SP_AGREGAR_USUARIO", a)) {
-                JOptionPane.showMessageDialog(null, "USUARIO AGREGADO");
-                usuario.dispose();
-                usr.getRecords();
+            if (!nuevo.Usuario.getText().equals("") && g.addUpdateOrDelete("SP_AGREGAR_USUARIO", a)) {
+                JOptionPane.showMessageDialog(null, "USUARIO AGREGADO", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
+                nuevo.dispose();
+                usuarios.getRecords();
             } else {
                 JOptionPane.showMessageDialog(null, "NO SE HA PODIDO AGREGAR EL USUARIO", "NO SE HA PODIDO AGREGAR EL USUARIO", JOptionPane.ERROR_MESSAGE);
             }
-        } catch (Exception e) {
+        } catch (HeadlessException e) {
+            JOptionPane.showMessageDialog(null, "NO SE HA PODIDO REGISTRAR EL USUARIO", "ERROR AL GUARDAR", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public void onEditar(int IDX) {
+        try {
+            temp = IDX;
+            ArrayList<Object> a = new ArrayList<>();
+            a.add(IDX);
+            ArrayList<Object[][]> usuario = g.findByParams("SP_USUARIO_X_ID", a);
+            Object[][] data = usuario.get(0);
+            editar.Usuario.setText(String.valueOf(data[0][1]));
+            editar.Contrasena.setText(String.valueOf(data[0][2]));
+            editar.Correo.setText(String.valueOf(data[0][3]));
+            editar.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/96/icons8_Idea_96px.png")));
+            editar.setLocationRelativeTo(null);
+            editar.setVisible(true);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "NO SE HA PODIDO EDITAR EL USUARIO", "ERROR AL EDITAR", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public void onModificar() {
+        try {
+            ArrayList<Object> a = new ArrayList<>();
+            a.add(temp);
+            a.add(editar.Usuario.getText());
+            a.add(String.valueOf(editar.Contrasena.getPassword()));
+            a.add(editar.Correo.getText());
+            if (!editar.Usuario.getText().equals("") && g.addUpdateOrDelete("SP_MODIFICAR_USUARIO", a)) {
+                JOptionPane.showMessageDialog(null, "USUARIO MODIFICADO", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
+                editar.dispose();
+                usuarios.getRecords();
+            } else {
+                JOptionPane.showMessageDialog(null, "NO SE HA PODIDO MODIFICAR EL USUARIO", "ERROR AL MODIFICAR EL USUARIO", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (HeadlessException e) {
+            JOptionPane.showMessageDialog(null, "NO SE HA PODIDO MODIFICAR EL USUARIO", "ERROR AL GUARDAR", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public void onEliminar(int IDX) {
+        try {
+            ArrayList<Object> a = new ArrayList<>();
+            a.add(IDX);
+            if (g.addUpdateOrDelete("SP_ELIMINAR_USUARIO", a)) {
+                JOptionPane.showMessageDialog(null, "USUARIO ELIMINADO", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
+                usuarios.getRecords();
+            } else {
+                JOptionPane.showMessageDialog(null, "NO SE HA PODIDO ELIMINAR EL USUARIO", "ERROR AL ELIMINAR EL USUARIO", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (HeadlessException e) {
+            JOptionPane.showMessageDialog(null, "NO SE HA PODIDO ELIMINAR EL USUARIO", "ERROR AL ELIMINAR", JOptionPane.ERROR_MESSAGE);
         }
     }
 }
