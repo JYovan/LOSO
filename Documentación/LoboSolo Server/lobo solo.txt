@@ -1,0 +1,14 @@
+usuarios
+proveedores
+pedidos
+compras
+articulos
+ficha tecnica(materiales)
+fracciones (procesos de mano de obra)
+produccion
+ficha tecnica mas fracciones mas costos fijos= precio de venta
+ventas
+contabilidad
+finanzas
+
+
