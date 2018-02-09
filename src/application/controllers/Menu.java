@@ -50,5 +50,6 @@ public class Menu {
         menu.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/gears.png")));
         menu.setLocationRelativeTo(null);
         menu.setVisible(true); 
+        //menu.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 }

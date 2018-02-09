@@ -6,6 +6,11 @@
 package application.controllers;
 
 import application.views.vLogin;
+import de.javasoft.plaf.synthetica.SyntheticaAluOxideLookAndFeel;
+import de.javasoft.plaf.synthetica.SyntheticaBlackEyeLookAndFeel;
+import de.javasoft.plaf.synthetica.SyntheticaBlackMoonLookAndFeel;
+import de.javasoft.plaf.synthetica.SyntheticaBlackStarLookAndFeel;
+import de.javasoft.plaf.synthetica.SyntheticaBlueIceLookAndFeel;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -15,6 +20,8 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import de.javasoft.plaf.synthetica.SyntheticaClassyLookAndFeel;
+import de.javasoft.plaf.synthetica.SyntheticaSimple2DLookAndFeel;
+import de.javasoft.plaf.synthetica.SyntheticaStandardLookAndFeel;
 import java.text.ParseException;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -96,7 +103,7 @@ public class Login {
 
     public static void main(String[] args) {
         try {
-            UIManager.setLookAndFeel(new SyntheticaClassyLookAndFeel());
+            UIManager.setLookAndFeel(new SyntheticaBlackMoonLookAndFeel());
         } catch (ParseException | UnsupportedLookAndFeelException e) {
             JOptionPane.showMessageDialog(null, "Error en Look an Feel" + e.getMessage(), null, JOptionPane.ERROR_MESSAGE);
         }
