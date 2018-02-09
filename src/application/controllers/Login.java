@@ -96,14 +96,14 @@ public class Login {
     }
 
     public void setVisible() {
-        login.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/gears.png")));
+        login.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/LS.png")));
         login.setLocationRelativeTo(null);
         login.setVisible(true);
     }
 
     public static void main(String[] args) {
         try {
-            UIManager.setLookAndFeel(new SyntheticaBlackMoonLookAndFeel());
+            UIManager.setLookAndFeel(new SyntheticaSimple2DLookAndFeel());
         } catch (ParseException | UnsupportedLookAndFeelException e) {
             JOptionPane.showMessageDialog(null, "Error en Look an Feel" + e.getMessage(), null, JOptionPane.ERROR_MESSAGE);
         }

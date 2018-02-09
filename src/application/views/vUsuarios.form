@@ -249,6 +249,10 @@
           </AuxValues>
         </Component>
         <Component class="javax.swing.JTextField" name="txtBusqueda">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="USUARIO, CORREO"/>
+            <Property name="toolTipText" type="java.lang.String" value="USUARIO, CORREO"/>
+          </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
           </AuxValues>

@@ -47,7 +47,7 @@ public class Menu {
     }
 
     public void setVisible() {
-        menu.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/gears.png")));
+        menu.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/LS.png")));
         menu.setLocationRelativeTo(null);
         menu.setVisible(true); 
         //menu.setExtendedState(JFrame.MAXIMIZED_BOTH);

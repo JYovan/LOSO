@@ -434,7 +434,7 @@ public class Resources {
 
             sysTray = SystemTray.getSystemTray();
             icon = Toolkit.getDefaultToolkit().getImage(
-                    ClassLoader.getSystemResource("media/gears.png"));
+                    ClassLoader.getSystemResource("media/LS32X32.png"));
 
             MouseListener mouseOcultar = new MouseListener() {
                 @Override

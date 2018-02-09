@@ -59,7 +59,7 @@ public class CtrlUsuarios {
         });
         nuevo.btnGuardar.addActionListener((e) -> {
             onGuardar();
-        });
+        }); 
         editar.btnGuardar.addActionListener((e) -> {
             onModificar();
         });

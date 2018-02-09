@@ -117,6 +117,9 @@ public class vUsuarios extends javax.swing.JFrame {
 
         btnAtras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/16/regresar.png"))); // NOI18N
 
+        txtBusqueda.setText("USUARIO, CORREO");
+        txtBusqueda.setToolTipText("USUARIO, CORREO");
+
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/32/icons8_Search_16px.png"))); // NOI18N
 
         javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
