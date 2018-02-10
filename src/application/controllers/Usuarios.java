@@ -27,10 +27,11 @@ import javax.swing.table.DefaultTableModel;
 public class Usuarios {
 
     vUsuarios vusuarios;
-    Generic g = new Generic();
     DefaultTableModel dtm;
 
-    public Usuarios() {
+    Generic g;
+    public Usuarios(Generic g) {
+        this.g = g;
         vusuarios = new vUsuarios();
         vusuarios.btnNuevo.addActionListener((e) -> {
             (new CtrlUsuarios(vusuarios, g, this)).setVisible();
@@ -132,7 +133,7 @@ public class Usuarios {
             ArrayList<Object[][]> a = g.findByParams("SP_BUSCAR_USUARIO", o);
             dtm = g.getModelFill(a.get(0), g.getDimensional(a.get(1)));
             vusuarios.tblUsuarios.setModel(dtm);
-             vusuarios.tblUsuarios.setColumnControlVisible(true);
+            vusuarios.tblUsuarios.setColumnControlVisible(true);
         });
 
         vusuarios.cmbTamano.addActionListener((e) -> {

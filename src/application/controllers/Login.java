@@ -5,6 +5,7 @@
  */
 package application.controllers;
 
+import application.config.Generic;
 import application.config.TextPrompt;
 import application.views.vLogin;
 import de.javasoft.plaf.synthetica.SyntheticaAluOxideLookAndFeel;
@@ -24,7 +25,9 @@ import de.javasoft.plaf.synthetica.SyntheticaClassyLookAndFeel;
 import de.javasoft.plaf.synthetica.SyntheticaSimple2DLookAndFeel;
 import de.javasoft.plaf.synthetica.SyntheticaStandardLookAndFeel;
 import java.awt.Font;
+import java.awt.HeadlessException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import javax.swing.UnsupportedLookAndFeelException;
 
 /**
@@ -35,6 +38,8 @@ public class Login {
 
     vLogin login;
 
+    Generic g = new Generic();
+
     public Login() {
 
         login = new vLogin();
@@ -42,8 +47,7 @@ public class Login {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (!"".equals(login.txtUsuario.getText()) && !"".equals(String.valueOf(login.txtContrasena.getPassword()))) {
-                    login.dispose();
-                    (new Menu()).setVisible();
+                    onAcceder();
                 } else {
                     JOptionPane.showMessageDialog(null, "DEBE DE INTRODUCIR SUS CREDENCIALES", "ERROR", JOptionPane.ERROR_MESSAGE);
                 }
@@ -56,8 +60,7 @@ public class Login {
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     if (!"".equals(login.txtUsuario.getText()) && !"".equals(String.valueOf(login.txtContrasena.getPassword()))) {
-                        login.dispose();
-                        (new Menu()).setVisible();
+                        onAcceder();
                     } else {
                         JOptionPane.showMessageDialog(null, "DEBE DE INTRODUCIR SUS CREDENCIALES", "ERROR", JOptionPane.ERROR_MESSAGE);
                     }
@@ -78,8 +81,7 @@ public class Login {
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     if (!"".equals(login.txtUsuario.getText()) && !"".equals(String.valueOf(login.txtContrasena.getPassword()))) {
-                        login.dispose();
-                        (new Menu()).setVisible();
+                        onAcceder();
                     } else {
                         JOptionPane.showMessageDialog(null, "DEBE DE INTRODUCIR SUS CREDENCIALES", "ERROR", JOptionPane.ERROR_MESSAGE);
                     }
@@ -117,5 +119,24 @@ public class Login {
         }
         JFrame.setDefaultLookAndFeelDecorated(true);
         (new Login()).setVisible();
+    }
+
+    public void onAcceder() {
+        try {
+            ArrayList<Object> a = new ArrayList<>();
+            a.add(login.txtUsuario.getText());
+            a.add(String.valueOf(login.txtContrasena.getPassword()));
+            ArrayList<Object[][]> usuario = g.findByParams("SP_ACCEDER", a);
+            Object[][] data = usuario.get(0); 
+            if (data  != null && data[0][0] != null && data[0][1] != null) {
+                login.dispose();
+                (new Menu(g)).setVisible();
+            } else {
+                JOptionPane.showMessageDialog(null, "DATOS INVÁLIDOS, INTENTE DE NUEVO", "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (HeadlessException e) { 
+            JOptionPane.showMessageDialog(null, "DATOS INVÁLIDOS, INTENTE DE NUEVO", "ERROR", JOptionPane.ERROR_MESSAGE);
+
+        }
     }
 }

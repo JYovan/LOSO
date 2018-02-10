@@ -5,6 +5,7 @@
  */
 package application.controllers;
 
+import application.config.Generic;
 import application.third_party.Resources;
 import application.views.vMenu;
 import java.awt.Toolkit;
@@ -22,7 +23,9 @@ public class Menu {
     vMenu menu;
     Resources src = new Resources();
 
-    public Menu() {
+    Generic g;
+    public Menu(Generic g) {
+         this.g = g;
         menu = new vMenu();
         src.toSysTray(menu);
         menu.mSalir.addMouseListener(new MouseAdapter() {
@@ -42,7 +45,7 @@ public class Menu {
             }
         });
         menu.mnuUsuarios.addActionListener((e) -> {
-            (new Usuarios()).setVisible();
+            (new Usuarios(g)).setVisible();
         });
     }
 
