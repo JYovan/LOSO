@@ -5,6 +5,7 @@
  */
 package application.controllers;
 
+import application.config.TextPrompt;
 import application.views.vLogin;
 import de.javasoft.plaf.synthetica.SyntheticaAluOxideLookAndFeel;
 import de.javasoft.plaf.synthetica.SyntheticaBlackEyeLookAndFeel;
@@ -22,6 +23,7 @@ import javax.swing.UIManager;
 import de.javasoft.plaf.synthetica.SyntheticaClassyLookAndFeel;
 import de.javasoft.plaf.synthetica.SyntheticaSimple2DLookAndFeel;
 import de.javasoft.plaf.synthetica.SyntheticaStandardLookAndFeel;
+import java.awt.Font;
 import java.text.ParseException;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -93,6 +95,12 @@ public class Login {
             }
         });
 
+        TextPrompt placeholder = new TextPrompt("NOMBRE DE USUARIO", login.txtUsuario);
+        placeholder.changeAlpha(0.75f);
+        placeholder.changeStyle(Font.BOLD);
+        TextPrompt placeholders = new TextPrompt("CONTRASEÑA", login.txtContrasena);
+        placeholders.changeAlpha(0.75f);
+        placeholders.changeStyle(Font.BOLD);
     }
 
     public void setVisible() {

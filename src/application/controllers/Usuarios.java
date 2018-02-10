@@ -6,8 +6,10 @@
 package application.controllers;
 
 import application.config.Generic;
+import application.config.TextPrompt;
 import application.controllers.usuarios.CtrlUsuarios;
 import application.views.vUsuarios;
+import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
@@ -77,6 +79,11 @@ public class Usuarios {
                 String string = vusuarios.txtBusqueda.getText();
                 String[] campos = string.split(",");
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    if (vusuarios.cmbTamano.getSelectedItem().toString().equals("TODOS")) {
+                        o.add(99999999);
+                    } else {
+                        o.add(vusuarios.cmbTamano.getSelectedItem().toString());
+                    }
                     for (int i = 0; i < campos.length; i++) {
                         if (campos.length > 0 && !campos[i].equals("")) {
                             o.add(campos[i]);
@@ -84,7 +91,7 @@ public class Usuarios {
                             o.add("");
                         }
                     }
-                    if (campos.length < 2) {
+                    if (campos.length < 3) {
                         o.add("");
                     }
                     ArrayList<Object[][]> a = g.findByParams("SP_BUSCAR_USUARIO", o);
@@ -102,6 +109,38 @@ public class Usuarios {
             }
         });
 
+        vusuarios.btnBuscar.addActionListener((e) -> {
+            ArrayList<Object> o = new ArrayList<>();
+            String string = vusuarios.txtBusqueda.getText();
+            String[] campos = string.split(",");
+
+            if (vusuarios.cmbTamano.getSelectedItem().toString().equals("TODOS")) {
+                o.add(99999999);
+            } else {
+                o.add(vusuarios.cmbTamano.getSelectedItem().toString());
+            }
+            for (int i = 0; i < campos.length; i++) {
+                if (campos.length > 0 && !campos[i].equals("")) {
+                    o.add(campos[i]);
+                } else {
+                    o.add("");
+                }
+            }
+            if (campos.length < 3) {
+                o.add("");
+            }
+            ArrayList<Object[][]> a = g.findByParams("SP_BUSCAR_USUARIO", o);
+            dtm = g.getModelFill(a.get(0), g.getDimensional(a.get(1)));
+            vusuarios.tblUsuarios.setModel(dtm);
+             vusuarios.tblUsuarios.setColumnControlVisible(true);
+        });
+
+        vusuarios.cmbTamano.addActionListener((e) -> {
+            getRecords();
+        });
+        TextPrompt placeholder = new TextPrompt("USUARIO,CORREO", vusuarios.txtBusqueda);
+        placeholder.changeAlpha(0.75f);
+        placeholder.changeStyle(Font.ITALIC);
         getRecords();
     }
 
@@ -113,7 +152,14 @@ public class Usuarios {
 
     public final void getRecords() {
         try {
-            ArrayList<Object[][]> a = g.findAll("SP_USUARIOS");
+
+            ArrayList<Object> o = new ArrayList<>();
+            if (vusuarios.cmbTamano.getSelectedItem().toString().equals("TODOS")) {
+                o.add(99999999);
+            } else {
+                o.add(vusuarios.cmbTamano.getSelectedItem().toString());
+            }
+            ArrayList<Object[][]> a = g.findByParams("SP_USUARIOS", o);
             dtm = g.getModelFill(a.get(0), g.getDimensional(a.get(1)));
             vusuarios.tblUsuarios.setModel(dtm);
         } catch (Exception e) {

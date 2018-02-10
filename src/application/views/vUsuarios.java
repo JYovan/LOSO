@@ -35,14 +35,14 @@ public class vUsuarios extends javax.swing.JFrame {
         btnEliminar = new javax.swing.JButton();
         btnExcel = new javax.swing.JButton();
         btnPdf = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblUsuarios = new javax.swing.JTable();
         btnAdelante = new javax.swing.JButton();
         cmbTamano = new javax.swing.JComboBox<>();
         btnAtras = new javax.swing.JButton();
         txtBusqueda = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblUsuarios = new org.jdesktop.swingx.JXTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("GESTION DE USUARIOS");
@@ -98,6 +98,17 @@ public class vUsuarios extends javax.swing.JFrame {
                 .addContainerGap(18, Short.MAX_VALUE))
         );
 
+        btnAdelante.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/16/delante.png"))); // NOI18N
+
+        cmbTamano.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "5", "10", "25", "50", "100", "200", "400", "800", "1000", "TODOS" }));
+
+        btnAtras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/16/regresar.png"))); // NOI18N
+
+        txtBusqueda.setToolTipText("USUARIO, CORREO");
+
+        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/32/icons8_Search_16px.png"))); // NOI18N
+
+        tblUsuarios.setAutoCreateRowSorter(true);
         tblUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -109,25 +120,17 @@ public class vUsuarios extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblUsuarios.setColumnControlVisible(true);
+        tblUsuarios.setInheritsPopupMenu(true);
+        tblUsuarios.setShowGrid(true);
         jScrollPane1.setViewportView(tblUsuarios);
-
-        btnAdelante.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/16/delante.png"))); // NOI18N
-
-        cmbTamano.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "25", "50", "100", "200", "400", "800", "1000" }));
-
-        btnAtras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/16/regresar.png"))); // NOI18N
-
-        txtBusqueda.setText("USUARIO, CORREO");
-        txtBusqueda.setToolTipText("USUARIO, CORREO");
-
-        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/32/icons8_Search_16px.png"))); // NOI18N
 
         javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
         panel1.setLayout(panel1Layout);
         panel1Layout.setHorizontalGroup(
             panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane1)
+            .addComponent(jSeparator1)
             .addGroup(panel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(cmbTamano, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -140,7 +143,7 @@ public class vUsuarios extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnAdelante)
                 .addContainerGap())
-            .addComponent(jSeparator1)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         panel1Layout.setVerticalGroup(
             panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -157,8 +160,8 @@ public class vUsuarios extends javax.swing.JFrame {
                         .addComponent(btnAdelante)
                         .addComponent(btnAtras)
                         .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE))
         );
 
         panel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnAdelante, btnAtras, btnBuscar, txtBusqueda});
@@ -193,7 +196,7 @@ public class vUsuarios extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private org.edisoncor.gui.panel.Panel panel1;
-    public javax.swing.JTable tblUsuarios;
+    public org.jdesktop.swingx.JXTable tblUsuarios;
     public javax.swing.JTextField txtBusqueda;
     // End of variables declaration//GEN-END:variables
 }
