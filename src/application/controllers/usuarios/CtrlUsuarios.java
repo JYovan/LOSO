@@ -14,14 +14,21 @@ import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JRDesignQuery;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -49,6 +56,7 @@ public class CtrlUsuarios {
                     onGuardar();
                 }
             }
+
             @Override
             public void keyTyped(KeyEvent e) {
             }
@@ -59,7 +67,7 @@ public class CtrlUsuarios {
         });
         nuevo.btnGuardar.addActionListener((e) -> {
             onGuardar();
-        }); 
+        });
         editar.btnGuardar.addActionListener((e) -> {
             onModificar();
         });
@@ -68,9 +76,10 @@ public class CtrlUsuarios {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                   onGuardar();
+                    onGuardar();
                 }
             }
+
             @Override
             public void keyTyped(KeyEvent e) {
             }
@@ -78,14 +87,15 @@ public class CtrlUsuarios {
             @Override
             public void keyReleased(KeyEvent e) {
             }
-        }); 
+        });
         editar.Correo.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                   onModificar();
+                    onModificar();
                 }
             }
+
             @Override
             public void keyTyped(KeyEvent e) {
             }
@@ -93,7 +103,7 @@ public class CtrlUsuarios {
             @Override
             public void keyReleased(KeyEvent e) {
             }
-        }); 
+        });
     }
 
     public void setVisible() {

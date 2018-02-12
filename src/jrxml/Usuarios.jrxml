@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Usuarios" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="64dab57e-af57-464c-b965-d8002e4b9fee">
+	<property name="ireport.zoom" value="2.2304157239725018"/>
+	<property name="ireport.x" value="492"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#CCCCCC" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Roman"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F0EFEF"/>
+		</conditionalStyle>
+	</style>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     U.`ID` AS ID,
+     U.`Usuario` AS USUARIO,
+     U.`Contrasena` AS CONTRASENA,
+     U.`Correo` AS CORREO,
+     U.`Estatus` AS ESTATUS,
+     U.`Registro` AS REGISTRO
+FROM
+     `usuarios` U]]>
+	</queryString>
+	<field name="ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="USUARIO" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CONTRASENA" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CORREO" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ESTATUS" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="REGISTRO" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="72" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="721" height="66" backcolor="#000000" uuid="f61ac06c-9db3-41e2-a920-0cc9dc4d1620"/>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement x="577" y="46" width="144" height="20" forecolor="#FFFFFF" uuid="45ed9d6a-34f7-468a-aa9f-e8b5be3e57da"/>
+					<textElement textAlignment="Right">
+						<font fontName="Segoe UI" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+			<image>
+				<reportElement x="721" y="0" width="70" height="66" uuid="6148b01b-53c2-4635-9174-d55ac6d64d74"/>
+				<imageExpression><![CDATA["C:\\Users\\Administrador\\Desktop\\LS.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement style="Title" x="0" y="0" width="370" height="66" uuid="1b298c90-a96d-4a09-878c-bb2a84346000"/>
+				<box topPadding="4" leftPadding="4" bottomPadding="4" rightPadding="4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Segoe UI" size="40" isBold="false"/>
+				</textElement>
+				<text><![CDATA[USUARIOS]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="22" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="132" height="20" backcolor="#CC9900" uuid="0d47028d-000a-4152-a4ff-674a2a1e48d6"/>
+			</rectangle>
+			<staticText>
+				<reportElement style="Column header" x="-1" y="0" width="132" height="20" forecolor="#FFFFFF" backcolor="#996600" uuid="4d768952-604e-4a12-8f99-6196678fec01"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="132" y="0" width="132" height="20" backcolor="#CC9900" uuid="a86e8c1e-428c-4a98-a5eb-32c527cc9680"/>
+			</rectangle>
+			<staticText>
+				<reportElement style="Column header" x="132" y="0" width="132" height="18" forecolor="#FFFFFF" backcolor="#996600" uuid="7efff6ec-85b7-4dae-bbb3-336ec654809a"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[USUARIO]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="264" y="0" width="132" height="20" backcolor="#CC9900" uuid="14326145-5bac-400f-9eef-f14c27e48852"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="396" y="0" width="132" height="20" backcolor="#CC9900" uuid="3244a34a-1c21-4324-b379-b6d7c775ce56"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="528" y="0" width="132" height="20" backcolor="#CC9900" uuid="bc991943-e6c4-4128-be7d-9d00af4db881"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="659" y="0" width="132" height="20" backcolor="#CC9900" uuid="21f7356e-ca4c-4958-b92e-472dc6b6de7d"/>
+			</rectangle>
+			<staticText>
+				<reportElement style="Column header" x="264" y="0" width="132" height="18" forecolor="#FFFFFF" backcolor="#996600" uuid="b9fa8fbd-128e-4f0b-8473-47fcc9ff9cb9"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CONTRASENA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="396" y="0" width="132" height="18" forecolor="#FFFFFF" backcolor="#996600" uuid="1116d0ac-d98e-4bd1-9dc3-ef6722311e05"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CORREO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="528" y="0" width="132" height="18" forecolor="#FFFFFF" backcolor="#996600" uuid="2882cda2-a6c0-4c20-84ed-57a5ee6afb21"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ESTATUS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="659" y="0" width="132" height="18" forecolor="#FFFFFF" backcolor="#00CCCC" uuid="a6ea42ee-4fc7-4ac4-b455-445a152f310d"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REGISTRO]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="19" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="0" y="0" width="797" height="18" uuid="bcf7681e-daf7-45e1-a043-e8f91639e692"/>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="0" y="0" width="132" height="18" uuid="3a1ea731-999c-446d-b2a7-87f6abfec9a9"/>
+					<textElement textAlignment="Center">
+						<font fontName="Segoe UI" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{ID}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="132" y="0" width="132" height="18" uuid="f38b124f-92e0-4f8a-be40-553fc5f5bc7b"/>
+					<textElement textAlignment="Center">
+						<font fontName="Segoe UI" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{USUARIO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="264" y="0" width="132" height="18" uuid="4fd81afc-7f2e-4d64-873c-72a273b965d9"/>
+					<textElement textAlignment="Center">
+						<font fontName="Segoe UI" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{CONTRASENA}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="396" y="0" width="132" height="18" uuid="0dc9ed74-8196-4d0b-a6f5-f1b2ede8ed55"/>
+					<textElement textAlignment="Center">
+						<font fontName="Segoe UI" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{CORREO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="529" y="0" width="132" height="18" uuid="7612d4fc-89df-483e-b5e2-250dab65a53a"/>
+					<textElement textAlignment="Center">
+						<font fontName="Segoe UI" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{ESTATUS}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="661" y="0" width="132" height="18" uuid="52034e29-cfc5-4980-a735-2534f5577c3e"/>
+					<textElement textAlignment="Center">
+						<font fontName="Segoe UI" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{REGISTRO}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="7" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="0904983d-85cc-4814-8f9d-bbe3fb9c5d0d"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="802" height="25" forecolor="#D0B48E" backcolor="#000000" uuid="4637b0da-3885-4a7d-8e48-57eb9df126d7"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="757" y="3" width="40" height="20" forecolor="#FFFFFF" uuid="245c1040-a264-46c8-b1b3-45be6e7289e4"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="677" y="3" width="80" height="20" forecolor="#FFFFFF" uuid="c87e9f99-ccb5-4e43-8cb3-fff4a48e3746"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Segoe UI" size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["PÁGINA  "+$V{PAGE_NUMBER}+" DE"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="2" y="3" width="197" height="20" forecolor="#FFFFFF" uuid="b74ee3cc-4b0b-4442-911f-e2cf2c3eda5d"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Segoe UI" size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
