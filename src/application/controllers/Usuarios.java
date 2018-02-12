@@ -92,7 +92,7 @@ public class Usuarios {
                             o.add("");
                         }
                     }
-                    if (campos.length < 3) {
+                    if (campos.length < 4) {
                         o.add("");
                     }
                     ArrayList<Object[][]> a = g.findByParams("SP_BUSCAR_USUARIO", o);
@@ -127,7 +127,7 @@ public class Usuarios {
                     o.add("");
                 }
             }
-            if (campos.length < 3) {
+            if (campos.length < 4) {
                 o.add("");
             }
             ArrayList<Object[][]> a = g.findByParams("SP_BUSCAR_USUARIO", o);
@@ -139,14 +139,14 @@ public class Usuarios {
         vusuarios.cmbTamano.addActionListener((e) -> {
             getRecords();
         });
-        TextPrompt placeholder = new TextPrompt("USUARIO,CORREO", vusuarios.txtBusqueda);
+        TextPrompt placeholder = new TextPrompt("BUSCA POR ID,USUARIO,CORREO", vusuarios.txtBusqueda);
         placeholder.changeAlpha(0.75f);
         placeholder.changeStyle(Font.ITALIC);
         getRecords();
     }
 
     public void setVisible() {
-        vusuarios.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/96/icons8_Idea_96px.png")));
+        vusuarios.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/LS.png")));
         vusuarios.setLocationRelativeTo(null);
         vusuarios.setVisible(true);
     }
