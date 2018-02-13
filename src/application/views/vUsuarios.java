@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package application.views;
+import application.config.ManejadorTecla;
 
 /**
  *
@@ -14,8 +15,10 @@ public class vUsuarios extends javax.swing.JFrame {
     /**
      * Creates new form vUsuarios
      */
+    ManejadorTecla manejador = new ManejadorTecla();
     public vUsuarios() {
         initComponents();
+        txtBusqueda.addKeyListener(manejador);
     }
 
     /**

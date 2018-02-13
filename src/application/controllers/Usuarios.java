@@ -92,7 +92,6 @@ public class Usuarios {
             public void mouseClicked(MouseEvent e) {
                 switch (e.getClickCount()) {
                     case 2:
-                        System.out.println("UN DOBLE CLICK");
                         vusuarios.btnEditar.doClick();
                         break;
                 }

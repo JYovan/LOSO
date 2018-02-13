@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package application.views.usuarios;
-
+import application.config.ManejadorTecla;
 /**
  *
  * @author Administrador
@@ -19,6 +19,10 @@ public class mdlEditar extends javax.swing.JDialog {
     public mdlEditar(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        ManejadorTecla manejador = new ManejadorTecla();
+        Contrasena.addKeyListener(manejador);
+        Correo.addKeyListener(manejador);
+        Usuario.addKeyListener(manejador);
     }
 
     /**
