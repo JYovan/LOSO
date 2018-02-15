@@ -62,6 +62,9 @@ public class Usuarios {
         vusuarios.btnNuevo.addActionListener((e) -> {
             (new CtrlUsuarios(vusuarios, g, this)).setVisible();
         });
+        vusuarios.btnExportar.addActionListener((e) -> {
+            getReporteUsuarios();
+        });
         vusuarios.btnEditar.addActionListener((e) -> {
             try {
                 if (vusuarios.tblUsuarios.getSelectedRow() >= 0) {
@@ -162,6 +165,22 @@ public class Usuarios {
         try {
             viewer = new JDialog(vusuarios, "Usuarios - Reporte de Listado de Usuarios", true);
             report = JasperCompileManager.compileReport("jrxml/Usuarios.jrxml");
+            print = JasperFillManager.fillReport(report, null, g.getCurrentConnection());
+            jv = new JasperViewer(print, false);
+            viewer.getContentPane().add(jv.getContentPane());
+            jv.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            viewer.setSize(jv.getSize());
+            viewer.setLocationRelativeTo(null);
+            viewer.setVisible(true);
+        } catch (JRException e) {
+            JOptionPane.showMessageDialog(null, "NO SE HA PODIDO GENERAR EL REPORTE DE USUARIOS\n" + e.getMessage(), "ERROR AL GENERAR", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public void getReporteUsuariosSQL() {
+        try {
+            viewer = new JDialog(vusuarios, "Usuarios - Reporte de Listado de Usuarios", true);
+            report = JasperCompileManager.compileReport("jrxml/Usuarios.jrxml");
             String sql = "SELECT v.vm_id Id, v.vm_folio Folio, v.vm_ncuenta NoCuenta, v.vm_femision Emitido, v.vm_nrecibo NoRecibo, v.vm_fentrega Entrega, v.vm_ingreso Ingreso,dp.dp_nombre Dependencia,lt.lugt_nombre LugarTrabajo, v.vm_estatus Estatus, v.vm_registro Registro\n"
                     + "FROM vale_m v INNER JOIN lugar_trabajo lt INNER JOIN dependencias dp\n"
                     + "ON v.fk_lugt_vm = lt.lugt_id AND lt.fk_dp_lugt = dp.dp_id ORDER BY vm_id desc limit 1";
@@ -171,16 +190,6 @@ public class Usuarios {
             JasperReport jr = JasperCompileManager.compileReport(jd);
             JasperPrint jp = JasperFillManager.fillReport(jr, null, g.getCurrentConnection());
             jv = new JasperViewer(jp, false);
-            viewer.getContentPane().add(jv.getContentPane());
-            jv.setExtendedState(JFrame.MAXIMIZED_BOTH);
-            viewer.setSize(jv.getSize());
-            viewer.setLocationRelativeTo(null);
-            viewer.setVisible(true);
-
-            viewer = new JDialog(vusuarios, "Usuarios - Reporte de Listado de Usuarios", true);
-            report = JasperCompileManager.compileReport("jrxml/Usuarios.jrxml");
-            print = JasperFillManager.fillReport(report, null, g.getCurrentConnection());
-            jv = new JasperViewer(print, false);
             viewer.getContentPane().add(jv.getContentPane());
             jv.setExtendedState(JFrame.MAXIMIZED_BOTH);
             viewer.setSize(jv.getSize());

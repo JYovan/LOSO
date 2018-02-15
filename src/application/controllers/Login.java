@@ -8,11 +8,6 @@ package application.controllers;
 import application.config.Generic;
 import application.config.TextPrompt;
 import application.views.vLogin;
-import de.javasoft.plaf.synthetica.SyntheticaAluOxideLookAndFeel;
-import de.javasoft.plaf.synthetica.SyntheticaBlackEyeLookAndFeel;
-import de.javasoft.plaf.synthetica.SyntheticaBlackMoonLookAndFeel;
-import de.javasoft.plaf.synthetica.SyntheticaBlackStarLookAndFeel;
-import de.javasoft.plaf.synthetica.SyntheticaBlueIceLookAndFeel;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -21,7 +16,6 @@ import java.awt.event.MouseEvent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
-import de.javasoft.plaf.synthetica.SyntheticaClassyLookAndFeel;
 import de.javasoft.plaf.synthetica.SyntheticaSimple2DLookAndFeel;
 import de.javasoft.plaf.synthetica.SyntheticaStandardLookAndFeel;
 import java.awt.Font;
@@ -43,38 +37,7 @@ public class Login {
     public Login() {
 
         login = new vLogin();
-        login.btnEntrar.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (!"".equals(login.txtUsuario.getText()) && !"".equals(String.valueOf(login.txtContrasena.getPassword()))) {
-                    onAcceder();
-                } else {
-                    JOptionPane.showMessageDialog(null, "DEBE DE INTRODUCIR SUS CREDENCIALES", "ERROR", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        });
-
-        login.btnEntrar.addKeyListener(new KeyListener() {
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    if (!"".equals(login.txtUsuario.getText()) && !"".equals(String.valueOf(login.txtContrasena.getPassword()))) {
-                        onAcceder();
-                    } else {
-                        JOptionPane.showMessageDialog(null, "DEBE DE INTRODUCIR SUS CREDENCIALES", "ERROR", JOptionPane.ERROR_MESSAGE);
-                    }
-                }
-            }
-
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-        });
+ 
         login.txtContrasena.addKeyListener(new KeyListener() {
 
             @Override
