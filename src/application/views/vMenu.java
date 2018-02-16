@@ -43,6 +43,8 @@ public class vMenu extends javax.swing.JFrame {
         jMenu9 = new javax.swing.JMenu();
         jMenu10 = new javax.swing.JMenu();
         mnuUsuarios = new javax.swing.JMenuItem();
+        mnuPermisos = new javax.swing.JMenuItem();
+        mnuModulos = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         mSalir = new javax.swing.JMenu();
 
@@ -85,8 +87,14 @@ public class vMenu extends javax.swing.JFrame {
 
         jMenu10.setText("Usuarios");
 
-        mnuUsuarios.setText("Usuarios");
+        mnuUsuarios.setText("USUARIOS");
         jMenu10.add(mnuUsuarios);
+
+        mnuPermisos.setText("PERMISOS");
+        jMenu10.add(mnuPermisos);
+
+        mnuModulos.setText("MODULOS");
+        jMenu10.add(mnuModulos);
 
         jMenuBar1.add(jMenu10);
 
@@ -129,6 +137,8 @@ public class vMenu extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     public javax.swing.JMenu mProveedores;
     public javax.swing.JMenu mSalir;
+    public javax.swing.JMenuItem mnuModulos;
+    public javax.swing.JMenuItem mnuPermisos;
     public javax.swing.JMenuItem mnuUsuarios;
     // End of variables declaration//GEN-END:variables
 }

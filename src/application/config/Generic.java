@@ -1,5 +1,5 @@
 package application.config;
- 
+
 import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -69,7 +69,7 @@ public class Generic {
             obj.add(data);//index 0
             obj.add(cols);//index 1  
             rs.close();
-            ps.close(); 
+            ps.close();
             return obj;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -348,6 +348,7 @@ public class Generic {
      * @see Conexion
      */
     public ArrayList fill(String stored) {
+        System.out.println("STORED "+stored);
         ArrayList<Object> obj = new ArrayList<>();
         try {
             int j = 1;

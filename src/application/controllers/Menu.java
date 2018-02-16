@@ -38,14 +38,14 @@ public class Menu {
             }
         });
 
-        menu.mProveedores.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-
-            }
+        menu.mnuModulos.addActionListener((e) -> {
+            (new Modulos(g)).setVisible();
         });
         menu.mnuUsuarios.addActionListener((e) -> {
             (new Usuarios(g)).setVisible();
+        });
+        menu.mnuPermisos.addActionListener((e) -> {
+            (new Permisos(g)).setVisible();
         });
     }
 
