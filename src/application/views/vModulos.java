@@ -39,9 +39,9 @@ public class vModulos extends javax.swing.JFrame {
         btnRefrescar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        cmbTamano.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "5", "10", "25", "50", "100", "200", "400", "800", "1000", "TODOS" }));
+        cmbTamano.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TODOS", "5", "10", "25", "50", "100", "200", "400", "800", "1000" }));
 
         txtBusqueda.setToolTipText("USUARIO, CORREO");
 

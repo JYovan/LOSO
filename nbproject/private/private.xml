@@ -3,14 +3,21 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Administrador/Documents/NetBeansProjects/LOSO/src/application/views/vMenu.java</file>
-            <file>file:/C:/Users/Administrador/Documents/NetBeansProjects/LOSO/src/application/views/usuarios/mdlEditar.java</file>
-            <file>file:/C:/Users/Administrador/Documents/NetBeansProjects/LOSO/src/application/controllers/usuarios/CtrlUsuarios.java</file>
-            <file>file:/C:/Users/Administrador/Documents/NetBeansProjects/LOSO/src/application/views/usuarios/mdlNuevo.java</file>
-        </group>
-        <group>
             <file>file:/C:/Users/Administrador/Documents/NetBeansProjects/LOSO/src/application/controllers/modulos/CtrlModulos.java</file>
             <file>file:/C:/Users/Administrador/Documents/NetBeansProjects/LOSO/src/application/controllers/usuarios/CtrlUsuarios.java</file>
+        </group>
+        <group>
+            <file>file:/C:/Users/Administrador/Documents/NetBeansProjects/LOSO/src/application/controllers/Permisos.java</file>
+            <file>file:/C:/Users/Administrador/Documents/NetBeansProjects/LOSO/src/application/controllers/modulos/CtrlModulos.java</file>
+            <file>file:/C:/Users/Administrador/Documents/NetBeansProjects/LOSO/src/application/views/vMenu.java</file>
+            <file>file:/C:/Users/Administrador/Documents/NetBeansProjects/LOSO/src/application/controllers/Menu.java</file>
+            <file>file:/C:/Users/Administrador/Documents/NetBeansProjects/LOSO/src/application/views/permisos/mdlEditar.java</file>
+            <file>file:/C:/Users/Administrador/Documents/NetBeansProjects/LOSO/src/application/controllers/usuarios/CtrlUsuarios.java</file>
+            <file>file:/C:/Users/Administrador/Documents/NetBeansProjects/LOSO/src/application/views/vPermisos.java</file>
+            <file>file:/C:/Users/Administrador/Documents/NetBeansProjects/LOSO/src/application/controllers/permisos/CtrlPermisos.java</file>
+            <file>file:/C:/Users/Administrador/Documents/NetBeansProjects/LOSO/src/application/views/permisos/mdlNuevo.java</file>
+            <file>file:/C:/Users/Administrador/Documents/NetBeansProjects/LOSO/src/application/config/Generic.java</file>
+            <file>file:/C:/Users/Administrador/Documents/NetBeansProjects/LOSO/src/application/views/vModulos.java</file>
         </group>
     </open-files>
 </project-private>

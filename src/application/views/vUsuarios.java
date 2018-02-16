@@ -52,7 +52,7 @@ public class vUsuarios extends javax.swing.JFrame {
 
         btnAdelante.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/16/delante.png"))); // NOI18N
 
-        cmbTamano.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "5", "10", "25", "50", "100", "200", "400", "800", "1000", "TODOS" }));
+        cmbTamano.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TODOS", "5", "10", "25", "50", "100", "200", "400", "800", "1000" }));
 
         btnAtras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/16/regresar.png"))); // NOI18N
 

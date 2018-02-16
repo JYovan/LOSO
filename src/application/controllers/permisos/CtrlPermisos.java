@@ -5,42 +5,22 @@
  */
 package application.controllers.permisos;
 
-import application.controllers.permisos.*;
 import application.config.Generic;
-import application.config.TextPrompt;
 import application.controllers.Permisos;
 import application.views.permisos.mdlEditar;
 import application.views.permisos.mdlNuevo;
 import application.views.vPermisos;
-import java.awt.Font;
 import java.awt.HeadlessException;
-import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JDialog;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.design.JRDesignQuery;
-import net.sf.jasperreports.engine.design.JasperDesign;
-import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -134,8 +114,8 @@ public class CtrlPermisos {
     public void onGuardar() {
         try {
             ArrayList<Object> a = new ArrayList<>();
-            a.add(nuevo.Modulo.getSelectedItem().toString());
             a.add(nuevo.Usuario.getSelectedItem().toString());
+            a.add(nuevo.Modulo.getSelectedItem().toString());
             a.add(nuevo.Ver.isSelected() ? 1 : 0);
             a.add(nuevo.Crear.isSelected() ? 1 : 0);
             a.add(nuevo.Modificar.isSelected() ? 1 : 0);
@@ -146,7 +126,7 @@ public class CtrlPermisos {
             DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
             Date date = new Date();
             a.add(dateFormat.format(date));
-            if (!nuevo.Modulo.getSelectedItem().toString().equals("") && nuevo.Usuario.getSelectedItem().toString().equals("") && g.addUpdateOrDelete("SP_AGREGAR_PERMISO", a)) {
+            if (!nuevo.Modulo.getSelectedItem().toString().equals("") && !nuevo.Usuario.getSelectedItem().toString().equals("") && g.addUpdateOrDelete("SP_AGREGAR_PERMISO", a)) {
                 JOptionPane.showMessageDialog(null, "PERMISO AGREGADO", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
                 nuevo.dispose();
                 permisos.getRecords();
@@ -163,12 +143,21 @@ public class CtrlPermisos {
             temp = IDX;
             ArrayList<Object> a = new ArrayList<>();
             a.add(IDX);
-            ArrayList<Object[][]> usuario = g.findByParams("SP_PERMISO_X_ID", a);
-            Object[][] data = usuario.get(0);
-            editar.Usuario.setSelectedItem(String.valueOf((data[0][1] != null) ? data[0][1] : ""));
-            editar.Modulo.setSelectedItem(String.valueOf((data[0][2] != null) ? data[0][2] : ""));
-
-            editar.Ver.setSelected(true);
+            ArrayList<Object[][]> x = g.findByParams("SP_PERMISO_X_ID", a);
+            Object[][] data = x.get(0);
+            /*FOR PARA COMPROBAR QUE LA INFORMACION LLEGUE*/
+//            for (int i = 0; i < data[0].length; i++) {
+//                System.out.println(i + " " + data[0][i]);
+//            }
+            editar.Usuario.getModel().setSelectedItem(data[0][1]);
+            editar.Modulo.getModel().setSelectedItem(data[0][2]);
+            editar.Ver.setSelected((data[0][3] != null) ? (String.valueOf(data[0][3]).equals("1")) : false);
+            editar.Crear.setSelected((data[0][4] != null) ? (String.valueOf(data[0][4]).equals("1")) : false);
+            editar.Modificar.setSelected((data[0][5] != null) ? (String.valueOf(data[0][5]).equals("1")) : false);
+            editar.Eliminar.setSelected((data[0][6] != null) ? (String.valueOf(data[0][6]).equals("1")) : false);
+            editar.Consultar.setSelected((data[0][7] != null) ? (String.valueOf(data[0][7]).equals("1")) : false);
+            editar.Reportes.setSelected((data[0][8] != null) ? (String.valueOf(data[0][8]).equals("1")) : false);
+            editar.Buscar.setSelected((data[0][9] != null) ? (String.valueOf(data[0][9]).equals("1")) : false);
             editar.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/96/icons8_Idea_96px.png")));
             editar.setLocationRelativeTo(null);
             editar.setVisible(true);
@@ -180,16 +169,14 @@ public class CtrlPermisos {
     public void onModificar() {
         try {
             ArrayList<Object> a = new ArrayList<>();
-            a.add(temp);
-            a.add(nuevo.Modulo.getSelectedItem().toString());
-            a.add(nuevo.Usuario.getSelectedItem().toString());
-            a.add(nuevo.Ver.isSelected() ? 1 : 0);
-            a.add(nuevo.Crear.isSelected() ? 1 : 0);
-            a.add(nuevo.Modificar.isSelected() ? 1 : 0);
-            a.add(nuevo.Eliminar.isSelected() ? 1 : 0);
-            a.add(nuevo.Consultar.isSelected() ? 1 : 0);
-            a.add(nuevo.Reportes.isSelected() ? 1 : 0);
-            a.add(nuevo.Buscar.isSelected() ? 1 : 0);
+            a.add(temp);/*ID*/
+            a.add(editar.Ver.isSelected() ? 1 : 0);
+            a.add(editar.Crear.isSelected() ? 1 : 0);
+            a.add(editar.Modificar.isSelected() ? 1 : 0);
+            a.add(editar.Eliminar.isSelected() ? 1 : 0);
+            a.add(editar.Consultar.isSelected() ? 1 : 0);
+            a.add(editar.Reportes.isSelected() ? 1 : 0);
+            a.add(editar.Buscar.isSelected() ? 1 : 0);
             if (!editar.Modulo.getSelectedItem().toString().equals("") && !editar.Usuario.getSelectedItem().toString().equals("") && g.addUpdateOrDelete("SP_MODIFICAR_PERMISO", a)) {
                 JOptionPane.showMessageDialog(null, "PERMISO MODIFICADO", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
                 editar.dispose();

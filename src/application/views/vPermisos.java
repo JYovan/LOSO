@@ -45,11 +45,12 @@ public class vPermisos extends javax.swing.JFrame {
         btnEliminar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("GESTION DE USUARIOS");
+        setTitle("GESTION DE PERMISOS");
 
         btnAdelante.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/16/delante.png"))); // NOI18N
 
-        cmbTamano.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "5", "10", "25", "50", "100", "200", "400", "800", "1000", "TODOS" }));
+        cmbTamano.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TODOS", "5", "10", "25", "50", "100", "200", "400", "800", "1000" }));
+        cmbTamano.setToolTipText("");
 
         btnAtras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/16/regresar.png"))); // NOI18N
 

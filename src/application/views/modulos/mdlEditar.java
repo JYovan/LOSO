@@ -34,7 +34,7 @@ public class mdlEditar extends javax.swing.JDialog {
         btnGuardar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("EDITAR USUARIO");
+        setTitle("EDITAR MODULO");
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 

@@ -9,7 +9,6 @@ import application.config.Generic;
 import application.config.TextPrompt;
 import application.controllers.permisos.CtrlPermisos;
 import application.views.vPermisos;
-import application.views.vPermisos;
 import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
