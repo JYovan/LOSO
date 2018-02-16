@@ -6,22 +6,39 @@
 package application.controllers.usuarios;
 
 import application.config.Generic;
+import application.config.TextPrompt;
 import application.controllers.Usuarios;
 import application.views.usuarios.mdlEditar;
 import application.views.usuarios.mdlNuevo;
 import application.views.vUsuarios;
+import java.awt.Font;
 import java.awt.HeadlessException;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JRDesignQuery;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -48,7 +65,11 @@ public class CtrlUsuarios {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     onGuardar();
                 }
+                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                    nuevo.dispose();
+                }
             }
+
             @Override
             public void keyTyped(KeyEvent e) {
             }
@@ -59,18 +80,50 @@ public class CtrlUsuarios {
         });
         nuevo.btnGuardar.addActionListener((e) -> {
             onGuardar();
-        }); 
+        });
         editar.btnGuardar.addActionListener((e) -> {
             onModificar();
         });
+        nuevo.Foto.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                final JFileChooser fc = new JFileChooser();
+                fc.setDialogTitle("SELECCIONE UNA IMAGEN");
+                int file = fc.showOpenDialog(null);
+                if (file == JFileChooser.APPROVE_OPTION) {
+                    File selectedFile = fc.getSelectedFile();
+                    nuevo.Foto.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(selectedFile.getAbsolutePath()).getScaledInstance(350, 350, Image.SCALE_SMOOTH)));
+                }
+            }
 
+        });
+        nuevo.Usuario.addKeyListener(new KeyListener() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                    nuevo.dispose();
+                }
+            }
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });
         nuevo.Correo.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                   onGuardar();
+                    onGuardar();
+                }
+                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                    nuevo.dispose();
                 }
             }
+
             @Override
             public void keyTyped(KeyEvent e) {
             }
@@ -78,14 +131,34 @@ public class CtrlUsuarios {
             @Override
             public void keyReleased(KeyEvent e) {
             }
-        }); 
+        });
+        editar.Usuario.addKeyListener(new KeyListener() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                    editar.dispose();
+                }
+            }
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });
         editar.Correo.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                   onModificar();
+                    onModificar();
+                }
+                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                    editar.dispose();
                 }
             }
+
             @Override
             public void keyTyped(KeyEvent e) {
             }
@@ -93,7 +166,30 @@ public class CtrlUsuarios {
             @Override
             public void keyReleased(KeyEvent e) {
             }
-        }); 
+        });
+        editar.Foto.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                final JFileChooser fc = new JFileChooser();
+                fc.setDialogTitle("SELECCIONE UNA IMAGEN");
+                int file = fc.showOpenDialog(null);
+                if (file == JFileChooser.APPROVE_OPTION) {
+                    File selectedFile = fc.getSelectedFile();
+                    editar.Foto.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(selectedFile.getAbsolutePath()).getScaledInstance(350, 350, Image.SCALE_SMOOTH)));
+                }
+            }
+
+        });
+        /*PLACEHOLDERS*/
+        TextPrompt placeholders = new TextPrompt("NOMBRE DE USUARIO", nuevo.Usuario);
+        placeholders.changeAlpha(0.75f);
+        placeholders.changeStyle(Font.BOLD);
+        placeholders = new TextPrompt("CONTRASEÑA", nuevo.Contrasena);
+        placeholders.changeAlpha(0.75f);
+        placeholders.changeStyle(Font.BOLD);
+        placeholders = new TextPrompt("lobosolo@lobosolo.com", nuevo.Correo);
+        placeholders.changeAlpha(0.75f);
+        placeholders.changeStyle(Font.BOLD);
     }
 
     public void setVisible() {
@@ -131,9 +227,10 @@ public class CtrlUsuarios {
             a.add(IDX);
             ArrayList<Object[][]> usuario = g.findByParams("SP_USUARIO_X_ID", a);
             Object[][] data = usuario.get(0);
-            editar.Usuario.setText(String.valueOf(data[0][1]));
-            editar.Contrasena.setText(String.valueOf(data[0][2]));
-            editar.Correo.setText(String.valueOf(data[0][3]));
+            editar.Usuario.setText(String.valueOf((data[0][1] != null) ? data[0][1] : ""));
+            editar.Contrasena.setText(String.valueOf((data[0][2] != null) ? data[0][2] : ""));
+            editar.Correo.setText(String.valueOf((data[0][3] != null) ? data[0][3] : ""));
+            editar.Tipo.setSelectedItem((data[0][5] != null) ? data[0][5].toString() : "");
             editar.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/96/icons8_Idea_96px.png")));
             editar.setLocationRelativeTo(null);
             editar.setVisible(true);

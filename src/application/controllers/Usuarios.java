@@ -17,8 +17,26 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JRDesignQuery;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -28,13 +46,24 @@ public class Usuarios {
 
     vUsuarios vusuarios;
     DefaultTableModel dtm;
-
     Generic g;
+    JasperDesign jd;
+    JRDesignQuery jq;
+    JasperReport report;
+    JasperPrint print;
+    JDialog viewer;
+    JasperViewer jv;
+
+    private TableRowSorter<TableModel> filtrador;
+
     public Usuarios(Generic g) {
         this.g = g;
         vusuarios = new vUsuarios();
         vusuarios.btnNuevo.addActionListener((e) -> {
             (new CtrlUsuarios(vusuarios, g, this)).setVisible();
+        });
+        vusuarios.btnExportar.addActionListener((e) -> {
+            getReporteUsuarios();
         });
         vusuarios.btnEditar.addActionListener((e) -> {
             try {
@@ -66,87 +95,49 @@ public class Usuarios {
             public void mouseClicked(MouseEvent e) {
                 switch (e.getClickCount()) {
                     case 2:
-                        System.out.println("UN DOBLE CLICK");
                         vusuarios.btnEditar.doClick();
                         break;
                 }
             }
         });
-
-        vusuarios.txtBusqueda.addKeyListener(new KeyListener() {
+        vusuarios.txtBusqueda.getDocument().addDocumentListener(new DocumentListener() {
             @Override
-            public void keyPressed(KeyEvent e) {
-                ArrayList<Object> o = new ArrayList<>();
-                String string = vusuarios.txtBusqueda.getText();
-                String[] campos = string.split(",");
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    if (vusuarios.cmbTamano.getSelectedItem().toString().equals("TODOS")) {
-                        o.add(99999999);
-                    } else {
-                        o.add(vusuarios.cmbTamano.getSelectedItem().toString());
-                    }
-                    for (int i = 0; i < campos.length; i++) {
-                        if (campos.length > 0 && !campos[i].equals("")) {
-                            o.add(campos[i]);
-                        } else {
-                            o.add("");
-                        }
-                    }
-                    if (campos.length < 3) {
-                        o.add("");
-                    }
-                    ArrayList<Object[][]> a = g.findByParams("SP_BUSCAR_USUARIO", o);
-                    dtm = g.getModelFill(a.get(0), g.getDimensional(a.get(1)));
-                    vusuarios.tblUsuarios.setModel(dtm);
-                }
-            }
-
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-        });
-
-        vusuarios.btnBuscar.addActionListener((e) -> {
-            ArrayList<Object> o = new ArrayList<>();
-            String string = vusuarios.txtBusqueda.getText();
-            String[] campos = string.split(",");
-
-            if (vusuarios.cmbTamano.getSelectedItem().toString().equals("TODOS")) {
-                o.add(99999999);
-            } else {
-                o.add(vusuarios.cmbTamano.getSelectedItem().toString());
-            }
-            for (int i = 0; i < campos.length; i++) {
-                if (campos.length > 0 && !campos[i].equals("")) {
-                    o.add(campos[i]);
+            public void insertUpdate(DocumentEvent e) {
+                String text = vusuarios.txtBusqueda.getText();
+                if (text.trim().length() == 0) {
+                    filtrador.setRowFilter(null);
                 } else {
-                    o.add("");
+                    filtrador.setRowFilter(RowFilter.regexFilter(text));
                 }
             }
-            if (campos.length < 3) {
-                o.add("");
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                String text = vusuarios.txtBusqueda.getText();
+                if (text.trim().length() == 0) {
+                    filtrador.setRowFilter(null);
+                } else {
+                    filtrador.setRowFilter(RowFilter.regexFilter(text));
+                }
             }
-            ArrayList<Object[][]> a = g.findByParams("SP_BUSCAR_USUARIO", o);
-            dtm = g.getModelFill(a.get(0), g.getDimensional(a.get(1)));
-            vusuarios.tblUsuarios.setModel(dtm);
-            vusuarios.tblUsuarios.setColumnControlVisible(true);
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                JOptionPane.showMessageDialog(null, "changeUpdate en la tabla Usuarios no sooportada");
+            }
         });
 
         vusuarios.cmbTamano.addActionListener((e) -> {
             getRecords();
         });
-        TextPrompt placeholder = new TextPrompt("USUARIO,CORREO", vusuarios.txtBusqueda);
+        TextPrompt placeholder = new TextPrompt("BUSCA POR ID,USUARIO,CORREO,ETC", vusuarios.txtBusqueda);
         placeholder.changeAlpha(0.75f);
         placeholder.changeStyle(Font.ITALIC);
         getRecords();
     }
 
     public void setVisible() {
-        vusuarios.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/96/icons8_Idea_96px.png")));
+        vusuarios.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/LS.png")));
         vusuarios.setLocationRelativeTo(null);
         vusuarios.setVisible(true);
     }
@@ -163,8 +154,54 @@ public class Usuarios {
             ArrayList<Object[][]> a = g.findByParams("SP_USUARIOS", o);
             dtm = g.getModelFill(a.get(0), g.getDimensional(a.get(1)));
             vusuarios.tblUsuarios.setModel(dtm);
+            filtrador = new TableRowSorter<>(dtm);
+            vusuarios.tblUsuarios.setRowSorter(filtrador);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
+    }
+
+    public void getReporteUsuarios() {
+        try {
+            viewer = new JDialog(vusuarios, "Usuarios - Reporte de Listado de Usuarios", true);
+            report = JasperCompileManager.compileReport("jrxml/Usuarios.jrxml");
+            print = JasperFillManager.fillReport(report, null, g.getCurrentConnection());
+            jv = new JasperViewer(print, false);
+            viewer.getContentPane().add(jv.getContentPane());
+            jv.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            viewer.setSize(jv.getSize());
+            viewer.setLocationRelativeTo(null);
+            viewer.setVisible(true);
+        } catch (JRException e) {
+            JOptionPane.showMessageDialog(null, "NO SE HA PODIDO GENERAR EL REPORTE DE USUARIOS\n" + e.getMessage(), "ERROR AL GENERAR", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public void getReporteUsuariosSQL() {
+        try {
+            viewer = new JDialog(vusuarios, "Usuarios - Reporte de Listado de Usuarios", true);
+            report = JasperCompileManager.compileReport("jrxml/Usuarios.jrxml");
+            String sql = "SELECT v.vm_id Id, v.vm_folio Folio, v.vm_ncuenta NoCuenta, v.vm_femision Emitido, v.vm_nrecibo NoRecibo, v.vm_fentrega Entrega, v.vm_ingreso Ingreso,dp.dp_nombre Dependencia,lt.lugt_nombre LugarTrabajo, v.vm_estatus Estatus, v.vm_registro Registro\n"
+                    + "FROM vale_m v INNER JOIN lugar_trabajo lt INNER JOIN dependencias dp\n"
+                    + "ON v.fk_lugt_vm = lt.lugt_id AND lt.fk_dp_lugt = dp.dp_id ORDER BY vm_id desc limit 1";
+            JRDesignQuery newQuery = new JRDesignQuery();
+            newQuery.setText(sql);
+            jd.setQuery(newQuery);
+            JasperReport jr = JasperCompileManager.compileReport(jd);
+            JasperPrint jp = JasperFillManager.fillReport(jr, null, g.getCurrentConnection());
+            jv = new JasperViewer(jp, false);
+            viewer.getContentPane().add(jv.getContentPane());
+            jv.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            viewer.setSize(jv.getSize());
+            viewer.setLocationRelativeTo(null);
+            viewer.setVisible(true);
+        } catch (JRException e) {
+            JOptionPane.showMessageDialog(null, "NO SE HA PODIDO GENERAR EL REPORTE DE USUARIOS\n" + e.getMessage(), "ERROR AL GENERAR", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public static boolean isEmailValid(String email) {
+        final Pattern EMAIL_REGEX = Pattern.compile("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", Pattern.CASE_INSENSITIVE);
+        return EMAIL_REGEX.matcher(email).matches();
     }
 }
