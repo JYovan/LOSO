@@ -21,6 +21,7 @@ import java.util.Date;
 import java.util.Iterator;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 /**
  *
@@ -42,7 +43,8 @@ public class CtrlPermisos {
         this.vpermisos = (vPermisos) parent;
         this.g = g;
         this.permisos = permisos;
-
+        AutoCompleteDecorator.decorate(this.nuevo.Modulo);
+        AutoCompleteDecorator.decorate(this.nuevo.Usuario);
         nuevo.btnGuardar.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {

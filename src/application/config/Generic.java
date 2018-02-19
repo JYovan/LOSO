@@ -348,7 +348,6 @@ public class Generic {
      * @see Conexion
      */
     public ArrayList fill(String stored) {
-        System.out.println("STORED "+stored);
         ArrayList<Object> obj = new ArrayList<>();
         try {
             int j = 1;
