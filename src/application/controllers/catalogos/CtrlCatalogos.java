@@ -26,8 +26,6 @@ public class CtrlCatalogos {
     String TipoCatalogo;
 
     public CtrlCatalogos(JFrame parent, Generic g, Catalogos catalogos, String TipoCatalogo) {
-        
-     
         this.TipoCatalogo = TipoCatalogo;
         nuevo = new application.views.catalogos.mdlNuevo(parent, true);
         editar = new application.views.catalogos.mdlEditar(parent, true);
@@ -155,13 +153,13 @@ public class CtrlCatalogos {
     public void onGuardar() {
         try {
             ArrayList<Object> a = new ArrayList<>();
-            
+
             System.out.println(this.TipoCatalogo);
-            
+
             a.add(this.TipoCatalogo);
             a.add(nuevo.SValue.getText());
             a.add(nuevo.Special.getText());
-            a.add(nuevo.Valor_Num.getText());
+            a.add((nuevo.Valor_Num.getText().equals("")) ? 0.00 : Float.parseFloat(nuevo.Valor_Num.getText()));
             a.add(nuevo.Valor_Text.getText());
 
             if (!nuevo.SValue.getText().equals("") && g.addUpdateOrDelete("SP_AGREGAR_CATALOGO", a)) {

@@ -29,31 +29,27 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-
 /**
  *
  * @author Christian
  */
 public class Catalogos {
 
-    vCatalogos vcatalogos;
+    private static vCatalogos vcatalogos;
     DefaultTableModel dtm;
     Generic g;
     JDialog viewer;
     private TableRowSorter<TableModel> filtrador;
     String TipoCatalogo;
-    
-    public Catalogos (Generic g,String TipoCatalogo){
-        
-        
-        
+
+    public Catalogos(Generic g, String TipoCatalogo) {
         this.g = g;
         this.TipoCatalogo = TipoCatalogo;
         vcatalogos = new vCatalogos();
         vcatalogos.btnNuevo.addActionListener((e) -> {
             (new CtrlCatalogos(vcatalogos, g, this, TipoCatalogo)).setVisible();
         });
-       
+
         vcatalogos.btnEditar.addActionListener((e) -> {
             try {
                 if (vcatalogos.tblCatalogos.getSelectedRow() >= 0) {
@@ -123,10 +119,9 @@ public class Catalogos {
         placeholder.changeAlpha(0.75f);
         placeholder.changeStyle(Font.ITALIC);
         getRecords();
-    
+
     }
-    
-    
+
     public void setVisible() {
         vcatalogos.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/LS.png")));
         vcatalogos.setLocationRelativeTo(null);
@@ -153,4 +148,8 @@ public class Catalogos {
         }
     }
 
+    /*NO EDITAR ESTA PARTE*/
+    public static vCatalogos getInstance() {
+        return vcatalogos;
+    }
 }

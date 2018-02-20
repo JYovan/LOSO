@@ -36,7 +36,7 @@ import net.sf.jasperreports.view.JasperViewer;
  */
 public class Permisos {
 
-    vPermisos vpermisos;
+    private static vPermisos vpermisos;
     DefaultTableModel dtm;
     Generic g;
     JasperDesign jd;
@@ -152,4 +152,8 @@ public class Permisos {
         }
     }
 
+    /*NO EDITAR ESTA PARTE*/
+    public static vPermisos getInstance() {
+        return vpermisos;
+    }
 }

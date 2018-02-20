@@ -44,7 +44,7 @@ import net.sf.jasperreports.view.JasperViewer;
  */
 public class Modulos {
 
-    vModulos vmodulos;
+    private static vModulos vmodulos;
     DefaultTableModel dtm;
     Generic g;
     JasperDesign jd;
@@ -163,5 +163,10 @@ public class Modulos {
     public static boolean isEmailValid(String email) {
         final Pattern EMAIL_REGEX = Pattern.compile("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", Pattern.CASE_INSENSITIVE);
         return EMAIL_REGEX.matcher(email).matches();
+    }
+    
+    /*NO EDITAR ESTA PARTE*/
+    public static vModulos getInstance() {
+        return vmodulos;
     }
 }

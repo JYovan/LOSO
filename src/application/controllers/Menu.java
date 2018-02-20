@@ -22,11 +22,22 @@ public class Menu {
 
     vMenu menu;
     Resources src = new Resources();
-
     Generic g;
+
+    /*INSTANCIAS*/
+    Catalogos c;
+    Modulos m;
+    Usuarios u;
+    Permisos p;
+
     public Menu(Generic g) {
-         this.g = g;
+        this.g = g;
         menu = new vMenu();
+        c = (new Catalogos(g, "UNIDADES"));
+        m = new Modulos(g);
+        u = new Usuarios(g);
+        p = new Permisos(g);
+        
         src.toSysTray(menu);
         menu.mSalir.addMouseListener(new MouseAdapter() {
             @Override
@@ -37,27 +48,26 @@ public class Menu {
                 }
             }
         });
-        
+
         menu.mnuUnidades.addActionListener((e) -> {
-            (new Catalogos(g,"UNIDADES")).setVisible();
-             
+            c.setVisible();
         });
 
         menu.mnuModulos.addActionListener((e) -> {
-            (new Modulos(g)).setVisible();
+           m.setVisible();
         });
         menu.mnuUsuarios.addActionListener((e) -> {
-            (new Usuarios(g)).setVisible();
+            u.setVisible();
         });
         menu.mnuPermisos.addActionListener((e) -> {
-            (new Permisos(g)).setVisible();
+            p.setVisible();
         });
     }
 
     public void setVisible() {
         menu.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/LS.png")));
         menu.setLocationRelativeTo(null);
-        menu.setVisible(true); 
+        menu.setVisible(true);
         //menu.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 }

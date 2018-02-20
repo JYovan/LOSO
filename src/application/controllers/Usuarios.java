@@ -8,6 +8,7 @@ package application.controllers;
 import application.config.Generic;
 import application.config.TextPrompt;
 import application.controllers.usuarios.CtrlUsuarios;
+import application.views.vModulos;
 import application.views.vUsuarios;
 import java.awt.Font;
 import java.awt.HeadlessException;
@@ -44,7 +45,7 @@ import net.sf.jasperreports.view.JasperViewer;
  */
 public class Usuarios {
 
-    vUsuarios vusuarios;
+    private static vUsuarios vusuarios;
     DefaultTableModel dtm;
     Generic g;
     JasperDesign jd;
@@ -203,5 +204,10 @@ public class Usuarios {
     public static boolean isEmailValid(String email) {
         final Pattern EMAIL_REGEX = Pattern.compile("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", Pattern.CASE_INSENSITIVE);
         return EMAIL_REGEX.matcher(email).matches();
+    }
+    
+    /*NO EDITAR ESTA PARTE*/
+    public static vUsuarios getInstance() {
+        return vusuarios;
     }
 }
