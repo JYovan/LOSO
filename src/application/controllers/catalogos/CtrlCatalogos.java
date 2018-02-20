@@ -199,7 +199,7 @@ public class CtrlCatalogos {
             ArrayList<Object> a = new ArrayList<>();
             a.add(temp);
             a.add((editar.SValue.getText() != null) ? editar.SValue.getText() : "");
-            a.add((editar.Valor_Num.getText() != null && editar.Valor_Num.getText().equals("")) ? editar.Valor_Num.getText() : "0.0");
+            a.add((editar.Valor_Num.getText().equals("")) ? 0.00 : Float.parseFloat(nuevo.Valor_Num.getText()));
             a.add((editar.Valor_Text.getText() != null) ? editar.Valor_Text.getText() : "");
             a.add((editar.Special.getText() != null) ? editar.Special.getText() : "");
             a.add(editar.cmbEstatus.getSelectedItem().toString());

@@ -82,8 +82,13 @@ public class Usuarios {
         });
         vusuarios.btnEliminar.addActionListener((e) -> {
             if (vusuarios.tblUsuarios.getSelectedRow() >= 0) {
-                int ID = Integer.parseInt(vusuarios.tblUsuarios.getValueAt(vusuarios.tblUsuarios.getSelectedRow(), 0).toString());
-                (new CtrlUsuarios(vusuarios, g, this)).onEliminar(ID);
+
+                int i = JOptionPane.showConfirmDialog(null, "¿Estás Seguro?", "Confirmar Eliminar", JOptionPane.YES_NO_OPTION);
+                if (i == 0) {
+                    int ID = Integer.parseInt(vusuarios.tblUsuarios.getValueAt(vusuarios.tblUsuarios.getSelectedRow(), 0).toString());
+                    (new CtrlUsuarios(vusuarios, g, this)).onEliminar(ID);
+                }
+
             } else {
                 JOptionPane.showMessageDialog(null, "DEBE DE SELECCIONAR UN REGISTRO", "ATENCIÓN", JOptionPane.WARNING_MESSAGE);
             }
@@ -205,7 +210,7 @@ public class Usuarios {
         final Pattern EMAIL_REGEX = Pattern.compile("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", Pattern.CASE_INSENSITIVE);
         return EMAIL_REGEX.matcher(email).matches();
     }
-    
+
     /*NO EDITAR ESTA PARTE*/
     public static vUsuarios getInstance() {
         return vusuarios;

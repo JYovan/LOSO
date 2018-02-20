@@ -70,8 +70,12 @@ public class Permisos {
         });
         vpermisos.btnEliminar.addActionListener((e) -> {
             if (vpermisos.tblPermisos.getSelectedRow() >= 0) {
-                int ID = Integer.parseInt(vpermisos.tblPermisos.getValueAt(vpermisos.tblPermisos.getSelectedRow(), 0).toString());
-                (new CtrlPermisos(vpermisos, g, this)).onEliminar(ID);
+                int i = JOptionPane.showConfirmDialog(null, "¿Estás Seguro?", "Confirmar Eliminar", JOptionPane.YES_NO_OPTION);
+                if (i == 0) {
+                    int ID = Integer.parseInt(vpermisos.tblPermisos.getValueAt(vpermisos.tblPermisos.getSelectedRow(), 0).toString());
+                    (new CtrlPermisos(vpermisos, g, this)).onEliminar(ID);
+                }
+
             } else {
                 JOptionPane.showMessageDialog(null, "DEBE DE SELECCIONAR UN REGISTRO", "ATENCIÓN", JOptionPane.WARNING_MESSAGE);
             }
@@ -79,7 +83,7 @@ public class Permisos {
         vpermisos.btnRefrescar.addActionListener((e) -> {
             getRecords();
         });
-        
+
         vpermisos.tblPermisos.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -90,7 +94,7 @@ public class Permisos {
                 }
             }
         });
-        
+
         vpermisos.txtBusqueda.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {

@@ -178,7 +178,7 @@ public class vMenu extends javax.swing.JFrame {
     public javax.swing.JMenu mSalir;
     public javax.swing.JMenuItem mnuBancos;
     public javax.swing.JMenuItem mnuCondicionesPago;
-    private javax.swing.JMenuItem mnuDepartamentos;
+    public javax.swing.JMenuItem mnuDepartamentos;
     public javax.swing.JMenuItem mnuFamilias;
     public javax.swing.JMenuItem mnuMetodosPago;
     public javax.swing.JMenuItem mnuModulos;

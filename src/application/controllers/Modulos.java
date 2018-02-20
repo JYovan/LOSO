@@ -78,8 +78,12 @@ public class Modulos {
         });
         vmodulos.btnEliminar.addActionListener((e) -> {
             if (vmodulos.tblModulos.getSelectedRow() >= 0) {
-                int ID = Integer.parseInt(vmodulos.tblModulos.getValueAt(vmodulos.tblModulos.getSelectedRow(), 0).toString());
-                (new CtrlModulos(vmodulos, g, this)).onEliminar(ID);
+                int i = JOptionPane.showConfirmDialog(null, "¿Estás Seguro?", "Confirmar Eliminar", JOptionPane.YES_NO_OPTION);
+                if (i == 0) {
+                    int ID = Integer.parseInt(vmodulos.tblModulos.getValueAt(vmodulos.tblModulos.getSelectedRow(), 0).toString());
+                    (new CtrlModulos(vmodulos, g, this)).onEliminar(ID);
+                }
+
             } else {
                 JOptionPane.showMessageDialog(null, "DEBE DE SELECCIONAR UN REGISTRO", "ATENCIÓN", JOptionPane.WARNING_MESSAGE);
             }
@@ -87,7 +91,7 @@ public class Modulos {
         vmodulos.btnRefrescar.addActionListener((e) -> {
             getRecords();
         });
-        
+
         vmodulos.tblModulos.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -98,7 +102,7 @@ public class Modulos {
                 }
             }
         });
-        
+
         vmodulos.txtBusqueda.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -164,7 +168,7 @@ public class Modulos {
         final Pattern EMAIL_REGEX = Pattern.compile("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", Pattern.CASE_INSENSITIVE);
         return EMAIL_REGEX.matcher(email).matches();
     }
-    
+
     /*NO EDITAR ESTA PARTE*/
     public static vModulos getInstance() {
         return vmodulos;

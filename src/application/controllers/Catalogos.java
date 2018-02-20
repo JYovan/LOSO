@@ -40,14 +40,23 @@ public class Catalogos {
     Generic g;
     JDialog viewer;
     private TableRowSorter<TableModel> filtrador;
+
+    public String getTipoCatalogo() {
+        return TipoCatalogo;
+    }
+
+    public void setTipoCatalogo(String TipoCatalogo) {
+        this.TipoCatalogo = TipoCatalogo;
+    }
     String TipoCatalogo;
 
-    public Catalogos(Generic g, String TipoCatalogo) {
+    public Catalogos(Generic g) {
         this.g = g;
-        this.TipoCatalogo = TipoCatalogo;
         vcatalogos = new vCatalogos();
+        
         vcatalogos.btnNuevo.addActionListener((e) -> {
             (new CtrlCatalogos(vcatalogos, g, this, TipoCatalogo)).setVisible();
+            
         });
 
         vcatalogos.btnEditar.addActionListener((e) -> {
@@ -66,8 +75,13 @@ public class Catalogos {
         });
         vcatalogos.btnEliminar.addActionListener((e) -> {
             if (vcatalogos.tblCatalogos.getSelectedRow() >= 0) {
-                int ID = Integer.parseInt(vcatalogos.tblCatalogos.getValueAt(vcatalogos.tblCatalogos.getSelectedRow(), 0).toString());
-                (new CtrlCatalogos(vcatalogos, g, this, TipoCatalogo)).onEliminar(ID);
+
+                int i = JOptionPane.showConfirmDialog(null, "¿Estás Seguro?", "Confirmar Eliminar", JOptionPane.YES_NO_OPTION);
+                if (i == 0) {
+                    int ID = Integer.parseInt(vcatalogos.tblCatalogos.getValueAt(vcatalogos.tblCatalogos.getSelectedRow(), 0).toString());
+                    (new CtrlCatalogos(vcatalogos, g, this, TipoCatalogo)).onEliminar(ID);
+                }
+
             } else {
                 JOptionPane.showMessageDialog(null, "DEBE DE SELECCIONAR UN REGISTRO", "ATENCIÓN", JOptionPane.WARNING_MESSAGE);
             }
@@ -130,14 +144,14 @@ public class Catalogos {
 
     public final void getRecords() {
         try {
-
+   
             ArrayList<Object> o = new ArrayList<>();
             if (vcatalogos.cmbTamano.getSelectedItem().toString().equals("TODOS")) {
                 o.add(99999999);
             } else {
                 o.add(vcatalogos.cmbTamano.getSelectedItem().toString());
             }
-            o.add(this.TipoCatalogo);
+            o.add(TipoCatalogo);
             ArrayList<Object[][]> a = g.findByParams("SP_CATALOGOS", o);
             dtm = g.getModelFill(a.get(0), g.getDimensional(a.get(1)));
             vcatalogos.tblCatalogos.setModel(dtm);
