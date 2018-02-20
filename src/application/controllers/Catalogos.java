@@ -53,16 +53,16 @@ public class Catalogos {
     public Catalogos(Generic g) {
         this.g = g;
         vcatalogos = new vCatalogos();
-        
+
         vcatalogos.btnNuevo.addActionListener((e) -> {
             (new CtrlCatalogos(vcatalogos, g, this, TipoCatalogo)).setVisible();
-            
+
         });
 
         vcatalogos.btnEditar.addActionListener((e) -> {
             try {
                 if (vcatalogos.tblCatalogos.getSelectedRow() >= 0) {
-                    int ID = Integer.parseInt(vcatalogos.tblCatalogos.getValueAt(vcatalogos.tblCatalogos.getSelectedRow(), 0).toString());
+                    int ID = Integer.parseInt(vcatalogos.tblCatalogos.getModel().getValueAt(vcatalogos.tblCatalogos.getSelectedRow(), 0).toString());
                     (new CtrlCatalogos(vcatalogos, g, this, TipoCatalogo)).onEditar(ID);
                 } else {
                     Toolkit.getDefaultToolkit().beep();
@@ -144,7 +144,7 @@ public class Catalogos {
 
     public final void getRecords() {
         try {
-   
+
             ArrayList<Object> o = new ArrayList<>();
             if (vcatalogos.cmbTamano.getSelectedItem().toString().equals("TODOS")) {
                 o.add(99999999);
@@ -157,6 +157,12 @@ public class Catalogos {
             vcatalogos.tblCatalogos.setModel(dtm);
             filtrador = new TableRowSorter<>(dtm);
             vcatalogos.tblCatalogos.setRowSorter(filtrador);
+            int row = 1;
+            for (int i = 0; i < vcatalogos.tblCatalogos.getRowCount(); i++) {
+                vcatalogos.tblCatalogos.setValueAt(row, i, 1);
+                row++;
+            }
+            vcatalogos.tblCatalogos.removeColumn(vcatalogos.tblCatalogos.getColumnModel().getColumn(0));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
