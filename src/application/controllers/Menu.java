@@ -37,6 +37,11 @@ public class Menu {
                 }
             }
         });
+        
+        menu.mnuUnidades.addActionListener((e) -> {
+            (new Catalogos(g,"UNIDADES")).setVisible();
+             
+        });
 
         menu.mnuModulos.addActionListener((e) -> {
             (new Modulos(g)).setVisible();

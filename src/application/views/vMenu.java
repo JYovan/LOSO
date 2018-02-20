@@ -46,6 +46,15 @@ public class vMenu extends javax.swing.JFrame {
         mnuPermisos = new javax.swing.JMenuItem();
         mnuModulos = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
+        jMenu1 = new javax.swing.JMenu();
+        mnuUnidades = new javax.swing.JMenuItem();
+        mnuMonedas = new javax.swing.JMenuItem();
+        mnuMetodosPago = new javax.swing.JMenuItem();
+        mnuCondicionesPago = new javax.swing.JMenuItem();
+        mnuBancos = new javax.swing.JMenuItem();
+        mnuFamilias = new javax.swing.JMenuItem();
+        mnuDepartamentos = new javax.swing.JMenuItem();
+        mnuPartesZapato = new javax.swing.JMenuItem();
         mSalir = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -87,18 +96,47 @@ public class vMenu extends javax.swing.JFrame {
 
         jMenu10.setText("Usuarios");
 
-        mnuUsuarios.setText("USUARIOS");
+        mnuUsuarios.setText("Usuarios");
         jMenu10.add(mnuUsuarios);
 
-        mnuPermisos.setText("PERMISOS");
+        mnuPermisos.setText("Permisos");
         jMenu10.add(mnuPermisos);
 
-        mnuModulos.setText("MODULOS");
+        mnuModulos.setText("Módulos");
         jMenu10.add(mnuModulos);
 
         jMenuBar1.add(jMenu10);
 
         jMenu4.setText("Configuración");
+
+        jMenu1.setText("Generales");
+
+        mnuUnidades.setText("Unidades");
+        jMenu1.add(mnuUnidades);
+
+        mnuMonedas.setText("Monedas");
+        jMenu1.add(mnuMonedas);
+
+        mnuMetodosPago.setText("Métodos de Pago");
+        jMenu1.add(mnuMetodosPago);
+
+        mnuCondicionesPago.setText("Condiciones de Pago");
+        jMenu1.add(mnuCondicionesPago);
+
+        mnuBancos.setText("Bancos");
+        jMenu1.add(mnuBancos);
+
+        mnuFamilias.setText("Familias");
+        jMenu1.add(mnuFamilias);
+
+        mnuDepartamentos.setText("Departamentos");
+        jMenu1.add(mnuDepartamentos);
+
+        mnuPartesZapato.setText("Partes del Zapato");
+        jMenu1.add(mnuPartesZapato);
+
+        jMenu4.add(jMenu1);
+
         jMenuBar1.add(jMenu4);
 
         mSalir.setText("Salir");
@@ -122,6 +160,7 @@ public class vMenu extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu10;
     private javax.swing.JMenu jMenu11;
     private javax.swing.JMenu jMenu12;
@@ -137,8 +176,16 @@ public class vMenu extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     public javax.swing.JMenu mProveedores;
     public javax.swing.JMenu mSalir;
+    public javax.swing.JMenuItem mnuBancos;
+    public javax.swing.JMenuItem mnuCondicionesPago;
+    private javax.swing.JMenuItem mnuDepartamentos;
+    public javax.swing.JMenuItem mnuFamilias;
+    public javax.swing.JMenuItem mnuMetodosPago;
     public javax.swing.JMenuItem mnuModulos;
+    public javax.swing.JMenuItem mnuMonedas;
+    public javax.swing.JMenuItem mnuPartesZapato;
     public javax.swing.JMenuItem mnuPermisos;
+    public javax.swing.JMenuItem mnuUnidades;
     public javax.swing.JMenuItem mnuUsuarios;
     // End of variables declaration//GEN-END:variables
 }

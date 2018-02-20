@@ -4,18 +4,20 @@
  * and open the template in the editor.
  */
 package application.views;
-
+import application.config.ManejadorTecla;
 /**
  *
- * @author Administrador
+ * @author Christian
  */
-public class vProductos extends javax.swing.JFrame {
+public class vCatalogos extends javax.swing.JFrame {
 
     /**
-     * Creates new form vProductos
+     * Creates new form vCatalogos
      */
-    public vProductos() {
+    ManejadorTecla manejador = new ManejadorTecla();
+    public vCatalogos() {
         initComponents();
+        txtBusqueda.addKeyListener(manejador);
     }
 
     /**
@@ -34,18 +36,15 @@ public class vProductos extends javax.swing.JFrame {
         txtBusqueda = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblProductos = new javax.swing.JTable();
+        tblCatalogos = new javax.swing.JTable();
         jToolBar1 = new javax.swing.JToolBar();
         btnNuevo = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         btnRefrescar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
-        btnExcel = new javax.swing.JButton();
-        btnPdf = new javax.swing.JButton();
-        btnExportar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("GESTIÓN DE PRODUCTOS");
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("GENERALES");
 
         btnAdelante.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/16/delante.png"))); // NOI18N
 
@@ -55,7 +54,7 @@ public class vProductos extends javax.swing.JFrame {
 
         txtBusqueda.setToolTipText("USUARIO, CORREO");
 
-        tblProductos.setModel(new javax.swing.table.DefaultTableModel(
+        tblCatalogos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -66,7 +65,7 @@ public class vProductos extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(tblProductos);
+        jScrollPane1.setViewportView(tblCatalogos);
 
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
@@ -88,18 +87,6 @@ public class vProductos extends javax.swing.JFrame {
         btnEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jToolBar1.add(btnEliminar);
 
-        btnExcel.setText("EXCEL");
-        jToolBar1.add(btnExcel);
-
-        btnPdf.setText("PDF");
-        btnPdf.setToolTipText("");
-        jToolBar1.add(btnPdf);
-
-        btnExportar.setText("EXPORTAR");
-        btnExportar.setToolTipText("");
-        btnExportar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jToolBar1.add(btnExportar);
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -115,7 +102,7 @@ public class vProductos extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnAdelante)
                 .addContainerGap())
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 729, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 544, Short.MAX_VALUE)
             .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
@@ -131,7 +118,7 @@ public class vProductos extends javax.swing.JFrame {
                     .addComponent(btnAtras)
                     .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -151,27 +138,21 @@ public class vProductos extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-
+ 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton btnAdelante;
     public javax.swing.JButton btnAtras;
     public javax.swing.JButton btnEditar;
     public javax.swing.JButton btnEliminar;
-    public javax.swing.JButton btnExcel;
-    public javax.swing.JButton btnExportar;
     public javax.swing.JButton btnNuevo;
-    public javax.swing.JButton btnPdf;
     public javax.swing.JButton btnRefrescar;
     public javax.swing.JComboBox<String> cmbTamano;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JToolBar jToolBar1;
-    public javax.swing.JTable tblProductos;
+    public javax.swing.JTable tblCatalogos;
     public javax.swing.JTextField txtBusqueda;
     // End of variables declaration//GEN-END:variables
 }
