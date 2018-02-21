@@ -30,19 +30,29 @@ public class vMenu extends javax.swing.JFrame {
     private void initComponents() {
 
         jMenuBar1 = new javax.swing.JMenuBar();
-        mProveedores = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
-        jMenu3 = new javax.swing.JMenu();
-        jMenu5 = new javax.swing.JMenu();
         jMenu6 = new javax.swing.JMenu();
-        jMenu13 = new javax.swing.JMenu();
-        jMenu12 = new javax.swing.JMenu();
-        jMenu11 = new javax.swing.JMenu();
         jMenu7 = new javax.swing.JMenu();
-        jMenu8 = new javax.swing.JMenu();
-        jMenu9 = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem8 = new javax.swing.JMenuItem();
+        jMenu5 = new javax.swing.JMenu();
+        jMenuItem9 = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        jMenuItem10 = new javax.swing.JMenuItem();
+        jMenu14 = new javax.swing.JMenu();
+        mnuClientes = new javax.swing.JMenuItem();
+        mnuProveedores = new javax.swing.JMenuItem();
+        mnuAlmacenes = new javax.swing.JMenuItem();
+        jSeparator3 = new javax.swing.JPopupMenu.Separator();
+        mnuLineas = new javax.swing.JMenuItem();
+        mnuEstilos = new javax.swing.JMenuItem();
+        mnuCombinaciones = new javax.swing.JMenuItem();
+        mnuMateriales = new javax.swing.JMenuItem();
+        jSeparator4 = new javax.swing.JPopupMenu.Separator();
+        mnuFracciones = new javax.swing.JMenuItem();
+        mnuMatxCombinacion = new javax.swing.JMenuItem();
         jMenu10 = new javax.swing.JMenu();
         mnuUsuarios = new javax.swing.JMenuItem();
+        jSeparator2 = new javax.swing.JPopupMenu.Separator();
         mnuPermisos = new javax.swing.JMenuItem();
         mnuModulos = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
@@ -53,10 +63,11 @@ public class vMenu extends javax.swing.JFrame {
         mnuCondicionesPago = new javax.swing.JMenuItem();
         mnuBancos = new javax.swing.JMenuItem();
         mnuFamilias = new javax.swing.JMenuItem();
+        mnuSeries = new javax.swing.JMenuItem();
         mnuDepartamentos = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
         mnuPartesZapato = new javax.swing.JMenuItem();
         mnuTemporadas = new javax.swing.JMenuItem();
-        mnuSeries = new javax.swing.JMenuItem();
         mnuHormas = new javax.swing.JMenuItem();
         mnuTiposEstilo = new javax.swing.JMenuItem();
         mnuMaquilas = new javax.swing.JMenuItem();
@@ -66,43 +77,71 @@ public class vMenu extends javax.swing.JFrame {
         setTitle("Calzado Lobo Solo v.1.0.0");
         setBackground(new java.awt.Color(255, 255, 255));
 
-        mProveedores.setText("Proveedores");
-        jMenuBar1.add(mProveedores);
-
-        jMenu2.setText("Pedidos");
-        jMenuBar1.add(jMenu2);
-
-        jMenu3.setText("Compras");
-        jMenuBar1.add(jMenu3);
-
-        jMenu5.setText("Artículos");
-        jMenuBar1.add(jMenu5);
-
-        jMenu6.setText("Fichas Técnicas");
+        jMenu6.setText("Ventas");
         jMenuBar1.add(jMenu6);
 
-        jMenu13.setText("Fracciones");
-        jMenuBar1.add(jMenu13);
-
-        jMenu12.setText("Producción");
-        jMenuBar1.add(jMenu12);
-
-        jMenu11.setText("Precios y Costos");
-        jMenuBar1.add(jMenu11);
-
-        jMenu7.setText("Ventas");
+        jMenu7.setText("Compras");
         jMenuBar1.add(jMenu7);
 
-        jMenu8.setText("Contabilidad");
-        jMenuBar1.add(jMenu8);
+        jMenu2.setText("Fichas Técnicas");
 
-        jMenu9.setText("Finanzas");
-        jMenuBar1.add(jMenu9);
+        jMenuItem8.setText("Fichas Técnicas");
+        jMenu2.add(jMenuItem8);
+
+        jMenuBar1.add(jMenu2);
+
+        jMenu5.setText("Pedidos");
+
+        jMenuItem9.setText("Pedidos");
+        jMenu5.add(jMenuItem9);
+
+        jMenuBar1.add(jMenu5);
+
+        jMenu3.setText("Producción");
+
+        jMenuItem10.setText("Orden de Producción");
+        jMenu3.add(jMenuItem10);
+
+        jMenuBar1.add(jMenu3);
+
+        jMenu14.setText("Catálogos");
+
+        mnuClientes.setText("Clientes");
+        jMenu14.add(mnuClientes);
+
+        mnuProveedores.setText("Proveedores");
+        jMenu14.add(mnuProveedores);
+
+        mnuAlmacenes.setText("Almacenes");
+        jMenu14.add(mnuAlmacenes);
+        jMenu14.add(jSeparator3);
+
+        mnuLineas.setText("Lineas");
+        jMenu14.add(mnuLineas);
+
+        mnuEstilos.setText("Estilos");
+        jMenu14.add(mnuEstilos);
+
+        mnuCombinaciones.setText("Combinaciones ");
+        jMenu14.add(mnuCombinaciones);
+
+        mnuMateriales.setText("Materiales");
+        jMenu14.add(mnuMateriales);
+        jMenu14.add(jSeparator4);
+
+        mnuFracciones.setText("Mano de Obra (Fracciones)");
+        jMenu14.add(mnuFracciones);
+
+        mnuMatxCombinacion.setText("Materiales por Combinación");
+        jMenu14.add(mnuMatxCombinacion);
+
+        jMenuBar1.add(jMenu14);
 
         jMenu10.setText("Usuarios");
 
         mnuUsuarios.setText("Usuarios");
         jMenu10.add(mnuUsuarios);
+        jMenu10.add(jSeparator2);
 
         mnuPermisos.setText("Permisos");
         jMenu10.add(mnuPermisos);
@@ -134,17 +173,18 @@ public class vMenu extends javax.swing.JFrame {
         mnuFamilias.setText("Familias");
         jMenu1.add(mnuFamilias);
 
+        mnuSeries.setText("Series");
+        jMenu1.add(mnuSeries);
+
         mnuDepartamentos.setText("Departamentos");
         jMenu1.add(mnuDepartamentos);
+        jMenu1.add(jSeparator1);
 
         mnuPartesZapato.setText("Partes del Zapato");
         jMenu1.add(mnuPartesZapato);
 
         mnuTemporadas.setText("Temporadas");
         jMenu1.add(mnuTemporadas);
-
-        mnuSeries.setText("Series");
-        jMenu1.add(mnuSeries);
 
         mnuHormas.setText("Hormas");
         jMenu1.add(mnuHormas);
@@ -182,31 +222,42 @@ public class vMenu extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu10;
-    private javax.swing.JMenu jMenu11;
-    private javax.swing.JMenu jMenu12;
-    private javax.swing.JMenu jMenu13;
+    private javax.swing.JMenu jMenu14;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenu jMenu7;
-    private javax.swing.JMenu jMenu8;
-    private javax.swing.JMenu jMenu9;
     private javax.swing.JMenuBar jMenuBar1;
-    public javax.swing.JMenu mProveedores;
+    private javax.swing.JMenuItem jMenuItem10;
+    private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JMenuItem jMenuItem9;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JPopupMenu.Separator jSeparator2;
+    private javax.swing.JPopupMenu.Separator jSeparator3;
+    private javax.swing.JPopupMenu.Separator jSeparator4;
     public javax.swing.JMenu mSalir;
+    public javax.swing.JMenuItem mnuAlmacenes;
     public javax.swing.JMenuItem mnuBancos;
+    private javax.swing.JMenuItem mnuClientes;
+    public javax.swing.JMenuItem mnuCombinaciones;
     public javax.swing.JMenuItem mnuCondicionesPago;
     public javax.swing.JMenuItem mnuDepartamentos;
+    public javax.swing.JMenuItem mnuEstilos;
     public javax.swing.JMenuItem mnuFamilias;
+    public javax.swing.JMenuItem mnuFracciones;
     public javax.swing.JMenuItem mnuHormas;
+    public javax.swing.JMenuItem mnuLineas;
     public javax.swing.JMenuItem mnuMaquilas;
+    public javax.swing.JMenuItem mnuMateriales;
+    public javax.swing.JMenuItem mnuMatxCombinacion;
     public javax.swing.JMenuItem mnuMetodosPago;
     public javax.swing.JMenuItem mnuModulos;
     public javax.swing.JMenuItem mnuMonedas;
     public javax.swing.JMenuItem mnuPartesZapato;
     public javax.swing.JMenuItem mnuPermisos;
+    public javax.swing.JMenuItem mnuProveedores;
     public javax.swing.JMenuItem mnuSeries;
     public javax.swing.JMenuItem mnuTemporadas;
     public javax.swing.JMenuItem mnuTiposEstilo;

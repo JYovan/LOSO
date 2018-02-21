@@ -29,6 +29,7 @@ public class Menu {
     Modulos m;
     Usuarios u;
     Permisos p;
+    Lineas lin;
 
     public Menu(Generic g) {
         this.g = g;
@@ -38,6 +39,7 @@ public class Menu {
         u = new Usuarios(g);
         p = new Permisos(g);
         c = new Catalogos(g);
+        lin = new Lineas(g);
 
         src.toSysTray(menu);
         menu.mSalir.addMouseListener(new MouseAdapter() {
@@ -48,6 +50,11 @@ public class Menu {
                     System.exit(0);
                 }
             }
+        });
+        
+        menu.mnuLineas.addActionListener((e) -> {
+            lin.getRecords();
+            lin.setVisible();
         });
         
         menu.mnuMaquilas.addActionListener((e) -> {
