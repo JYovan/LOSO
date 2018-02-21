@@ -22,6 +22,7 @@ public class mdlEditar extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.SValue.addKeyListener(manejador);
+        this.IValue.addKeyListener(manejador);
         this.Special.addKeyListener(manejador);
         this.Valor_Num.addKeyListener(manejador);
         this.Valor_Text.addKeyListener(manejador);
@@ -38,12 +39,13 @@ public class mdlEditar extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        SValue = new javax.swing.JTextField();
         Valor_Text = new javax.swing.JTextField();
         Valor_Num = new javax.swing.JTextField();
         Special = new javax.swing.JTextField();
         cmbEstatus = new javax.swing.JComboBox<>();
         btnGuardar = new javax.swing.JButton();
+        IValue = new javax.swing.JTextField();
+        SValue = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("EDITAR CATÁLOGO");
@@ -63,21 +65,26 @@ public class mdlEditar extends javax.swing.JDialog {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(SValue)
                     .addComponent(Valor_Text)
                     .addComponent(Valor_Num)
                     .addComponent(Special)
                     .addComponent(cmbEstatus, 0, 380, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnGuardar)))
+                        .addComponent(btnGuardar))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(SValue, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(IValue)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addComponent(SValue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(SValue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(IValue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(Valor_Text, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -120,6 +127,7 @@ public class mdlEditar extends javax.swing.JDialog {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JTextField IValue;
     public javax.swing.JTextField SValue;
     public javax.swing.JTextField Special;
     public javax.swing.JTextField Valor_Num;

@@ -55,6 +55,11 @@ public class vMenu extends javax.swing.JFrame {
         mnuFamilias = new javax.swing.JMenuItem();
         mnuDepartamentos = new javax.swing.JMenuItem();
         mnuPartesZapato = new javax.swing.JMenuItem();
+        mnuTemporadas = new javax.swing.JMenuItem();
+        mnuSeries = new javax.swing.JMenuItem();
+        mnuHormas = new javax.swing.JMenuItem();
+        mnuTiposEstilo = new javax.swing.JMenuItem();
+        mnuMaquilas = new javax.swing.JMenuItem();
         mSalir = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -135,6 +140,21 @@ public class vMenu extends javax.swing.JFrame {
         mnuPartesZapato.setText("Partes del Zapato");
         jMenu1.add(mnuPartesZapato);
 
+        mnuTemporadas.setText("Temporadas");
+        jMenu1.add(mnuTemporadas);
+
+        mnuSeries.setText("Series");
+        jMenu1.add(mnuSeries);
+
+        mnuHormas.setText("Hormas");
+        jMenu1.add(mnuHormas);
+
+        mnuTiposEstilo.setText("Tipos de Estilo");
+        jMenu1.add(mnuTiposEstilo);
+
+        mnuMaquilas.setText("Maquilas");
+        jMenu1.add(mnuMaquilas);
+
         jMenu4.add(jMenu1);
 
         jMenuBar1.add(jMenu4);
@@ -180,11 +200,16 @@ public class vMenu extends javax.swing.JFrame {
     public javax.swing.JMenuItem mnuCondicionesPago;
     public javax.swing.JMenuItem mnuDepartamentos;
     public javax.swing.JMenuItem mnuFamilias;
+    public javax.swing.JMenuItem mnuHormas;
+    public javax.swing.JMenuItem mnuMaquilas;
     public javax.swing.JMenuItem mnuMetodosPago;
     public javax.swing.JMenuItem mnuModulos;
     public javax.swing.JMenuItem mnuMonedas;
     public javax.swing.JMenuItem mnuPartesZapato;
     public javax.swing.JMenuItem mnuPermisos;
+    public javax.swing.JMenuItem mnuSeries;
+    public javax.swing.JMenuItem mnuTemporadas;
+    public javax.swing.JMenuItem mnuTiposEstilo;
     public javax.swing.JMenuItem mnuUnidades;
     public javax.swing.JMenuItem mnuUsuarios;
     // End of variables declaration//GEN-END:variables

@@ -140,6 +140,7 @@ public class Catalogos {
         vcatalogos.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/LS.png")));
         vcatalogos.setLocationRelativeTo(null);
         vcatalogos.setVisible(true);
+        vcatalogos.setTitle(TipoCatalogo);
     }
 
     public final void getRecords() {
@@ -157,12 +158,15 @@ public class Catalogos {
             vcatalogos.tblCatalogos.setModel(dtm);
             filtrador = new TableRowSorter<>(dtm);
             vcatalogos.tblCatalogos.setRowSorter(filtrador);
-            int row = 1;
-            for (int i = 0; i < vcatalogos.tblCatalogos.getRowCount(); i++) {
-                vcatalogos.tblCatalogos.setValueAt(row, i, 1);
-                row++;
-            }
+//            int row = 1;
+//            for (int i = 0; i < vcatalogos.tblCatalogos.getRowCount(); i++) {
+//                vcatalogos.tblCatalogos.setValueAt(row, i, 1);
+//                row++;
+//            }
             vcatalogos.tblCatalogos.removeColumn(vcatalogos.tblCatalogos.getColumnModel().getColumn(0));
+          
+             
+            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }

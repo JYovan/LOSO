@@ -22,6 +22,7 @@ public class mdlNuevo extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.SValue.addKeyListener(manejador);
+        this.IValue.addKeyListener(manejador);
         this.Special.addKeyListener(manejador);
         this.Valor_Num.addKeyListener(manejador);
         this.Valor_Text.addKeyListener(manejador);
@@ -39,6 +40,7 @@ public class mdlNuevo extends javax.swing.JDialog {
         Valor_Num = new javax.swing.JTextField();
         Special = new javax.swing.JTextField();
         btnGuardar = new javax.swing.JButton();
+        IValue = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("AGREGAR CATÁLOGO");
@@ -54,20 +56,25 @@ public class mdlNuevo extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(SValue)
                     .addComponent(Valor_Text)
                     .addComponent(Valor_Num)
                     .addComponent(Special)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 309, Short.MAX_VALUE)
-                        .addComponent(btnGuardar)))
+                        .addComponent(btnGuardar))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(SValue, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(IValue)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addComponent(SValue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(SValue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(IValue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(Valor_Text, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -99,6 +106,7 @@ public class mdlNuevo extends javax.swing.JDialog {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JTextField IValue;
     public javax.swing.JTextField SValue;
     public javax.swing.JTextField Special;
     public javax.swing.JTextField Valor_Num;

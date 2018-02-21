@@ -50,6 +50,42 @@ public class Menu {
             }
         });
         
+        menu.mnuMaquilas.addActionListener((e) -> {
+            c.setTipoCatalogo("MAQUILAS");
+            c.getRecords();
+            c.setVisible();
+        });
+        
+        menu.mnuHormas.addActionListener((e) -> {
+            c.setTipoCatalogo("HORMAS");
+            c.getRecords();
+            c.setVisible();
+        });
+        
+        menu.mnuTemporadas.addActionListener((e) -> {
+            c.setTipoCatalogo("TEMPORADAS");
+            c.getRecords();
+            c.setVisible();
+        });
+        
+        menu.mnuMetodosPago.addActionListener((e) -> {
+            c.setTipoCatalogo("METODOS PAGO");
+            c.getRecords();
+            c.setVisible();
+        });
+        
+        menu.mnuSeries.addActionListener((e) -> {
+            c.setTipoCatalogo("SERIES");
+            c.getRecords();
+            c.setVisible();
+        });
+        
+        menu.mnuTiposEstilo.addActionListener((e) -> {
+            c.setTipoCatalogo("TIPOS ESTILO");
+            c.getRecords();
+            c.setVisible();
+        });
+
         menu.mnuMetodosPago.addActionListener((e) -> {
             c.setTipoCatalogo("METODOS PAGO");
             c.getRecords();
