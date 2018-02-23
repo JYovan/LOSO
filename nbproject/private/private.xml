@@ -3,15 +3,25 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Christian/Documents/GitHub/LOSO/src/application/controllers/Usuarios.java</file>
-            <file>file:/C:/Users/Christian/Documents/GitHub/LOSO/src/application/views/catalogos/mdlNuevo.java</file>
-            <file>file:/C:/Users/Christian/Documents/GitHub/LOSO/src/application/views/catalogos/mdlEditar.java</file>
-            <file>file:/C:/Users/Christian/Documents/GitHub/LOSO/src/application/controllers/catalogos/CtrlCatalogos.java</file>
-            <file>file:/C:/Users/Christian/Documents/GitHub/LOSO/src/application/controllers/Catalogos.java</file>
+            <file>file:/C:/Users/Administrador/Documents/NetBeansProjects/LOSO/src/application/views/vEstilos.java</file>
+            <file>file:/C:/Users/Administrador/Documents/NetBeansProjects/LOSO/src/application/controllers/estilos/CtrlEstilos.java</file>
+            <file>file:/C:/Users/Administrador/Documents/NetBeansProjects/LOSO/src/application/controllers/usuarios/CtrlUsuarios.java</file>
+            <file>file:/C:/Users/Administrador/Documents/NetBeansProjects/LOSO/src/application/controllers/permisos/CtrlPermisos.java</file>
+            <file>file:/C:/Users/Administrador/Documents/NetBeansProjects/LOSO/src/application/config/TextPrompt.java</file>
+            <file>file:/C:/Users/Administrador/Documents/NetBeansProjects/LOSO/src/application/views/estilos/mdlEditar.java</file>
+            <file>file:/C:/Users/Administrador/Documents/NetBeansProjects/LOSO/src/application/controllers/Estilos.java</file>
+            <file>file:/C:/Users/Administrador/Documents/NetBeansProjects/LOSO/src/application/controllers/catalogos/CtrlCatalogos.java</file>
+            <file>file:/C:/Users/Administrador/Documents/NetBeansProjects/LOSO/src/application/views/estilos/mdlNuevo.java</file>
         </group>
         <group>
-            <file>file:/C:/Users/Christian/Documents/GitHub/LOSO/src/application/controllers/Lineas.java</file>
-            <file>file:/C:/Users/Christian/Documents/GitHub/LOSO/src/application/views/vLineas.java</file>
+            <file>file:/C:/Users/Administrador/Documents/NetBeansProjects/LOSO/src/application/views/vEstilos.java</file>
+            <file>file:/C:/Users/Administrador/Documents/NetBeansProjects/LOSO/src/application/controllers/estilos/CtrlEstilos.java</file>
+            <file>file:/C:/Users/Administrador/Documents/NetBeansProjects/LOSO/src/application/controllers/usuarios/CtrlUsuarios.java</file>
+            <file>file:/C:/Users/Administrador/Documents/NetBeansProjects/LOSO/src/application/controllers/permisos/CtrlPermisos.java</file>
+            <file>file:/C:/Users/Administrador/Documents/NetBeansProjects/LOSO/src/application/views/estilos/mdlEditar.java</file>
+            <file>file:/C:/Users/Administrador/Documents/NetBeansProjects/LOSO/src/application/controllers/Estilos.java</file>
+            <file>file:/C:/Users/Administrador/Documents/NetBeansProjects/LOSO/src/application/controllers/catalogos/CtrlCatalogos.java</file>
+            <file>file:/C:/Users/Administrador/Documents/NetBeansProjects/LOSO/src/application/views/estilos/mdlNuevo.java</file>
         </group>
     </open-files>
 </project-private>

@@ -30,7 +30,8 @@ public class Menu {
     Usuarios u;
     Permisos p;
     Lineas lin;
-
+    Estilos est;
+    
     public Menu(Generic g) {
         this.g = g;
         menu = new vMenu();
@@ -40,6 +41,7 @@ public class Menu {
         p = new Permisos(g);
         c = new Catalogos(g);
         lin = new Lineas(g);
+        est = new Estilos(g);
 
         src.toSysTray(menu);
         menu.mSalir.addMouseListener(new MouseAdapter() {
@@ -51,42 +53,45 @@ public class Menu {
                 }
             }
         });
-        
+        menu.mnuEstilos.addActionListener((e) -> {
+            est.getRecords();
+            est.setVisible();
+        });
         menu.mnuLineas.addActionListener((e) -> {
             lin.getRecords();
             lin.setVisible();
         });
-        
+
         menu.mnuMaquilas.addActionListener((e) -> {
             c.setTipoCatalogo("MAQUILAS");
             c.getRecords();
             c.setVisible();
         });
-        
+
         menu.mnuHormas.addActionListener((e) -> {
             c.setTipoCatalogo("HORMAS");
             c.getRecords();
             c.setVisible();
         });
-        
+
         menu.mnuTemporadas.addActionListener((e) -> {
             c.setTipoCatalogo("TEMPORADAS");
             c.getRecords();
             c.setVisible();
         });
-        
+
         menu.mnuMetodosPago.addActionListener((e) -> {
             c.setTipoCatalogo("METODOS PAGO");
             c.getRecords();
             c.setVisible();
         });
-        
+
         menu.mnuSeries.addActionListener((e) -> {
             c.setTipoCatalogo("SERIES");
             c.getRecords();
             c.setVisible();
         });
-        
+
         menu.mnuTiposEstilo.addActionListener((e) -> {
             c.setTipoCatalogo("TIPOS ESTILO");
             c.getRecords();
@@ -98,7 +103,7 @@ public class Menu {
             c.getRecords();
             c.setVisible();
         });
-        
+
         menu.mnuDepartamentos.addActionListener((e) -> {
             c.setTipoCatalogo("DEPARTAMENTOS");
             c.getRecords();

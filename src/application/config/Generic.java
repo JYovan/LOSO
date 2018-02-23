@@ -348,7 +348,7 @@ public class Generic {
      * @see Conexion
      */
     public ArrayList fill(String stored) {
-        ArrayList<Object> obj = new ArrayList<>();
+        ArrayList<Object[]> obj = new ArrayList<>();
         try {
             int j = 1;
             ps = c.getConnection().prepareCall("CALL " + stored + "();");
@@ -356,7 +356,8 @@ public class Generic {
             if (rs.last()) {
                 rs.beforeFirst();
                 while (rs.next()) {
-                    obj.add(rs.getObject(1));
+                    Object[] item = new Object[]{rs.getObject(1),rs.getObject(2)}; 
+                    obj.add(item);
                 }
             }
             rs.close();

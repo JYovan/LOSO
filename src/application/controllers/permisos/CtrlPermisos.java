@@ -7,6 +7,7 @@ package application.controllers.permisos;
 
 import application.config.Generic;
 import application.controllers.Permisos;
+import application.helpers.Item;
 import application.views.permisos.mdlEditar;
 import application.views.permisos.mdlNuevo;
 import application.views.vPermisos;
@@ -19,6 +20,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
@@ -35,6 +37,8 @@ public class CtrlPermisos {
     Permisos permisos;
     vPermisos vpermisos;
     int temp = 0;
+    ArrayList<Item> modulos = new ArrayList<>();
+    ArrayList<Item> usuarios = new ArrayList<>();
 
     public CtrlPermisos(JFrame parent, Generic g, Permisos permisos) {
         /*NO SE DEBE DE LLAMAR NADA SI NO SE DEFINEN ESTAS ASIGNACIONES*/
@@ -45,6 +49,14 @@ public class CtrlPermisos {
         this.permisos = permisos;
         AutoCompleteDecorator.decorate(this.nuevo.Modulo);
         AutoCompleteDecorator.decorate(this.nuevo.Usuario);
+        nuevo.Modulo.addActionListener((e) -> {
+            for (Item modulo : modulos) {
+                if (modulo.getDescription().equals(nuevo.Modulo.getSelectedItem().toString())) {
+                    System.out.println("ID : " + modulo.getID());
+                }
+            }
+        });
+
         nuevo.btnGuardar.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -147,10 +159,6 @@ public class CtrlPermisos {
             a.add(IDX);
             ArrayList<Object[][]> x = g.findByParams("SP_PERMISO_X_ID", a);
             Object[][] data = x.get(0);
-            /*FOR PARA COMPROBAR QUE LA INFORMACION LLEGUE*/
-//            for (int i = 0; i < data[0].length; i++) {
-//                System.out.println(i + " " + data[0][i]);
-//            }
             editar.Usuario.getModel().setSelectedItem(data[0][1]);
             editar.Modulo.getModel().setSelectedItem(data[0][2]);
             editar.Ver.setSelected((data[0][3] != null) ? (String.valueOf(data[0][3]).equals("1")) : false);
@@ -209,9 +217,9 @@ public class CtrlPermisos {
     public final void getUsuarios() {
         try {
             for (Iterator it = g.fill("SP_OBTENER_USUARIOS").iterator(); it.hasNext();) {
-                Object util = it.next();
-                nuevo.Usuario.addItem(String.valueOf(util));
-                editar.Usuario.addItem(String.valueOf(util));
+                Object[] item = (Object[]) it.next();
+                nuevo.Usuario.addItem(String.valueOf(item[1]));
+                editar.Usuario.addItem(String.valueOf(item[1]));
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "NO SE HAN PODIDO OBTENER LOS USUARIOS", "ERROR AL ELIMINAR", JOptionPane.ERROR_MESSAGE);
@@ -222,13 +230,18 @@ public class CtrlPermisos {
 
     public final void getModulos() {
         try {
+            Item itm = null;
             for (Iterator it = g.fill("SP_OBTENER_MODULOS").iterator(); it.hasNext();) {
-                Object util = it.next();
-                nuevo.Modulo.addItem(String.valueOf(util));
-                editar.Modulo.addItem(String.valueOf(util));
+                Object[] item = (Object[]) it.next();
+                if (item != null) {
+                    itm = new Item(Integer.parseInt(String.valueOf(item[0])), String.valueOf(item[1]));
+                    nuevo.Modulo.addItem(String.valueOf(item[1]));
+                    editar.Modulo.addItem(String.valueOf(item[1]));
+                    modulos.add(itm);
+                }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "NO SE HAN PODIDO OBTENER LOS MODULOS", "ERROR AL ELIMINAR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "NO SE HAN PODIDO OBTENER LOS MODULOS", "ERROR AL OBTENER LOS MODULOS", JOptionPane.ERROR_MESSAGE);
 
             System.out.println("ERROR\n" + e.getMessage());
             e.printStackTrace();/*INDICA LA LINEA DONDE OCURRE EL PROBLEMA*/
