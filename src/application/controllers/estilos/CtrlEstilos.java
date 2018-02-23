@@ -10,10 +10,12 @@ import application.config.Generic;
 import application.config.TextPrompt;
 import application.controllers.Estilos;
 import application.helpers.Item;
+import application.third_party.ImageUtils;
 import application.views.estilos.mdlEditar;
 import application.views.estilos.mdlNuevo;
 import application.views.vEstilos;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.HeadlessException;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -21,17 +23,24 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 /**
@@ -49,6 +58,11 @@ public class CtrlEstilos {
     ArrayList<Item> lineas = new ArrayList<>();
     ArrayList<Item> familias = new ArrayList<>();
     ArrayList<Item> series = new ArrayList<>();
+    ArrayList<Item> hormas = new ArrayList<>();
+    ArrayList<Item> maquilas = new ArrayList<>();
+    ArrayList<Item> temporadas = new ArrayList<>();
+    ArrayList<Item> tipo_estilos = new ArrayList<>();
+    JFileChooser fc;
 
     public CtrlEstilos(JFrame parent, Generic g, Estilos estilos) {
         /*NO SE DEBE DE LLAMAR NADA SI NO SE DEFINEN ESTAS ASIGNACIONES*/
@@ -108,12 +122,21 @@ public class CtrlEstilos {
         nuevo.Foto.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                final JFileChooser fc = new JFileChooser();
+                fc = new JFileChooser();
+                FileNameExtensionFilter filter = new FileNameExtensionFilter("images", "jpg", "gif", "png");
+                fc.setFileFilter(filter);
+                fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+                fc.setCurrentDirectory(new File(System.getProperty("user.home") + "/Pictures"));
                 fc.setDialogTitle("SELECCIONE UNA IMAGEN");
                 int file = fc.showOpenDialog(null);
                 if (file == JFileChooser.APPROVE_OPTION) {
                     File selectedFile = fc.getSelectedFile();
                     nuevo.Foto.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(selectedFile.getAbsolutePath()).getScaledInstance(350, 350, Image.SCALE_SMOOTH)));
+                    try {
+                        bufi = ImageUtils.resizeImage(ImageIO.read(fc.getSelectedFile()), 1, 350, 350);
+                    } catch (IOException ex) {
+                        Logger.getLogger(CtrlEstilos.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             }
 
@@ -166,6 +189,10 @@ public class CtrlEstilos {
         /*INVOCAR METODOS QUE RELLENAN DATOS*/
         getLineas();
         getFamilias();
+        getHormas();
+        getMaquilas();
+        getTemporadas();
+        getTipoEstilo();
 
     }
 
@@ -175,10 +202,13 @@ public class CtrlEstilos {
         nuevo.setVisible(true);
     }
 
+    BufferedImage bufi = null;
+    File files_dir = new File("files");
+
     public void onGuardar() {
         try {
             ArrayList<Object> a = new ArrayList<>();
-            a.add(nuevo.Linea.getSelectedItem().toString());
+            a.add(getID(lineas,nuevo.Linea.getSelectedItem().toString()));
             a.add(nuevo.Clave.getText());
             a.add(nuevo.Descripcion.getText());
             a.add(getID(familias, nuevo.Familia.getSelectedItem().toString()));
@@ -188,15 +218,12 @@ public class CtrlEstilos {
             DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
             Date date = new Date();
             a.add(dateFormat.format(date));
+            if (!files_dir.exists()) {
+                files_dir.mkdir();
+            }
+            System.out.println(fc.getSelectedFile().getName());
+            ImageIO.write(bufi, "png", new File("files/" + fc.getSelectedFile().getName() + ".png"));
             if (g.addUpdateOrDelete("SP_AGREGAR_ESTILO", a)) {
-                File files = new File("C:\\Directory2\\Sub2\\Sub-Sub2");
-                if (!files.exists()) {
-                    if (files.mkdirs()) {
-                        System.out.println("Multiple directories are created!");
-                    } else {
-                        System.out.println("Failed to create multiple directories!");
-                    }
-                }
                 JOptionPane.showMessageDialog(null, "ESTILO AGREGADO", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
                 nuevo.dispose();
                 estilos.getRecords();
@@ -205,6 +232,8 @@ public class CtrlEstilos {
             }
         } catch (HeadlessException e) {
             JOptionPane.showMessageDialog(null, "NO SE HA PODIDO REGISTRAR EL ESTILO", "ERROR AL GUARDAR", JOptionPane.ERROR_MESSAGE);
+        } catch (IOException ex) {
+            Logger.getLogger(CtrlEstilos.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -217,13 +246,7 @@ public class CtrlEstilos {
             Object[][] data = x.get(0);
             editar.Linea.getModel().setSelectedItem(data[0][1]);
 //            editar.Modulo.getModel().setSelectedItem(data[0][2]);
-//            editar.Ver.setSelected((data[0][3] != null) ? (String.valueOf(data[0][3]).equals("1")) : false);
-//            editar.Crear.setSelected((data[0][4] != null) ? (String.valueOf(data[0][4]).equals("1")) : false);
-//            editar.Modificar.setSelected((data[0][5] != null) ? (String.valueOf(data[0][5]).equals("1")) : false);
-//            editar.Eliminar.setSelected((data[0][6] != null) ? (String.valueOf(data[0][6]).equals("1")) : false);
-//            editar.Consultar.setSelected((data[0][7] != null) ? (String.valueOf(data[0][7]).equals("1")) : false);
-//            editar.Reportes.setSelected((data[0][8] != null) ? (String.valueOf(data[0][8]).equals("1")) : false);
-//            editar.Buscar.setSelected((data[0][9] != null) ? (String.valueOf(data[0][9]).equals("1")) : false);
+//            editar.Ver.setSelected((data[0][3] != null) ? (String.valueOf(data[0][3]).equals("1")) : false); 
             editar.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/96/icons8_Idea_96px.png")));
             editar.setLocationRelativeTo(null);
             editar.setVisible(true);
@@ -273,15 +296,17 @@ public class CtrlEstilos {
     public final void getLineas() {
         try {
             lineas = new ArrayList<>();
+            Item linea = null;
+            nuevo.Linea.addItem("");
             for (Iterator it = g.fill("SP_OBTENER_LINEAS").iterator(); it.hasNext();) {
                 Object[] item = (Object[]) it.next();
-                System.out.println(String.valueOf(item[0] + ":" + item[1]));
-                lineas.add(new Item(Integer.parseInt(String.valueOf(item[0])), String.valueOf(item[1])));
+                linea = new Item(Integer.parseInt(String.valueOf(item[0])), String.valueOf(item[1]));
+                lineas.add(linea);
                 nuevo.Linea.addItem(String.valueOf(item[1]));
                 editar.Linea.addItem(String.valueOf(item[1]));
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "NO SE HAN PODIDO OBTENER FAMILIAS", "ERROR AL OBTENER", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "NO SE HAN PODIDO OBTENER LINEAS", "ERROR AL OBTENER", JOptionPane.ERROR_MESSAGE);
 
             System.out.println("ERROR\n" + e.getMessage());
             e.printStackTrace();/*INDICA LA LINEA DONDE OCURRE EL PROBLEMA*/
@@ -292,15 +317,116 @@ public class CtrlEstilos {
         try {
             familias = new ArrayList<>();
             Item familia = null;
+            nuevo.Familia.addItem("");
             for (Iterator it = g.fill("SP_OBTENER_FAMILIAS").iterator(); it.hasNext();) {
-                Object[] item = (Object[]) it.next(); 
+                Object[] item = (Object[]) it.next();
                 familia = new Item(Integer.parseInt(String.valueOf(item[0])), String.valueOf(item[1]));
                 familias.add(familia);
                 nuevo.Familia.addItem(String.valueOf(item[1]));
                 editar.Familia.addItem(String.valueOf(item[1]));
             }
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "NO SE HAN PODIDO OBTENER FAMILIAS", "ERROR AL OBTENER", JOptionPane.ERROR_MESSAGE);
+
+            System.out.println("ERROR\n" + e.getMessage());
+            e.printStackTrace();/*INDICA LA LINEA DONDE OCURRE EL PROBLEMA*/
+        }
+    }
+
+    public final void getSeries() {
+        try {
+            series = new ArrayList<>();
+            Item serie = null;
+            nuevo.Serie.addItem("");
+            for (Iterator it = g.fill("SP_OBTENER_SERIES").iterator(); it.hasNext();) {
+                Object[] item = (Object[]) it.next();
+                serie = new Item(Integer.parseInt(String.valueOf(item[0])), String.valueOf(item[1]));
+                series.add(serie);
+                nuevo.Serie.addItem(String.valueOf(item[1]));
+                editar.Serie.addItem(String.valueOf(item[1]));
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "NO SE HAN PODIDO OBTENER SERIES", "ERROR AL OBTENER", JOptionPane.ERROR_MESSAGE);
+
+            System.out.println("ERROR\n" + e.getMessage());
+            e.printStackTrace();/*INDICA LA LINEA DONDE OCURRE EL PROBLEMA*/
+        }
+    }
+
+    public final void getHormas() {
+        try {
+            hormas = new ArrayList<>();
+            Item horma = null;
+            nuevo.Serie.addItem("");
+            for (Iterator it = g.fill("SP_OBTENER_HORMAS").iterator(); it.hasNext();) {
+                Object[] item = (Object[]) it.next();
+                horma = new Item(Integer.parseInt(String.valueOf(item[0])), String.valueOf(item[1]));
+                hormas.add(horma);
+                nuevo.Horma.addItem(String.valueOf(item[1]));
+                editar.Horma.addItem(String.valueOf(item[1]));
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "NO SE HAN PODIDO OBTENER HORMAS", "ERROR AL OBTENER", JOptionPane.ERROR_MESSAGE);
+
+            System.out.println("ERROR\n" + e.getMessage());
+            e.printStackTrace();/*INDICA LA LINEA DONDE OCURRE EL PROBLEMA*/
+        }
+    }
+
+    public final void getMaquilas() {
+        try {
+            maquilas = new ArrayList<>();
+            Item maquila = null;
+            nuevo.Maquila.addItem("");
+            for (Iterator it = g.fill("SP_OBTENER_MAQUILAS").iterator(); it.hasNext();) {
+                Object[] item = (Object[]) it.next();
+                maquila = new Item(Integer.parseInt(String.valueOf(item[0])), String.valueOf(item[1]));
+                maquilas.add(maquila);
+                nuevo.Maquila.addItem(String.valueOf(item[1]));
+                editar.Maquila.addItem(String.valueOf(item[1]));
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "NO SE HAN PODIDO OBTENER MAQUILAS", "ERROR AL OBTENER", JOptionPane.ERROR_MESSAGE);
+
+            System.out.println("ERROR\n" + e.getMessage());
+            e.printStackTrace();/*INDICA LA LINEA DONDE OCURRE EL PROBLEMA*/
+        }
+    }
+
+    public final void getTemporadas() {
+        try {
+            temporadas = new ArrayList<>();
+            Item temporada = null;
+            nuevo.Temporada.addItem("");
+            for (Iterator it = g.fill("SP_OBTENER_TEMPORADAS").iterator(); it.hasNext();) {
+                Object[] item = (Object[]) it.next();
+                temporada = new Item(Integer.parseInt(String.valueOf(item[0])), String.valueOf(item[1]));
+                temporadas.add(temporada);
+                nuevo.Temporada.addItem(String.valueOf(item[1]));
+                editar.Temporada.addItem(String.valueOf(item[1]));
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "NO SE HAN PODIDO OBTENER TEMPORADAS", "ERROR AL OBTENER", JOptionPane.ERROR_MESSAGE);
+
+            System.out.println("ERROR\n" + e.getMessage());
+            e.printStackTrace();/*INDICA LA LINEA DONDE OCURRE EL PROBLEMA*/
+        }
+    }
+
+    public final void getTipoEstilo() {
+        try {
+            tipo_estilos = new ArrayList<>();
+            Item tipo_estilo = null;
+            nuevo.Tipo.addItem("");
+            for (Iterator it = g.fill("SP_OBTENER_TIPOS_ESTILO").iterator(); it.hasNext();) {
+                Object[] item = (Object[]) it.next();
+                tipo_estilo = new Item(Integer.parseInt(String.valueOf(item[0])), String.valueOf(item[1]));
+                tipo_estilos.add(tipo_estilo);
+                nuevo.Tipo.addItem(String.valueOf(item[1]));
+                editar.Tipo.addItem(String.valueOf(item[1]));
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "NO SE HAN PODIDO OBTENER TEMPORADAS", "ERROR AL OBTENER", JOptionPane.ERROR_MESSAGE);
 
             System.out.println("ERROR\n" + e.getMessage());
             e.printStackTrace();/*INDICA LA LINEA DONDE OCURRE EL PROBLEMA*/

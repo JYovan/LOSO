@@ -66,23 +66,16 @@ public class mdlNuevo extends javax.swing.JDialog {
 
         plnNuevo.setBackground(new java.awt.Color(255, 255, 255));
 
-        Familia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "FAMILIA" }));
-
         btnGuardar.setText("Guardar");
 
-        Serie.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SERIE" }));
         Serie.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        Horma.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "HORMA" }));
         Horma.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        Tipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TIPO" }));
         Tipo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        Maquila.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "MAQUILA" }));
         Maquila.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        Temporada.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TEMPORADA" }));
         Temporada.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         jLabel1.setText("FAMILIA");
@@ -101,7 +94,7 @@ public class mdlNuevo extends javax.swing.JDialog {
 
         Liberado.setText("LIBERADO");
 
-        jLabel5.setText("GENERO");
+        jLabel5.setText("MAQUILA");
 
         Notas.setColumns(20);
         Notas.setRows(5);
@@ -117,8 +110,6 @@ public class mdlNuevo extends javax.swing.JDialog {
         MaquilaPlantilla.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         jLabel9.setText("MAQUILA O PLANTILLA");
-
-        Linea.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "LINEA" }));
 
         javax.swing.GroupLayout plnNuevoLayout = new javax.swing.GroupLayout(plnNuevo);
         plnNuevo.setLayout(plnNuevoLayout);

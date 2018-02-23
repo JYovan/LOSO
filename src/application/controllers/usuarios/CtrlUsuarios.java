@@ -190,7 +190,6 @@ public class CtrlUsuarios {
     public void onGuardar() {
         try {
             ArrayList<Object> a = new ArrayList<>();
-            a.add(temp);
             a.add(nuevo.Usuario.getText());
             a.add(String.valueOf(nuevo.Contrasena.getPassword()));
             a.add(nuevo.Correo.getText());

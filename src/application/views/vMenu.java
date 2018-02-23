@@ -78,121 +78,157 @@ public class vMenu extends javax.swing.JFrame {
         setBackground(new java.awt.Color(255, 255, 255));
 
         jMenu6.setText("Ventas");
+        jMenu6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenuBar1.add(jMenu6);
 
         jMenu7.setText("Compras");
+        jMenu7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenuBar1.add(jMenu7);
 
         jMenu2.setText("Fichas Técnicas");
+        jMenu2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         jMenuItem8.setText("Fichas Técnicas");
+        jMenuItem8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu2.add(jMenuItem8);
 
         jMenuBar1.add(jMenu2);
 
         jMenu5.setText("Pedidos");
+        jMenu5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         jMenuItem9.setText("Pedidos");
+        jMenuItem9.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu5.add(jMenuItem9);
 
         jMenuBar1.add(jMenu5);
 
         jMenu3.setText("Producción");
+        jMenu3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         jMenuItem10.setText("Orden de Producción");
+        jMenuItem10.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu3.add(jMenuItem10);
 
         jMenuBar1.add(jMenu3);
 
         jMenu14.setText("Catálogos");
+        jMenu14.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         mnuClientes.setText("Clientes");
+        mnuClientes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu14.add(mnuClientes);
 
         mnuProveedores.setText("Proveedores");
+        mnuProveedores.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu14.add(mnuProveedores);
 
         mnuAlmacenes.setText("Almacenes");
+        mnuAlmacenes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu14.add(mnuAlmacenes);
         jMenu14.add(jSeparator3);
 
         mnuLineas.setText("Lineas");
+        mnuLineas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu14.add(mnuLineas);
 
         mnuEstilos.setText("Estilos");
+        mnuEstilos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu14.add(mnuEstilos);
 
         mnuCombinaciones.setText("Combinaciones ");
+        mnuCombinaciones.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu14.add(mnuCombinaciones);
 
         mnuMateriales.setText("Materiales");
+        mnuMateriales.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu14.add(mnuMateriales);
         jMenu14.add(jSeparator4);
 
         mnuFracciones.setText("Mano de Obra (Fracciones)");
+        mnuFracciones.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu14.add(mnuFracciones);
 
         mnuMatxCombinacion.setText("Materiales por Combinación");
+        mnuMatxCombinacion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu14.add(mnuMatxCombinacion);
 
         jMenuBar1.add(jMenu14);
 
         jMenu10.setText("Usuarios");
+        jMenu10.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         mnuUsuarios.setText("Usuarios");
+        mnuUsuarios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu10.add(mnuUsuarios);
         jMenu10.add(jSeparator2);
 
         mnuPermisos.setText("Permisos");
+        mnuPermisos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu10.add(mnuPermisos);
 
         mnuModulos.setText("Módulos");
+        mnuModulos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu10.add(mnuModulos);
 
         jMenuBar1.add(jMenu10);
 
         jMenu4.setText("Configuración");
+        jMenu4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         jMenu1.setText("Generales");
 
         mnuUnidades.setText("Unidades");
+        mnuUnidades.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu1.add(mnuUnidades);
 
         mnuMonedas.setText("Monedas");
+        mnuMonedas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu1.add(mnuMonedas);
 
         mnuMetodosPago.setText("Métodos de Pago");
+        mnuMetodosPago.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu1.add(mnuMetodosPago);
 
         mnuCondicionesPago.setText("Condiciones de Pago");
+        mnuCondicionesPago.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu1.add(mnuCondicionesPago);
 
         mnuBancos.setText("Bancos");
+        mnuBancos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu1.add(mnuBancos);
 
         mnuFamilias.setText("Familias");
+        mnuFamilias.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu1.add(mnuFamilias);
 
         mnuSeries.setText("Series");
+        mnuSeries.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu1.add(mnuSeries);
 
         mnuDepartamentos.setText("Departamentos");
+        mnuDepartamentos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu1.add(mnuDepartamentos);
         jMenu1.add(jSeparator1);
 
         mnuPartesZapato.setText("Partes del Zapato");
+        mnuPartesZapato.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu1.add(mnuPartesZapato);
 
         mnuTemporadas.setText("Temporadas");
+        mnuTemporadas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu1.add(mnuTemporadas);
 
         mnuHormas.setText("Hormas");
+        mnuHormas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu1.add(mnuHormas);
 
         mnuTiposEstilo.setText("Tipos de Estilo");
+        mnuTiposEstilo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu1.add(mnuTiposEstilo);
 
         mnuMaquilas.setText("Maquilas");
+        mnuMaquilas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu1.add(mnuMaquilas);
 
         jMenu4.add(jMenu1);
@@ -200,6 +236,7 @@ public class vMenu extends javax.swing.JFrame {
         jMenuBar1.add(jMenu4);
 
         mSalir.setText("Salir");
+        mSalir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenuBar1.add(mSalir);
 
         setJMenuBar(jMenuBar1);
