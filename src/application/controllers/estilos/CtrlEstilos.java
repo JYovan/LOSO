@@ -46,7 +46,9 @@ public class CtrlEstilos {
     Estilos estilos;
     vEstilos vestilos;
     int temp = 0;
-    ArrayList<Item> lineas, familias, series = new ArrayList<>();
+    ArrayList<Item> lineas = new ArrayList<>();
+    ArrayList<Item> familias = new ArrayList<>();
+    ArrayList<Item> series = new ArrayList<>();
 
     public CtrlEstilos(JFrame parent, Generic g, Estilos estilos) {
         /*NO SE DEBE DE LLAMAR NADA SI NO SE DEFINEN ESTAS ASIGNACIONES*/
@@ -63,6 +65,7 @@ public class CtrlEstilos {
         AutoCompleteDecorator.decorate(this.nuevo.Temporada);
         AutoCompleteDecorator.decorate(this.nuevo.Tipo);
         AutoCompleteDecorator.decorate(this.nuevo.Linea);
+        AutoCompleteDecorator.decorate(this.nuevo.MaquilaPlantilla);
         /*NUEVO*/
         nuevo.btnGuardar.addKeyListener(new KeyListener() {
             @Override
@@ -156,6 +159,9 @@ public class CtrlEstilos {
         TP = new TextPrompt("HERRAMENTAL", nuevo.Herramental);
         TP.changeAlpha(0.75f);
         TP.changeStyle(Font.ITALIC);
+        TP = new TextPrompt("TIPO DE CONSTRUCCION", nuevo.TipoDeConstruccion);
+        TP.changeAlpha(0.75f);
+        TP.changeStyle(Font.ITALIC);
 
         /*INVOCAR METODOS QUE RELLENAN DATOS*/
         getLineas();
@@ -175,13 +181,9 @@ public class CtrlEstilos {
             a.add(nuevo.Linea.getSelectedItem().toString());
             a.add(nuevo.Clave.getText());
             a.add(nuevo.Descripcion.getText());
-            a.add(nuevo.Descripcion.getText());
-            int Familia = 0;
-//            for (Item modulo : modulos) {
-//                if (modulo.getDescription().equals(nuevo.Modulo.getSelectedItem().toString())) {
-//                    System.out.println("ID : " + modulo.getID());
-//                }
-//            }
+            a.add(getID(familias, nuevo.Familia.getSelectedItem().toString()));
+            a.add(getID(series, nuevo.Serie.getSelectedItem().toString()));
+            a.add(getID(series, nuevo.Serie.getSelectedItem().toString()));
 
             DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
             Date date = new Date();
@@ -270,6 +272,7 @@ public class CtrlEstilos {
 
     public final void getLineas() {
         try {
+            lineas = new ArrayList<>();
             for (Iterator it = g.fill("SP_OBTENER_LINEAS").iterator(); it.hasNext();) {
                 Object[] item = (Object[]) it.next();
                 System.out.println(String.valueOf(item[0] + ":" + item[1]));
@@ -287,10 +290,12 @@ public class CtrlEstilos {
 
     public final void getFamilias() {
         try {
+            familias = new ArrayList<>();
+            Item familia = null;
             for (Iterator it = g.fill("SP_OBTENER_FAMILIAS").iterator(); it.hasNext();) {
-                Object[] item = (Object[]) it.next();
-                System.out.println(String.valueOf(item[0] + ":" + item[1]));
-                familias.add(new Item(Integer.parseInt(String.valueOf(item[0])), String.valueOf(item[1])));
+                Object[] item = (Object[]) it.next(); 
+                familia = new Item(Integer.parseInt(String.valueOf(item[0])), String.valueOf(item[1]));
+                familias.add(familia);
                 nuevo.Familia.addItem(String.valueOf(item[1]));
                 editar.Familia.addItem(String.valueOf(item[1]));
             }
@@ -300,5 +305,16 @@ public class CtrlEstilos {
             System.out.println("ERROR\n" + e.getMessage());
             e.printStackTrace();/*INDICA LA LINEA DONDE OCURRE EL PROBLEMA*/
         }
+    }
+
+    public int getID(ArrayList<Item> x, String selected_item) {
+        int id = 0;
+        for (Item o : x) {
+            if (o.getDescription().equals(selected_item)) {
+                id = o.getID();
+                break;
+            }
+        }
+        return id;
     }
 }
