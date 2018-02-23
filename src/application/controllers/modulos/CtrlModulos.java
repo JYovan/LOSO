@@ -110,9 +110,9 @@ public class CtrlModulos {
             }
         });
         /*PLACEHOLDERS*/
-        TextPrompt placeholders = new TextPrompt("NOMBRE DEL MODULO", nuevo.Modulo);
-        placeholders.changeAlpha(0.75f);
-        placeholders.changeStyle(Font.BOLD);
+//        TextPrompt placeholders = new TextPrompt("NOMBRE DEL MODULO", nuevo.Modulo);
+//        placeholders.changeAlpha(0.75f);
+//        placeholders.changeStyle(Font.BOLD);
     }
 
     public void setVisible() {

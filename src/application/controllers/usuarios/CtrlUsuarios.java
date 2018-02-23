@@ -170,15 +170,15 @@ public class CtrlUsuarios {
 
         });
         /*PLACEHOLDERS*/
-        TextPrompt placeholders = new TextPrompt("NOMBRE DE USUARIO", nuevo.Usuario);
-        placeholders.changeAlpha(0.75f);
-        placeholders.changeStyle(Font.BOLD);
-        placeholders = new TextPrompt("CONTRASEÑA", nuevo.Contrasena);
-        placeholders.changeAlpha(0.75f);
-        placeholders.changeStyle(Font.BOLD);
-        placeholders = new TextPrompt("lobosolo@lobosolo.com", nuevo.Correo);
-        placeholders.changeAlpha(0.75f);
-        placeholders.changeStyle(Font.BOLD);
+//        TextPrompt placeholders = new TextPrompt("NOMBRE DE USUARIO", nuevo.Usuario);
+//        placeholders.changeAlpha(0.75f);
+//        placeholders.changeStyle(Font.BOLD);
+//        placeholders = new TextPrompt("CONTRASEÑA", nuevo.Contrasena);
+//        placeholders.changeAlpha(0.75f);
+//        placeholders.changeStyle(Font.BOLD);
+//        placeholders = new TextPrompt("lobosolo@lobosolo.com", nuevo.Correo);
+//        placeholders.changeAlpha(0.75f);
+//        placeholders.changeStyle(Font.BOLD);
     }
 
     public void setVisible() {

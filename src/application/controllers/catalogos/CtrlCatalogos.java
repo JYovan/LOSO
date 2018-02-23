@@ -207,21 +207,21 @@ public class CtrlCatalogos {
         });
 
         /*PLACEHOLDERS*/
-        TextPrompt placeholders = new TextPrompt("CLAVE", nuevo.SValue);
-        placeholders.changeAlpha(0.75f);
-        placeholders.changeStyle(Font.BOLD);
-        placeholders = new TextPrompt("ORDEN", nuevo.IValue);
-        placeholders.changeAlpha(0.75f);
-        placeholders.changeStyle(Font.BOLD);
-        placeholders = new TextPrompt("DESCRIPCIÓN", nuevo.Valor_Text);
-        placeholders.changeAlpha(0.75f);
-        placeholders.changeStyle(Font.BOLD);
-        placeholders = new TextPrompt("VALOR", nuevo.Valor_Num);
-        placeholders.changeAlpha(0.75f);
-        placeholders.changeStyle(Font.BOLD);
-        placeholders = new TextPrompt("CAMPO ESPECIAL", nuevo.Special);
-        placeholders.changeAlpha(0.75f);
-        placeholders.changeStyle(Font.BOLD);
+//        TextPrompt placeholders = new TextPrompt("CLAVE", nuevo.SValue);
+//        placeholders.changeAlpha(0.75f);
+//        placeholders.changeStyle(Font.BOLD);
+//        placeholders = new TextPrompt("ORDEN", nuevo.IValue);
+//        placeholders.changeAlpha(0.75f);
+//        placeholders.changeStyle(Font.BOLD);
+//        placeholders = new TextPrompt("DESCRIPCIÓN", nuevo.Valor_Text);
+//        placeholders.changeAlpha(0.75f);
+//        placeholders.changeStyle(Font.BOLD);
+//        placeholders = new TextPrompt("VALOR", nuevo.Valor_Num);
+//        placeholders.changeAlpha(0.75f);
+//        placeholders.changeStyle(Font.BOLD);
+//        placeholders = new TextPrompt("CAMPO ESPECIAL", nuevo.Special);
+//        placeholders.changeAlpha(0.75f);
+//        placeholders.changeStyle(Font.BOLD);
     }
 
     public void setVisible() {

@@ -67,9 +67,9 @@ public class mdlEditar extends javax.swing.JDialog {
 
         Buscar.setText("BUSCAR");
 
-        jLabel1.setText("USUARIO");
+        jLabel1.setText("Usuario");
 
-        jLabel2.setText("MODULO");
+        jLabel2.setText("Módulo");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);

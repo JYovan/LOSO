@@ -206,12 +206,12 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
-            <Property name="text" type="java.lang.String" value="USUARIO"/>
+            <Property name="text" type="java.lang.String" value="Usuario"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
-            <Property name="text" type="java.lang.String" value="MODULO"/>
+            <Property name="text" type="java.lang.String" value="M&#xf3;dulo"/>
           </Properties>
         </Component>
       </SubComponents>

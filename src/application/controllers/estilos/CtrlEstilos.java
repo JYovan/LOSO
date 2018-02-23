@@ -103,7 +103,7 @@ public class CtrlEstilos {
         nuevo.btnGuardar.addActionListener((e) -> {
             onGuardar();
         });
-        nuevo.Clave.addKeyListener(new KeyListener() {
+        nuevo.btnGuardar.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
@@ -164,27 +164,27 @@ public class CtrlEstilos {
         });
 
         /*PLACEHOLDERS*/
-        TextPrompt TP = new TextPrompt("CLAVE", nuevo.Clave);
-        TP.changeAlpha(0.75f);
-        TP.changeStyle(Font.ITALIC);
-        TP = new TextPrompt("DESPERDICIO", nuevo.Descripcion);
-        TP.changeAlpha(0.75f);
-        TP.changeStyle(Font.ITALIC);
-        TP = new TextPrompt("DESPERDICIO", nuevo.Desperdicio);
-        TP.changeAlpha(0.75f);
-        TP.changeStyle(Font.ITALIC);
-        TP = new TextPrompt("2018", nuevo.Ano);
-        TP.changeAlpha(0.75f);
-        TP.changeStyle(Font.ITALIC);
-        TP = new TextPrompt("PUNTO CENTRAL", nuevo.PuntoCentral);
-        TP.changeAlpha(0.75f);
-        TP.changeStyle(Font.ITALIC);
-        TP = new TextPrompt("HERRAMENTAL", nuevo.Herramental);
-        TP.changeAlpha(0.75f);
-        TP.changeStyle(Font.ITALIC);
-        TP = new TextPrompt("TIPO DE CONSTRUCCION", nuevo.TipoDeConstruccion);
-        TP.changeAlpha(0.75f);
-        TP.changeStyle(Font.ITALIC);
+//        TextPrompt TP = new TextPrompt("CLAVE", nuevo.Clave);
+//        TP.changeAlpha(0.75f);
+//        TP.changeStyle(Font.ITALIC);
+//        TP = new TextPrompt("DESPERDICIO", nuevo.Descripcion);
+//        TP.changeAlpha(0.75f);
+//        TP.changeStyle(Font.ITALIC);
+//        TP = new TextPrompt("DESPERDICIO", nuevo.Desperdicio);
+//        TP.changeAlpha(0.75f);
+//        TP.changeStyle(Font.ITALIC);
+//        TP = new TextPrompt("2018", nuevo.Ano);
+//        TP.changeAlpha(0.75f);
+//        TP.changeStyle(Font.ITALIC);
+//        TP = new TextPrompt("PUNTO CENTRAL", nuevo.PuntoCentral);
+//        TP.changeAlpha(0.75f);
+//        TP.changeStyle(Font.ITALIC);
+//        TP = new TextPrompt("HERRAMENTAL", nuevo.Herramental);
+//        TP.changeAlpha(0.75f);
+//        TP.changeStyle(Font.ITALIC);
+//        TP = new TextPrompt("TIPO DE CONSTRUCCION", nuevo.TipoDeConstruccion);
+//        TP.changeAlpha(0.75f);
+//        TP.changeStyle(Font.ITALIC);
 
         /*INVOCAR METODOS QUE RELLENAN DATOS*/
         getLineas();

@@ -9,6 +9,7 @@ import application.config.Generic;
 import application.config.TextPrompt;
 import application.controllers.Lineas;
 import application.helpers.Item;
+import application.third_party.Resources;
 import application.views.lineas.mdlEditar;
 import application.views.lineas.mdlNuevo;
 import application.views.vLineas;
@@ -27,20 +28,22 @@ import javax.swing.JOptionPane;
  * @author Christian
  */
 public class CtrlLineas {
-
+    
     mdlNuevo nuevo;
     mdlEditar editar;
     Generic g;
     Lineas lineas;
     vLineas vlineas;
     int temp = 0;
-
+    Resources rsc;
+    
     public CtrlLineas(JFrame parent, Generic g, Lineas lineas) {
         nuevo = new mdlNuevo(parent, true);
         editar = new mdlEditar(parent, true);
         this.vlineas = (vLineas) parent;
         this.g = g;
         this.lineas = lineas;
+        rsc = new Resources();
         nuevo.cmbTemporada.addActionListener((e) -> {
             System.out.println("TEMPORADA: " + getID(temporadas, nuevo.cmbTemporada.getSelectedItem().toString()));
         });
@@ -54,11 +57,11 @@ public class CtrlLineas {
                     nuevo.dispose();
                 }
             }
-
+            
             @Override
             public void keyTyped(KeyEvent e) {
             }
-
+            
             @Override
             public void keyReleased(KeyEvent e) {
             }
@@ -69,7 +72,7 @@ public class CtrlLineas {
         editar.btnGuardar.addActionListener((e) -> {
             onModificar();
         });
-
+        
         nuevo.txtClave.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -77,15 +80,36 @@ public class CtrlLineas {
                     nuevo.dispose();
                 }
             }
-
+            
             @Override
             public void keyTyped(KeyEvent e) {
             }
-
+            
             @Override
             public void keyReleased(KeyEvent e) {
             }
         });
+        
+        nuevo.txtAno.addKeyListener(new KeyListener() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                
+                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                    editar.dispose();
+                }
+            }
+            
+            @Override
+            public void keyTyped(KeyEvent e) {
+                rsc.setOnlyNumbers(e);
+                
+            }
+            
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });
+        
         nuevo.txtDescripcion.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -96,11 +120,11 @@ public class CtrlLineas {
                     nuevo.dispose();
                 }
             }
-
+            
             @Override
             public void keyTyped(KeyEvent e) {
             }
-
+            
             @Override
             public void keyReleased(KeyEvent e) {
             }
@@ -112,15 +136,36 @@ public class CtrlLineas {
                     editar.dispose();
                 }
             }
-
+            
             @Override
             public void keyTyped(KeyEvent e) {
             }
-
+            
             @Override
             public void keyReleased(KeyEvent e) {
             }
         });
+        
+        editar.txtAno.addKeyListener(new KeyListener() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                
+                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                    editar.dispose();
+                }
+            }
+            
+            @Override
+            public void keyTyped(KeyEvent e) {
+                rsc.setOnlyNumbers(e);
+                
+            }
+            
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });
+        
         editar.txtDescripcion.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -131,45 +176,48 @@ public class CtrlLineas {
                     editar.dispose();
                 }
             }
-
+            
             @Override
             public void keyTyped(KeyEvent e) {
             }
-
+            
             @Override
             public void keyReleased(KeyEvent e) {
             }
         });
 
         /*PLACEHOLDERS*/
-        TextPrompt placeholders = new TextPrompt("AÑO", nuevo.txtAno);
-        placeholders.changeAlpha(0.75f);
-        placeholders.changeStyle(Font.BOLD);
-        placeholders = new TextPrompt("CLAVE", nuevo.txtClave);
-        placeholders.changeAlpha(0.75f);
-        placeholders.changeStyle(Font.BOLD);
-        placeholders = new TextPrompt("DESCRIPCIÓN", nuevo.txtDescripcion);
-        placeholders.changeAlpha(0.75f);
-        placeholders.changeStyle(Font.BOLD);
-
+//        TextPrompt placeholders = new TextPrompt("AÑO", nuevo.txtAno);
+//        placeholders.changeAlpha(0.75f);
+//        placeholders.changeStyle(Font.BOLD);
+//        placeholders = new TextPrompt("CLAVE", nuevo.txtClave);
+//        placeholders.changeAlpha(0.75f);
+//        placeholders.changeStyle(Font.BOLD);
+//        placeholders = new TextPrompt("DESCRIPCIÓN", nuevo.txtDescripcion);
+//        placeholders.changeAlpha(0.75f);
+//        placeholders.changeStyle(Font.BOLD);
+        
         getTemporadas();
     }
-
+    
     public void setVisible() {
         nuevo.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/96/icons8_Idea_96px.png")));
         nuevo.setLocationRelativeTo(null);
         nuevo.setVisible(true);
     }
-
+    
     public void onGuardar() {
         try {
-            ArrayList<Object> a = new ArrayList<>(); 
+            ArrayList<Object> a = new ArrayList<>();            
+    
+            
             a.add(nuevo.txtClave.getText());
             a.add(nuevo.txtDescripcion.getText());
             a.add(nuevo.cmbEstatusMuestra.getSelectedItem().toString());
             a.add(nuevo.txtAno.getText());
             a.add(getID(temporadas, nuevo.cmbTemporada.getSelectedItem().toString()));
-            a.add(nuevo.cmbEstatus.getSelectedItem().toString());
+
+          
             if (!nuevo.txtClave.getText().equals("") && g.addUpdateOrDelete("SP_AGREGAR_LINEA", a)) {
                 JOptionPane.showMessageDialog(null, "REGISTRO AGREGADO", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
                 nuevo.dispose();
@@ -181,13 +229,13 @@ public class CtrlLineas {
             JOptionPane.showMessageDialog(null, "NO SE HA PODIDO REGISTRAR EL REGISTRO", "ERROR AL GUARDAR", JOptionPane.ERROR_MESSAGE);
         }
     }
-
+    
     public void onEditar(int IDX) {
         try {
             temp = IDX;
             ArrayList<Object> a = new ArrayList<>();
             a.add(IDX);
-            ArrayList<Object[][]> usuario = g.findByParams("SP_USUARIO_X_ID", a);
+            ArrayList<Object[][]> usuario = g.findByParams("SP_LINEA_X_ID", a);
             Object[][] data = usuario.get(0);
             editar.txtClave.setText(String.valueOf((data[0][1] != null) ? data[0][1] : ""));
             editar.txtDescripcion.setText(String.valueOf((data[0][2] != null) ? data[0][2] : ""));
@@ -202,7 +250,7 @@ public class CtrlLineas {
             JOptionPane.showMessageDialog(null, "NO SE HA PODIDO EDITAR EL REGISTRO", "ERROR AL EDITAR", JOptionPane.ERROR_MESSAGE);
         }
     }
-
+    
     public void onModificar() {
         try {
             ArrayList<Object> a = new ArrayList<>();
@@ -211,9 +259,9 @@ public class CtrlLineas {
             a.add(editar.txtDescripcion.getText());
             a.add(editar.cmbEstatusMuestra.getSelectedItem().toString());
             a.add(editar.txtAno.getText());
-            a.add(editar.cmbTemporada.getSelectedItem().toString());
+            a.add(getID(temporadas, editar.cmbTemporada.getSelectedItem().toString()));
             a.add(editar.cmbEstatus.getSelectedItem().toString());
-
+            
             if (!editar.txtClave.getText().equals("") && g.addUpdateOrDelete("SP_MODIFICAR_LINEA", a)) {
                 JOptionPane.showMessageDialog(null, "REGISTRO MODIFICADO", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
                 editar.dispose();
@@ -225,7 +273,7 @@ public class CtrlLineas {
             JOptionPane.showMessageDialog(null, "NO SE HA PODIDO MODIFICAR EL REGISTRO", "ERROR AL GUARDAR", JOptionPane.ERROR_MESSAGE);
         }
     }
-
+    
     public void onEliminar(int IDX) {
         try {
             ArrayList<Object> a = new ArrayList<>();
@@ -241,7 +289,7 @@ public class CtrlLineas {
         }
     }
     ArrayList<Item> temporadas;
-
+    
     public final void getTemporadas() {
         try {
             temporadas = new ArrayList<>();
@@ -259,7 +307,7 @@ public class CtrlLineas {
             e.printStackTrace();/*INDICA LA LINEA DONDE OCURRE EL PROBLEMA*/
         }
     }
-
+    
     public int getID(ArrayList<Item> x, String selected_item) {
         int id = 0;
         for (Item o : x) {
