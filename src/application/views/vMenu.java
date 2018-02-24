@@ -42,6 +42,7 @@ public class vMenu extends javax.swing.JFrame {
         mnuClientes = new javax.swing.JMenuItem();
         mnuProveedores = new javax.swing.JMenuItem();
         mnuAlmacenes = new javax.swing.JMenuItem();
+        mnuMaquilas = new javax.swing.JMenuItem();
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
         mnuLineas = new javax.swing.JMenuItem();
         mnuEstilos = new javax.swing.JMenuItem();
@@ -70,7 +71,6 @@ public class vMenu extends javax.swing.JFrame {
         mnuTemporadas = new javax.swing.JMenuItem();
         mnuHormas = new javax.swing.JMenuItem();
         mnuTiposEstilo = new javax.swing.JMenuItem();
-        mnuMaquilas = new javax.swing.JMenuItem();
         mSalir = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -126,6 +126,9 @@ public class vMenu extends javax.swing.JFrame {
         mnuAlmacenes.setText("Almacenes");
         mnuAlmacenes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu14.add(mnuAlmacenes);
+
+        mnuMaquilas.setText("Maquilas");
+        jMenu14.add(mnuMaquilas);
         jMenu14.add(jSeparator3);
 
         mnuLineas.setText("Lineas");
@@ -226,10 +229,6 @@ public class vMenu extends javax.swing.JFrame {
         mnuTiposEstilo.setText("Tipos de Estilo");
         mnuTiposEstilo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu1.add(mnuTiposEstilo);
-
-        mnuMaquilas.setText("Maquilas");
-        mnuMaquilas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jMenu1.add(mnuMaquilas);
 
         jMenu4.add(jMenu1);
 

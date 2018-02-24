@@ -31,6 +31,7 @@ public class Menu {
     Permisos p;
     Lineas lin;
     Estilos est;
+    Maquilas maq;
     
     public Menu(Generic g) {
         this.g = g;
@@ -42,6 +43,7 @@ public class Menu {
         c = new Catalogos(g);
         lin = new Lineas(g);
         est = new Estilos(g);
+        maq = new Maquilas(g);
 
         src.toSysTray(menu);
         menu.mSalir.addMouseListener(new MouseAdapter() {
@@ -53,6 +55,12 @@ public class Menu {
                 }
             }
         });
+        
+        menu.mnuMaquilas.addActionListener((e) -> {
+            maq.getRecords();
+            maq.setVisible();
+        });
+        
         menu.mnuEstilos.addActionListener((e) -> {
             est.getRecords();
             est.setVisible();
@@ -62,12 +70,7 @@ public class Menu {
             lin.setVisible();
         });
 
-        menu.mnuMaquilas.addActionListener((e) -> {
-            c.setTipoCatalogo("MAQUILAS");
-            c.getRecords();
-            c.setVisible();
-        });
-
+       
         menu.mnuHormas.addActionListener((e) -> {
             c.setTipoCatalogo("HORMAS");
             c.getRecords();
