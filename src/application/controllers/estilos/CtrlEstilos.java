@@ -10,12 +10,15 @@ import application.config.Generic;
 import application.controllers.Estilos;
 import application.helpers.Item;
 import application.third_party.ImageUtils;
+import application.third_party.WaitLayerUI;
 import application.views.estilos.mdlEditar;
 import application.views.estilos.mdlNuevo;
 import application.views.vEstilos;
 import java.awt.HeadlessException;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
@@ -34,7 +37,10 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLayer;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.Timer;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
@@ -50,6 +56,7 @@ public class CtrlEstilos {
     Estilos estilos;
     vEstilos vestilos;
     int temp = 0;
+    boolean tiene_foto = false;
     ArrayList<Item> lineas = new ArrayList<>();
     ArrayList<Item> familias = new ArrayList<>();
     ArrayList<Item> series = new ArrayList<>();
@@ -263,6 +270,7 @@ public class CtrlEstilos {
                 fc.setDialogTitle("SELECCIONE UNA IMAGEN");
                 int file = fc.showOpenDialog(null);
                 if (file == JFileChooser.APPROVE_OPTION) {
+                    tiene_foto = true;
                     File selectedFile = fc.getSelectedFile();
                     editar.Foto.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(selectedFile.getAbsolutePath()).getScaledInstance(350, 350, Image.SCALE_SMOOTH)));
                     try {
@@ -385,7 +393,9 @@ public class CtrlEstilos {
             a.add(IDX);
             ArrayList<Object[][]> x = g.findByParams("SP_ESTILO_X_ID", a);
             Object[][] data = x.get(0);
-            editar.Linea.getModel().setSelectedItem(data[0][1]);
+            if (data[0][1] != null) {
+                editar.Linea.getModel().setSelectedItem(data[0][1]);
+            }
             editar.Clave.setText(String.valueOf(data[0][2]));
             editar.Descripcion.setText(String.valueOf(data[0][3]));
             if (data[0][4] != null) {
@@ -411,14 +421,15 @@ public class CtrlEstilos {
                 editar.Liberado.setSelected(true);
             }
             editar.Herramental.setText(String.valueOf(data[0][12]));
-            editar.Maquila.getModel().setSelectedItem(data[0][13]);
+            editar.Maquila.getModel().setSelectedItem(String.valueOf(data[0][13]));
             editar.Notas.setText(String.valueOf(data[0][14]));
             editar.Ano.setText((String.valueOf(data[0][15]).equals("null")) ? "" : String.valueOf(data[0][15]));
-            editar.Temporada.getModel().setSelectedItem(data[0][16]);
+            editar.Temporada.getModel().setSelectedItem(String.valueOf(data[0][16]));
             editar.PuntoCentral.setText((String.valueOf(data[0][17]).equals("null") ? "" : String.valueOf(data[0][17])));
             editar.Tipo.getModel().setSelectedItem(data[0][18]);
-            editar.MaquilaPlantilla.getModel().setSelectedItem(data[0][19]);
+            editar.MaquilaPlantilla.getModel().setSelectedItem(String.valueOf(data[0][19]));
             editar.TipoDeConstruccion.setText(String.valueOf(data[0][20]));
+
             editar.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/96/icons8_Idea_96px.png")));
             editar.setLocationRelativeTo(null);
             editar.setVisible(true);
@@ -437,7 +448,7 @@ public class CtrlEstilos {
                 a.add(getID(lineas, editar.Linea.getSelectedItem().toString()));
                 a.add((editar.Clave.getText().equals("") ? "" : editar.Clave.getText()));
                 a.add(editar.Descripcion.getText());
-                if (!editar.Familia.getSelectedItem().toString().equals("")) {
+                if (editar.Familia.getSelectedIndex() != -1) {
                     x = getID(familias, editar.Familia.getSelectedItem().toString());
                     if (Integer.parseInt(String.valueOf(x)) != 0) {
                         a.add(x);
@@ -447,7 +458,7 @@ public class CtrlEstilos {
                 } else {
                     a.add(null);
                 }
-                if (!editar.Serie.getSelectedItem().toString().equals("")) {
+                if (editar.Serie.getSelectedIndex() != -1) {
                     x = getID(series, editar.Serie.getSelectedItem().toString());
                     if (Integer.parseInt(String.valueOf(x)) != 0) {
                         a.add(x);
@@ -457,7 +468,7 @@ public class CtrlEstilos {
                 } else {
                     a.add(null);
                 }
-                if (!editar.Horma.getSelectedItem().toString().equals("")) {
+                if (editar.Horma.getSelectedIndex() != -1) {
                     x = getID(hormas, editar.Horma.getSelectedItem().toString());
                     if (Integer.parseInt(String.valueOf(x)) != 0) {
                         a.add(x);
@@ -473,15 +484,13 @@ public class CtrlEstilos {
                     a.add(Foto);
                     ImageIO.write(bufi, "png", new File(Foto));
                 } else {
-                    a.add(null);
+                    a.add(0);
                 }
                 a.add(editar.Estatus.getSelectedItem().toString());
                 a.add(editar.Desperdicio.getText());
                 a.add(editar.Liberado.isSelected() ? 1 : 0);
                 a.add(editar.Herramental.getText());
-                System.out.println("EDITAR MAQUILA: "+editar.Maquila.getSelectedItem().toString());
-                System.out.println(editar.Maquila.getSelectedItem().toString());
-                if (editar.Maquila.getSelectedItem().toString() != null) {
+                if (editar.Maquila.getSelectedIndex() != -1) {
                     x = getID(maquilas, editar.Maquila.getSelectedItem().toString());
                     if (Integer.parseInt(String.valueOf(x)) != 0) {
                         a.add(x);
@@ -493,7 +502,7 @@ public class CtrlEstilos {
                 }
                 a.add(editar.Notas.getText());
                 a.add(editar.Ano.getText().equals("") ? null : Integer.parseInt(editar.Ano.getText()));
-                if (!editar.Temporada.getSelectedItem().toString().equals("")) {
+                if (editar.Temporada.getSelectedIndex() != -1) {
                     x = getID(temporadas, editar.Temporada.getSelectedItem().toString());
                     if (Integer.parseInt(String.valueOf(x)) != 0) {
                         a.add(x);
@@ -505,7 +514,7 @@ public class CtrlEstilos {
                 }
                 a.add(editar.PuntoCentral.getText().equals("") ? null : Integer.parseInt(editar.PuntoCentral.getText()));
 
-                if (!editar.Tipo.getSelectedItem().toString().equals("")) {
+                if (editar.Tipo.getSelectedIndex() != -1) {
                     x = getID(tipo_estilos, editar.Tipo.getSelectedItem().toString());
                     if (Integer.parseInt(String.valueOf(x)) != 0) {
                         a.add(x);
@@ -520,9 +529,10 @@ public class CtrlEstilos {
                 if (!files_dir.exists()) {
                     files_dir.mkdir();
                 }
-                for (int i = 0; i < a.size(); i++) {
-                    System.out.println(i + ".-" + String.valueOf(a.get(i)));
-                }
+//                puede servir para testear
+//                for (int i = 0; i < a.size(); i++) {
+//                    System.out.println(i + ".-" + String.valueOf(a.get(i)));
+//                }
                 if (g.addUpdateOrDelete("SP_MODIFICAR_ESTILO", a)) {
                     JOptionPane.showMessageDialog(null, "ESTILO MODIFICADO", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
                     editar.dispose();
@@ -542,6 +552,7 @@ public class CtrlEstilos {
 
     public void onEliminar(int IDX) {
         try {
+//            HoldOn(vestilos.jPanel2);
             ArrayList<Object> a = new ArrayList<>();
             a.add(IDX);
             if (g.addUpdateOrDelete("SP_ELIMINAR_ESTILO", a)) {
@@ -569,7 +580,6 @@ public class CtrlEstilos {
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "NO SE HAN PODIDO OBTENER LINEAS", "ERROR AL OBTENER", JOptionPane.ERROR_MESSAGE);
-
             System.out.println("ERROR\n" + e.getMessage());
             e.printStackTrace();/*INDICA LA LINEA DONDE OCURRE EL PROBLEMA*/
         }
@@ -712,5 +722,31 @@ public class CtrlEstilos {
             }
         }
         return id;
+    }
+
+    /*
+        HoldOn implementation for Java
+     */
+    final WaitLayerUI layerUI = new WaitLayerUI();
+    JPanel pnl = new JPanel();
+    Timer stopper;
+
+    public void HoldOn(JPanel pnlContenedor) {
+
+        this.pnl = pnlContenedor;
+        JLayer<JPanel> jlayer = new JLayer<>(this.pnl, layerUI);
+        stopper = new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                layerUI.stop();
+            }
+        });
+        stopper.setRepeats(false);
+        jlayer.setSize(pnlContenedor.getSize());
+        pnlContenedor.add(jlayer);
+        layerUI.start();
+        if (!stopper.isRunning()) {
+            stopper.start();
+        }
     }
 }

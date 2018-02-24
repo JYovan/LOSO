@@ -67,6 +67,7 @@ public class vEstilos extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblEstilos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jScrollPane1.setViewportView(tblEstilos);
 
         jToolBar1.setFloatable(false);
@@ -151,7 +152,7 @@ public class vEstilos extends javax.swing.JFrame {
     public javax.swing.JButton btnNuevo;
     public javax.swing.JButton btnRefrescar;
     public javax.swing.JComboBox<String> cmbTamano;
-    private javax.swing.JPanel jPanel2;
+    public javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JToolBar jToolBar1;
