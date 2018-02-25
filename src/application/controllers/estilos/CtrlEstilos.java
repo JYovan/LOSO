@@ -42,6 +42,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import org.apache.commons.io.FilenameUtils;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 /**
@@ -308,7 +309,8 @@ public class CtrlEstilos {
         try {
             ArrayList<Object> a = new ArrayList<>();
             Object x = null;
-            String Foto = "files/" + fc.getSelectedFile().getName();
+            String ext = FilenameUtils.getExtension(fc.getSelectedFile().getName());
+            String Foto = "files/" + nuevo.Clave.getText() + "." + ext;
             if (!nuevo.Linea.getSelectedItem().toString().equals("") && !nuevo.Clave.getText().equals("")) {
                 a.add(getID(lineas, nuevo.Linea.getSelectedItem().toString()));
                 a.add((nuevo.Clave.getText().equals("") ? "" : nuevo.Clave.getText()));
@@ -480,7 +482,8 @@ public class CtrlEstilos {
                 }
                 a.add(editar.Genero.getSelectedItem().toString());
                 if (bufi != null) {
-                    Foto = "files/" + fc.getSelectedFile().getName();
+                    String ext = FilenameUtils.getExtension(fc.getSelectedFile().getName());
+                    Foto = "files/" + editar.Clave.getText() + "." + ext;
                     a.add(Foto);
                     ImageIO.write(bufi, "png", new File(Foto));
                 } else {
