@@ -102,7 +102,7 @@ public class Generic {
                 }
             }
             stored += "";
-            ps = c.getConnection().prepareCall(stored,ResultSet.TYPE_SCROLL_INSENSITIVE,
+            ps = c.getConnection().prepareCall(stored,ResultSet.TYPE_SCROLL_SENSITIVE,
                 ResultSet.CONCUR_READ_ONLY);
             for (int nal = 1; nal <= o.size(); nal++) {
                 ps.setObject(nal, o.get(j));
@@ -352,7 +352,7 @@ public class Generic {
         ArrayList<Object[]> obj = new ArrayList<>();
         try {
             int j = 1;
-            ps = c.getConnection().prepareCall("EXEC " + stored + ";",ResultSet.TYPE_SCROLL_INSENSITIVE,
+            ps = c.getConnection().prepareCall("EXEC " + stored + ";",ResultSet.TYPE_SCROLL_SENSITIVE,
                 ResultSet.CONCUR_READ_ONLY);
             rs = ps.executeQuery();
             if (rs.last()) {
