@@ -9,12 +9,6 @@
             <file>file:/C:/Users/Administrador/Documents/NetBeansProjects/LOSO/src/application/controllers/Estilos.java</file>
             <file>file:/C:/Users/Administrador/Documents/NetBeansProjects/LOSO/src/application/views/estilos/mdlNuevo.java</file>
         </group>
-        <group>
-            <file>file:/C:/Users/Administrador/Documents/NetBeansProjects/LOSO/src/application/views/vEstilos.java</file>
-            <file>file:/C:/Users/Administrador/Documents/NetBeansProjects/LOSO/src/application/controllers/estilos/CtrlEstilos.java</file>
-            <file>file:/C:/Users/Administrador/Documents/NetBeansProjects/LOSO/src/application/views/estilos/mdlEditar.java</file>
-            <file>file:/C:/Users/Administrador/Documents/NetBeansProjects/LOSO/src/application/controllers/Estilos.java</file>
-            <file>file:/C:/Users/Administrador/Documents/NetBeansProjects/LOSO/src/application/views/estilos/mdlNuevo.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
