@@ -352,7 +352,8 @@ public class Generic {
         ArrayList<Object[]> obj = new ArrayList<>();
         try {
             int j = 1;
-            ps = c.getConnection().prepareCall("EXECUTE " + stored + ";");
+            ps = c.getConnection().prepareCall("EXEC " + stored + ";",ResultSet.TYPE_SCROLL_INSENSITIVE,
+                ResultSet.CONCUR_READ_ONLY);
             rs = ps.executeQuery();
             if (rs.last()) {
                 rs.beforeFirst();
