@@ -43,7 +43,7 @@ public class Generic {
         ArrayList<Object[][]> obj = new ArrayList<>();
         Object[][] cols = new Object[0][0];
         try {
-            ps = c.getConnection().prepareCall("CALL " + stored + "();");
+            ps = c.getConnection().prepareCall("EXECUTE " + stored + "");
             rs = ps.executeQuery();
             rsmd = rs.getMetaData();
             int col = 0, coldb = 1;
@@ -93,7 +93,7 @@ public class Generic {
         Object[][] cols = null;
         int j = 0;
         try {
-            stored = "CALL " + stored + "(";
+            stored = "EXECUTE " + stored + " ";
             for (int i = 1; i <= o.size(); i++) {
                 if (i == o.size()) {
                     stored += "?";
@@ -101,8 +101,9 @@ public class Generic {
                     stored += "?,";
                 }
             }
-            stored += ");";
-            ps = c.getConnection().prepareCall(stored);
+            stored += "";
+            ps = c.getConnection().prepareCall(stored,ResultSet.TYPE_SCROLL_INSENSITIVE,
+                ResultSet.CONCUR_READ_ONLY);
             for (int nal = 1; nal <= o.size(); nal++) {
                 ps.setObject(nal, o.get(j));
                 j++;
@@ -144,7 +145,7 @@ public class Generic {
         Object[] obj = null;
         try {
             int j = 0;
-            String stored = "CALL " + sp + "();";
+            String stored = "EXECUTE " + sp ;
             ps = c.getConnection().prepareCall(stored);
             rs = ps.executeQuery();
             rsmd = rs.getMetaData();
@@ -185,8 +186,8 @@ public class Generic {
     public boolean addUpdateOrDelete(String sp, ArrayList<Object> al) {
         try {
             int j = 0;
-            String stored = "CALL " + sp;
-            stored += "(";
+            String stored = "EXECUTE " + sp;
+            stored += " ";
             for (int i = 1; i <= al.size(); i++) {
                 if (i == al.size()) {
                     stored += "?";
@@ -194,7 +195,7 @@ public class Generic {
                     stored += "?,";
                 }
             }
-            stored += ");";
+            stored += ";";
             ps = c.getConnection().prepareCall(stored);
             for (int nal = 1; nal <= al.size(); nal++) {
                 ps.setObject(nal, al.get(j));
@@ -222,8 +223,8 @@ public class Generic {
         ArrayList<Object> obj = null;
         try {
             int j;
-            String stored = "CALL " + sp;
-            stored += "(";
+            String stored = "EXECUTE " + sp;
+            stored += "";
             for (int i = 1; i <= al.size(); i++) {
                 if (i == al.size()) {
                     stored += "?";
@@ -231,7 +232,7 @@ public class Generic {
                     stored += "?,";
                 }
             }
-            stored += ");";
+            stored += ";";
             ps = c.getConnection().prepareCall(stored);
             rs = ps.executeQuery();
             rsmd = rs.getMetaData();
@@ -274,8 +275,8 @@ public class Generic {
         Object[] obj = null;
         try {
             int j = 0;
-            String stored = "CALL " + sp;
-            stored += "(";
+            String stored = "EXECUTE " + sp;
+            stored += "";
             for (int i = 1; i <= o.size(); i++) {
                 if (i == o.size()) {
                     stored += "?";
@@ -283,7 +284,7 @@ public class Generic {
                     stored += "?,";
                 }
             }
-            stored += ");";
+            stored += "";
             ps = c.getConnection().prepareCall(stored);
             for (int nal = 1; nal <= o.size(); nal++) {
                 ps.setObject(nal, o.get(j));
@@ -351,12 +352,12 @@ public class Generic {
         ArrayList<Object[]> obj = new ArrayList<>();
         try {
             int j = 1;
-            ps = c.getConnection().prepareCall("CALL " + stored + "();");
+            ps = c.getConnection().prepareCall("EXECUTE " + stored + ";");
             rs = ps.executeQuery();
             if (rs.last()) {
                 rs.beforeFirst();
                 while (rs.next()) {
-                    Object[] item = new Object[]{rs.getObject(1),rs.getObject(2)}; 
+                    Object[] item = new Object[]{rs.getObject(1), rs.getObject(2)};
                     obj.add(item);
                 }
             }
@@ -382,7 +383,7 @@ public class Generic {
         ArrayList<Object> obj = new ArrayList<>();
         int j = 0;
         try {
-            stored = "CALL " + stored + "(";
+            stored = "EXECUTE " + stored + " ";
             for (int i = 1; i <= criterios.size(); i++) {
                 if (i == criterios.size()) {
                     stored += "?";
@@ -390,7 +391,7 @@ public class Generic {
                     stored += "?,";
                 }
             }
-            stored += ");";
+            stored += ";";
             ps = c.getConnection().prepareCall(stored);
             for (int nal = 1; nal <= criterios.size(); nal++) {
                 ps.setObject(nal, criterios.get(j));

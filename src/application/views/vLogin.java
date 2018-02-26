@@ -18,8 +18,7 @@ public class vLogin extends javax.swing.JFrame {
     ManejadorTecla manejador = new ManejadorTecla();
     public vLogin() {
         initComponents();
-        txtUsuario.addKeyListener(manejador);
-        txtContrasena.addKeyListener(manejador);
+        txtUsuario.addKeyListener(manejador); 
     }
 
     /**
