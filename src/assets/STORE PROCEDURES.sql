@@ -929,3 +929,19 @@ SET NOCOUNT ON;
 	SELECT E.ID AS ID, E.Descripcion AS LINEA FROM Estilos AS E WHERE E.Estatus IN('ACTIVO');
 END
 GO
+
+-- -----------------------------------------------------
+-- procedure SP_MATERIALES
+-- -----------------------------------------------------
+IF EXISTS (	SELECT name FROM sysobjects WHERE  name = 'SP_MATERIALES' AND TYPE = 'P')
+	DROP PROCEDURE SP_MATERIALES
+GO
+CREATE PROCEDURE SP_MATERIALES(@IDX INT)
+AS
+BEGIN
+SET NOCOUNT ON; 
+	SELECT  M.ID AS ID, M.Descripcion AS DESCRIPCION, M.Estatus AS ESTATUS
+	FROM Materiales AS M
+    WHERE M.ID = @IDX AND M.Estatus IN('ACTIVO','INACTIVO');
+END
+GO

@@ -33,6 +33,7 @@ public class Menu {
     Estilos est;
     Maquilas maq;
     Combinaciones comb;
+    Materiales mat;
     
     public Menu(Generic g) {
         this.g = g;
@@ -46,6 +47,7 @@ public class Menu {
         est = new Estilos(g);
         maq = new Maquilas(g);
         comb =  new Combinaciones(g);
+        mat =  new Materiales(g);
 
         src.toSysTray(menu);
         menu.mSalir.addMouseListener(new MouseAdapter() {
@@ -56,6 +58,11 @@ public class Menu {
                     System.exit(0);
                 }
             }
+        });
+        
+        menu.mnuMateriales.addActionListener((e) -> {
+            mat.getRecords();
+            mat.setVisible();
         });
         
         menu.mnuCombinaciones.addActionListener((e) -> {
