@@ -62,7 +62,7 @@ public class CtrlMateriales {
     ArrayList<Item> unidades_de_compra = new ArrayList<>();
     ArrayList<Item> unidades_de_consumo = new ArrayList<>();
     ArrayList<Item> tipos = new ArrayList<>();
-    ArrayList<Item> estatus = new ArrayList<>(); 
+    ArrayList<Item> estatus = new ArrayList<>();
     JFileChooser fc;
 
     public CtrlMateriales(JFrame parent, Generic g, Materiales materiales) {
@@ -77,56 +77,15 @@ public class CtrlMateriales {
         AutoCompleteDecorator.decorate(this.nuevo.UnidadCompra);
         AutoCompleteDecorator.decorate(this.nuevo.UnidadConsumo);
         AutoCompleteDecorator.decorate(this.nuevo.Tipo);
-        AutoCompleteDecorator.decorate(this.nuevo.Estatus); 
+        AutoCompleteDecorator.decorate(this.nuevo.Estatus);
+
+        AutoCompleteDecorator.decorate(this.editar.Departamento);
+        AutoCompleteDecorator.decorate(this.editar.Familia);
+        AutoCompleteDecorator.decorate(this.editar.UnidadCompra);
+        AutoCompleteDecorator.decorate(this.editar.UnidadConsumo);
+        AutoCompleteDecorator.decorate(this.editar.Tipo);
+        AutoCompleteDecorator.decorate(this.editar.Estatus);
         /*NUEVO*/
-       /* nuevo.Ano.addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                if (e.getKeyChar() < '0' || e.getKeyChar() > '9' && e.getKeyChar() != KeyEvent.VK_BACK_SPACE) {
-                    e.consume();
-                }
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-        });
-        nuevo.PuntoCentral.addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                if (e.getKeyChar() < '0' || e.getKeyChar() > '9' && e.getKeyChar() != KeyEvent.VK_BACK_SPACE) {
-                    e.consume();
-                }
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-        });
-        nuevo.Clave.addKeyListener(new KeyListener() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    editar.dispose();
-                }
-            }
-
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-        });
         nuevo.btnGuardar.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -165,77 +124,8 @@ public class CtrlMateriales {
             public void keyReleased(KeyEvent e) {
             }
         });
-        nuevo.Foto.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                fc = new JFileChooser();
-                FileNameExtensionFilter filter = new FileNameExtensionFilter("images", "jpg", "gif", "png");
-                fc.setFileFilter(filter);
-                fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-                fc.setCurrentDirectory(new File(System.getProperty("user.home") + "/Pictures"));
-                fc.setDialogTitle("SELECCIONE UNA IMAGEN");
-                int file = fc.showOpenDialog(null);
-                if (file == JFileChooser.APPROVE_OPTION) {
-                    File selectedFile = fc.getSelectedFile();
-                    nuevo.Foto.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(selectedFile.getAbsolutePath()).getScaledInstance(350, 350, Image.SCALE_SMOOTH)));
-                    try {
-                        bufi = ImageUtils.resizeImage(ImageIO.read(fc.getSelectedFile()), 1, 350, 350);
-                    } catch (IOException ex) {
-                        Logger.getLogger(CtrlMateriales.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-            }
-        });*/
 
         /*EDITAR*/
-       /* editar.Ano.addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                if (e.getKeyChar() < '0' || e.getKeyChar() > '9' && e.getKeyChar() != KeyEvent.VK_BACK_SPACE) {
-                    e.consume();
-                }
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-        });
-        editar.PuntoCentral.addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                if (e.getKeyChar() < '0' || e.getKeyChar() > '9' && e.getKeyChar() != KeyEvent.VK_BACK_SPACE) {
-                    e.consume();
-                }
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-        });
-        editar.Clave.addKeyListener(new KeyListener() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    editar.dispose();
-                }
-            }
-
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-        });
         editar.btnGuardar.addActionListener((e) -> {
             onModificar();
         });
@@ -255,40 +145,13 @@ public class CtrlMateriales {
             public void keyReleased(KeyEvent e) {
             }
         });
-        editar.Foto.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                fc = new JFileChooser();
-                FileNameExtensionFilter filter = new FileNameExtensionFilter("images", "jpg", "gif", "png");
-                fc.setFileFilter(filter);
-                fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-                fc.setCurrentDirectory(new File(System.getProperty("user.home") + "/Pictures"));
-                fc.setDialogTitle("SELECCIONE UNA IMAGEN");
-                int file = fc.showOpenDialog(null);
-                if (file == JFileChooser.APPROVE_OPTION) {
-                    tiene_foto = true;
-                    File selectedFile = fc.getSelectedFile();
-                    editar.Foto.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(selectedFile.getAbsolutePath()).getScaledInstance(350, 350, Image.SCALE_SMOOTH)));
-                    try {
-                        bufi = ImageUtils.resizeImage(ImageIO.read(fc.getSelectedFile()), 1, 350, 350);
-                    } catch (IOException ex) {
-                        Logger.getLogger(CtrlMateriales.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-            }
-        });
-*/
+
         /*PLACEHOLDERS*/
 
  /*INVOCAR METODOS QUE RELLENAN DATOS*/
-//        getLineas();
-//        getSeries();
-//        getFamilias();
-//        getHormas();
-//        getMaquilas();
-//        getTemporadas();
-//        getTipoEstilo();
-
+        getDepartamentos();
+        getFamilias();
+        getUnidades();
     }
 
     public void setVisible() {
@@ -301,256 +164,177 @@ public class CtrlMateriales {
     File files_dir = new File("files");
 
     public void onGuardar() {
-//        try {
-//            ArrayList<Object> a = new ArrayList<>();
-//            Object x = null;
-//            String ext = FilenameUtils.getExtension(fc.getSelectedFile().getName());
-//            String Foto = "files/" + nuevo.Clave.getText() + "." + ext;
-//            if (!nuevo.Linea.getSelectedItem().toString().equals("") && !nuevo.Clave.getText().equals("")) {
-//                a.add(getID(lineas, nuevo.Linea.getSelectedItem().toString()));
-//                a.add((nuevo.Clave.getText().equals("") ? "" : nuevo.Clave.getText()));
-//                a.add(nuevo.Descripcion.getText());
-//                x = getID(familias, nuevo.Familia.getSelectedItem().toString());
-//                if (Integer.parseInt(String.valueOf(x)) != 0) {
-//                    a.add(x);
-//                } else {
-//                    a.add(null);
-//                }
-//                x = getID(series, nuevo.Serie.getSelectedItem().toString());
-//                if (Integer.parseInt(String.valueOf(x)) != 0) {
-//                    a.add(x);
-//                } else {
-//                    a.add(null);
-//                }
-//                x = getID(hormas, nuevo.Horma.getSelectedItem().toString());
-//                if (Integer.parseInt(String.valueOf(x)) != 0) {
-//                    a.add(x);
-//                } else {
-//                    a.add(null);
-//                }
-//                a.add(nuevo.Genero.getSelectedItem().toString());
-//                a.add(Foto);
-//                a.add(nuevo.Estatus.getSelectedItem().toString());
-//                a.add(nuevo.Desperdicio.getText());
-//                a.add(nuevo.Liberado.isSelected() ? 1 : 0);
-//                a.add(nuevo.Herramental.getText());
-//                x = getID(maquilas, nuevo.Maquila.getSelectedItem().toString());
-//                if (Integer.parseInt(String.valueOf(x)) != 0) {
-//                    a.add(x);
-//                } else {
-//                    a.add(null);
-//                }
-//                a.add(nuevo.Notas.getText());
-//                a.add(nuevo.Ano.getText().equals("") ? null : Integer.parseInt(nuevo.Ano.getText()));
-//                x = getID(temporadas, nuevo.Temporada.getSelectedItem().toString());
-//                if (Integer.parseInt(String.valueOf(x)) != 0) {
-//                    a.add(x);
-//                } else {
-//                    a.add(null);
-//                }
-//                a.add(nuevo.PuntoCentral.getText().equals("") ? null : Integer.parseInt(nuevo.PuntoCentral.getText()));
-//                x = getID(tipo_materiales, nuevo.Tipo.getSelectedItem().toString());
-//                if (Integer.parseInt(String.valueOf(x)) != 0) {
-//                    a.add(x);
-//                } else {
-//                    a.add(null);
-//                }
-//                a.add(nuevo.MaquilaPlantilla.getSelectedItem().toString());
-//                a.add(nuevo.TipoDeConstruccion.getText());
-//                DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
-//                Date date = new Date();
-//                a.add(dateFormat.format(date));
-//                if (!files_dir.exists()) {
-//                    files_dir.mkdir();
-//                }
-//                System.out.println(fc.getSelectedFile().getName());
-//                ImageIO.write(bufi, "png", new File(Foto));
-//                if (g.addUpdateOrDelete("SP_AGREGAR_MATERIAL", a)) {
-//                    JOptionPane.showMessageDialog(null, "MATERIAL AGREGADO", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
-//                    nuevo.dispose();
-//                    materiales.getRecords();
-//                } else {
-//                    JOptionPane.showMessageDialog(null, "NO SE HA PODIDO AGREGAR EL MATERIAL", "NO SE HA PODIDO AGREGAR EL MATERIAL", JOptionPane.ERROR_MESSAGE);
-//                }
-//            } else {
-//                JOptionPane.showMessageDialog(null, "DEBE DE ELEGIR UNA LINEA Y UNA CLAVE", "NO SE HA PODIDO AGREGAR EL MATERIAL", JOptionPane.ERROR_MESSAGE);
-//            }
-//        } catch (HeadlessException e) {
-//            JOptionPane.showMessageDialog(null, "NO SE HA PODIDO REGISTRAR EL MATERIAL", "ERROR AL GUARDAR", JOptionPane.ERROR_MESSAGE);
-//        } catch (IOException ex) {
-//            Logger.getLogger(CtrlMateriales.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+        try {
+            ArrayList<Object> a = new ArrayList<>();
+            Object x = null;
+            if (!nuevo.Material.getText().equals("")) {
+                a.add(nuevo.Material.getText());
+                if (nuevo.Departamento.getSelectedIndex() != -1) {
+                    x = getID(departamentos, nuevo.Departamento.getSelectedItem().toString());
+                    if (Integer.parseInt(String.valueOf(x)) != 0) {
+                        a.add(x);
+                    } else {
+                        a.add(null);
+                    }
+                } else {
+                    a.add(null);
+                }
+                x = getID(familias, nuevo.Familia.getSelectedItem().toString());
+                if (Integer.parseInt(String.valueOf(x)) != 0) {
+                    a.add(x);
+                } else {
+                    a.add(null);
+                }
+                a.add((nuevo.Descripcion.getText().equals("")) ? "" : nuevo.Descripcion.getText());
+                x = getID(unidades_de_compra, nuevo.UnidadCompra.getSelectedItem().toString());
+                if (Integer.parseInt(String.valueOf(x)) != 0) {
+                    a.add(x);
+                } else {
+                    a.add(null);
+                }
+                x = getID(unidades_de_consumo, nuevo.UnidadConsumo.getSelectedItem().toString());
+                if (Integer.parseInt(String.valueOf(x)) != 0) {
+                    a.add(x);
+                } else {
+                    a.add(null);
+                }
+                a.add(nuevo.Tipo.getSelectedItem().toString());
+                a.add(nuevo.Minimo.getValue().toString().equals("") ? 0 : Float.parseFloat(nuevo.Minimo.getValue().toString()));
+                a.add(nuevo.Maximo.getValue().toString().equals("") ? 0 : Float.parseFloat(nuevo.Maximo.getValue().toString()));
+                a.add(nuevo.PrecioLista.getValue().toString().equals("") ? 0 : Float.parseFloat(nuevo.PrecioLista.getValue().toString()));
+                a.add(nuevo.PrecioTope.getValue().toString().equals("") ? 0 : Float.parseFloat(nuevo.PrecioTope.getValue().toString()));
+                a.add(nuevo.FechaUltimoInventario.getText());
+                a.add(nuevo.Existencia.getValue().toString().equals("") ? 0 : Float.parseFloat(nuevo.Existencia.getValue().toString()));
+                a.add(nuevo.Estatus.getSelectedItem().toString());
+                if (g.addUpdateOrDelete("SP_AGREGAR_MATERIAL", a)) {
+                    JOptionPane.showMessageDialog(null, "MATERIAL AGREGADO", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
+                    nuevo.dispose();
+                    materiales.getRecords();
+                } else {
+                    JOptionPane.showMessageDialog(null, "NO SE HA PODIDO AGREGAR EL MATERIAL", "NO SE HA PODIDO AGREGAR EL MATERIAL", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "DEBE DE ELEGIR UNA LINEA Y UNA CLAVE", "NO SE HA PODIDO AGREGAR EL MATERIAL", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (HeadlessException e) {
+            JOptionPane.showMessageDialog(null, "NO SE HA PODIDO REGISTRAR EL MATERIAL", "ERROR AL GUARDAR", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     public void onEditar(int IDX) {
-//        try {
-//            bufi = null;
-//            temp = IDX;
-//            ArrayList<Object> a = new ArrayList<>();
-//            a.add(IDX);
-//            ArrayList<Object[][]> x = g.findByParams("SP_MATERIAL_X_ID", a);
-//            Object[][] data = x.get(0);
-//            if (data[0][1] != null) {
-//                editar.Linea.getModel().setSelectedItem(data[0][1]);
-//            }
-//            editar.Clave.setText(String.valueOf(data[0][2]));
-//            editar.Descripcion.setText(String.valueOf(data[0][3]));
-//            if (data[0][4] != null) {
-//                editar.Familia.getModel().setSelectedItem(data[0][4]);
-//            }
-//            if (data[0][5] != null) {
-//                editar.Serie.getModel().setSelectedItem(data[0][5]);
-//            }
-//            if (data[0][6] != null) {
-//                editar.Horma.getModel().setSelectedItem(data[0][6]);
-//            }
-//            if (data[0][7] != null) {
-//                editar.Genero.getModel().setSelectedItem(data[0][7]);
-//            }
-//            editar.Foto.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage((String.valueOf(data[0][8]))).getScaledInstance(350, 350, Image.SCALE_SMOOTH)));
-//            if (data[0][9] != null) {
-//                editar.Estatus.getModel().setSelectedItem(data[0][9]);
-//            }
-//            editar.Desperdicio.setText(String.valueOf(data[0][10]));
-//            if (String.valueOf(data[0][11]).equals("0") || String.valueOf(data[0][11]).equals("null")) {
-//                editar.Liberado.setSelected(false);
-//            } else {
-//                editar.Liberado.setSelected(true);
-//            }
-//            editar.Herramental.setText(String.valueOf(data[0][12]));
-//            editar.Maquila.getModel().setSelectedItem(String.valueOf(data[0][13]));
-//            editar.Notas.setText(String.valueOf(data[0][14]));
-//            editar.Ano.setText((String.valueOf(data[0][15]).equals("null")) ? "" : String.valueOf(data[0][15]));
-//            editar.Temporada.getModel().setSelectedItem(String.valueOf(data[0][16]));
-//            editar.PuntoCentral.setText((String.valueOf(data[0][17]).equals("null") ? "" : String.valueOf(data[0][17])));
-//            editar.Tipo.getModel().setSelectedItem(data[0][18]);
-//            editar.MaquilaPlantilla.getModel().setSelectedItem(String.valueOf(data[0][19]));
-//            editar.TipoDeConstruccion.setText(String.valueOf(data[0][20]));
-//
-//            editar.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/96/icons8_Idea_96px.png")));
-//            editar.setLocationRelativeTo(null);
-//            editar.setVisible(true);
-//        } catch (NumberFormatException e) {
-//            JOptionPane.showMessageDialog(null, "NO SE HA PODIDO EDITAR EL MATERIAL", "ERROR AL EDITAR", JOptionPane.ERROR_MESSAGE);
-//        }
+        try {
+            temp = IDX;
+            ArrayList<Object> a = new ArrayList<>();
+            a.add(IDX);
+            ArrayList<Object[][]> x = g.findByParams("SP_MATERIAL_X_ID", a);
+            Object[][] data = x.get(0);
+            editar.Material.setText(String.valueOf(data[0][1]));
+            if (data[0][2] != null) {
+                editar.Departamento.getModel().setSelectedItem(data[0][2]);
+            }
+            if (data[0][3] != null) {
+                editar.Familia.getModel().setSelectedItem(data[0][3]);
+            }
+            editar.Descripcion.setText(String.valueOf(data[0][4]));
+            if (data[0][5] != null) {
+                editar.UnidadCompra.getModel().setSelectedItem(data[0][5]);
+            }
+            if (data[0][6] != null) {
+                editar.UnidadConsumo.getModel().setSelectedItem(data[0][6]);
+            }
+            if (data[0][7] != null) {
+                editar.Tipo.getModel().setSelectedItem(data[0][7]);
+            }
+            editar.Minimo.setValue(Float.parseFloat(String.valueOf(data[0][8])));
+            editar.Maximo.setValue(Float.parseFloat(String.valueOf(data[0][9])));
+            editar.PrecioLista.setValue(Float.parseFloat(String.valueOf(data[0][10])));
+            editar.PrecioTope.setValue(Float.parseFloat(String.valueOf(data[0][11])));
+            editar.FechaUltimoInventario.setText(String.valueOf(data[0][12]));
+            editar.Existencia.setValue(Float.parseFloat(String.valueOf(data[0][13])));
+            if (data[0][14] != null) {
+                editar.Estatus.getModel().setSelectedItem(data[0][14]);
+            }
+            editar.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/96/icons8_Idea_96px.png")));
+            editar.setLocationRelativeTo(null);
+            editar.setVisible(true);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "NO SE HA PODIDO EDITAR EL MATERIAL", "ERROR AL EDITAR", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     public void onModificar() {
 //        try {
-//            ArrayList<Object> a = new ArrayList<>();
-//            Object x = null;
-//            String Foto = "";
-//            if (!editar.Linea.getSelectedItem().toString().equals("") && !editar.Clave.getText().equals("")) {
-//                a.add(temp);/*ID*/
-//                a.add(getID(lineas, editar.Linea.getSelectedItem().toString()));
-//                a.add((editar.Clave.getText().equals("") ? "" : editar.Clave.getText()));
-//                a.add(editar.Descripcion.getText());
-//                if (editar.Familia.getSelectedIndex() != -1) {
-//                    x = getID(familias, editar.Familia.getSelectedItem().toString());
-//                    if (Integer.parseInt(String.valueOf(x)) != 0) {
-//                        a.add(x);
-//                    } else {
-//                        a.add(null);
-//                    }
-//                } else {
-//                    a.add(null);
-//                }
-//                if (editar.Serie.getSelectedIndex() != -1) {
-//                    x = getID(series, editar.Serie.getSelectedItem().toString());
-//                    if (Integer.parseInt(String.valueOf(x)) != 0) {
-//                        a.add(x);
-//                    } else {
-//                        a.add(null);
-//                    }
-//                } else {
-//                    a.add(null);
-//                }
-//                if (editar.Horma.getSelectedIndex() != -1) {
-//                    x = getID(hormas, editar.Horma.getSelectedItem().toString());
-//                    if (Integer.parseInt(String.valueOf(x)) != 0) {
-//                        a.add(x);
-//                    } else {
-//                        a.add(null);
-//                    }
-//                } else {
-//                    a.add(null);
-//                }
-//                a.add(editar.Genero.getSelectedItem().toString());
-//                if (bufi != null) {
-//                    String ext = FilenameUtils.getExtension(fc.getSelectedFile().getName());
-//                    Foto = "files/" + editar.Clave.getText() + "." + ext;
-//                    a.add(Foto);
-//                    ImageIO.write(bufi, "png", new File(Foto));
-//                } else {
-//                    a.add(0);
-//                }
-//                a.add(editar.Estatus.getSelectedItem().toString());
-//                a.add(editar.Desperdicio.getText());
-//                a.add(editar.Liberado.isSelected() ? 1 : 0);
-//                a.add(editar.Herramental.getText());
-//                if (editar.Maquila.getSelectedIndex() != -1) {
-//                    x = getID(maquilas, editar.Maquila.getSelectedItem().toString());
-//                    if (Integer.parseInt(String.valueOf(x)) != 0) {
-//                        a.add(x);
-//                    } else {
-//                        a.add(null);
-//                    }
-//                } else {
-//                    a.add(null);
-//                }
-//                a.add(editar.Notas.getText());
-//                a.add(editar.Ano.getText().equals("") ? null : Integer.parseInt(editar.Ano.getText()));
-//                if (editar.Temporada.getSelectedIndex() != -1) {
-//                    x = getID(temporadas, editar.Temporada.getSelectedItem().toString());
-//                    if (Integer.parseInt(String.valueOf(x)) != 0) {
-//                        a.add(x);
-//                    } else {
-//                        a.add(null);
-//                    }
-//                } else {
-//                    a.add(null);
-//                }
-//                a.add(editar.PuntoCentral.getText().equals("") ? null : Integer.parseInt(editar.PuntoCentral.getText()));
-//
-//                if (editar.Tipo.getSelectedIndex() != -1) {
-//                    x = getID(tipo_materiales, editar.Tipo.getSelectedItem().toString());
-//                    if (Integer.parseInt(String.valueOf(x)) != 0) {
-//                        a.add(x);
-//                    } else {
-//                        a.add(null);
-//                    }
-//                } else {
-//                    a.add(null);
-//                }
-//                a.add(editar.MaquilaPlantilla.getSelectedItem().toString());
-//                a.add(editar.TipoDeConstruccion.getText());
-//                if (!files_dir.exists()) {
-//                    files_dir.mkdir();
-//                }
-////                puede servir para testear
-////                for (int i = 0; i < a.size(); i++) {
-////                    System.out.println(i + ".-" + String.valueOf(a.get(i)));
-////                }
-//                if (g.addUpdateOrDelete("SP_MODIFICAR_MATERIAL", a)) {
-//                    JOptionPane.showMessageDialog(null, "MATERIAL MODIFICADO", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
-//                    editar.dispose();
-//                    materiales.getRecords();
-//                } else {
-//                    JOptionPane.showMessageDialog(null, "NO SE HA PODIDO MODIFICAR EL MATERIAL", "NO SE HA PODIDO MODIFICAR EL MATERIAL", JOptionPane.ERROR_MESSAGE);
-//                }
-//            } else {
-//                JOptionPane.showMessageDialog(null, "DEBE DE ELEGIR UNA LINEA Y UNA CLAVE", "NO SE HA PODIDO MODIFICAR EL MATERIAL", JOptionPane.ERROR_MESSAGE);
-//            }
-//        } catch (HeadlessException e) {
-//            JOptionPane.showMessageDialog(null, "NO SE HA PODIDO MODIFICAR EL MATERIAL\n" + e.getMessage(), "ERROR AL GUARDAR", JOptionPane.ERROR_MESSAGE);
-//        } catch (IOException ex) {
-//            JOptionPane.showMessageDialog(null, "NO SE HA PODIDO MODIFICAR EL MATERIAL\n" + ex.getMessage(), "ERROR AL GUARDAR", JOptionPane.ERROR_MESSAGE);
-//        }
+        ArrayList<Object> a = new ArrayList<>();
+        Object x = null;
+        a.add(temp);/*ID*/
+        if (!editar.Material.getText().equals("")) {
+            a.add(editar.Material.getText());
+            if (editar.Departamento.getSelectedIndex() != -1) {
+                x = getID(departamentos, editar.Departamento.getSelectedItem().toString());
+                if (Integer.parseInt(String.valueOf(x)) != 0) {
+                    a.add(x);
+                } else {
+                    a.add(null);
+                }
+            } else {
+                a.add(null);
+            }
+            if (editar.Familia.getSelectedIndex() != -1) {
+                x = getID(familias, editar.Familia.getSelectedItem().toString());
+                if (Integer.parseInt(String.valueOf(x)) != 0) {
+                    a.add(x);
+                } else {
+                    a.add(null);
+                }
+            } else {
+                a.add(null);
+            }
+            a.add((editar.Descripcion.getText().equals("")) ? "" : editar.Descripcion.getText());
+            if (editar.UnidadCompra.getSelectedIndex() != -1) {
+                x = getID(unidades_de_compra, editar.UnidadCompra.getSelectedItem().toString());
+                if (Integer.parseInt(String.valueOf(x)) != 0) {
+                    a.add(x);
+                } else {
+                    a.add(null);
+                }
+            } else {
+                a.add(null);
+            }
+            if (editar.UnidadConsumo.getSelectedIndex() != -1) {
+                x = getID(unidades_de_consumo, editar.UnidadConsumo.getSelectedItem().toString());
+                if (Integer.parseInt(String.valueOf(x)) != 0) {
+                    a.add(x);
+                } else {
+                    a.add(null);
+                }
+            } else {
+                a.add(null);
+            }
+            a.add(editar.Tipo.getSelectedItem().toString());
+            a.add(editar.Minimo.getValue().toString().equals("") ? 0 : Float.parseFloat(editar.Minimo.getValue().toString()));
+            a.add(editar.Maximo.getValue().toString().equals("") ? 0 : Float.parseFloat(editar.Maximo.getValue().toString()));
+            a.add(editar.PrecioLista.getValue().toString().equals("") ? 0 : Float.parseFloat(editar.PrecioLista.getValue().toString()));
+            a.add(editar.PrecioTope.getValue().toString().equals("") ? 0 : Float.parseFloat(editar.PrecioTope.getValue().toString()));
+            a.add(editar.FechaUltimoInventario.getText());
+            a.add(editar.Existencia.getValue().toString().equals("") ? 0 : Float.parseFloat(editar.Existencia.getValue().toString()));
+            a.add(editar.Estatus.getSelectedItem().toString());
+        }
+
+//                puede servir para testear
+        for (int i = 0; i < a.size(); i++) {
+            System.out.println(i + ".-" + String.valueOf(a.get(i)));
+        }
+        if (g.addUpdateOrDelete("SP_MODIFICAR_MATERIAL", a)) {
+            JOptionPane.showMessageDialog(null, "MATERIAL MODIFICADO", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
+            editar.dispose();
+            materiales.getRecords();
+        } else {
+            JOptionPane.showMessageDialog(null, "NO SE HA PODIDO MODIFICAR EL MATERIAL", "NO SE HA PODIDO MODIFICAR EL MATERIAL", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     public void onEliminar(int IDX) {
         try {
-//            HoldOn(vmateriales.jPanel2);
             ArrayList<Object> a = new ArrayList<>();
             a.add(IDX);
             if (g.addUpdateOrDelete("SP_ELIMINAR_MATERIAL", a)) {
@@ -563,151 +347,72 @@ public class CtrlMateriales {
             JOptionPane.showMessageDialog(null, "NO SE HA PODIDO ELIMINAR EL MATERIAL", "ERROR AL ELIMINAR", JOptionPane.ERROR_MESSAGE);
         }
     }
-//
-//    public final void getLineas() {
-//        try {
-//            lineas = new ArrayList<>();
-//            Item linea = null;
-//            nuevo.Linea.addItem("");
-//            for (Iterator it = g.fill("SP_OBTENER_LINEAS").iterator(); it.hasNext();) {
-//                Object[] item = (Object[]) it.next();
-//                linea = new Item(Integer.parseInt(String.valueOf(item[0])), String.valueOf(item[1]));
-//                lineas.add(linea);
-//                nuevo.Linea.addItem(String.valueOf(item[1]));
-//                editar.Linea.addItem(String.valueOf(item[1]));
-//            }
-//        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(null, "NO SE HAN PODIDO OBTENER LINEAS", "ERROR AL OBTENER", JOptionPane.ERROR_MESSAGE);
-//            System.out.println("ERROR\n" + e.getMessage());
-//            e.printStackTrace();/*INDICA LA LINEA DONDE OCURRE EL PROBLEMA*/
-//        }
-//    }
-//
-//    public final void getFamilias() {
-//        try {
-//            familias = new ArrayList<>();
-//            Item familia = null;
-//            nuevo.Familia.addItem("");
-//            editar.Familia.addItem("");
-//            for (Iterator it = g.fill("SP_OBTENER_FAMILIAS").iterator(); it.hasNext();) {
-//                Object[] item = (Object[]) it.next();
-//                familia = new Item(Integer.parseInt(String.valueOf(item[0])), String.valueOf(item[1]));
-//                familias.add(familia);
-//                nuevo.Familia.addItem(String.valueOf(item[1]));
-//                editar.Familia.addItem(String.valueOf(item[1]));
-//            }
-//        } catch (NumberFormatException e) {
-//            JOptionPane.showMessageDialog(null, "NO SE HAN PODIDO OBTENER FAMILIAS", "ERROR AL OBTENER", JOptionPane.ERROR_MESSAGE);
-//
-//            System.out.println("ERROR\n" + e.getMessage());
-//            e.printStackTrace();/*INDICA LA LINEA DONDE OCURRE EL PROBLEMA*/
-//        }
-//    }
-//
-//    public final void getSeries() {
-//        try {
-//            series = new ArrayList<>();
-//            Item serie = null;
-//            nuevo.Serie.addItem("");
-//            editar.Serie.addItem("");
-//            for (Iterator it = g.fill("SP_OBTENER_SERIES").iterator(); it.hasNext();) {
-//                Object[] item = (Object[]) it.next();
-//                serie = new Item(Integer.parseInt(String.valueOf(item[0])), String.valueOf(item[1]));
-//                series.add(serie);
-//                nuevo.Serie.addItem(String.valueOf(item[1]));
-//                editar.Serie.addItem(String.valueOf(item[1]));
-//            }
-//        } catch (NumberFormatException e) {
-//            JOptionPane.showMessageDialog(null, "NO SE HAN PODIDO OBTENER SERIES", "ERROR AL OBTENER", JOptionPane.ERROR_MESSAGE);
-//
-//            System.out.println("ERROR\n" + e.getMessage());
-//            e.printStackTrace();/*INDICA LA LINEA DONDE OCURRE EL PROBLEMA*/
-//        }
-//    }
-//
-//    public final void getHormas() {
-//        try {
-//            hormas = new ArrayList<>();
-//            Item horma = null;
-//            nuevo.Horma.addItem("");
-//            editar.Horma.addItem("");
-//            for (Iterator it = g.fill("SP_OBTENER_HORMAS").iterator(); it.hasNext();) {
-//                Object[] item = (Object[]) it.next();
-//                horma = new Item(Integer.parseInt(String.valueOf(item[0])), String.valueOf(item[1]));
-//                hormas.add(horma);
-//                nuevo.Horma.addItem(String.valueOf(item[1]));
-//                editar.Horma.addItem(String.valueOf(item[1]));
-//            }
-//        } catch (NumberFormatException e) {
-//            JOptionPane.showMessageDialog(null, "NO SE HAN PODIDO OBTENER HORMAS", "ERROR AL OBTENER", JOptionPane.ERROR_MESSAGE);
-//
-//            System.out.println("ERROR\n" + e.getMessage());
-//            e.printStackTrace();/*INDICA LA LINEA DONDE OCURRE EL PROBLEMA*/
-//        }
-//    }
-//
-//    public final void getMaquilas() {
-//        try {
-//            maquilas = new ArrayList<>();
-//            Item maquila = null;
-//            nuevo.Maquila.addItem("");
-//            editar.Maquila.addItem("");
-//            for (Iterator it = g.fill("SP_OBTENER_MAQUILAS").iterator(); it.hasNext();) {
-//                Object[] item = (Object[]) it.next();
-//                maquila = new Item(Integer.parseInt(String.valueOf(item[0])), String.valueOf(item[1]));
-//                maquilas.add(maquila);
-//                nuevo.Maquila.addItem(String.valueOf(item[1]));
-//                editar.Maquila.addItem(String.valueOf(item[1]));
-//            }
-//        } catch (NumberFormatException e) {
-//            JOptionPane.showMessageDialog(null, "NO SE HAN PODIDO OBTENER MAQUILAS", "ERROR AL OBTENER", JOptionPane.ERROR_MESSAGE);
-//
-//            System.out.println("ERROR\n" + e.getMessage());
-//            e.printStackTrace();/*INDICA LA LINEA DONDE OCURRE EL PROBLEMA*/
-//        }
-//    }
-//
-//    public final void getTemporadas() {
-//        try {
-//            temporadas = new ArrayList<>();
-//            Item temporada = null;
-//            nuevo.Temporada.addItem("");
-//            editar.Temporada.addItem("");
-//            for (Iterator it = g.fill("SP_OBTENER_TEMPORADAS").iterator(); it.hasNext();) {
-//                Object[] item = (Object[]) it.next();
-//                temporada = new Item(Integer.parseInt(String.valueOf(item[0])), String.valueOf(item[1]));
-//                temporadas.add(temporada);
-//                nuevo.Temporada.addItem(String.valueOf(item[1]));
-//                editar.Temporada.addItem(String.valueOf(item[1]));
-//            }
-//        } catch (NumberFormatException e) {
-//            JOptionPane.showMessageDialog(null, "NO SE HAN PODIDO OBTENER TEMPORADAS", "ERROR AL OBTENER", JOptionPane.ERROR_MESSAGE);
-//
-//            System.out.println("ERROR\n" + e.getMessage());
-//            e.printStackTrace();/*INDICA LA LINEA DONDE OCURRE EL PROBLEMA*/
-//        }
-//    }
-//
-//    public final void getTipoEstilo() {
-//        try {
-//            tipo_materiales = new ArrayList<>();
-//            Item tipo_estilo = null;
-//            nuevo.Tipo.addItem("");
-//            editar.Tipo.addItem("");
-//            for (Iterator it = g.fill("SP_OBTENER_TIPOS_MATERIAL").iterator(); it.hasNext();) {
-//                Object[] item = (Object[]) it.next();
-//                tipo_estilo = new Item(Integer.parseInt(String.valueOf(item[0])), String.valueOf(item[1]));
-//                tipo_materiales.add(tipo_estilo);
-//                nuevo.Tipo.addItem(String.valueOf(item[1]));
-//                editar.Tipo.addItem(String.valueOf(item[1]));
-//            }
-//        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(null, "NO SE HAN PODIDO OBTENER TEMPORADAS", "ERROR AL OBTENER", JOptionPane.ERROR_MESSAGE);
-//
-//            System.out.println("ERROR\n" + e.getMessage());
-//            e.printStackTrace();/*INDICA LA LINEA DONDE OCURRE EL PROBLEMA*/
-//        }
-//    }
+
+    public final void getDepartamentos() {
+        try {
+            departamentos = new ArrayList<>();
+            Item linea = null;
+            nuevo.Departamento.addItem("");
+            for (Iterator it = g.fill("SP_OBTENER_DEPARTAMENTOS").iterator(); it.hasNext();) {
+                Object[] item = (Object[]) it.next();
+                linea = new Item(Integer.parseInt(String.valueOf(item[0])), String.valueOf(item[1]));
+                departamentos.add(linea);
+                nuevo.Departamento.addItem(String.valueOf(item[1]));
+                editar.Departamento.addItem(String.valueOf(item[1]));
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "NO SE HAN PODIDO OBTENER DEPARTAMENTOS", "ERROR AL OBTENER", JOptionPane.ERROR_MESSAGE);
+            System.out.println("ERROR\n" + e.getMessage());
+            e.printStackTrace();/*INDICA LA LINEA DONDE OCURRE EL PROBLEMA*/
+        }
+    }
+
+    public final void getFamilias() {
+        try {
+            familias = new ArrayList<>();
+            Item familia = null;
+            nuevo.Familia.addItem("");
+            editar.Familia.addItem("");
+            for (Iterator it = g.fill("SP_OBTENER_FAMILIAS").iterator(); it.hasNext();) {
+                Object[] item = (Object[]) it.next();
+                familia = new Item(Integer.parseInt(String.valueOf(item[0])), String.valueOf(item[1]));
+                familias.add(familia);
+                nuevo.Familia.addItem(String.valueOf(item[1]));
+                editar.Familia.addItem(String.valueOf(item[1]));
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "NO SE HAN PODIDO OBTENER FAMILIAS", "ERROR AL OBTENER", JOptionPane.ERROR_MESSAGE);
+
+            System.out.println("ERROR\n" + e.getMessage());
+            e.printStackTrace();/*INDICA LA LINEA DONDE OCURRE EL PROBLEMA*/
+        }
+    }
+
+    public final void getUnidades() {
+        try {
+            familias = new ArrayList<>();
+            Item unidades = null;
+            nuevo.UnidadCompra.addItem("");
+            nuevo.UnidadConsumo.addItem("");
+            editar.UnidadCompra.addItem("");
+            editar.UnidadConsumo.addItem("");
+            for (Iterator it = g.fill("SP_OBTENER_UNIDADES").iterator(); it.hasNext();) {
+                Object[] item = (Object[]) it.next();
+                unidades = new Item(Integer.parseInt(String.valueOf(item[0])), String.valueOf(item[1]));
+                unidades_de_compra.add(unidades);
+                unidades_de_consumo.add(unidades);
+                nuevo.UnidadCompra.addItem(String.valueOf(item[1]));
+                nuevo.UnidadConsumo.addItem(String.valueOf(item[1]));
+                editar.UnidadCompra.addItem(String.valueOf(item[1]));
+                editar.UnidadConsumo.addItem(String.valueOf(item[1]));
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "NO SE HAN PODIDO OBTENER UNIDADES", "ERROR AL OBTENER", JOptionPane.ERROR_MESSAGE);
+
+            System.out.println("ERROR\n" + e.getMessage());
+            e.printStackTrace();/*INDICA LA LINEA DONDE OCURRE EL PROBLEMA*/
+        }
+    }
 
     public int getID(ArrayList<Item> x, String selected_item) {
         int id = 0;

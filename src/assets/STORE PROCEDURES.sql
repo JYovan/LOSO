@@ -403,7 +403,7 @@ CREATE PROCEDURE SP_LINEAS(@MAX INT)
 AS
 BEGIN
 SET NOCOUNT ON; 
-	SELECT TOP (@MAX) L.ID AS ID, L.Clave AS CLAVE, L.Descripcion AS DESCRIPCION, L.Ano AS AÑO, L.Estatus AS ESTATUS FROM Lineas AS L WHERE L.Estatus IN('ACTIVO','INACTIVO');
+	SELECT TOP (@MAX) L.ID AS ID, L.Clave AS CLAVE, L.Descripcion AS DESCRIPCION, L.Ano AS Aï¿½O, L.Estatus AS ESTATUS FROM Lineas AS L WHERE L.Estatus IN('ACTIVO','INACTIVO');
 END
 GO
 
@@ -488,7 +488,7 @@ CREATE PROCEDURE SP_BUSCAR_LINEA(@MAX INT, @Clave VARCHAR(45),@Descripcion VARCH
 AS
 BEGIN
 SET NOCOUNT ON; 
-	SELECT TOP(@MAX) L.ID AS ID, L.Clave AS CLAVE, L.Descripcion AS DESCRIPCION, L.Ano AS AÑO, L.Estatus AS ESTATUS  FROM Lineas AS L 
+	SELECT TOP(@MAX) L.ID AS ID, L.Clave AS CLAVE, L.Descripcion AS DESCRIPCION, L.Ano AS Aï¿½O, L.Estatus AS ESTATUS  FROM Lineas AS L 
 	WHERE L.Clave LIKE CONCAT('%',@Clave,'%') AND L.Descripcion LIKE CONCAT('%',@Descripcion,'%');
 END
 GO
@@ -936,12 +936,154 @@ GO
 IF EXISTS (	SELECT name FROM sysobjects WHERE  name = 'SP_MATERIALES' AND TYPE = 'P')
 	DROP PROCEDURE SP_MATERIALES
 GO
-CREATE PROCEDURE SP_MATERIALES(@IDX INT)
+CREATE PROCEDURE SP_MATERIALES(@MAX INT)
 AS
 BEGIN
 SET NOCOUNT ON; 
-	SELECT  M.ID AS ID, M.Descripcion AS DESCRIPCION, M.Estatus AS ESTATUS
+	SELECT TOP(@MAX) M.ID AS ID, M.Descripcion AS DESCRIPCION, M.Estatus AS ESTATUS
 	FROM Materiales AS M
-    WHERE M.ID = @IDX AND M.Estatus IN('ACTIVO','INACTIVO');
+    WHERE M.Estatus IN('ACTIVO','INACTIVO');
+END
+GO
+
+-- -----------------------------------------------------
+-- procedure SP_ELIMINAR_MATERIAL
+-- -----------------------------------------------------
+IF EXISTS (	SELECT name FROM sysobjects WHERE  name = 'SP_ELIMINAR_MATERIAL' AND TYPE = 'P')
+	DROP PROCEDURE SP_ELIMINAR_MATERIAL
+GO
+CREATE PROCEDURE SP_ELIMINAR_MATERIAL(@IDX INT)
+AS
+BEGIN
+SET NOCOUNT ON; 
+	UPDATE Material
+	SET [Estatus] = 'INACTIVO' 
+	WHERE [ID] = @IDX; 
+END
+GO
+
+
+-- -----------------------------------------------------
+-- procedure SP_OBTENER_DEPARTAMENTOS
+-- -----------------------------------------------------
+
+IF EXISTS (	SELECT name FROM sysobjects WHERE  name = 'SP_OBTENER_DEPARTAMENTOS' AND TYPE = 'P')
+	DROP PROCEDURE SP_OBTENER_DEPARTAMENTOS
+GO
+CREATE PROCEDURE SP_OBTENER_DEPARTAMENTOS
+AS
+BEGIN
+SET NOCOUNT ON; 
+	SELECT D.ID AS ID, D.SValue AS DEPARTAMENTO FROM CATALOGOS AS D WHERE F.Estatus IN('ACTIVO') AND F.FieldId LIKE 'DEPARTAMENTOS';
+END
+GO
+
+-- -----------------------------------------------------
+-- procedure SP_OBTENER_UNIDADES
+-- -----------------------------------------------------
+
+IF EXISTS (	SELECT name FROM sysobjects WHERE  name = 'SP_OBTENER_UNIDADES' AND TYPE = 'P')
+	DROP PROCEDURE SP_OBTENER_UNIDADES
+GO
+CREATE PROCEDURE SP_OBTENER_UNIDADES
+AS
+BEGIN
+SET NOCOUNT ON; 
+	SELECT U.ID AS ID, U.SValue AS UNIDAD FROM CATALOGOS AS U WHERE U.Estatus IN('ACTIVO') AND U.FieldId LIKE 'UNIDADES';
+END
+GO
+
+
+-- -----------------------------------------------------
+-- procedure SP_MATERIAL_X_ID
+-- -----------------------------------------------------
+IF EXISTS (	SELECT name FROM sysobjects WHERE  name = 'SP_MATERIAL_X_ID' AND TYPE = 'P')
+	DROP PROCEDURE SP_MATERIAL_X_ID
+GO
+CREATE PROCEDURE SP_MATERIAL_X_ID(@IDX INT)
+AS
+BEGIN
+SET NOCOUNT ON; 
+	SELECT TOP 1 M.ID AS ID, M.Material AS MATERIAL, D.SValue AS DEPARTAMENTO, F.SValue AS FAMILIA, 
+        U.SValue AS UNIDAD_DE_COMPRA, UU.SValue AS UNIDAD_DE_CONSUMO, M.Tipo AS TIPO, M.Minimo AS MINIMO, M.Maximo AS MAXIMO,
+        M.PrecioLista AS PRECIO_DE_LISTA, M.PrecioTope AS PRECIO_TOPE, M.FechaUltimoInventario AS FECHA_ULTIMO_INVENTARIO, 
+        M.Existencia AS EXISTENCIA, M.Estatus AS ESTATUS
+        FROM [Materiales] AS M 
+        LEFT JOIN Catalogos AS D ON M.[Departamento] = D.ID
+        LEFT JOIN Catalogos AS F ON M.[Familia] = F.ID
+        LEFT JOIN Catalogos AS U ON M.UnidadCompra = U.ID
+        LEFT JOIN Catalogos AS UU ON M.UnidadConsumo = UU.ID
+        WHERE M.ID = @IDX AND M.Estatus IN('ACTIVO','INACTIVO');
+END
+GO
+
+
+-- -----------------------------------------------------
+-- procedure SP_AGREGAR_MATERIAL
+-- -----------------------------------------------------
+
+IF EXISTS (	SELECT name FROM sysobjects WHERE  name = 'SP_AGREGAR_MATERIAL' AND TYPE = 'P')
+	DROP PROCEDURE SP_AGREGAR_MATERIAL
+GO
+CREATE  PROCEDURE SP_AGREGAR_MATERIAL(@Material VARCHAR(45), 
+@Departamento INT, @Familia INT, @Descripcion VARCHAR(45), 
+@UnidadCompra INT, @UnidadConsumo INT, @Tipo VARCHAR(45),@Minimo FLOAT, 
+	@Maximo FLOAT, @PrecioLista FLOAT, @PrecioTope FLOAT, @FechaUltimoInventario VARCHAR(50), @Existencia FLOAT, 
+	@Estatus VARCHAR(10))
+AS
+BEGIN
+SET NOCOUNT ON;
+
+INSERT INTO [dbo].[Materiales]
+           ([Material]            ,[Departamento]           ,[Familia]           ,[Descripcion]
+           ,[UnidadCompra]           ,[UnidadConsumo]           ,[Tipo]           ,[Minimo]
+           ,[Maximo]           ,[PrecioLista]           ,[PrecioTope]           ,[FechaUltimoInventario]
+           ,[Existencia]           ,[Estatus])
+     VALUES
+           (@Material            ,@Departamento
+           ,@Familia           ,@Descripcion
+           ,@UnidadCompra           ,@UnidadConsumo
+           ,@Tipo           ,@Minimo
+           ,@Maximo           ,@PrecioLista
+           ,@PrecioTope           ,@FechaUltimoInventario
+           ,@Existencia           ,@Estatus); 
+
+END
+GO
+
+-- -----------------------------------------------------
+-- procedure SP_MODIFICAR_MATERIAL
+-- -----------------------------------------------------
+
+IF EXISTS (	SELECT name FROM sysobjects WHERE  name = 'SP_MODIFICAR_MATERIAL' AND TYPE = 'P')
+	DROP PROCEDURE SP_MODIFICAR_MATERIAL
+GO
+CREATE  PROCEDURE SP_MODIFICAR_MATERIAL(@ID INT, @Material VARCHAR(45), 
+@Departamento INT, @Familia INT, @Descripcion VARCHAR(45), 
+@UnidadCompra INT, @UnidadConsumo INT, @Tipo VARCHAR(45),@Minimo FLOAT, 
+	@Maximo FLOAT, @PrecioLista FLOAT, @PrecioTope FLOAT, @FechaUltimoInventario VARCHAR(50), @Existencia FLOAT, 
+	@Estatus VARCHAR(10))
+AS
+BEGIN
+SET NOCOUNT ON;
+
+ 
+UPDATE [dbo].[Materiales]
+   SET [Material] = @Material 
+      ,[Departamento] = @Departamento
+      ,[Familia] = @Familia
+      ,[Descripcion] = @Descripcion
+      ,[UnidadCompra] = @UnidadCompra
+      ,[UnidadConsumo] = @UnidadConsumo
+      ,[Tipo] = @Tipo
+      ,[Minimo] = @Minimo
+      ,[Maximo] = @Maximo
+      ,[PrecioLista] = @PrecioLista
+      ,[PrecioTope] = @PrecioTope
+      ,[FechaUltimoInventario] = @FechaUltimoInventario
+      ,[Existencia] = @Existencia
+      ,[Estatus] = @Estatus
+ WHERE ID = @ID;
+
 END
 GO
