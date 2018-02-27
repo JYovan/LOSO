@@ -34,6 +34,7 @@ public class Menu {
     Maquilas maq;
     Combinaciones comb;
     Materiales mat;
+    Fracciones fra;
     
     public Menu(Generic g) {
         this.g = g;
@@ -48,6 +49,7 @@ public class Menu {
         maq = new Maquilas(g);
         comb =  new Combinaciones(g);
         mat =  new Materiales(g);
+        fra = new Fracciones(g);
 
         src.toSysTray(menu);
         menu.mSalir.addMouseListener(new MouseAdapter() {
@@ -58,6 +60,11 @@ public class Menu {
                     System.exit(0);
                 }
             }
+        });
+        
+        menu.mnuFracciones.addActionListener((e) -> {
+            fra.getRecords();
+            fra.setVisible();
         });
         
         menu.mnuMateriales.addActionListener((e) -> {

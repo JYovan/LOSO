@@ -52,11 +52,6 @@ public class vMenu extends javax.swing.JFrame {
         jSeparator4 = new javax.swing.JPopupMenu.Separator();
         mnuFracciones = new javax.swing.JMenuItem();
         mnuMatxCombinacion = new javax.swing.JMenuItem();
-        jMenu10 = new javax.swing.JMenu();
-        mnuUsuarios = new javax.swing.JMenuItem();
-        jSeparator2 = new javax.swing.JPopupMenu.Separator();
-        mnuPermisos = new javax.swing.JMenuItem();
-        mnuModulos = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenu1 = new javax.swing.JMenu();
         mnuUnidades = new javax.swing.JMenuItem();
@@ -72,6 +67,11 @@ public class vMenu extends javax.swing.JFrame {
         mnuTemporadas = new javax.swing.JMenuItem();
         mnuHormas = new javax.swing.JMenuItem();
         mnuTiposEstilo = new javax.swing.JMenuItem();
+        jMenu10 = new javax.swing.JMenu();
+        mnuUsuarios = new javax.swing.JMenuItem();
+        jSeparator2 = new javax.swing.JPopupMenu.Separator();
+        mnuPermisos = new javax.swing.JMenuItem();
+        mnuModulos = new javax.swing.JMenuItem();
         mSalir = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -172,24 +172,6 @@ public class vMenu extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu14);
 
-        jMenu10.setText("Usuarios");
-        jMenu10.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        mnuUsuarios.setText("Usuarios");
-        mnuUsuarios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jMenu10.add(mnuUsuarios);
-        jMenu10.add(jSeparator2);
-
-        mnuPermisos.setText("Permisos");
-        mnuPermisos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jMenu10.add(mnuPermisos);
-
-        mnuModulos.setText("Módulos");
-        mnuModulos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jMenu10.add(mnuModulos);
-
-        jMenuBar1.add(jMenu10);
-
         jMenu4.setText("Configuración");
         jMenu4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
@@ -245,6 +227,24 @@ public class vMenu extends javax.swing.JFrame {
         jMenu1.add(mnuTiposEstilo);
 
         jMenu4.add(jMenu1);
+
+        jMenu10.setText("Usuarios");
+        jMenu10.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        mnuUsuarios.setText("Usuarios");
+        mnuUsuarios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jMenu10.add(mnuUsuarios);
+        jMenu10.add(jSeparator2);
+
+        mnuPermisos.setText("Permisos");
+        mnuPermisos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jMenu10.add(mnuPermisos);
+
+        mnuModulos.setText("Módulos");
+        mnuModulos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jMenu10.add(mnuModulos);
+
+        jMenu4.add(jMenu10);
 
         jMenuBar1.add(jMenu4);
 
