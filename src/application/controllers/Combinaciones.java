@@ -1,41 +1,41 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package application.controllers;
 
 import application.config.Generic;
 import application.config.TextPrompt;
-import application.controllers.lineas.CtrlLineas;
-import application.views.vLineas;
+import application.controllers.combinaciones.CtrlCombinaciones;
+import application.views.vCombinaciones;
 import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.regex.Pattern;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.design.JRDesignQuery;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.view.JasperViewer;
-import javax.swing.table.TableRowSorter;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperFillManager;
 
 /**
  *
  * @author Christian
  */
-public class Lineas {
+public class Combinaciones {
 
-    private static vLineas vlineas;
+    private static vCombinaciones vcombinaciones;
     DefaultTableModel dtm;
     Generic g;
     JasperDesign jd;
@@ -47,20 +47,18 @@ public class Lineas {
 
     private TableRowSorter<TableModel> filtrador;
 
-    public Lineas(Generic g) {
+    public Combinaciones(Generic g) {
         this.g = g;
-        vlineas = new vLineas();
-        vlineas.btnNuevo.addActionListener((e) -> {
-            (new CtrlLineas(vlineas, g, this)).setVisible();
+        vcombinaciones = new vCombinaciones();
+        vcombinaciones.btnNuevo.addActionListener((e) -> {
+            (new CtrlCombinaciones(vcombinaciones, g, this)).setVisible();
         });
-        vlineas.btnExportar.addActionListener((e) -> {
-            
-        });
-        vlineas.btnEditar.addActionListener((e) -> {
+     
+        vcombinaciones.btnEditar.addActionListener((e) -> {
             try {
-                if (vlineas.tblLineas.getSelectedRow() >= 0) {
-                    int ID = Integer.parseInt(vlineas.tblLineas.getValueAt(vlineas.tblLineas.getSelectedRow(), 0).toString());
-                    (new CtrlLineas(vlineas, g, this)).onEditar(ID);
+                if (vcombinaciones.tblCombinaciones.getSelectedRow() >= 0) {
+                    int ID = Integer.parseInt(vcombinaciones.tblCombinaciones.getValueAt(vcombinaciones.tblCombinaciones.getSelectedRow(), 0).toString());
+                    (new CtrlCombinaciones(vcombinaciones, g, this)).onEditar(ID);
                 } else {
                     Toolkit.getDefaultToolkit().beep();
                     JOptionPane.showMessageDialog(null, "DEBE DE SELECCIONAR UN REGISTRO", "ATENCIÓN", JOptionPane.WARNING_MESSAGE);
@@ -70,36 +68,36 @@ public class Lineas {
             }
 
         });
-        vlineas.btnEliminar.addActionListener((e) -> {
-            if (vlineas.tblLineas.getSelectedRow() >= 0) {
+        vcombinaciones.btnEliminar.addActionListener((e) -> {
+            if (vcombinaciones.tblCombinaciones.getSelectedRow() >= 0) {
 
                 int i = JOptionPane.showConfirmDialog(null, "¿Estás Seguro?", "Confirmar Eliminar", JOptionPane.YES_NO_OPTION);
                 if (i == 0) {
-                    int ID = Integer.parseInt(vlineas.tblLineas.getValueAt(vlineas.tblLineas.getSelectedRow(), 0).toString());
-                    (new CtrlLineas(vlineas, g, this)).onEliminar(ID);
+                    int ID = Integer.parseInt(vcombinaciones.tblCombinaciones.getValueAt(vcombinaciones.tblCombinaciones.getSelectedRow(), 0).toString());
+                    (new CtrlCombinaciones(vcombinaciones, g, this)).onEliminar(ID);
                 }
 
             } else {
                 JOptionPane.showMessageDialog(null, "DEBE DE SELECCIONAR UN REGISTRO", "ATENCIÓN", JOptionPane.WARNING_MESSAGE);
             }
         });
-        vlineas.btnRefrescar.addActionListener((e) -> {
+        vcombinaciones.btnRefrescar.addActionListener((e) -> {
             getRecords();
         });
-        vlineas.tblLineas.addMouseListener(new MouseAdapter() {
+        vcombinaciones.tblCombinaciones.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 switch (e.getClickCount()) {
                     case 2:
-                        vlineas.btnEditar.doClick();
+                        vcombinaciones.btnEditar.doClick();
                         break;
                 }
             }
         });
-        vlineas.txtBusqueda.getDocument().addDocumentListener(new DocumentListener() {
+        vcombinaciones.txtBusqueda.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
-                String text = vlineas.txtBusqueda.getText();
+                String text = vcombinaciones.txtBusqueda.getText();
                 if (text.trim().length() == 0) {
                     filtrador.setRowFilter(null);
                 } else {
@@ -109,7 +107,7 @@ public class Lineas {
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                String text = vlineas.txtBusqueda.getText();
+                String text = vcombinaciones.txtBusqueda.getText();
                 if (text.trim().length() == 0) {
                     filtrador.setRowFilter(null);
                 } else {
@@ -123,52 +121,42 @@ public class Lineas {
             }
         });
 
-        vlineas.cmbTamano.addActionListener((e) -> {
+        vcombinaciones.cmbTamano.addActionListener((e) -> {
             getRecords();
         });
-        TextPrompt placeholder = new TextPrompt("BUSCA LINEA, DESCRIPCIÓN", vlineas.txtBusqueda);
+        TextPrompt placeholder = new TextPrompt("BUSCA CLAVE, DESCRIPCIÓN", vcombinaciones.txtBusqueda);
         placeholder.changeAlpha(0.75f);
         placeholder.changeStyle(Font.ITALIC);
         getRecords();
     }
 
     public void setVisible() {
-        vlineas.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/LS.png")));
-        vlineas.setLocationRelativeTo(null);
-        vlineas.setVisible(true);
+        vcombinaciones.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/LS.png")));
+        vcombinaciones.setLocationRelativeTo(null);
+        vcombinaciones.setVisible(true);
     }
 
     public final void getRecords() {
         try {
 
             ArrayList<Object> o = new ArrayList<>();
-            if (vlineas.cmbTamano.getSelectedItem().toString().equals("TODOS")) {
+            if (vcombinaciones.cmbTamano.getSelectedItem().toString().equals("TODOS")) {
                 o.add(99999999);
             } else {
-                o.add(vlineas.cmbTamano.getSelectedItem().toString());
+                o.add(vcombinaciones.cmbTamano.getSelectedItem().toString());
             }
-            ArrayList<Object[][]> a = g.findByParams("SP_LINEAS", o);
+            ArrayList<Object[][]> a = g.findByParams("SP_COMBINACIONES", o);
             dtm = g.getModelFill(a.get(0), g.getDimensional(a.get(1)));
-            vlineas.tblLineas.setModel(dtm);
+            vcombinaciones.tblCombinaciones.setModel(dtm);
             filtrador = new TableRowSorter<>(dtm);
-            vlineas.tblLineas.setRowSorter(filtrador);
+            vcombinaciones.tblCombinaciones.setRowSorter(filtrador);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
 
-   
-
-    
-
-    public static boolean isEmailValid(String email) {
-        final Pattern EMAIL_REGEX = Pattern.compile("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", Pattern.CASE_INSENSITIVE);
-        return EMAIL_REGEX.matcher(email).matches();
-    }
-
-    /*NO EDITAR ESTA PARTE*/
-    public static vLineas getInstance() {
-        return vlineas;
+    public static vCombinaciones getInstance() {
+        return vcombinaciones;
     }
 
 }

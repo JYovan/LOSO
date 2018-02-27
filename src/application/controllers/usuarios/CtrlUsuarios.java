@@ -234,6 +234,7 @@ public class CtrlUsuarios {
             a.add(editar.Usuario.getText());
             a.add(String.valueOf(editar.Contrasena.getPassword()));
             a.add(editar.Correo.getText());
+            a.add(editar.Tipo.getSelectedItem().toString());
             if (!editar.Usuario.getText().equals("") && g.addUpdateOrDelete("SP_MODIFICAR_USUARIO", a)) {
                 JOptionPane.showMessageDialog(null, "USUARIO MODIFICADO", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
                 editar.dispose();

@@ -44,8 +44,10 @@ public class vProductos extends javax.swing.JFrame {
         btnPdf = new javax.swing.JButton();
         btnExportar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("GESTIÓN DE PRODUCTOS");
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("PRODUCTOS");
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
         btnAdelante.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/16/delante.png"))); // NOI18N
 
