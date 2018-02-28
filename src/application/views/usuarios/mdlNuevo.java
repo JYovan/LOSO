@@ -64,7 +64,7 @@ public class mdlNuevo extends javax.swing.JDialog {
 
         jLabel4.setText("Tipo");
 
-        Tipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrador", "Contabilidad", "Compras", "Produccion", "Almacen", " " }));
+        Tipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ADMINISTRADOR", "COMPRAS", "VENTAS", "PRODUCCION", "ALMACEN", "CONTABILIDAD", " ", " " }));
 
         btnGuardar.setText("Guardar");
 

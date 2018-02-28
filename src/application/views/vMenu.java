@@ -62,8 +62,10 @@ public class vMenu extends javax.swing.JFrame {
         mnuFamilias = new javax.swing.JMenuItem();
         mnuSeries = new javax.swing.JMenuItem();
         mnuDepartamentos = new javax.swing.JMenuItem();
+        mnuTrasnportes = new javax.swing.JMenuItem();
+        mnuRutas = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
-        mnuPartesZapato = new javax.swing.JMenuItem();
+        mnuPiezas = new javax.swing.JMenuItem();
         mnuTemporadas = new javax.swing.JMenuItem();
         mnuHormas = new javax.swing.JMenuItem();
         mnuTiposEstilo = new javax.swing.JMenuItem();
@@ -208,11 +210,17 @@ public class vMenu extends javax.swing.JFrame {
         mnuDepartamentos.setText("Departamentos");
         mnuDepartamentos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu1.add(mnuDepartamentos);
+
+        mnuTrasnportes.setText("Transportes");
+        jMenu1.add(mnuTrasnportes);
+
+        mnuRutas.setText("Rutas");
+        jMenu1.add(mnuRutas);
         jMenu1.add(jSeparator1);
 
-        mnuPartesZapato.setText("Partes del Zapato");
-        mnuPartesZapato.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jMenu1.add(mnuPartesZapato);
+        mnuPiezas.setText("Piezas");
+        mnuPiezas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jMenu1.add(mnuPiezas);
 
         mnuTemporadas.setText("Temporadas");
         mnuTemporadas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -306,12 +314,14 @@ public class vMenu extends javax.swing.JFrame {
     public javax.swing.JMenuItem mnuMetodosPago;
     public javax.swing.JMenuItem mnuModulos;
     public javax.swing.JMenuItem mnuMonedas;
-    public javax.swing.JMenuItem mnuPartesZapato;
     public javax.swing.JMenuItem mnuPermisos;
+    public javax.swing.JMenuItem mnuPiezas;
     public javax.swing.JMenuItem mnuProveedores;
+    public javax.swing.JMenuItem mnuRutas;
     public javax.swing.JMenuItem mnuSeries;
     public javax.swing.JMenuItem mnuTemporadas;
     public javax.swing.JMenuItem mnuTiposEstilo;
+    public javax.swing.JMenuItem mnuTrasnportes;
     public javax.swing.JMenuItem mnuUnidades;
     public javax.swing.JMenuItem mnuUsuarios;
     // End of variables declaration//GEN-END:variables

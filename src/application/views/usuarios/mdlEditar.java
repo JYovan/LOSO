@@ -57,7 +57,7 @@ public class mdlEditar extends javax.swing.JDialog {
         Foto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/camera.png"))); // NOI18N
         Foto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        Tipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrador", "Contabilidad", "Compras", "Produccion", "Almacen", " " }));
+        Tipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ADMINISTRADOR", "COMPRAS", "VENTAS", "PRODUCCION", "ALMACEN", "CONTABILIDAD" }));
 
         jLabel1.setText("Usuario");
 

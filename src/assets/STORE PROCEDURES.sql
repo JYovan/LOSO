@@ -403,7 +403,7 @@ CREATE PROCEDURE SP_LINEAS(@MAX INT)
 AS
 BEGIN
 SET NOCOUNT ON; 
-	SELECT TOP (@MAX) L.ID AS ID, L.Clave AS CLAVE, L.Descripcion AS DESCRIPCION, L.Ano AS A�O, L.Estatus AS ESTATUS FROM Lineas AS L WHERE L.Estatus IN('ACTIVO','INACTIVO');
+	SELECT TOP (@MAX) L.ID AS ID, L.Clave AS CLAVE, L.Descripcion AS DESCRIPCION, L.Ano AS ANO, L.Estatus AS ESTATUS FROM Lineas AS L WHERE L.Estatus IN('ACTIVO','INACTIVO');
 END
 GO
 
@@ -488,7 +488,7 @@ CREATE PROCEDURE SP_BUSCAR_LINEA(@MAX INT, @Clave VARCHAR(45),@Descripcion VARCH
 AS
 BEGIN
 SET NOCOUNT ON; 
-	SELECT TOP(@MAX) L.ID AS ID, L.Clave AS CLAVE, L.Descripcion AS DESCRIPCION, L.Ano AS A�O, L.Estatus AS ESTATUS  FROM Lineas AS L 
+	SELECT TOP(@MAX) L.ID AS ID, L.Clave AS CLAVE, L.Descripcion AS DESCRIPCION, L.Ano AS ANO, L.Estatus AS ESTATUS  FROM Lineas AS L 
 	WHERE L.Clave LIKE CONCAT('%',@Clave,'%') AND L.Descripcion LIKE CONCAT('%',@Descripcion,'%');
 END
 GO
@@ -963,20 +963,6 @@ END
 GO
 
 
--- -----------------------------------------------------
--- procedure SP_OBTENER_DEPARTAMENTOS
--- -----------------------------------------------------
-
-IF EXISTS (	SELECT name FROM sysobjects WHERE  name = 'SP_OBTENER_DEPARTAMENTOS' AND TYPE = 'P')
-	DROP PROCEDURE SP_OBTENER_DEPARTAMENTOS
-GO
-CREATE PROCEDURE SP_OBTENER_DEPARTAMENTOS
-AS
-BEGIN
-SET NOCOUNT ON; 
-	SELECT D.ID AS ID, D.SValue AS DEPARTAMENTO FROM CATALOGOS AS D WHERE F.Estatus IN('ACTIVO') AND F.FieldId LIKE 'DEPARTAMENTOS';
-END
-GO
 
 -- -----------------------------------------------------
 -- procedure SP_OBTENER_UNIDADES
@@ -1085,5 +1071,105 @@ UPDATE [dbo].[Materiales]
       ,[Estatus] = @Estatus
  WHERE ID = @ID;
 
+END
+GO
+
+-- -----------------------------------------------------
+-- procedure SP_FRACCIONES
+-- -----------------------------------------------------
+IF EXISTS (	SELECT name FROM sysobjects WHERE  name = 'SP_FRACCIONES' AND TYPE = 'P')
+	DROP PROCEDURE SP_FRACCIONES
+GO
+CREATE PROCEDURE SP_FRACCIONES(@MAX INT)
+AS
+BEGIN
+SET NOCOUNT ON; 
+	SELECT TOP (@MAX) C.ID AS ID, C.Clave AS CLAVE, C.Descripcion AS DESCRIPCION, C.Estatus AS ESTATUS FROM Fracciones AS C WHERE C.Estatus IN('ACTIVO','INACTIVO');
+END
+GO
+
+-- -----------------------------------------------------
+-- procedure SP_AGREGAR_FRACCION
+-- -----------------------------------------------------
+IF EXISTS (	SELECT name FROM sysobjects WHERE  name = 'SP_AGREGAR_FRACCION' AND TYPE = 'P')
+	DROP PROCEDURE SP_AGREGAR_FRACCION
+GO
+CREATE  PROCEDURE SP_AGREGAR_FRACCION(
+@Clave VARCHAR(15),
+@Descripcion VARCHAR(100), 
+@DepartamentoCat INT
+)
+AS
+BEGIN
+SET NOCOUNT ON;
+	INSERT INTO Fracciones([Clave],[Descripcion],[DepartamentoCat],[Estatus]) 
+						VALUES (@Clave, @Descripcion, @DepartamentoCat,'ACTIVO');
+END
+GO
+
+-- -----------------------------------------------------
+-- procedure SP_FRACCION_X_ID
+-- -----------------------------------------------------
+IF EXISTS (	SELECT name FROM sysobjects WHERE  name = 'SP_FRACCION_X_ID' AND TYPE = 'P')
+	DROP PROCEDURE SP_FRACCION_X_ID
+GO
+CREATE PROCEDURE SP_FRACCION_X_ID(@IDX INT)
+AS
+BEGIN
+SET NOCOUNT ON; 
+	SELECT TOP 1 C.ID AS ID, C.Clave AS CLAVE, C.DESCRIPCION AS DESCRIPCION, C.DepartamentoCat  AS DEPARTAMENTO,C.Estatus AS ESTATUS
+    FROM Fracciones AS C
+    WHERE C.ID = @IDX AND C.Estatus IN('ACTIVO','INACTIVO') ;
+END
+GO
+
+-- -----------------------------------------------------
+-- procedure SP_MODIFICAR_FRACCION
+-- -----------------------------------------------------
+IF EXISTS (	SELECT name FROM sysobjects WHERE  name = 'SP_MODIFICAR_FRACCION' AND TYPE = 'P')
+	DROP PROCEDURE SP_MODIFICAR_FRACCION
+GO
+CREATE PROCEDURE SP_MODIFICAR_FRACCION(
+@IDX INT, @Clave VARCHAR(15), 
+@Descripcion VARCHAR(100), 
+@DepartamentoCat INT,
+@Estatus VARCHAR(25))
+AS
+BEGIN
+SET NOCOUNT ON; 
+	UPDATE Fracciones
+	SET [Clave] = @Clave, [Descripcion] = @Descripcion, [DepartamentoCat] = @DepartamentoCat,[Estatus] = @Estatus
+	WHERE [ID] = @IDX; 
+END
+GO
+
+-- -----------------------------------------------------
+-- procedure SP_ELIMINAR_FRACCION
+-- -----------------------------------------------------
+
+IF EXISTS (	SELECT name FROM sysobjects WHERE  name = 'SP_ELIMINAR_FRACCION' AND TYPE = 'P')
+	DROP PROCEDURE SP_ELIMINAR_FRACCION
+GO
+CREATE PROCEDURE SP_ELIMINAR_FRACCION(@IDX INT)
+AS
+BEGIN
+SET NOCOUNT ON; 
+	UPDATE Fracciones
+	SET [Estatus] = 'INACTIVO' 
+	WHERE [ID] = @IDX; 
+END
+GO
+
+-- -----------------------------------------------------
+-- procedure SP_OBTENER_DEPARTAMENTOS
+-- -----------------------------------------------------
+IF EXISTS (	SELECT name FROM sysobjects WHERE  name = 'SP_OBTENER_DEPARTAMENTOS' AND TYPE = 'P')
+	DROP PROCEDURE SP_OBTENER_DEPARTAMENTOS
+GO
+CREATE PROCEDURE SP_OBTENER_DEPARTAMENTOS
+AS
+BEGIN
+SET NOCOUNT ON; 
+	SELECT D.ID AS ID, D.SValue AS DEPARTAMENTOS FROM CATALOGOS AS D WHERE D.Estatus IN('ACTIVO') AND D.FieldId LIKE 'DEPARTAMENTOS';
 END
 GO
