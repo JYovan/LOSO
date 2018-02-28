@@ -258,14 +258,14 @@ public class CtrlMateriales {
             }
             if (!String.valueOf(data[0][11]).equals("")) {
                 editar.PrecioTope.setValue(Float.parseFloat(String.valueOf(data[0][11])));
-            } 
-            Calendar c = Calendar.getInstance();
-            c.setTime(new Date(String.valueOf(data[0][12])));
-            editar.FechaUltimoInventario.setSelectedDate(c);
-             
-            editar.FechaUltimoInventario.setDefaultPeriods(new datechooser.model.multiple.PeriodSet(new datechooser.model.multiple.Period(new java.util.GregorianCalendar(2018, 1, 27),
-            new java.util.GregorianCalendar(2018, 1, 27))));
-            
+            }
+            String fecha = String.valueOf(data[0][12]);
+            String[] partes = fecha.split("/");/*0 = dias, 1 = meses, 2 = años*/
+            System.out.println("AÑO: " + partes[2] + ", MES: " + partes[1] + ", DIAS:" + partes[0]);
+            editar.FechaUltimoInventario.setDefaultPeriods(new datechooser.model.multiple.PeriodSet(new datechooser.model.multiple.Period(
+                    new java.util.GregorianCalendar(Integer.parseInt(partes[2]), Integer.parseInt(partes[1]) - 1, Integer.parseInt(partes[0])),
+                    new java.util.GregorianCalendar(Integer.parseInt(partes[2]), Integer.parseInt(partes[1]) - 1, Integer.parseInt(partes[0])))));
+
             editar.Existencia.setValue(Float.parseFloat(String.valueOf(data[0][13])));
             if (data[0][14] != null) {
                 editar.Estatus.getModel().setSelectedItem(data[0][14]);
