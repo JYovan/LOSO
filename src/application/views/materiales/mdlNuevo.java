@@ -144,7 +144,14 @@ public class mdlNuevo extends javax.swing.JDialog {
                 (datechooser.view.BackRenderer)null,
                 false,
                 true)));
+    FechaUltimoInventario.setNothingAllowed(false);
     FechaUltimoInventario.setFormat(2);
+    try {
+        FechaUltimoInventario.setDefaultPeriods(new datechooser.model.multiple.PeriodSet(new datechooser.model.multiple.Period(new java.util.GregorianCalendar(2018, 1, 27),
+            new java.util.GregorianCalendar(2018, 1, 27))));
+} catch (datechooser.model.exeptions.IncompatibleDataExeption e1) {
+    e1.printStackTrace();
+    }
 
     jLabel13.setText("Fecha ultimo inventario");
 

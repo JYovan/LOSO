@@ -13,6 +13,7 @@ import application.third_party.WaitLayerUI;
 import application.views.materiales.mdlEditar;
 import application.views.materiales.mdlNuevo;
 import application.views.vMateriales;
+import datechooser.model.exeptions.IncompatibleDataExeption;
 import java.awt.HeadlessException;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -28,6 +29,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.logging.Level;
@@ -245,11 +247,25 @@ public class CtrlMateriales {
             if (data[0][7] != null) {
                 editar.Tipo.getModel().setSelectedItem(data[0][7]);
             }
-            editar.Minimo.setValue(Float.parseFloat(String.valueOf(data[0][8])));
-            editar.Maximo.setValue(Float.parseFloat(String.valueOf(data[0][9])));
-            editar.PrecioLista.setValue(Float.parseFloat(String.valueOf(data[0][10])));
-            editar.PrecioTope.setValue(Float.parseFloat(String.valueOf(data[0][11])));
-            editar.FechaUltimoInventario.setText(String.valueOf(data[0][12]));
+            if (!String.valueOf(data[0][8]).equals("")) {
+                editar.Minimo.setValue(Float.parseFloat(String.valueOf(data[0][8])));
+            }
+            if (!String.valueOf(data[0][9]).equals("")) {
+                editar.Maximo.setValue(Float.parseFloat(String.valueOf(data[0][9])));
+            }
+            if (!String.valueOf(data[0][10]).equals("")) {
+                editar.PrecioLista.setValue(Float.parseFloat(String.valueOf(data[0][10])));
+            }
+            if (!String.valueOf(data[0][11]).equals("")) {
+                editar.PrecioTope.setValue(Float.parseFloat(String.valueOf(data[0][11])));
+            } 
+            Calendar c = Calendar.getInstance();
+            c.setTime(new Date(String.valueOf(data[0][12])));
+            editar.FechaUltimoInventario.setSelectedDate(c);
+             
+            editar.FechaUltimoInventario.setDefaultPeriods(new datechooser.model.multiple.PeriodSet(new datechooser.model.multiple.Period(new java.util.GregorianCalendar(2018, 1, 27),
+            new java.util.GregorianCalendar(2018, 1, 27))));
+            
             editar.Existencia.setValue(Float.parseFloat(String.valueOf(data[0][13])));
             if (data[0][14] != null) {
                 editar.Estatus.getModel().setSelectedItem(data[0][14]);
@@ -258,7 +274,10 @@ public class CtrlMateriales {
             editar.setLocationRelativeTo(null);
             editar.setVisible(true);
         } catch (NumberFormatException e) {
+            e.printStackTrace();
             JOptionPane.showMessageDialog(null, "NO SE HA PODIDO EDITAR EL MATERIAL", "ERROR AL EDITAR", JOptionPane.ERROR_MESSAGE);
+        } catch (IncompatibleDataExeption ex) {
+            Logger.getLogger(CtrlMateriales.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
