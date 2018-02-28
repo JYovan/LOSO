@@ -35,7 +35,7 @@ public class Menu {
     Combinaciones comb;
     Materiales mat;
     Fracciones fra;
-    
+
     public Menu(Generic g) {
         this.g = g;
         menu = new vMenu();
@@ -47,8 +47,8 @@ public class Menu {
         lin = new Lineas(g);
         est = new Estilos(g);
         maq = new Maquilas(g);
-        comb =  new Combinaciones(g);
-        mat =  new Materiales(g);
+        comb = new Combinaciones(g);
+        mat = new Materiales(g);
         fra = new Fracciones(g);
 
         src.toSysTray(menu);
@@ -61,27 +61,27 @@ public class Menu {
                 }
             }
         });
-        
+
         menu.mnuFracciones.addActionListener((e) -> {
             fra.getRecords();
             fra.setVisible();
         });
-        
+
         menu.mnuMateriales.addActionListener((e) -> {
             mat.getRecords();
             mat.setVisible();
         });
-        
+
         menu.mnuCombinaciones.addActionListener((e) -> {
             comb.getRecords();
             comb.setVisible();
         });
-        
+
         menu.mnuMaquilas.addActionListener((e) -> {
             maq.getRecords();
             maq.setVisible();
         });
-        
+
         menu.mnuEstilos.addActionListener((e) -> {
             est.getRecords();
             est.setVisible();
@@ -90,8 +90,19 @@ public class Menu {
             lin.getRecords();
             lin.setVisible();
         });
+        
+        menu.mnuRutas.addActionListener((e) -> {
+            c.setTipoCatalogo("RUTAS");
+            c.getRecords();
+            c.setVisible();
+        });
 
-       
+        menu.mnuTrasnportes.addActionListener((e) -> {
+            c.setTipoCatalogo("TRANSPORTES");
+            c.getRecords();
+            c.setVisible();
+        });
+
         menu.mnuHormas.addActionListener((e) -> {
             c.setTipoCatalogo("HORMAS");
             c.getRecords();
@@ -122,20 +133,15 @@ public class Menu {
             c.setVisible();
         });
 
-        menu.mnuMetodosPago.addActionListener((e) -> {
-            c.setTipoCatalogo("METODOS PAGO");
-            c.getRecords();
-            c.setVisible();
-        });
-
+      
         menu.mnuDepartamentos.addActionListener((e) -> {
             c.setTipoCatalogo("DEPARTAMENTOS");
             c.getRecords();
             c.setVisible();
         });
 
-        menu.mnuPartesZapato.addActionListener((e) -> {
-            c.setTipoCatalogo("PARTES ZAPATO");
+        menu.mnuPiezas.addActionListener((e) -> {
+            c.setTipoCatalogo("PIEZAS");
             c.getRecords();
             c.setVisible();
         });

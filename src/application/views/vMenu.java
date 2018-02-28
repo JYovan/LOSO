@@ -31,8 +31,6 @@ public class vMenu extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu6 = new javax.swing.JMenu();
-        jMenu7 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
@@ -62,8 +60,10 @@ public class vMenu extends javax.swing.JFrame {
         mnuFamilias = new javax.swing.JMenuItem();
         mnuSeries = new javax.swing.JMenuItem();
         mnuDepartamentos = new javax.swing.JMenuItem();
+        mnuTrasnportes = new javax.swing.JMenuItem();
+        mnuRutas = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
-        mnuPartesZapato = new javax.swing.JMenuItem();
+        mnuPiezas = new javax.swing.JMenuItem();
         mnuTemporadas = new javax.swing.JMenuItem();
         mnuHormas = new javax.swing.JMenuItem();
         mnuTiposEstilo = new javax.swing.JMenuItem();
@@ -90,14 +90,6 @@ public class vMenu extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 445, Short.MAX_VALUE)
         );
-
-        jMenu6.setText("Ventas");
-        jMenu6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jMenuBar1.add(jMenu6);
-
-        jMenu7.setText("Compras");
-        jMenu7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jMenuBar1.add(jMenu7);
 
         jMenu2.setText("Fichas Técnicas");
         jMenu2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -208,11 +200,17 @@ public class vMenu extends javax.swing.JFrame {
         mnuDepartamentos.setText("Departamentos");
         mnuDepartamentos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu1.add(mnuDepartamentos);
+
+        mnuTrasnportes.setText("Transportes");
+        jMenu1.add(mnuTrasnportes);
+
+        mnuRutas.setText("Rutas");
+        jMenu1.add(mnuRutas);
         jMenu1.add(jSeparator1);
 
-        mnuPartesZapato.setText("Partes del Zapato");
-        mnuPartesZapato.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jMenu1.add(mnuPartesZapato);
+        mnuPiezas.setText("Piezas");
+        mnuPiezas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jMenu1.add(mnuPiezas);
 
         mnuTemporadas.setText("Temporadas");
         mnuTemporadas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -277,8 +275,6 @@ public class vMenu extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
-    private javax.swing.JMenu jMenu6;
-    private javax.swing.JMenu jMenu7;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem8;
@@ -306,12 +302,14 @@ public class vMenu extends javax.swing.JFrame {
     public javax.swing.JMenuItem mnuMetodosPago;
     public javax.swing.JMenuItem mnuModulos;
     public javax.swing.JMenuItem mnuMonedas;
-    public javax.swing.JMenuItem mnuPartesZapato;
     public javax.swing.JMenuItem mnuPermisos;
+    public javax.swing.JMenuItem mnuPiezas;
     public javax.swing.JMenuItem mnuProveedores;
+    public javax.swing.JMenuItem mnuRutas;
     public javax.swing.JMenuItem mnuSeries;
     public javax.swing.JMenuItem mnuTemporadas;
     public javax.swing.JMenuItem mnuTiposEstilo;
+    public javax.swing.JMenuItem mnuTrasnportes;
     public javax.swing.JMenuItem mnuUnidades;
     public javax.swing.JMenuItem mnuUsuarios;
     // End of variables declaration//GEN-END:variables

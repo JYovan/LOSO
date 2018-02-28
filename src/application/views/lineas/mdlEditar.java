@@ -55,7 +55,7 @@ public class mdlEditar extends javax.swing.JDialog {
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
-        cmbEstatusMuestra.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "MUESTRA", "PRODUCCIÓN" }));
+        cmbEstatusMuestra.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "MUESTRA", "PRODUCCION" }));
 
         btnGuardar.setText("Guardar");
 
