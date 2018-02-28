@@ -133,12 +133,7 @@ public class Menu {
             c.setVisible();
         });
 
-        menu.mnuMetodosPago.addActionListener((e) -> {
-            c.setTipoCatalogo("METODOS PAGO");
-            c.getRecords();
-            c.setVisible();
-        });
-
+      
         menu.mnuDepartamentos.addActionListener((e) -> {
             c.setTipoCatalogo("DEPARTAMENTOS");
             c.getRecords();
