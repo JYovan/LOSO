@@ -44,6 +44,7 @@ public class Resources {
     MenuItem mnuiMinimize;
     MenuItem mnuiRestore;
     MenuItem mnuiTitulo;
+    MenuItem mnuiCerrar;
     SystemTray sysTray;
     TrayIcon iconSysTray = null;
 
@@ -514,6 +515,13 @@ public class Resources {
             mnuiMinimize = new MenuItem("Ocultar");
             mnuiMinimize.addActionListener(listenerMinimize);
             popupmenu.add(mnuiMinimize);
+            
+            
+            mnuiCerrar = new MenuItem("Cerrar");
+            mnuiCerrar.addActionListener((e) -> {
+                System.exit(0);
+            });
+            popupmenu.add(mnuiCerrar);
 
             // mnuiExit = new MenuItem("Salir");
             // mnuiExit.addActionListener(listenerExit);
