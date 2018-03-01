@@ -29,7 +29,7 @@ public class vMenu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jDesktopPane1 = new javax.swing.JDesktopPane();
+        dpContenedor = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem8 = new javax.swing.JMenuItem();
@@ -79,17 +79,17 @@ public class vMenu extends javax.swing.JFrame {
         setTitle("Calzado Lobo Solo v.1.0.0");
         setBackground(new java.awt.Color(255, 255, 255));
 
-        jDesktopPane1.setBackground(new java.awt.Color(255, 255, 255));
+        dpContenedor.setBackground(new java.awt.Color(255, 255, 255));
 
-        javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
-        jDesktopPane1.setLayout(jDesktopPane1Layout);
-        jDesktopPane1Layout.setHorizontalGroup(
-            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1095, Short.MAX_VALUE)
+        javax.swing.GroupLayout dpContenedorLayout = new javax.swing.GroupLayout(dpContenedor);
+        dpContenedor.setLayout(dpContenedorLayout);
+        dpContenedorLayout.setHorizontalGroup(
+            dpContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1175, Short.MAX_VALUE)
         );
-        jDesktopPane1Layout.setVerticalGroup(
-            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 445, Short.MAX_VALUE)
+        dpContenedorLayout.setVerticalGroup(
+            dpContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 583, Short.MAX_VALUE)
         );
 
         jMenu2.setText("Fichas Técnicas");
@@ -103,7 +103,7 @@ public class vMenu extends javax.swing.JFrame {
         mnuMatxCombinacion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu2.add(mnuMatxCombinacion);
 
-        mnuFraccionesPorEstilo.setText("jMenuItem1");
+        mnuFraccionesPorEstilo.setText("Fracciones por Estilo");
         jMenu2.add(mnuFraccionesPorEstilo);
 
         jMenuBar1.add(jMenu2);
@@ -260,11 +260,11 @@ public class vMenu extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane1)
+            .addComponent(dpContenedor)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane1)
+            .addComponent(dpContenedor)
         );
 
         pack();
@@ -272,7 +272,7 @@ public class vMenu extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JDesktopPane jDesktopPane1;
+    public javax.swing.JDesktopPane dpContenedor;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu10;
     private javax.swing.JMenu jMenu14;

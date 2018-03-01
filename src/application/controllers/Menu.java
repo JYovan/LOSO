@@ -8,6 +8,8 @@ package application.controllers;
 import application.config.Generic;
 import application.third_party.Resources;
 import application.views.vMenu;
+import java.awt.Dimension;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -41,7 +43,7 @@ public class Menu {
         menu = new vMenu();
 
         m = new Modulos(g);
-        u = new Usuarios(g);
+        u = new Usuarios(g, menu);
         p = new Permisos(g);
         c = new Catalogos(g);
         lin = new Lineas(g);
@@ -90,7 +92,7 @@ public class Menu {
             lin.getRecords();
             lin.setVisible();
         });
-        
+
         menu.mnuRutas.addActionListener((e) -> {
             c.setTipoCatalogo("RUTAS");
             c.getRecords();
@@ -133,7 +135,6 @@ public class Menu {
             c.setVisible();
         });
 
-      
         menu.mnuDepartamentos.addActionListener((e) -> {
             c.setTipoCatalogo("DEPARTAMENTOS");
             c.getRecords();
@@ -194,9 +195,20 @@ public class Menu {
     }
 
     public void setVisible() {
+        
         menu.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/LS.png")));
-        menu.setLocationRelativeTo(null);
+
+        menu.setExtendedState(menu.getExtendedState() | JFrame.MAXIMIZED_BOTH);
         menu.setVisible(true);
-        //menu.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        
+//        Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
+//        Rectangle r = new Rectangle(1, 1, d.width, d.height - 30);
+//        menu.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/LS.png")));
+//        menu.setSize(d.width, d.height - 30);
+//        menu.setMaximizedBounds(r);
+//        menu.setLocationRelativeTo(null);
+//        menu.setVisible(true);
+      
+
     }
 }

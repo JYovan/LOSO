@@ -8,13 +8,12 @@ package application.controllers;
 import application.config.Generic;
 import application.config.TextPrompt;
 import application.controllers.usuarios.CtrlUsuarios;
-import application.views.vModulos;
 import application.views.vUsuarios;
+import application.views.vMenu;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -28,14 +27,10 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.design.JRDesignQuery;
 import net.sf.jasperreports.engine.design.JasperDesign;
-import net.sf.jasperreports.engine.xml.JRXmlLoader;
 
 import net.sf.jasperreports.view.JasperViewer;
 
@@ -45,7 +40,7 @@ import net.sf.jasperreports.view.JasperViewer;
  */
 public class Usuarios {
 
-    private static vUsuarios vusuarios;
+    public static vUsuarios vusuarios;
     DefaultTableModel dtm;
     Generic g;
     JasperDesign jd;
@@ -54,14 +49,18 @@ public class Usuarios {
     JasperPrint print;
     JDialog viewer;
     JasperViewer jv;
+    vMenu mnu;
+    CtrlUsuarios cu;
 
     private TableRowSorter<TableModel> filtrador;
 
-    public Usuarios(Generic g) {
+    public Usuarios(Generic g, JFrame parent) {
+        this.mnu = (vMenu) parent;
         this.g = g;
+        cu = new CtrlUsuarios(vusuarios, g, this, mnu);
         vusuarios = new vUsuarios();
         vusuarios.btnNuevo.addActionListener((e) -> {
-            (new CtrlUsuarios(vusuarios, g, this)).setVisible();
+            cu.setVisible();
         });
         vusuarios.btnExportar.addActionListener((e) -> {
             getReporteUsuarios();
@@ -70,7 +69,7 @@ public class Usuarios {
             try {
                 if (vusuarios.tblUsuarios.getSelectedRow() >= 0) {
                     int ID = Integer.parseInt(vusuarios.tblUsuarios.getValueAt(vusuarios.tblUsuarios.getSelectedRow(), 0).toString());
-                    (new CtrlUsuarios(vusuarios, g, this)).onEditar(ID);
+                    cu.onEditar(ID);
                 } else {
                     Toolkit.getDefaultToolkit().beep();
                     JOptionPane.showMessageDialog(null, "DEBE DE SELECCIONAR UN REGISTRO", "ATENCIÓN", JOptionPane.WARNING_MESSAGE);
@@ -86,7 +85,7 @@ public class Usuarios {
                 int i = JOptionPane.showConfirmDialog(null, "¿Estás Seguro?", "Confirmar Eliminar", JOptionPane.YES_NO_OPTION);
                 if (i == 0) {
                     int ID = Integer.parseInt(vusuarios.tblUsuarios.getValueAt(vusuarios.tblUsuarios.getSelectedRow(), 0).toString());
-                    (new CtrlUsuarios(vusuarios, g, this)).onEliminar(ID);
+                    (new CtrlUsuarios(vusuarios, g, this, mnu)).onEliminar(ID);
                 }
 
             } else {
@@ -143,9 +142,20 @@ public class Usuarios {
     }
 
     public void setVisible() {
-        vusuarios.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/LS.png")));
-        vusuarios.setLocationRelativeTo(null);
-        vusuarios.setVisible(true);
+
+        if (vusuarios.isShowing()) {
+            //mensaje de que está abierto si se desea
+        } else {
+            mnu.dpContenedor.add(vusuarios);
+
+            Dimension desktopSize = mnu.dpContenedor.getSize();
+            Dimension jInternalFrameSize = vusuarios.getSize();
+            vusuarios.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
+                    (desktopSize.height - jInternalFrameSize.height) / 2);
+            vusuarios.setFrameIcon(null);
+            vusuarios.show();
+        }
+
     }
 
     public final void getRecords() {
@@ -168,42 +178,42 @@ public class Usuarios {
     }
 
     public void getReporteUsuarios() {
-        try {
-            viewer = new JDialog(vusuarios, "Usuarios - Reporte de Listado de Usuarios", true);
-            report = JasperCompileManager.compileReport("jrxml/Usuarios.jrxml");
-            print = JasperFillManager.fillReport(report, null, g.getCurrentConnection());
-            jv = new JasperViewer(print, false);
-            viewer.getContentPane().add(jv.getContentPane());
-            jv.setExtendedState(JFrame.MAXIMIZED_BOTH);
-            viewer.setSize(jv.getSize());
-            viewer.setLocationRelativeTo(null);
-            viewer.setVisible(true);
-        } catch (JRException e) {
-            JOptionPane.showMessageDialog(null, "NO SE HA PODIDO GENERAR EL REPORTE DE USUARIOS\n" + e.getMessage(), "ERROR AL GENERAR", JOptionPane.ERROR_MESSAGE);
-        }
+//        try {
+//            viewer = new JDialog(vusuarios, "Usuarios - Reporte de Listado de Usuarios", true);
+//            report = JasperCompileManager.compileReport("jrxml/Usuarios.jrxml");
+//            print = JasperFillManager.fillReport(report, null, g.getCurrentConnection());
+//            jv = new JasperViewer(print, false);
+//            viewer.getContentPane().add(jv.getContentPane());
+//            jv.setExtendedState(JFrame.MAXIMIZED_BOTH);
+//            viewer.setSize(jv.getSize());
+//            viewer.setLocationRelativeTo(null);
+//            viewer.setVisible(true);
+//        } catch (JRException e) {
+//            JOptionPane.showMessageDialog(null, "NO SE HA PODIDO GENERAR EL REPORTE DE USUARIOS\n" + e.getMessage(), "ERROR AL GENERAR", JOptionPane.ERROR_MESSAGE);
+//        }
     }
 
     public void getReporteUsuariosSQL() {
-        try {
-            viewer = new JDialog(vusuarios, "Usuarios - Reporte de Listado de Usuarios", true);
-            report = JasperCompileManager.compileReport("jrxml/Usuarios.jrxml");
-            String sql = "SELECT v.vm_id Id, v.vm_folio Folio, v.vm_ncuenta NoCuenta, v.vm_femision Emitido, v.vm_nrecibo NoRecibo, v.vm_fentrega Entrega, v.vm_ingreso Ingreso,dp.dp_nombre Dependencia,lt.lugt_nombre LugarTrabajo, v.vm_estatus Estatus, v.vm_registro Registro\n"
-                    + "FROM vale_m v INNER JOIN lugar_trabajo lt INNER JOIN dependencias dp\n"
-                    + "ON v.fk_lugt_vm = lt.lugt_id AND lt.fk_dp_lugt = dp.dp_id ORDER BY vm_id desc limit 1";
-            JRDesignQuery newQuery = new JRDesignQuery();
-            newQuery.setText(sql);
-            jd.setQuery(newQuery);
-            JasperReport jr = JasperCompileManager.compileReport(jd);
-            JasperPrint jp = JasperFillManager.fillReport(jr, null, g.getCurrentConnection());
-            jv = new JasperViewer(jp, false);
-            viewer.getContentPane().add(jv.getContentPane());
-            jv.setExtendedState(JFrame.MAXIMIZED_BOTH);
-            viewer.setSize(jv.getSize());
-            viewer.setLocationRelativeTo(null);
-            viewer.setVisible(true);
-        } catch (JRException e) {
-            JOptionPane.showMessageDialog(null, "NO SE HA PODIDO GENERAR EL REPORTE DE USUARIOS\n" + e.getMessage(), "ERROR AL GENERAR", JOptionPane.ERROR_MESSAGE);
-        }
+//        try {
+//            viewer = new JDialog(vusuarios, "Usuarios - Reporte de Listado de Usuarios", true);
+//            report = JasperCompileManager.compileReport("jrxml/Usuarios.jrxml");
+//            String sql = "SELECT v.vm_id Id, v.vm_folio Folio, v.vm_ncuenta NoCuenta, v.vm_femision Emitido, v.vm_nrecibo NoRecibo, v.vm_fentrega Entrega, v.vm_ingreso Ingreso,dp.dp_nombre Dependencia,lt.lugt_nombre LugarTrabajo, v.vm_estatus Estatus, v.vm_registro Registro\n"
+//                    + "FROM vale_m v INNER JOIN lugar_trabajo lt INNER JOIN dependencias dp\n"
+//                    + "ON v.fk_lugt_vm = lt.lugt_id AND lt.fk_dp_lugt = dp.dp_id ORDER BY vm_id desc limit 1";
+//            JRDesignQuery newQuery = new JRDesignQuery();
+//            newQuery.setText(sql);
+//            jd.setQuery(newQuery);
+//            JasperReport jr = JasperCompileManager.compileReport(jd);
+//            JasperPrint jp = JasperFillManager.fillReport(jr, null, g.getCurrentConnection());
+//            jv = new JasperViewer(jp, false);
+//            viewer.getContentPane().add(jv.getContentPane());
+//            jv.setExtendedState(JFrame.MAXIMIZED_BOTH);
+//            viewer.setSize(jv.getSize());
+//            viewer.setLocationRelativeTo(null);
+//            viewer.setVisible(true);
+//        } catch (JRException e) {
+//            JOptionPane.showMessageDialog(null, "NO SE HA PODIDO GENERAR EL REPORTE DE USUARIOS\n" + e.getMessage(), "ERROR AL GENERAR", JOptionPane.ERROR_MESSAGE);
+//        }
     }
 
     public static boolean isEmailValid(String email) {

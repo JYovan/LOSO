@@ -8,9 +8,11 @@ package application.controllers.usuarios;
 import application.config.Generic;
 import application.config.TextPrompt;
 import application.controllers.Usuarios;
-import application.views.usuarios.mdlEditar;
-import application.views.usuarios.mdlNuevo;
+import application.views.usuarios.mdlIFEditar;
+import application.views.usuarios.mdlIFNuevo;
 import application.views.vUsuarios;
+import application.views.vMenu;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.Image;
@@ -27,6 +29,7 @@ import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -35,19 +38,22 @@ import javax.swing.JOptionPane;
  */
 public class CtrlUsuarios {
 
-    mdlNuevo nuevo;
-    mdlEditar editar;
+    mdlIFNuevo nuevo;
+    mdlIFEditar editar;
     Generic g;
     Usuarios usuarios;
     vUsuarios vusuarios;
     int temp = 0;
+    vMenu mnu;
 
-    public CtrlUsuarios(JFrame parent, Generic g, Usuarios usuarios) {
-        nuevo = new mdlNuevo(parent, true);
-        editar = new mdlEditar(parent, true);
+    public CtrlUsuarios(JInternalFrame parent, Generic g, Usuarios usuarios, JFrame menu) {
+        nuevo = new mdlIFNuevo();
+        editar = new mdlIFEditar();
         this.vusuarios = (vUsuarios) parent;
         this.g = g;
         this.usuarios = usuarios;
+        this.mnu = (vMenu) menu;
+
         nuevo.btnGuardar.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -170,21 +176,24 @@ public class CtrlUsuarios {
 
         });
         /*PLACEHOLDERS*/
-//        TextPrompt placeholders = new TextPrompt("NOMBRE DE USUARIO", nuevo.Usuario);
-//        placeholders.changeAlpha(0.75f);
-//        placeholders.changeStyle(Font.BOLD);
-//        placeholders = new TextPrompt("CONTRASEÑA", nuevo.Contrasena);
-//        placeholders.changeAlpha(0.75f);
-//        placeholders.changeStyle(Font.BOLD);
-//        placeholders = new TextPrompt("lobosolo@lobosolo.com", nuevo.Correo);
-//        placeholders.changeAlpha(0.75f);
-//        placeholders.changeStyle(Font.BOLD);
-    }
 
+    }
+    
+   
+    
     public void setVisible() {
-        nuevo.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/96/icons8_Idea_96px.png")));
-        nuevo.setLocationRelativeTo(null);
-        nuevo.setVisible(true);
+        if(!nuevo.isShowing()){
+            mnu.dpContenedor.add(nuevo);
+            Dimension desktopSize = mnu.dpContenedor.getSize();
+            Dimension jInternalFrameSize = nuevo.getSize();
+            nuevo.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
+                    (desktopSize.height - jInternalFrameSize.height) / 2);
+            nuevo.setFrameIcon(null);
+            nuevo.show();
+            nuevo.toFront();
+        }
+  
+       
     }
 
     public void onGuardar() {
@@ -219,9 +228,18 @@ public class CtrlUsuarios {
             editar.Contrasena.setText(String.valueOf((data[0][2] != null) ? data[0][2] : ""));
             editar.Correo.setText(String.valueOf((data[0][3] != null) ? data[0][3] : ""));
             editar.Tipo.setSelectedItem((data[0][5] != null) ? data[0][5].toString() : "");
-            editar.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/96/icons8_Idea_96px.png")));
-            editar.setLocationRelativeTo(null);
-            editar.setVisible(true);
+
+            if (!editar.isShowing()) {
+                mnu.dpContenedor.add(editar);
+                Dimension desktopSize = mnu.dpContenedor.getSize();
+                Dimension jInternalFrameSize = editar.getSize();
+                editar.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
+                        (desktopSize.height - jInternalFrameSize.height) / 2);
+                editar.setFrameIcon(null);
+                editar.show();
+                editar.toFront();
+            }
+
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "NO SE HA PODIDO EDITAR EL USUARIO", "ERROR AL EDITAR", JOptionPane.ERROR_MESSAGE);
         }

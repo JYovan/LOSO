@@ -19,6 +19,9 @@ import de.javasoft.plaf.synthetica.SyntheticaClassyLookAndFeel;
 import de.javasoft.plaf.synthetica.SyntheticaGreenDreamLookAndFeel;
 import de.javasoft.plaf.synthetica.SyntheticaMauveMetallicLookAndFeel;
 import de.javasoft.plaf.synthetica.SyntheticaSilverMoonLookAndFeel;
+import de.javasoft.plaf.synthetica.SyntheticaSimple2DLookAndFeel;
+import de.javasoft.plaf.synthetica.SyntheticaSkyMetallicLookAndFeel;
+import de.javasoft.plaf.synthetica.SyntheticaWhiteVisionLookAndFeel;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -27,14 +30,13 @@ import java.awt.event.MouseEvent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
-import de.javasoft.plaf.synthetica.SyntheticaSimple2DLookAndFeel;
-import de.javasoft.plaf.synthetica.SyntheticaSkyMetallicLookAndFeel;
-import de.javasoft.plaf.synthetica.SyntheticaWhiteVisionLookAndFeel;
 import java.awt.Font;
 import java.awt.HeadlessException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import javax.swing.SwingUtilities;
 import javax.swing.UnsupportedLookAndFeelException;
+import org.jvnet.substance.SubstanceLookAndFeel;
 
 /**
  *
@@ -49,7 +51,7 @@ public class Login {
     public Login() {
 
         login = new vLogin();
- 
+
         login.txtContrasena.addKeyListener(new KeyListener() {
 
             @Override
@@ -81,19 +83,38 @@ public class Login {
     }
 
     public void setVisible() {
+
         login.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/LS.png")));
         login.setLocationRelativeTo(null);
         login.setVisible(true);
     }
 //SyntheticaAluOxideLookAndFeel
+//SaharaSkin  ModerateSkin
+
     public static void main(String[] args) {
-        try {
-            UIManager.setLookAndFeel(new SyntheticaAluOxideLookAndFeel());
-        } catch (ParseException | UnsupportedLookAndFeelException e) {
-            JOptionPane.showMessageDialog(null, "Error en Look an Feel" + e.getMessage(), null, JOptionPane.ERROR_MESSAGE);
-        }
-        JFrame.setDefaultLookAndFeelDecorated(true);
-        (new Login()).setVisible();
+
+        //JFrame.setDefaultLookAndFeelDecorated(true);
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                   SubstanceLookAndFeel.setSkin("org.jvnet.substance.skin.ModerateSkin");
+
+                } catch (Exception e) {
+                    System.out.println("Substance Graphite failed to initialize");
+                }
+                JFrame.setDefaultLookAndFeelDecorated(Boolean.TRUE);
+                (new Login()).setVisible();
+            }
+        });
+
+//        try {
+//            UIManager.setLookAndFeel(new SyntheticaAluOxideLookAndFeel());
+//            
+//        } catch (ParseException | UnsupportedLookAndFeelException e) {
+//            JOptionPane.showMessageDialog(null, "Error en Look an Feel" + e.getMessage(), null, JOptionPane.ERROR_MESSAGE);
+//        }
+//        JFrame.setDefaultLookAndFeelDecorated(Boolean.TRUE);
+//        (new Login()).setVisible();
     }
 
     public void onAcceder() {
@@ -102,14 +123,14 @@ public class Login {
             a.add(login.txtUsuario.getText());
             a.add(String.valueOf(login.txtContrasena.getPassword()));
             ArrayList<Object[][]> usuario = g.findByParams("SP_ACCEDER", a);
-            Object[][] data = usuario.get(0); 
-            if (data  != null && data[0][0] != null && data[0][1] != null) {
+            Object[][] data = usuario.get(0);
+            if (data != null && data[0][0] != null && data[0][1] != null) {
                 login.dispose();
                 (new Menu(g)).setVisible();
             } else {
                 JOptionPane.showMessageDialog(null, "DATOS INVÁLIDOS, INTENTE DE NUEVO", "ERROR", JOptionPane.ERROR_MESSAGE);
             }
-        } catch (HeadlessException e) { 
+        } catch (HeadlessException e) {
             JOptionPane.showMessageDialog(null, "DATOS INVÁLIDOS, INTENTE DE NUEVO", "ERROR", JOptionPane.ERROR_MESSAGE);
 
         }
