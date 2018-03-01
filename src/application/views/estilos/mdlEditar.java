@@ -75,7 +75,7 @@ public class mdlEditar extends javax.swing.JDialog {
         Estatus = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("EDITAR LINEA");
+        setTitle("EDITAR ESTILO");
 
         plnNuevo.setBackground(new java.awt.Color(255, 255, 255));
 

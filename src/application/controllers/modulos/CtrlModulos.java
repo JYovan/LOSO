@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 /**
  *
@@ -42,6 +43,8 @@ public class CtrlModulos {
         this.vmodulos = (vModulos) parent;
         this.g = g;
         this.modulos = modulos;
+        
+    
 
         nuevo.btnGuardar.addKeyListener(new KeyListener() {
             @Override

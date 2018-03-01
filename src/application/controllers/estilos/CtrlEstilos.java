@@ -74,6 +74,7 @@ public class CtrlEstilos {
         this.vestilos = (vEstilos) parent;
         this.g = g;
         this.estilos = estilos;
+        //Ayuda en captura combos nuevo estilo
         AutoCompleteDecorator.decorate(this.nuevo.Linea);
         AutoCompleteDecorator.decorate(this.nuevo.Familia);
         AutoCompleteDecorator.decorate(this.nuevo.Serie);
@@ -83,6 +84,16 @@ public class CtrlEstilos {
         AutoCompleteDecorator.decorate(this.nuevo.Tipo);
         AutoCompleteDecorator.decorate(this.nuevo.Linea);
         AutoCompleteDecorator.decorate(this.nuevo.MaquilaPlantilla);
+        //Ayuda en captura combos editar estilo
+        AutoCompleteDecorator.decorate(this.editar.Linea);
+        AutoCompleteDecorator.decorate(this.editar.Familia);
+        AutoCompleteDecorator.decorate(this.editar.Serie);
+        AutoCompleteDecorator.decorate(this.editar.Horma);
+        AutoCompleteDecorator.decorate(this.editar.Maquila);
+        AutoCompleteDecorator.decorate(this.editar.Temporada);
+        AutoCompleteDecorator.decorate(this.editar.Tipo);
+        AutoCompleteDecorator.decorate(this.editar.Linea);
+        AutoCompleteDecorator.decorate(this.editar.MaquilaPlantilla);
         /*NUEVO*/
         nuevo.Ano.addKeyListener(new KeyListener() {
             @Override

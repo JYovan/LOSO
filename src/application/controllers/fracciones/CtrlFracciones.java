@@ -1,4 +1,3 @@
-
 package application.controllers.fracciones;
 
 import application.config.Generic;
@@ -16,9 +15,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 public class CtrlFracciones {
+
     mdlNuevo nuevo;
     mdlEditar editar;
     Generic g;
@@ -26,8 +26,7 @@ public class CtrlFracciones {
     vFracciones vfracciones;
     int temp = 0;
     Resources rsc;
-    
-    
+
     public CtrlFracciones(JFrame parent, Generic g, Fracciones fracciones) {
         nuevo = new mdlNuevo(parent, true);
         editar = new mdlEditar(parent, true);
@@ -35,6 +34,9 @@ public class CtrlFracciones {
         this.g = g;
         this.fracciones = fracciones;
         rsc = new Resources();
+        //Ayuda en captura combo box
+        AutoCompleteDecorator.decorate(this.nuevo.cmbDepartamento);
+        AutoCompleteDecorator.decorate(this.editar.cmbDepartamento);
 
         nuevo.btnGuardar.addKeyListener(new KeyListener() {
             @Override
@@ -174,10 +176,10 @@ public class CtrlFracciones {
         });
 
         getDepartamentos();
+        
     }
-    
-    
-     public void setVisible() {
+
+    public void setVisible() {
         nuevo.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/96/icons8_Idea_96px.png")));
         nuevo.setLocationRelativeTo(null);
         nuevo.setVisible(true);
@@ -186,10 +188,16 @@ public class CtrlFracciones {
     public void onGuardar() {
         try {
             ArrayList<Object> a = new ArrayList<>();
-
+            Object x = null;
             a.add(nuevo.txtClave.getText());
             a.add(nuevo.txtDescripcion.getText());
-            a.add(getID(departamentos, nuevo.cmbDepartamento.getSelectedItem().toString()));
+
+            x = getID(departamentos, nuevo.cmbDepartamento.getSelectedItem().toString());
+            if (Integer.parseInt(String.valueOf(x)) != 0) {
+                a.add(x);
+            } else {
+                a.add(null);
+            }
 
             if (!nuevo.txtClave.getText().equals("") && g.addUpdateOrDelete("SP_AGREGAR_FRACCION", a)) {
                 JOptionPane.showMessageDialog(null, "REGISTRO AGREGADO", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
@@ -212,7 +220,10 @@ public class CtrlFracciones {
             Object[][] data = combinacion.get(0);
             editar.txtClave.setText(String.valueOf((data[0][1] != null) ? data[0][1] : ""));
             editar.txtDescripcion.setText(String.valueOf((data[0][2] != null) ? data[0][2] : ""));
-            editar.cmbDepartamento.setSelectedItem((data[0][3] != null) ? data[0][3].toString() : "");
+             if (data[0][3] != null) {
+                editar.cmbDepartamento.getModel().setSelectedItem(data[0][3]);
+            }
+
             editar.cmbEstatus.setSelectedItem((data[0][4] != null) ? data[0][4].toString() : "");
             editar.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/96/icons8_Idea_96px.png")));
             editar.setLocationRelativeTo(null);
@@ -225,10 +236,23 @@ public class CtrlFracciones {
     public void onModificar() {
         try {
             ArrayList<Object> a = new ArrayList<>();
+            Object x = null;
             a.add(temp);
             a.add(editar.txtClave.getText());
             a.add(editar.txtDescripcion.getText());
-            a.add(getID(departamentos, editar.cmbDepartamento.getSelectedItem().toString()));
+           
+
+            if (editar.cmbDepartamento.getSelectedIndex() != -1) {
+                x = getID(departamentos, editar.cmbDepartamento.getSelectedItem().toString());
+                if (Integer.parseInt(String.valueOf(x)) != 0) {
+                    a.add(x);
+                } else {
+                    a.add(null);
+                }
+            } else {
+                a.add(null);
+            }
+
             a.add(editar.cmbEstatus.getSelectedItem().toString());
 
             if (!editar.txtClave.getText().equals("") && g.addUpdateOrDelete("SP_MODIFICAR_FRACCION", a)) {
@@ -257,7 +281,6 @@ public class CtrlFracciones {
             JOptionPane.showMessageDialog(null, "NO SE HA PODIDO ELIMINAR EL REGISTRO", "ERROR AL ELIMINAR", JOptionPane.ERROR_MESSAGE);
         }
     }
- 
 
     ArrayList<Item> departamentos;
 
@@ -265,12 +288,14 @@ public class CtrlFracciones {
         try {
             departamentos = new ArrayList<>();
             Item departamento = null;
+            nuevo.cmbDepartamento.addItem("");
+            editar.cmbDepartamento.addItem("");
             for (Iterator it = g.fill("SP_OBTENER_DEPARTAMENTOS").iterator(); it.hasNext();) {
-                Object[] util = (Object[]) it.next();
-                nuevo.cmbDepartamento.addItem(String.valueOf(util[1]));
-                editar.cmbDepartamento.addItem(String.valueOf(util[1]));
-                departamento = new Item(Integer.parseInt(String.valueOf(util[0])), String.valueOf(util[1]));
+                 Object[] item = (Object[]) it.next();
+                departamento = new Item(Integer.parseInt(String.valueOf(item[0])), String.valueOf(item[1]));
                 departamentos.add(departamento);
+                nuevo.cmbDepartamento.addItem(String.valueOf(item[1]));
+                editar.cmbDepartamento.addItem(String.valueOf(item[1]));
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "NO SE HAN PODIDO OBTENER LOS REGISTROS", "ERROR AL ELIMINAR", JOptionPane.ERROR_MESSAGE);
@@ -289,6 +314,5 @@ public class CtrlFracciones {
         }
         return id;
     }
-    
-    
+
 }

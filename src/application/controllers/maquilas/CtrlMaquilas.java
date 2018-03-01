@@ -14,6 +14,7 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 public class CtrlMaquilas {
 
@@ -34,6 +35,9 @@ public class CtrlMaquilas {
         this.g = g;
         this.maquilas = maquilas;
         rsc = new Resources();
+        
+        //Ayuda en captura combo box
+       
     
         nuevo.btnGuardar.addKeyListener(new KeyListener() {
             @Override

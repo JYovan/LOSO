@@ -74,6 +74,8 @@ public class CtrlMateriales {
         this.vmateriales = (vMateriales) parent;
         this.g = g;
         this.materiales = materiales;
+        
+        //Ayuda en captura combo box
         AutoCompleteDecorator.decorate(this.nuevo.Departamento);
         AutoCompleteDecorator.decorate(this.nuevo.Familia);
         AutoCompleteDecorator.decorate(this.nuevo.UnidadCompra);
@@ -372,6 +374,7 @@ public class CtrlMateriales {
             departamentos = new ArrayList<>();
             Item linea = null;
             nuevo.Departamento.addItem("");
+            editar.Departamento.addItem("");
             for (Iterator it = g.fill("SP_OBTENER_DEPARTAMENTOS").iterator(); it.hasNext();) {
                 Object[] item = (Object[]) it.next();
                 linea = new Item(Integer.parseInt(String.valueOf(item[0])), String.valueOf(item[1]));

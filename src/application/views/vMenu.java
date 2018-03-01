@@ -29,10 +29,12 @@ public class vMenu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        jDesktopPane1 = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem8 = new javax.swing.JMenuItem();
+        mnuMatxCombinacion = new javax.swing.JMenuItem();
+        mnuFraccionesPorEstilo = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         jMenuItem9 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
@@ -46,10 +48,9 @@ public class vMenu extends javax.swing.JFrame {
         mnuLineas = new javax.swing.JMenuItem();
         mnuEstilos = new javax.swing.JMenuItem();
         mnuCombinaciones = new javax.swing.JMenuItem();
-        mnuMateriales = new javax.swing.JMenuItem();
         jSeparator4 = new javax.swing.JPopupMenu.Separator();
         mnuFracciones = new javax.swing.JMenuItem();
-        mnuMatxCombinacion = new javax.swing.JMenuItem();
+        mnuMateriales = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenu1 = new javax.swing.JMenu();
         mnuUnidades = new javax.swing.JMenuItem();
@@ -78,16 +79,16 @@ public class vMenu extends javax.swing.JFrame {
         setTitle("Calzado Lobo Solo v.1.0.0");
         setBackground(new java.awt.Color(255, 255, 255));
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jDesktopPane1.setBackground(new java.awt.Color(255, 255, 255));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
+        jDesktopPane1.setLayout(jDesktopPane1Layout);
+        jDesktopPane1Layout.setHorizontalGroup(
+            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 1095, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        jDesktopPane1Layout.setVerticalGroup(
+            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 445, Short.MAX_VALUE)
         );
 
@@ -97,6 +98,13 @@ public class vMenu extends javax.swing.JFrame {
         jMenuItem8.setText("Fichas Técnicas");
         jMenuItem8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu2.add(jMenuItem8);
+
+        mnuMatxCombinacion.setText("Materiales por Combinación");
+        mnuMatxCombinacion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jMenu2.add(mnuMatxCombinacion);
+
+        mnuFraccionesPorEstilo.setText("jMenuItem1");
+        jMenu2.add(mnuFraccionesPorEstilo);
 
         jMenuBar1.add(jMenu2);
 
@@ -148,19 +156,15 @@ public class vMenu extends javax.swing.JFrame {
         mnuCombinaciones.setText("Combinaciones ");
         mnuCombinaciones.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu14.add(mnuCombinaciones);
-
-        mnuMateriales.setText("Materiales");
-        mnuMateriales.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jMenu14.add(mnuMateriales);
         jMenu14.add(jSeparator4);
 
         mnuFracciones.setText("Mano de Obra (Fracciones)");
         mnuFracciones.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu14.add(mnuFracciones);
 
-        mnuMatxCombinacion.setText("Materiales por Combinación");
-        mnuMatxCombinacion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jMenu14.add(mnuMatxCombinacion);
+        mnuMateriales.setText("Materiales");
+        mnuMateriales.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jMenu14.add(mnuMateriales);
 
         jMenuBar1.add(jMenu14);
 
@@ -256,11 +260,11 @@ public class vMenu extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jDesktopPane1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jDesktopPane1)
         );
 
         pack();
@@ -268,6 +272,7 @@ public class vMenu extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu10;
     private javax.swing.JMenu jMenu14;
@@ -279,7 +284,6 @@ public class vMenu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
@@ -294,6 +298,7 @@ public class vMenu extends javax.swing.JFrame {
     public javax.swing.JMenuItem mnuEstilos;
     public javax.swing.JMenuItem mnuFamilias;
     public javax.swing.JMenuItem mnuFracciones;
+    public javax.swing.JMenuItem mnuFraccionesPorEstilo;
     public javax.swing.JMenuItem mnuHormas;
     public javax.swing.JMenuItem mnuLineas;
     public javax.swing.JMenuItem mnuMaquilas;

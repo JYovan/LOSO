@@ -22,13 +22,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 /**
  *
  * @author Christian
  */
 public class CtrlLineas {
-    
+
     mdlNuevo nuevo;
     mdlEditar editar;
     Generic g;
@@ -36,7 +37,7 @@ public class CtrlLineas {
     vLineas vlineas;
     int temp = 0;
     Resources rsc;
-    
+
     public CtrlLineas(JFrame parent, Generic g, Lineas lineas) {
         nuevo = new mdlNuevo(parent, true);
         editar = new mdlEditar(parent, true);
@@ -47,6 +48,11 @@ public class CtrlLineas {
         nuevo.cmbTemporada.addActionListener((e) -> {
             System.out.println("TEMPORADA: " + getID(temporadas, nuevo.cmbTemporada.getSelectedItem().toString()));
         });
+
+        //Ayuda en captura combo box
+        AutoCompleteDecorator.decorate(this.nuevo.cmbEstatusMuestra);
+        AutoCompleteDecorator.decorate(this.editar.cmbEstatusMuestra);
+
         nuevo.btnGuardar.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -57,11 +63,11 @@ public class CtrlLineas {
                     nuevo.dispose();
                 }
             }
-            
+
             @Override
             public void keyTyped(KeyEvent e) {
             }
-            
+
             @Override
             public void keyReleased(KeyEvent e) {
             }
@@ -72,7 +78,7 @@ public class CtrlLineas {
         editar.btnGuardar.addActionListener((e) -> {
             onModificar();
         });
-        
+
         nuevo.txtClave.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -80,36 +86,36 @@ public class CtrlLineas {
                     nuevo.dispose();
                 }
             }
-            
+
             @Override
             public void keyTyped(KeyEvent e) {
             }
-            
+
             @Override
             public void keyReleased(KeyEvent e) {
             }
         });
-        
+
         nuevo.txtAno.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
-                
+
                 if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
                     editar.dispose();
                 }
             }
-            
+
             @Override
             public void keyTyped(KeyEvent e) {
                 rsc.setOnlyNumbers(e);
-                
+
             }
-            
+
             @Override
             public void keyReleased(KeyEvent e) {
             }
         });
-        
+
         nuevo.txtDescripcion.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -120,11 +126,11 @@ public class CtrlLineas {
                     nuevo.dispose();
                 }
             }
-            
+
             @Override
             public void keyTyped(KeyEvent e) {
             }
-            
+
             @Override
             public void keyReleased(KeyEvent e) {
             }
@@ -136,36 +142,36 @@ public class CtrlLineas {
                     editar.dispose();
                 }
             }
-            
+
             @Override
             public void keyTyped(KeyEvent e) {
             }
-            
+
             @Override
             public void keyReleased(KeyEvent e) {
             }
         });
-        
+
         editar.txtAno.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
-                
+
                 if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
                     editar.dispose();
                 }
             }
-            
+
             @Override
             public void keyTyped(KeyEvent e) {
                 rsc.setOnlyNumbers(e);
-                
+
             }
-            
+
             @Override
             public void keyReleased(KeyEvent e) {
             }
         });
-        
+
         editar.txtDescripcion.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -176,11 +182,11 @@ public class CtrlLineas {
                     editar.dispose();
                 }
             }
-            
+
             @Override
             public void keyTyped(KeyEvent e) {
             }
-            
+
             @Override
             public void keyReleased(KeyEvent e) {
             }
@@ -196,28 +202,38 @@ public class CtrlLineas {
 //        placeholders = new TextPrompt("DESCRIPCIÓN", nuevo.txtDescripcion);
 //        placeholders.changeAlpha(0.75f);
 //        placeholders.changeStyle(Font.BOLD);
-        
         getTemporadas();
+        getTiposEstilo();
     }
-    
+
     public void setVisible() {
         nuevo.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/96/icons8_Idea_96px.png")));
         nuevo.setLocationRelativeTo(null);
         nuevo.setVisible(true);
     }
-    
+
     public void onGuardar() {
         try {
-            ArrayList<Object> a = new ArrayList<>();            
-    
-            
+            ArrayList<Object> a = new ArrayList<>();
+            Object x = null;
+
             a.add(nuevo.txtClave.getText());
             a.add(nuevo.txtDescripcion.getText());
-            a.add(nuevo.cmbEstatusMuestra.getSelectedItem().toString());
-            a.add(nuevo.txtAno.getText());
-            a.add(getID(temporadas, nuevo.cmbTemporada.getSelectedItem().toString()));
+            x = getID(tiposestilo, nuevo.cmbEstatusMuestra.getSelectedItem().toString());
+            if (Integer.parseInt(String.valueOf(x)) != 0) {
+                a.add(x);
+            } else {
+                a.add(null);
+            }
 
-          
+            a.add(nuevo.txtAno.getText());
+            x = getID(temporadas, nuevo.cmbTemporada.getSelectedItem().toString());
+            if (Integer.parseInt(String.valueOf(x)) != 0) {
+                a.add(x);
+            } else {
+                a.add(null);
+            }
+
             if (!nuevo.txtClave.getText().equals("") && g.addUpdateOrDelete("SP_AGREGAR_LINEA", a)) {
                 JOptionPane.showMessageDialog(null, "REGISTRO AGREGADO", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
                 nuevo.dispose();
@@ -229,7 +245,7 @@ public class CtrlLineas {
             JOptionPane.showMessageDialog(null, "NO SE HA PODIDO REGISTRAR EL REGISTRO", "ERROR AL GUARDAR", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
+
     public void onEditar(int IDX) {
         try {
             temp = IDX;
@@ -250,18 +266,40 @@ public class CtrlLineas {
             JOptionPane.showMessageDialog(null, "NO SE HA PODIDO EDITAR EL REGISTRO", "ERROR AL EDITAR", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
+
     public void onModificar() {
         try {
             ArrayList<Object> a = new ArrayList<>();
+            Object x = null;
             a.add(temp);
             a.add(editar.txtClave.getText());
             a.add(editar.txtDescripcion.getText());
-            a.add(editar.cmbEstatusMuestra.getSelectedItem().toString());
+
+            if (editar.cmbEstatusMuestra.getSelectedIndex() != -1) {
+                x = getID(tiposestilo, editar.cmbEstatusMuestra.getSelectedItem().toString());
+                if (Integer.parseInt(String.valueOf(x)) != 0) {
+                    a.add(x);
+                } else {
+                    a.add(null);
+                }
+            } else {
+                a.add(null);
+            }
+
             a.add(editar.txtAno.getText());
-            a.add(getID(temporadas, editar.cmbTemporada.getSelectedItem().toString()));
+
+            if (editar.cmbTemporada.getSelectedIndex() != -1) {
+                x = getID(temporadas, editar.cmbTemporada.getSelectedItem().toString());
+                if (Integer.parseInt(String.valueOf(x)) != 0) {
+                    a.add(x);
+                } else {
+                    a.add(null);
+                }
+            } else {
+                a.add(null);
+            }
             a.add(editar.cmbEstatus.getSelectedItem().toString());
-            
+
             if (!editar.txtClave.getText().equals("") && g.addUpdateOrDelete("SP_MODIFICAR_LINEA", a)) {
                 JOptionPane.showMessageDialog(null, "REGISTRO MODIFICADO", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
                 editar.dispose();
@@ -273,7 +311,7 @@ public class CtrlLineas {
             JOptionPane.showMessageDialog(null, "NO SE HA PODIDO MODIFICAR EL REGISTRO", "ERROR AL GUARDAR", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
+
     public void onEliminar(int IDX) {
         try {
             ArrayList<Object> a = new ArrayList<>();
@@ -289,11 +327,13 @@ public class CtrlLineas {
         }
     }
     ArrayList<Item> temporadas;
-    
+
     public final void getTemporadas() {
         try {
             temporadas = new ArrayList<>();
             Item temporada = null;
+            nuevo.cmbTemporada.addItem("");
+            editar.cmbTemporada.addItem("");
             for (Iterator it = g.fill("SP_OBTENER_TEMPORADAS").iterator(); it.hasNext();) {
                 Object[] util = (Object[]) it.next();
                 nuevo.cmbTemporada.addItem(String.valueOf(util[1]));
@@ -307,7 +347,29 @@ public class CtrlLineas {
             e.printStackTrace();/*INDICA LA LINEA DONDE OCURRE EL PROBLEMA*/
         }
     }
-    
+
+    ArrayList<Item> tiposestilo;
+
+    public final void getTiposEstilo() {
+        try {
+            tiposestilo = new ArrayList<>();
+            Item tipoestilo = null;
+            nuevo.cmbEstatusMuestra.addItem("");
+            editar.cmbEstatusMuestra.addItem("");
+            for (Iterator it = g.fill("SP_OBTENER_TIPOS_ESTILO").iterator(); it.hasNext();) {
+                Object[] util = (Object[]) it.next();
+                nuevo.cmbEstatusMuestra.addItem(String.valueOf(util[1]));
+                editar.cmbEstatusMuestra.addItem(String.valueOf(util[1]));
+                tipoestilo = new Item(Integer.parseInt(String.valueOf(util[0])), String.valueOf(util[1]));
+                tiposestilo.add(tipoestilo);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "NO SE HAN PODIDO OBTENER LOS REGISTROS", "ERROR AL ELIMINAR", JOptionPane.ERROR_MESSAGE);
+            System.out.println("ERROR\n" + e.getMessage());
+            e.printStackTrace();/*INDICA LA LINEA DONDE OCURRE EL PROBLEMA*/
+        }
+    }
+
     public int getID(ArrayList<Item> x, String selected_item) {
         int id = 0;
         for (Item o : x) {

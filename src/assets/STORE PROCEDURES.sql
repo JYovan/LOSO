@@ -416,15 +416,15 @@ GO
 CREATE  PROCEDURE SP_AGREGAR_LINEA(
 @Clave VARCHAR(45),
 @Descripcion VARCHAR(90), 
-@EstatusMuestra VARCHAR(45), 
+@TipoEstiloCat INT, 
 @Ano VARCHAR(45),
 @TemporadaCat INT
 )
 AS
 BEGIN
 SET NOCOUNT ON;
-	INSERT INTO lineas ([Clave],[Descripcion],[EstatusMuestra],[Ano],[TemporadaCat],[Estatus]) 
-						VALUES (@Clave, @Descripcion, @EstatusMuestra,@Ano,@TemporadaCat,'ACTIVO');
+	INSERT INTO lineas ([Clave],[Descripcion],[TipoEstiloCat],[Ano],[TemporadaCat],[Estatus]) 
+						VALUES (@Clave, @Descripcion, @TipoEstiloCat,@Ano,@TemporadaCat,'ACTIVO');
 END
 GO
 
@@ -438,9 +438,11 @@ CREATE PROCEDURE SP_LINEA_X_ID(@IDX INT)
 AS
 BEGIN
 SET NOCOUNT ON; 
-	SELECT TOP 1 L.ID AS ID, L.Clave AS CLAVE, L.DESCRIPCION AS DESCRIPCION, L.EstatusMuestra  AS EstatusMuestra, L.Ano, L.TemporadaCat AS TEMPORADA,
+	SELECT TOP 1 L.ID AS ID, L.Clave AS CLAVE, L.DESCRIPCION AS DESCRIPCION, TE.SValue  AS TipoEstiloCat, L.Ano, TEMP.SValue AS TEMPORADA,
 		L.Estatus AS ESTATUS
     FROM Lineas AS L
+	LEFT JOIN Catalogos TE ON TE.ID = L.TipoEstiloCat AND TE.FieldId IN ('TIPOS ESTILO')
+	LEFT JOIN Catalogos TEMP ON TEMP.ID = L.TemporadaCat AND TEMP.FieldId IN ('TEMPORADAS')
     WHERE L.ID = @IDX AND L.Estatus IN('ACTIVO','INACTIVO') ;
 END
 GO
@@ -451,12 +453,12 @@ GO
 IF EXISTS (	SELECT name FROM sysobjects WHERE  name = 'SP_MODIFICAR_LINEA' AND TYPE = 'P')
 	DROP PROCEDURE SP_MODIFICAR_LINEA
 GO
-CREATE PROCEDURE SP_MODIFICAR_LINEA(@IDX INT, @Clave VARCHAR(45), @Descripcion VARCHAR(90), @EstatusMuestra VARCHAR(45),@Ano VARCHAR(45), @TemporadaCat INT, @Estatus VARCHAR(45))
+CREATE PROCEDURE SP_MODIFICAR_LINEA(@IDX INT, @Clave VARCHAR(45), @Descripcion VARCHAR(90), @TipoEstiloCat INT,@Ano VARCHAR(45), @TemporadaCat INT, @Estatus VARCHAR(45))
 AS
 BEGIN
 SET NOCOUNT ON; 
 	UPDATE Lineas
-	SET [Clave] = @Clave, [Descripcion] = @Descripcion, [EstatusMuestra] = @EstatusMuestra, [Ano] = @Ano,[TemporadaCat] = @TemporadaCat,[Estatus] = @Estatus
+	SET [Clave] = @Clave, [Descripcion] = @Descripcion, [TipoEstiloCat] = @TipoEstiloCat, [Ano] = @Ano,[TemporadaCat] = @TemporadaCat,[Estatus] = @Estatus
 	WHERE [ID] = @IDX; 
 END
 GO
@@ -621,7 +623,7 @@ CREATE PROCEDURE SP_OBTENER_MAQUILAS
 AS
 BEGIN
 SET NOCOUNT ON; 
-	SELECT C.ID AS ID, C.SValue AS MAQUILA FROM CATALOGOS AS C WHERE C.Estatus IN('ACTIVO') AND C.FieldId LIKE 'MAQUILAS';
+	SELECT C.ID AS ID, C.Nombre AS MAQUILA FROM Maquilas AS C WHERE C.Estatus IN('ACTIVO');
 END
 GO
 
@@ -877,8 +879,10 @@ CREATE PROCEDURE SP_COMBINACION_X_ID(@IDX INT)
 AS
 BEGIN
 SET NOCOUNT ON; 
-	SELECT TOP 1 C.ID AS ID, C.Clave AS CLAVE, C.DESCRIPCION AS DESCRIPCION, C.Linea  AS LINEA, C.Estilo AS ESTILO,C.Estatus AS ESTATUS
+	SELECT TOP 1 C.ID AS ID, C.Clave AS CLAVE, C.DESCRIPCION AS DESCRIPCION, L.Clave  AS LINEA, E.Clave AS ESTILO,C.Estatus AS ESTATUS
     FROM Combinaciones AS C
+	LEFT JOIN Lineas L ON L.ID = C.Linea
+	LEFT JOIN Estilos E ON E.ID = C.Estilo
     WHERE C.ID = @IDX AND C.Estatus IN('ACTIVO','INACTIVO') ;
 END
 GO
@@ -1117,8 +1121,12 @@ CREATE PROCEDURE SP_FRACCION_X_ID(@IDX INT)
 AS
 BEGIN
 SET NOCOUNT ON; 
-	SELECT TOP 1 C.ID AS ID, C.Clave AS CLAVE, C.DESCRIPCION AS DESCRIPCION, C.DepartamentoCat  AS DEPARTAMENTO,C.Estatus AS ESTATUS
+	SELECT TOP 1 C.ID AS ID, C.Clave AS CLAVE, 
+	C.DESCRIPCION AS DESCRIPCION, 
+	CAT.SValue  AS DEPARTAMENTO,
+	C.Estatus AS ESTATUS
     FROM Fracciones AS C
+	LEFT JOIN Catalogos CAT ON CAT.ID = C.DepartamentoCat
     WHERE C.ID = @IDX AND C.Estatus IN('ACTIVO','INACTIVO') ;
 END
 GO

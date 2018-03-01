@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 public class CtrlCombinaciones {
 
@@ -33,6 +34,11 @@ public class CtrlCombinaciones {
         this.g = g;
         this.combinaciones = combinaciones;
         rsc = new Resources();
+        //Ayuda en captura combo box
+        AutoCompleteDecorator.decorate(this.nuevo.cmbEstilo);
+        AutoCompleteDecorator.decorate(this.nuevo.cmbLinea);
+        AutoCompleteDecorator.decorate(this.editar.cmbEstilo);
+        AutoCompleteDecorator.decorate(this.editar.cmbLinea);
 
         nuevo.btnGuardar.addKeyListener(new KeyListener() {
             @Override
@@ -183,13 +189,24 @@ public class CtrlCombinaciones {
 
     public void onGuardar() {
         try {
+            Object x = null;
             ArrayList<Object> a = new ArrayList<>();
 
             a.add(nuevo.txtClave.getText());
             a.add(nuevo.txtDescripcion.getText());
-            a.add(getID(lineas, nuevo.cmbLinea.getSelectedItem().toString()));
-            a.add(getID(estilos, nuevo.cmbEstilo.getSelectedItem().toString()));
 
+            x = getID(lineas, nuevo.cmbLinea.getSelectedItem().toString());
+            if (Integer.parseInt(String.valueOf(x)) != 0) {
+                a.add(x);
+            } else {
+                a.add(null);
+            }
+            x = getID(estilos, nuevo.cmbEstilo.getSelectedItem().toString());
+            if (Integer.parseInt(String.valueOf(x)) != 0) {
+                a.add(x);
+            } else {
+                a.add(null);
+            }
             if (!nuevo.txtClave.getText().equals("") && g.addUpdateOrDelete("SP_AGREGAR_COMBINACION", a)) {
                 JOptionPane.showMessageDialog(null, "REGISTRO AGREGADO", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
                 nuevo.dispose();
@@ -225,12 +242,33 @@ public class CtrlCombinaciones {
     public void onModificar() {
         try {
             ArrayList<Object> a = new ArrayList<>();
+            Object x = null;
             a.add(temp);
             a.add(editar.txtClave.getText());
             a.add(editar.txtDescripcion.getText());
-            a.add(getID(lineas, editar.cmbLinea.getSelectedItem().toString()));
-            a.add(getID(estilos, editar.cmbEstilo.getSelectedItem().toString()));
             a.add(editar.cmbEstatus.getSelectedItem().toString());
+
+            if (editar.cmbLinea.getSelectedIndex() != -1) {
+                x = getID(lineas, editar.cmbLinea.getSelectedItem().toString());
+                if (Integer.parseInt(String.valueOf(x)) != 0) {
+                    a.add(x);
+                } else {
+                    a.add(null);
+                }
+            } else {
+                a.add(null);
+            }
+            
+            if (editar.cmbEstilo.getSelectedIndex() != -1) {
+                x = getID(estilos, editar.cmbEstilo.getSelectedItem().toString());
+                if (Integer.parseInt(String.valueOf(x)) != 0) {
+                    a.add(x);
+                } else {
+                    a.add(null);
+                }
+            } else {
+                a.add(null);
+            }
 
             if (!editar.txtClave.getText().equals("") && g.addUpdateOrDelete("SP_MODIFICAR_COMBINACION", a)) {
                 JOptionPane.showMessageDialog(null, "REGISTRO MODIFICADO", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
@@ -263,6 +301,8 @@ public class CtrlCombinaciones {
     public final void getLineas() {
         try {
             lineas = new ArrayList<>();
+            nuevo.cmbLinea.addItem("");
+            editar.cmbLinea.addItem("");
             Item linea = null;
             for (Iterator it = g.fill("SP_OBTENER_LINEAS").iterator(); it.hasNext();) {
                 Object[] util = (Object[]) it.next();
@@ -284,6 +324,8 @@ public class CtrlCombinaciones {
         try {
             estilos = new ArrayList<>();
             Item estilo = null;
+            nuevo.cmbEstilo.addItem("");
+            editar.cmbEstilo.addItem("");
             for (Iterator it = g.fill("SP_OBTENER_ESTILOS").iterator(); it.hasNext();) {
                 Object[] util = (Object[]) it.next();
                 nuevo.cmbEstilo.addItem(String.valueOf(util[1]));
