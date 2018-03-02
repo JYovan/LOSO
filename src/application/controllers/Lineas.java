@@ -4,6 +4,9 @@ import application.config.Generic;
 import application.config.TextPrompt;
 import application.controllers.lineas.CtrlLineas;
 import application.views.vLineas;
+import application.views.vLineas;
+import application.views.vMenu;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
@@ -44,23 +47,27 @@ public class Lineas {
     JasperPrint print;
     JDialog viewer;
     JasperViewer jv;
+    vMenu menu;
+    CtrlLineas lin;
 
     private TableRowSorter<TableModel> filtrador;
 
-    public Lineas(Generic g) {
+    public Lineas(Generic g, JFrame parent) {
         this.g = g;
         vlineas = new vLineas();
+        this.menu = (vMenu) parent;
+        lin = new CtrlLineas(vlineas, g, this, menu);
         vlineas.btnNuevo.addActionListener((e) -> {
-            (new CtrlLineas(vlineas, g, this)).setVisible();
+            lin.setVisible();
         });
         vlineas.btnExportar.addActionListener((e) -> {
-            
+
         });
         vlineas.btnEditar.addActionListener((e) -> {
             try {
                 if (vlineas.tblLineas.getSelectedRow() >= 0) {
                     int ID = Integer.parseInt(vlineas.tblLineas.getValueAt(vlineas.tblLineas.getSelectedRow(), 0).toString());
-                    (new CtrlLineas(vlineas, g, this)).onEditar(ID);
+                    lin.onEditar(ID);
                 } else {
                     Toolkit.getDefaultToolkit().beep();
                     JOptionPane.showMessageDialog(null, "DEBE DE SELECCIONAR UN REGISTRO", "ATENCIÓN", JOptionPane.WARNING_MESSAGE);
@@ -76,7 +83,7 @@ public class Lineas {
                 int i = JOptionPane.showConfirmDialog(null, "¿Estás Seguro?", "Confirmar Eliminar", JOptionPane.YES_NO_OPTION);
                 if (i == 0) {
                     int ID = Integer.parseInt(vlineas.tblLineas.getValueAt(vlineas.tblLineas.getSelectedRow(), 0).toString());
-                    (new CtrlLineas(vlineas, g, this)).onEliminar(ID);
+                    lin.onEliminar(ID);
                 }
 
             } else {
@@ -133,9 +140,19 @@ public class Lineas {
     }
 
     public void setVisible() {
-        vlineas.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/LS.png")));
-        vlineas.setLocationRelativeTo(null);
-        vlineas.setVisible(true);
+        if (vlineas.isShowing()) {
+            //mensaje de que está abierto si se desea
+        } else {
+            menu.dpContenedor.add(vlineas);
+
+            Dimension desktopSize = menu.dpContenedor.getSize();
+            Dimension jInternalFrameSize = vlineas.getSize();
+            vlineas.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
+                    (desktopSize.height - jInternalFrameSize.height) / 2);
+            vlineas.setFrameIcon(null);
+            vlineas.show();
+        }
+
     }
 
     public final void getRecords() {
@@ -156,10 +173,6 @@ public class Lineas {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
-
-   
-
-    
 
     public static boolean isEmailValid(String email) {
         final Pattern EMAIL_REGEX = Pattern.compile("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", Pattern.CASE_INSENSITIVE);

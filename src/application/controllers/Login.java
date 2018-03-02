@@ -35,6 +35,7 @@ import java.awt.HeadlessException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
 import org.jvnet.substance.SubstanceLookAndFeel;
 
@@ -93,20 +94,37 @@ public class Login {
 
     public static void main(String[] args) {
 
-        //JFrame.setDefaultLookAndFeelDecorated(true);
+        try {
+            for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            // If Nimbus is not available, you can set the GUI to another look and feel.
+        }
+
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                try {
-                   SubstanceLookAndFeel.setSkin("org.jvnet.substance.skin.ModerateSkin");
-
-                } catch (Exception e) {
-                    System.out.println("Substance Graphite failed to initialize");
-                }
-                JFrame.setDefaultLookAndFeelDecorated(Boolean.TRUE);
                 (new Login()).setVisible();
             }
         });
 
+//substanc error en combo box
+//        SwingUtilities.invokeLater(new Runnable() {
+//            public void run() {
+//                try {
+//                   SubstanceLookAndFeel.setSkin("org.jvnet.substance.skin.ModerateSkin");
+//
+//                } catch (Exception e) {
+//                    System.out.println("Substance Graphite failed to initialize");
+//                }
+//                JFrame.setDefaultLookAndFeelDecorated(Boolean.TRUE);
+//                (new Login()).setVisible();
+//            }
+//        });
+//sintetica error al ocultar barra de herramientas
 //        try {
 //            UIManager.setLookAndFeel(new SyntheticaAluOxideLookAndFeel());
 //            

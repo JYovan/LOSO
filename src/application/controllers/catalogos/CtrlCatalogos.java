@@ -4,9 +4,11 @@ import application.config.Generic;
 import application.config.TextPrompt;
 import application.controllers.Catalogos;
 import application.third_party.Resources;
-import application.views.catalogos.mdlEditar;
-import application.views.catalogos.mdlNuevo;
+import application.views.catalogos.mdlIEditar;
+import application.views.catalogos.mdlINuevo;
 import application.views.vCatalogos;
+import application.views.vMenu;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
@@ -14,24 +16,27 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 
 public class CtrlCatalogos {
 
-    mdlNuevo nuevo;
-    mdlEditar editar;
+    mdlINuevo nuevo;
+    mdlIEditar editar;
     Generic g;
     Catalogos catalogos;
     vCatalogos vcatalogos;
     int temp = 0;
     String TipoCatalogo;
+    vMenu menu;
 
     Resources rsc = new Resources();
 
-    public CtrlCatalogos(JFrame parent, Generic g, Catalogos catalogos, String TipoCatalogo) {
+    public CtrlCatalogos(JInternalFrame parent, Generic g, Catalogos catalogos, String TipoCatalogo, JFrame menu) {
         this.TipoCatalogo = TipoCatalogo;
-        nuevo = new application.views.catalogos.mdlNuevo(parent, true);
-        editar = new application.views.catalogos.mdlEditar(parent, true);
+        this.menu = (vMenu) menu;
+        nuevo = new application.views.catalogos.mdlINuevo();
+        editar = new application.views.catalogos.mdlIEditar();
         this.vcatalogos = (vCatalogos) parent;
         this.g = g;
         this.catalogos = catalogos;
@@ -225,9 +230,18 @@ public class CtrlCatalogos {
     }
 
     public void setVisible() {
-        nuevo.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/96/icons8_Idea_96px.png")));
-        nuevo.setLocationRelativeTo(null);
-        nuevo.setVisible(true);
+        
+           if(!nuevo.isShowing()){
+            menu.dpContenedor.add(nuevo);
+            Dimension desktopSize = menu.dpContenedor.getSize();
+            Dimension jInternalFrameSize = nuevo.getSize();
+            nuevo.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
+                    (desktopSize.height - jInternalFrameSize.height) / 2);
+            nuevo.setFrameIcon(null);
+            nuevo.show();
+            nuevo.toFront();
+        }
+
     }
 
     public void onGuardar() {
@@ -266,9 +280,19 @@ public class CtrlCatalogos {
             editar.Valor_Num.setText(String.valueOf((data[0][3] != null) ? data[0][3] : ""));
             editar.Special.setText(String.valueOf((data[0][4] != null) ? data[0][4] : ""));
             editar.cmbEstatus.setSelectedItem((data[0][5] != null) ? data[0][5].toString() : "");
-            editar.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/96/icons8_Idea_96px.png")));
-            editar.setLocationRelativeTo(null);
-            editar.setVisible(true);
+            
+            if(!editar.isShowing()){
+            menu.dpContenedor.add(editar);
+            Dimension desktopSize = menu.dpContenedor.getSize();
+            Dimension jInternalFrameSize = editar.getSize();
+            editar.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
+                    (desktopSize.height - jInternalFrameSize.height) / 2);
+            editar.setFrameIcon(null);
+            editar.show();
+            editar.toFront();
+        }
+            
+            
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "NO SE HA PODIDO EDITAR EL REGISTRO", "ERROR AL EDITAR", JOptionPane.ERROR_MESSAGE);
         }

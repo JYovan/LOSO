@@ -4,12 +4,14 @@
  * and open the template in the editor.
  */
 package application.views;
+
 import application.config.ManejadorTecla;
+
 /**
  *
  * @author Christian
  */
-public class vCatalogos extends javax.swing.JFrame {
+public class vCatalogos extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form vCatalogos
@@ -43,8 +45,20 @@ public class vCatalogos extends javax.swing.JFrame {
         btnRefrescar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 255, 255));
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
         setTitle("GENERALES");
+        setToolTipText("");
+        setFrameIcon(null);
+        setPreferredSize(new java.awt.Dimension(800, 400));
+        try {
+            setSelected(true);
+        } catch (java.beans.PropertyVetoException e1) {
+            e1.printStackTrace();
+        }
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -104,7 +118,7 @@ public class vCatalogos extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnAdelante)
                 .addContainerGap())
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 544, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 784, Short.MAX_VALUE)
             .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
@@ -119,8 +133,8 @@ public class vCatalogos extends javax.swing.JFrame {
                     .addComponent(btnAdelante)
                     .addComponent(btnAtras)
                     .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -140,7 +154,6 @@ public class vCatalogos extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
- 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton btnAdelante;
