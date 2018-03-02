@@ -37,6 +37,7 @@ public class Menu {
     Combinaciones comb;
     Materiales mat;
     Fracciones fra;
+    MaterialesXCombinacion mxc;
 
     public Menu(Generic g) {
         this.g = g;
@@ -45,13 +46,14 @@ public class Menu {
         m = new Modulos(g);
         u = new Usuarios(g, menu);
         p = new Permisos(g);
-        c = new Catalogos(g,menu);
-        lin = new Lineas(g,menu);
+        c = new Catalogos(g, menu);
+        lin = new Lineas(g, menu);
         est = new Estilos(g);
         maq = new Maquilas(g);
-        comb = new Combinaciones(g,menu);
+        comb = new Combinaciones(g, menu);
         mat = new Materiales(g);
-        fra = new Fracciones(g,menu);
+        fra = new Fracciones(g, menu);
+        mxc = new MaterialesXCombinacion(g, menu);
 
         src.toSysTray(menu);
         menu.mSalir.addMouseListener(new MouseAdapter() {
@@ -64,6 +66,11 @@ public class Menu {
             }
         });
 
+        menu.mnuMatxCombinacion.addActionListener((e) -> {
+            mxc.getRecords();
+            mxc.setVisible();
+        });
+        
         menu.mnuFracciones.addActionListener((e) -> {
             fra.getRecords();
             fra.setVisible();
@@ -195,12 +202,12 @@ public class Menu {
     }
 
     public void setVisible() {
-        
+
         menu.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/LS.png")));
 
         menu.setExtendedState(menu.getExtendedState() | JFrame.MAXIMIZED_BOTH);
         menu.setVisible(true);
-        
+
 //        Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 //        Rectangle r = new Rectangle(1, 1, d.width, d.height - 30);
 //        menu.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/LS.png")));
@@ -208,7 +215,5 @@ public class Menu {
 //        menu.setMaximizedBounds(r);
 //        menu.setLocationRelativeTo(null);
 //        menu.setVisible(true);
-      
-
     }
 }

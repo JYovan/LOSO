@@ -140,12 +140,10 @@ public class MaterialesXCombinacion {
     }
 
     public void setVisible() {
-
         if (vmaterialesxcombinacion.isShowing()) {
             //mensaje de que está abierto si se desea
         } else {
             mnu.dpContenedor.add(vmaterialesxcombinacion);
-
             Dimension desktopSize = mnu.dpContenedor.getSize();
             Dimension jInternalFrameSize = vmaterialesxcombinacion.getSize();
             vmaterialesxcombinacion.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
@@ -165,7 +163,7 @@ public class MaterialesXCombinacion {
             } else {
                 o.add(vmaterialesxcombinacion.cmbTamano.getSelectedItem().toString());
             }
-            ArrayList<Object[][]> a = g.findByParams("SP_USUARIOS", o);
+            ArrayList<Object[][]> a = g.findByParams("SP_MATERIALES_X_COMBINACION", o);
             dtm = g.getModelFill(a.get(0), g.getDimensional(a.get(1)));
             vmaterialesxcombinacion.tblMaterialesXCombinacion.setModel(dtm);
             filtrador = new TableRowSorter<>(dtm);
