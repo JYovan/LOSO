@@ -41,6 +41,10 @@ public class mdlNuevo extends javax.swing.JInternalFrame {
         btnAgregar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
 
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
         setTitle("NUEVO - MATERIAL POR COMBINACION");
 
         pnlContenedor.setBackground(new java.awt.Color(255, 255, 255));

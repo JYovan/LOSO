@@ -41,6 +41,9 @@ public class mdlEditar extends javax.swing.JInternalFrame {
         btnAgregar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
 
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
         setTitle("EDITAR - MATERIAL POR COMBINACION");
 
         pnlContenedor.setBackground(new java.awt.Color(255, 255, 255));

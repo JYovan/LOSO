@@ -15,6 +15,8 @@ import application.third_party.WaitLayerUI;
 import application.views.materialesxcombinacion.mdlEditar;
 import application.views.materialesxcombinacion.mdlNuevo;
 import application.views.vMaterialesXCombinacion;
+import application.views.vMenu;
+import java.awt.Dimension;
 import java.awt.HeadlessException;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -68,6 +70,7 @@ public class CtrlMaterialesXCombinacion {
     ArrayList<Item> temporadas = new ArrayList<>();
     ArrayList<Item> tipo_materialesxcombinacion = new ArrayList<>();
     JFileChooser fc;
+    vMenu mnu;
 
     public CtrlMaterialesXCombinacion(JInternalFrame parent, Generic g, MaterialesXCombinacion materialesxcombinacion, JFrame menu) {
         /*NO SE DEBE DE LLAMAR NADA SI NO SE DEFINEN ESTAS ASIGNACIONES*/
@@ -76,6 +79,7 @@ public class CtrlMaterialesXCombinacion {
         this.vmaterialesxcombinacion = (vMaterialesXCombinacion) parent;
         this.g = g;
         this.materialesxcombinacion = materialesxcombinacion;
+        this.mnu = (vMenu) menu;
         //Ayuda en captura combos nuevo estilo
         AutoCompleteDecorator.decorate(this.nuevo.Estilo); 
         //Ayuda en captura combos editar estilo
@@ -148,7 +152,17 @@ public class CtrlMaterialesXCombinacion {
     }
 
     public void setVisible() { 
-        nuevo.setVisible(true);
+        if(!nuevo.isShowing()){
+            mnu.dpContenedor.add(nuevo);
+            Dimension desktopSize = mnu.dpContenedor.getSize();
+            Dimension jInternalFrameSize = nuevo.getSize();
+            nuevo.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
+                    (desktopSize.height - jInternalFrameSize.height) / 2);
+            nuevo.setFrameIcon(null);
+            nuevo.show();
+            nuevo.toFront();
+        }
+  
     }
 
     BufferedImage bufi = null;
