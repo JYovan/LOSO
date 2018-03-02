@@ -10,6 +10,8 @@ import application.config.TextPrompt;
 import application.controllers.catalogos.CtrlCatalogos;
 import application.controllers.usuarios.CtrlUsuarios;
 import application.views.vCatalogos;
+import application.views.vMenu;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
@@ -40,6 +42,8 @@ public class Catalogos {
     Generic g;
     JDialog viewer;
     private TableRowSorter<TableModel> filtrador;
+    vMenu mnu;
+    CtrlCatalogos cat;
 
     public String getTipoCatalogo() {
         return TipoCatalogo;
@@ -50,12 +54,15 @@ public class Catalogos {
     }
     String TipoCatalogo;
 
-    public Catalogos(Generic g) {
+    public Catalogos(Generic g, JFrame parent) {
         this.g = g;
+        this.mnu = (vMenu) parent;
+        cat = new CtrlCatalogos(vcatalogos, g, this, TipoCatalogo, mnu);
         vcatalogos = new vCatalogos();
 
         vcatalogos.btnNuevo.addActionListener((e) -> {
-            (new CtrlCatalogos(vcatalogos, g, this, TipoCatalogo)).setVisible();
+            //(new CtrlCatalogos(vcatalogos, g, this, TipoCatalogo)).setVisible();
+            cat.setVisible();
 
         });
 
@@ -63,7 +70,7 @@ public class Catalogos {
             try {
                 if (vcatalogos.tblCatalogos.getSelectedRow() >= 0) {
                     int ID = Integer.parseInt(vcatalogos.tblCatalogos.getModel().getValueAt(vcatalogos.tblCatalogos.getSelectedRow(), 0).toString());
-                    (new CtrlCatalogos(vcatalogos, g, this, TipoCatalogo)).onEditar(ID);
+                    cat.onEditar(ID);
                 } else {
                     Toolkit.getDefaultToolkit().beep();
                     JOptionPane.showMessageDialog(null, "DEBE DE SELECCIONAR UN REGISTRO", "ATENCIÓN", JOptionPane.WARNING_MESSAGE);
@@ -79,7 +86,7 @@ public class Catalogos {
                 int i = JOptionPane.showConfirmDialog(null, "¿Estás Seguro?", "Confirmar Eliminar", JOptionPane.YES_NO_OPTION);
                 if (i == 0) {
                     int ID = Integer.parseInt(vcatalogos.tblCatalogos.getValueAt(vcatalogos.tblCatalogos.getSelectedRow(), 0).toString());
-                    (new CtrlCatalogos(vcatalogos, g, this, TipoCatalogo)).onEliminar(ID);
+                    cat.onEliminar(ID);
                 }
 
             } else {
@@ -137,10 +144,20 @@ public class Catalogos {
     }
 
     public void setVisible() {
-        vcatalogos.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/LS.png")));
-        vcatalogos.setLocationRelativeTo(null);
-        vcatalogos.setVisible(true);
-        vcatalogos.setTitle(TipoCatalogo);
+         if (vcatalogos.isShowing()) {
+            //mensaje de que está abierto si se desea
+        } else {
+            mnu.dpContenedor.add(vcatalogos);
+
+            Dimension desktopSize = mnu.dpContenedor.getSize();
+            Dimension jInternalFrameSize = vcatalogos.getSize();
+            vcatalogos.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
+                    (desktopSize.height - jInternalFrameSize.height) / 2);
+            vcatalogos.setFrameIcon(null);
+            vcatalogos.setTitle(TipoCatalogo);
+            vcatalogos.show();
+        }
+   
     }
 
     public final void getRecords() {

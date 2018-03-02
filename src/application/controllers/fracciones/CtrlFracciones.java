@@ -4,9 +4,11 @@ import application.config.Generic;
 import application.controllers.Fracciones;
 import application.helpers.Item;
 import application.third_party.Resources;
-import application.views.fracciones.mdlEditar;
-import application.views.fracciones.mdlNuevo;
+import application.views.fracciones.mdlIEditar;
+import application.views.fracciones.mdlINuevo;
 import application.views.vFracciones;
+import application.views.vMenu;
+import java.awt.Dimension;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
@@ -14,22 +16,25 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 public class CtrlFracciones {
 
-    mdlNuevo nuevo;
-    mdlEditar editar;
+    mdlINuevo nuevo;
+    mdlIEditar editar;
     Generic g;
     Fracciones fracciones;
     vFracciones vfracciones;
     int temp = 0;
     Resources rsc;
+    vMenu menu;
 
-    public CtrlFracciones(JFrame parent, Generic g, Fracciones fracciones) {
-        nuevo = new mdlNuevo(parent, true);
-        editar = new mdlEditar(parent, true);
+    public CtrlFracciones(JInternalFrame parent, Generic g, Fracciones fracciones, JFrame menu) {
+        this.menu =  (vMenu) menu;
+        nuevo = new mdlINuevo();
+        editar = new mdlIEditar();
         this.vfracciones = (vFracciones) parent;
         this.g = g;
         this.fracciones = fracciones;
@@ -180,9 +185,16 @@ public class CtrlFracciones {
     }
 
     public void setVisible() {
-        nuevo.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/96/icons8_Idea_96px.png")));
-        nuevo.setLocationRelativeTo(null);
-        nuevo.setVisible(true);
+         if(!nuevo.isShowing()){
+            menu.dpContenedor.add(nuevo);
+            Dimension desktopSize = menu.dpContenedor.getSize();
+            Dimension jInternalFrameSize = nuevo.getSize();
+            nuevo.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
+                    (desktopSize.height - jInternalFrameSize.height) / 2);
+            nuevo.setFrameIcon(null);
+            nuevo.show();
+            nuevo.toFront();
+        }
     }
 
     public void onGuardar() {
@@ -224,10 +236,16 @@ public class CtrlFracciones {
                 editar.cmbDepartamento.getModel().setSelectedItem(data[0][3]);
             }
 
-            editar.cmbEstatus.setSelectedItem((data[0][4] != null) ? data[0][4].toString() : "");
-            editar.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/96/icons8_Idea_96px.png")));
-            editar.setLocationRelativeTo(null);
-            editar.setVisible(true);
+            if(!editar.isShowing()){
+            menu.dpContenedor.add(editar);
+            Dimension desktopSize = menu.dpContenedor.getSize();
+            Dimension jInternalFrameSize = editar.getSize();
+            editar.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
+                    (desktopSize.height - jInternalFrameSize.height) / 2);
+            editar.setFrameIcon(null);
+            editar.show();
+            editar.toFront();
+        }
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "NO SE HA PODIDO EDITAR EL REGISTRO", "ERROR AL EDITAR", JOptionPane.ERROR_MESSAGE);
         }

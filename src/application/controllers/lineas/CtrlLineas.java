@@ -10,9 +10,11 @@ import application.config.TextPrompt;
 import application.controllers.Lineas;
 import application.helpers.Item;
 import application.third_party.Resources;
-import application.views.lineas.mdlEditar;
-import application.views.lineas.mdlNuevo;
+import application.views.lineas.mdlIEditar;
+import application.views.lineas.mdlINuevo;
 import application.views.vLineas;
+import application.views.vMenu;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
@@ -21,6 +23,7 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
@@ -30,17 +33,19 @@ import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
  */
 public class CtrlLineas {
 
-    mdlNuevo nuevo;
-    mdlEditar editar;
+    mdlINuevo nuevo;
+    mdlIEditar editar;
     Generic g;
     Lineas lineas;
     vLineas vlineas;
     int temp = 0;
     Resources rsc;
+    vMenu menu;
 
-    public CtrlLineas(JFrame parent, Generic g, Lineas lineas) {
-        nuevo = new mdlNuevo(parent, true);
-        editar = new mdlEditar(parent, true);
+    public CtrlLineas(JInternalFrame parent, Generic g, Lineas lineas, JFrame menu) {
+        this.menu = (vMenu) menu;
+        nuevo = new mdlINuevo();
+        editar = new mdlIEditar();
         this.vlineas = (vLineas) parent;
         this.g = g;
         this.lineas = lineas;
@@ -207,9 +212,16 @@ public class CtrlLineas {
     }
 
     public void setVisible() {
-        nuevo.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/96/icons8_Idea_96px.png")));
-        nuevo.setLocationRelativeTo(null);
-        nuevo.setVisible(true);
+        if (!nuevo.isShowing()) {
+            menu.dpContenedor.add(nuevo);
+            Dimension desktopSize = menu.dpContenedor.getSize();
+            Dimension jInternalFrameSize = nuevo.getSize();
+            nuevo.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
+                    (desktopSize.height - jInternalFrameSize.height) / 2);
+            nuevo.setFrameIcon(null);
+            nuevo.show();
+            nuevo.toFront();
+        }
     }
 
     public void onGuardar() {
@@ -259,9 +271,16 @@ public class CtrlLineas {
             editar.txtAno.setText(String.valueOf((data[0][4] != null) ? data[0][4] : ""));
             editar.cmbTemporada.setSelectedItem((data[0][5] != null) ? data[0][5].toString() : "");
             editar.cmbEstatus.setSelectedItem((data[0][6] != null) ? data[0][6].toString() : "");
-            editar.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/96/icons8_Idea_96px.png")));
-            editar.setLocationRelativeTo(null);
-            editar.setVisible(true);
+            if (!editar.isShowing()) {
+                menu.dpContenedor.add(editar);
+                Dimension desktopSize = menu.dpContenedor.getSize();
+                Dimension jInternalFrameSize = editar.getSize();
+                editar.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
+                        (desktopSize.height - jInternalFrameSize.height) / 2);
+                editar.setFrameIcon(null);
+                editar.show();
+                editar.toFront();
+            }
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "NO SE HA PODIDO EDITAR EL REGISTRO", "ERROR AL EDITAR", JOptionPane.ERROR_MESSAGE);
         }

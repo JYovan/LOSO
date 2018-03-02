@@ -45,13 +45,13 @@ public class Menu {
         m = new Modulos(g);
         u = new Usuarios(g, menu);
         p = new Permisos(g);
-        c = new Catalogos(g);
-        lin = new Lineas(g);
+        c = new Catalogos(g,menu);
+        lin = new Lineas(g,menu);
         est = new Estilos(g);
         maq = new Maquilas(g);
-        comb = new Combinaciones(g);
+        comb = new Combinaciones(g,menu);
         mat = new Materiales(g);
-        fra = new Fracciones(g);
+        fra = new Fracciones(g,menu);
 
         src.toSysTray(menu);
         menu.mSalir.addMouseListener(new MouseAdapter() {

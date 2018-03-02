@@ -9,6 +9,8 @@ import application.config.Generic;
 import application.config.TextPrompt;
 import application.controllers.combinaciones.CtrlCombinaciones;
 import application.views.vCombinaciones;
+import application.views.vMenu;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
@@ -16,6 +18,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.event.DocumentEvent;
@@ -44,21 +47,25 @@ public class Combinaciones {
     JasperPrint print;
     JDialog viewer;
     JasperViewer jv;
-
+    vMenu mnu;
+    CtrlCombinaciones comb;
+    
     private TableRowSorter<TableModel> filtrador;
 
-    public Combinaciones(Generic g) {
+    public Combinaciones(Generic g, JFrame parent ) {
         this.g = g;
         vcombinaciones = new vCombinaciones();
+        this.mnu = (vMenu) parent;
+        comb = new CtrlCombinaciones(vcombinaciones, g, this, mnu);
         vcombinaciones.btnNuevo.addActionListener((e) -> {
-            (new CtrlCombinaciones(vcombinaciones, g, this)).setVisible();
+            comb.setVisible();
         });
      
         vcombinaciones.btnEditar.addActionListener((e) -> {
             try {
                 if (vcombinaciones.tblCombinaciones.getSelectedRow() >= 0) {
                     int ID = Integer.parseInt(vcombinaciones.tblCombinaciones.getValueAt(vcombinaciones.tblCombinaciones.getSelectedRow(), 0).toString());
-                    (new CtrlCombinaciones(vcombinaciones, g, this)).onEditar(ID);
+                    comb.onEditar(ID);
                 } else {
                     Toolkit.getDefaultToolkit().beep();
                     JOptionPane.showMessageDialog(null, "DEBE DE SELECCIONAR UN REGISTRO", "ATENCIÓN", JOptionPane.WARNING_MESSAGE);
@@ -74,7 +81,7 @@ public class Combinaciones {
                 int i = JOptionPane.showConfirmDialog(null, "¿Estás Seguro?", "Confirmar Eliminar", JOptionPane.YES_NO_OPTION);
                 if (i == 0) {
                     int ID = Integer.parseInt(vcombinaciones.tblCombinaciones.getValueAt(vcombinaciones.tblCombinaciones.getSelectedRow(), 0).toString());
-                    (new CtrlCombinaciones(vcombinaciones, g, this)).onEliminar(ID);
+                    comb.onEliminar(ID);
                 }
 
             } else {
@@ -131,9 +138,20 @@ public class Combinaciones {
     }
 
     public void setVisible() {
-        vcombinaciones.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/LS.png")));
-        vcombinaciones.setLocationRelativeTo(null);
-        vcombinaciones.setVisible(true);
+        
+         if (vcombinaciones.isShowing()) {
+            //mensaje de que está abierto si se desea
+        } else {
+            mnu.dpContenedor.add(vcombinaciones);
+
+            Dimension desktopSize = mnu.dpContenedor.getSize();
+            Dimension jInternalFrameSize = vcombinaciones.getSize();
+            vcombinaciones.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
+                    (desktopSize.height - jInternalFrameSize.height) / 2);
+            vcombinaciones.setFrameIcon(null);
+            vcombinaciones.show();
+        }
+
     }
 
     public final void getRecords() {
