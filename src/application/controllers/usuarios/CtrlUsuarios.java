@@ -31,6 +31,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 /**
  *
@@ -53,7 +54,7 @@ public class CtrlUsuarios {
         this.g = g;
         this.usuarios = usuarios;
         this.mnu = (vMenu) menu;
-
+        AutoCompleteDecorator.decorate(nuevo.Tipo);
         nuevo.btnGuardar.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {

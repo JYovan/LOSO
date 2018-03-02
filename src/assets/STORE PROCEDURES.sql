@@ -1181,3 +1181,43 @@ SET NOCOUNT ON;
 	SELECT D.ID AS ID, D.SValue AS DEPARTAMENTOS FROM CATALOGOS AS D WHERE D.Estatus IN('ACTIVO') AND D.FieldId LIKE 'DEPARTAMENTOS';
 END
 GO
+
+-- -----------------------------------------------------
+-- procedure SP_OBTENER_ESTILOS_MXC
+-- -----------------------------------------------------
+IF EXISTS (	SELECT name FROM sysobjects WHERE  name = 'SP_OBTENER_ESTILOS_MXC' AND TYPE = 'P')
+	DROP PROCEDURE SP_OBTENER_ESTILOS_MXC
+GO
+CREATE PROCEDURE SP_OBTENER_ESTILOS_MXC
+AS
+BEGIN
+SET NOCOUNT ON; 
+	SELECT E.ID AS ID, E.Descripcion AS LINEA FROM Estilos AS E WHERE E.Estatus IN('ACTIVO');
+END
+GO
+-- -----------------------------------------------------
+-- procedure SP_OBTENER_COMBINACIONES_MXC
+-- -----------------------------------------------------
+IF EXISTS (	SELECT name FROM sysobjects WHERE  name = 'SP_OBTENER_COMBINACIONES_MXC' AND TYPE = 'P')
+	DROP PROCEDURE SP_OBTENER_COMBINACIONES_MXC
+GO
+CREATE PROCEDURE SP_OBTENER_COMBINACIONES_MXC
+AS
+BEGIN
+SET NOCOUNT ON; 
+	SELECT E.ID AS ID, E.Descripcion AS LINEA FROM Estilos AS E WHERE E.Estatus IN('ACTIVO');
+END
+GO
+-- -----------------------------------------------------
+-- procedure SP_OBTENER_PIEZAS_MXC
+-- -----------------------------------------------------
+IF EXISTS (	SELECT name FROM sysobjects WHERE  name = 'SP_OBTENER_PIEZAS_MXC' AND TYPE = 'P')
+	DROP PROCEDURE SP_OBTENER_PIEZAS_MXC
+GO
+CREATE PROCEDURE SP_OBTENER_PIEZAS_MXC
+AS
+BEGIN
+SET NOCOUNT ON; 
+	SELECT U.ID AS ID, U.SValue AS UNIDAD FROM CATALOGOS AS U WHERE U.Estatus IN('ACTIVO') AND U.FieldId LIKE 'UNIDADES';
+END
+GO
