@@ -1222,7 +1222,7 @@ CREATE PROCEDURE SP_OBTENER_COMBINACIONES_MXC
 AS
 BEGIN
 SET NOCOUNT ON; 
-	SELECT E.ID AS ID, E.Descripcion AS LINEA FROM Estilos AS E WHERE E.Estatus IN('ACTIVO');
+	SELECT C.ID AS ID, C.Descripcion AS COMBINACION FROM Combinaciones AS C WHERE C.Estatus IN('ACTIVO');
 END
 GO
 -- -----------------------------------------------------
@@ -1236,5 +1236,63 @@ AS
 BEGIN
 SET NOCOUNT ON; 
 	SELECT U.ID AS ID, U.SValue AS UNIDAD FROM CATALOGOS AS U WHERE U.Estatus IN('ACTIVO') AND U.FieldId LIKE 'UNIDADES';
+END
+GO 
+-- -----------------------------------------------------
+-- procedure SP_AGREGAR_MATERIALES_X_COMBINACION
+-- -----------------------------------------------------
+IF EXISTS (	SELECT name FROM sysobjects WHERE  name = 'SP_AGREGAR_MATERIALES_X_COMBINACION' AND TYPE = 'P')
+	DROP PROCEDURE SP_AGREGAR_MATERIALES_X_COMBINACION
+GO
+CREATE PROCEDURE SP_AGREGAR_MATERIALES_X_COMBINACION(@Estilo INT, @Combinacion INT, @Pieza INT,@Registro VARCHAR(25))
+AS
+BEGIN
+SET NOCOUNT ON; 
+INSERT INTO [dbo].[MaterialesXCombinacion]
+           ([Estilo],[Combinacion],[Pieza],[Estatus],[Registro])
+     VALUES
+           (@Estilo
+           ,@Combinacion
+           ,0
+           ,'ACTIVO',@Registro);
+		   DECLARE @id INT;
+      SELECT SCOPE_IDENTITY() AS ULTIMOID;
+END
+GO
+
+-- -----------------------------------------------------
+-- procedure SP_AGREGAR_MATERIALES_X_COMBINACION_DETALLE
+-- -----------------------------------------------------
+IF EXISTS (	SELECT name FROM sysobjects WHERE  name = 'SP_AGREGAR_MATERIALES_X_COMBINACION_DETALLE' AND TYPE = 'P')
+	DROP PROCEDURE SP_AGREGAR_MATERIALES_X_COMBINACION_DETALLE
+GO
+CREATE PROCEDURE SP_AGREGAR_MATERIALES_X_COMBINACION_DETALLE(@IDX INT, @Material INT, @Consumo FLOAT, @Tipo INT,@Registro VARCHAR(25))
+AS
+BEGIN
+SET NOCOUNT ON;   
+INSERT INTO [dbo].[MaterialesXCombinacionDetalle]
+           ([MaterialXCombinacion],[Material],[Consumo],[Tipo],[Estatus],[Registro])
+     VALUES
+           (@IDX
+           ,@Material
+           ,@Consumo
+           ,@Tipo
+           ,'ACTIVO',@Registro );
+
+END
+GO
+
+
+-- -----------------------------------------------------
+-- procedure SP_OBTENER_MATERIALES_MXC
+-- -----------------------------------------------------
+IF EXISTS (	SELECT name FROM sysobjects WHERE  name = 'SP_OBTENER_MATERIALES_MXC' AND TYPE = 'P')
+	DROP PROCEDURE SP_OBTENER_MATERIALES_MXC
+GO
+CREATE PROCEDURE SP_OBTENER_MATERIALES_MXC(@MAX INT)
+AS
+BEGIN
+SET NOCOUNT ON; 
+    SELECT M.[ID] ,M.[Material] AS MATERIAL FROM [Materiales] AS M WHERE M.Estatus IN('ACTIVO');
 END
 GO

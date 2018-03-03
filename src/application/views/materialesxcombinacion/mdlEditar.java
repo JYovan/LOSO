@@ -32,16 +32,16 @@ public class mdlEditar extends javax.swing.JInternalFrame {
         Estilo = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblMateriales = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tblMaterialesAgregados = new javax.swing.JTable();
         BuscarMateriales = new javax.swing.JTextField();
         Buscar = new javax.swing.JTextField();
         btnGuardar = new javax.swing.JButton();
         btnAgregar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         Combinacion = new javax.swing.JComboBox<>();
-        jLabel3 = new javax.swing.JLabel();
+        Consumo = new javax.swing.JSpinner();
 
         setClosable(true);
         setIconifiable(true);
@@ -54,31 +54,25 @@ public class mdlEditar extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Combinacion");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblMateriales.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
             },
             new String [] {
-                "ID(OCULTO)", "MATERIAL", "U.M", "CANTIDAD"
+                "ID", "MATERIAL", "U.M", "PRECIO"
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane1.setViewportView(tblMateriales);
+
+        tblMaterialesAgregados.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID(OCULTO)", "MATERIAL", "U.M", "CANTIDAD", "PRECIO"
+            }
+        ));
+        jScrollPane2.setViewportView(tblMaterialesAgregados);
 
         btnGuardar.setText("Guardar");
 
@@ -86,9 +80,7 @@ public class mdlEditar extends javax.swing.JInternalFrame {
 
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/16/cerrar.png"))); // NOI18N
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel3.setText("TOTAL:$  0.0");
+        Consumo.setModel(new javax.swing.SpinnerNumberModel(0.0f, 0.0f, null, 1.0f));
 
         javax.swing.GroupLayout pnlContenedorLayout = new javax.swing.GroupLayout(pnlContenedor);
         pnlContenedor.setLayout(pnlContenedorLayout);
@@ -98,22 +90,22 @@ public class mdlEditar extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlContenedorLayout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(0, 459, Short.MAX_VALUE))
+                    .addGroup(pnlContenedorLayout.createSequentialGroup()
                         .addGroup(pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(BuscarMateriales, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(Estilo, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE))
+                        .addGap(12, 12, 12)
                         .addGroup(pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnAgregar)
-                            .addComponent(btnEliminar)))
-                    .addGroup(pnlContenedorLayout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(10, 10, 10)
+                            .addComponent(Consumo, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnEliminar))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addGroup(pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addComponent(Buscar)
@@ -143,13 +135,13 @@ public class mdlEditar extends javax.swing.JInternalFrame {
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(pnlContenedorLayout.createSequentialGroup()
-                        .addGap(80, 80, 80)
+                        .addGap(51, 51, 51)
+                        .addComponent(Consumo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnAgregar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnEliminar)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
                 .addComponent(btnGuardar)
                 .addContainerGap())
         );
@@ -173,17 +165,17 @@ public class mdlEditar extends javax.swing.JInternalFrame {
     public javax.swing.JTextField Buscar;
     public javax.swing.JTextField BuscarMateriales;
     public javax.swing.JComboBox<String> Combinacion;
+    public javax.swing.JSpinner Consumo;
     public javax.swing.JComboBox<String> Estilo;
     public javax.swing.JButton btnAgregar;
     public javax.swing.JButton btnEliminar;
     public javax.swing.JButton btnGuardar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    public javax.swing.JTable jTable1;
-    public javax.swing.JTable jTable2;
     private javax.swing.JPanel pnlContenedor;
+    public javax.swing.JTable tblMateriales;
+    public javax.swing.JTable tblMaterialesAgregados;
     // End of variables declaration//GEN-END:variables
 }

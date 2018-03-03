@@ -218,48 +218,58 @@ public class Generic {
      * @since v1.0
      * @see Conexion
      */
-    public ArrayList<Object> addUpdateOrDeleteAndGetLastId(String sp, ArrayList<Object> al) {
-
-        ArrayList<Object> obj = null;
+    public ArrayList<Object[][]> addUpdateOrDeleteAndGetLastId(String stored, ArrayList<Object> o) {
+        Object[][] data = null;
+        ArrayList<Object[][]> obj = null;
+        Object[][] cols = null;
+        int j = 0;
         try {
-            int j;
-            String stored = "EXECUTE " + sp;
-            stored += "";
-            for (int i = 1; i <= al.size(); i++) {
-                if (i == al.size()) {
+            stored = "EXECUTE " + stored + " ";
+            for (int i = 1; i <= o.size(); i++) {
+                if (i == o.size()) {
                     stored += "?";
                 } else {
                     stored += "?,";
                 }
             }
-            stored += ";";
-            ps = c.getConnection().prepareCall(stored);
+            stored += "";
+            ps = c.getConnection().prepareCall(stored,ResultSet.TYPE_SCROLL_SENSITIVE,
+                ResultSet.CONCUR_READ_ONLY);
+            for (int nal = 1; nal <= o.size(); nal++) {
+                ps.setObject(nal, o.get(j));
+                j++;
+            }
             rs = ps.executeQuery();
             rsmd = rs.getMetaData();
+            int col = 0, coldb = 1;
             if (rs.last()) {
+                data = new Object[rs.getRow()][rsmd.getColumnCount()];
                 rs.beforeFirst();
-                j = 1;
                 while (rs.next()) {
-                    obj = new ArrayList<>();
-                    for (int i = 0; i < rsmd.getColumnCount(); i++) {
-                        obj.add(rs.getObject(j));// ID
-                        j++;
+                    for (int filas = 0; filas < rsmd.getColumnCount(); filas++) {
+                        data[col][filas] = rs.getObject(coldb);
+                        coldb++;
                     }
-                }
-                if (obj != null) {
-                    return obj;
-                } else {
-                    JOptionPane.showMessageDialog(null,
-                            "No es posible obtener el dato principal.", "Error",
-                            JOptionPane.ERROR_MESSAGE);
+                    col++;
+                    coldb = 1;
                 }
             }
+            coldb = 1;
+            cols = new Object[rsmd.getColumnCount()][rsmd.getColumnCount()];
+            for (int i = 0; i < rsmd.getColumnCount(); i++) {
+                cols[0][i] = rsmd.getColumnLabel(coldb);
+                coldb++;
+            }
+            obj = new ArrayList<>();
+            obj.add(data);//index 0
+            obj.add(cols);//index 1   
             rs.close();
             ps.close();
-        } catch (SQLException | HeadlessException e) {
-            e.printStackTrace();
+            return obj;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
         }
-        return null;
+        return obj;
     }
 //Metodo para validar y obtener la informacion de un usuario en el sistema
 

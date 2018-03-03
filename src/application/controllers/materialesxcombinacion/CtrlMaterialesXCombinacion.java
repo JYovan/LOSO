@@ -9,6 +9,7 @@ import application.controllers.materialesxcombinacion.*;
 import application.controllers.materialesxcombinacion.*;
 import application.config.Generic;
 import application.controllers.MaterialesXCombinacion;
+import static application.controllers.MaterialesXCombinacion.vmaterialesxcombinacion;
 import application.helpers.Item;
 import application.third_party.ImageUtils;
 import application.third_party.WaitLayerUI;
@@ -32,6 +33,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.logging.Level;
@@ -44,8 +46,14 @@ import javax.swing.JInternalFrame;
 import javax.swing.JLayer;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.RowFilter;
 import javax.swing.Timer;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import org.apache.commons.io.FilenameUtils;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
@@ -61,8 +69,9 @@ public class CtrlMaterialesXCombinacion {
     MaterialesXCombinacion materialesxcombinacion;
     vMaterialesXCombinacion vmaterialesxcombinacion;
     int temp = 0;
-    boolean tiene_foto = false; 
-    ArrayList<Item> estilos = new ArrayList<>(); 
+    boolean tiene_foto = false;
+    ArrayList<Item> estilos = new ArrayList<>();
+    ArrayList<Item> combinaciones = new ArrayList<>();
     JFileChooser fc;
     vMenu mnu;
 
@@ -75,10 +84,21 @@ public class CtrlMaterialesXCombinacion {
         this.materialesxcombinacion = materialesxcombinacion;
         this.mnu = (vMenu) menu;
         //Ayuda en captura combos nuevo estilo
-        AutoCompleteDecorator.decorate(this.nuevo.Estilo); 
+        AutoCompleteDecorator.decorate(this.nuevo.Estilo);
+        AutoCompleteDecorator.decorate(this.nuevo.Combinacion);
         //Ayuda en captura combos editar estilo
-        AutoCompleteDecorator.decorate(this.editar.Estilo); 
-        /*NUEVO*/ 
+        AutoCompleteDecorator.decorate(this.editar.Estilo);
+        AutoCompleteDecorator.decorate(this.editar.Combinacion);
+        /*NUEVO*/
+        nuevo.btnAgregar.addActionListener((e) -> {
+            Float Consumo = Float.parseFloat(nuevo.Consumo.getValue().toString());
+            if (Consumo > 0) {
+                System.out.println("CONSUMO: " + Consumo);
+                nuevo.Consumo.setValue(0);
+            } else {
+                JOptionPane.showMessageDialog(null, "DEBE DE ESTABLECER UN CONSUMO", "ATENCIÓN", JOptionPane.WARNING_MESSAGE);
+            }
+        });
         nuevo.btnGuardar.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -116,9 +136,9 @@ public class CtrlMaterialesXCombinacion {
             @Override
             public void keyReleased(KeyEvent e) {
             }
-        }); 
+        });
 
-        /*EDITAR*/ 
+        /*EDITAR*/
         editar.btnGuardar.addActionListener((e) -> {
             onModificar();
         });
@@ -137,16 +157,43 @@ public class CtrlMaterialesXCombinacion {
             @Override
             public void keyReleased(KeyEvent e) {
             }
-        }); 
+        });
+        nuevo.BuscarMateriales.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                String text = nuevo.BuscarMateriales.getText();
+                if (text.trim().length() == 0) {
+                    filtrador.setRowFilter(null);
+                } else {
+                    filtrador.setRowFilter(RowFilter.regexFilter(text));
+                }
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                String text = nuevo.BuscarMateriales.getText();
+                if (text.trim().length() == 0) {
+                    filtrador.setRowFilter(null);
+                } else {
+                    filtrador.setRowFilter(RowFilter.regexFilter(text));
+                }
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                JOptionPane.showMessageDialog(null, "changeUpdate en la tabla Materiales no sooportada Linea 174");
+            }
+        });
         /*PLACEHOLDERS*/
 
  /*INVOCAR METODOS QUE RELLENAN DATOS*/
-        getEstilos(); 
+        getEstilos();
+        getCombinaciones();
 
     }
 
-    public void setVisible() { 
-        if(!nuevo.isShowing()){
+    public void setVisible() {
+        if (!nuevo.isShowing()) {
             mnu.dpContenedor.add(nuevo);
             Dimension desktopSize = mnu.dpContenedor.getSize();
             Dimension jInternalFrameSize = nuevo.getSize();
@@ -155,93 +202,60 @@ public class CtrlMaterialesXCombinacion {
             nuevo.setFrameIcon(null);
             nuevo.show();
             nuevo.toFront();
+            getMateriales();
         }
-  
     }
 
     BufferedImage bufi = null;
     File files_dir = new File("files");
 
     public void onGuardar() {
-//        try {
-            ArrayList<Object> a = new ArrayList<>();
+        try {
+            ArrayList<Object> encabezado = new ArrayList<>();
+            ArrayList<Object> detalle = new ArrayList<>();
             Object x = null;
-//            String ext = FilenameUtils.getExtension(fc.getSelectedFile().getName());
-//            String Foto = "files/" + nuevo.Clave.getText() + "." + ext;
-//            if (!nuevo.Linea.getSelectedItem().toString().equals("") && !nuevo.Clave.getText().equals("")) {
-//                a.add(getID(lineas, nuevo.Linea.getSelectedItem().toString()));
-//                a.add((nuevo.Clave.getText().equals("") ? "" : nuevo.Clave.getText()));
-//                a.add(nuevo.Descripcion.getText());
-//                x = getID(familias, nuevo.Familia.getSelectedItem().toString());
-//                if (Integer.parseInt(String.valueOf(x)) != 0) {
-//                    a.add(x);
-//                } else {
-//                    a.add(null);
-//                }
-//                x = getID(series, nuevo.Serie.getSelectedItem().toString());
-//                if (Integer.parseInt(String.valueOf(x)) != 0) {
-//                    a.add(x);
-//                } else {
-//                    a.add(null);
-//                }
-//                x = getID(hormas, nuevo.Horma.getSelectedItem().toString());
-//                if (Integer.parseInt(String.valueOf(x)) != 0) {
-//                    a.add(x);
-//                } else {
-//                    a.add(null);
-//                }
-//                a.add(nuevo.Genero.getSelectedItem().toString());
-//                a.add(Foto);
-//                a.add(nuevo.Estatus.getSelectedItem().toString());
-//                a.add(nuevo.Desperdicio.getText());
-//                a.add(nuevo.Liberado.isSelected() ? 1 : 0);
-//                a.add(nuevo.Herramental.getText());
-//                x = getID(maquilas, nuevo.Maquila.getSelectedItem().toString());
-//                if (Integer.parseInt(String.valueOf(x)) != 0) {
-//                    a.add(x);
-//                } else {
-//                    a.add(null);
-//                }
-//                a.add(nuevo.Notas.getText());
-//                a.add(nuevo.Ano.getText().equals("") ? null : Integer.parseInt(nuevo.Ano.getText()));
-//                x = getID(estilos, nuevo.Temporada.getSelectedItem().toString());
-//                if (Integer.parseInt(String.valueOf(x)) != 0) {
-//                    a.add(x);
-//                } else {
-//                    a.add(null);
-//                }
-//                a.add(nuevo.PuntoCentral.getText().equals("") ? null : Integer.parseInt(nuevo.PuntoCentral.getText()));
-//                x = getID(tipo_materialesxcombinacion, nuevo.Tipo.getSelectedItem().toString());
-//                if (Integer.parseInt(String.valueOf(x)) != 0) {
-//                    a.add(x);
-//                } else {
-//                    a.add(null);
-//                }
-//                a.add(nuevo.MaquilaPlantilla.getSelectedItem().toString());
-//                a.add(nuevo.TipoDeConstruccion.getText());
-//                DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
-//                Date date = new Date();
-//                a.add(dateFormat.format(date));
-//                if (!files_dir.exists()) {
-//                    files_dir.mkdir();
-//                }
-//                System.out.println(fc.getSelectedFile().getName());
-//                ImageIO.write(bufi, "png", new File(Foto));
-                if (g.addUpdateOrDelete("SP_AGREGAR_ESTILO", a)) {
-                    JOptionPane.showMessageDialog(null, "ESTILO AGREGADO", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
+            /*ENCABEZADO*/
+            if (nuevo.Estilo.getSelectedIndex() != -1
+                    && nuevo.Combinacion.getSelectedIndex() != -1
+                    && !nuevo.Estilo.getSelectedItem().toString().equals("")
+                    && !nuevo.Combinacion.getSelectedItem().toString().equals("")) {
+                encabezado.add(getID(estilos, nuevo.Estilo.getSelectedItem().toString()));
+                encabezado.add(getID(combinaciones, nuevo.Combinacion.getSelectedItem().toString()));
+                encabezado.add(0);/*PROVISIONAL*/
+                String fechatiempo = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(Calendar.getInstance().getTime());
+                encabezado.add(fechatiempo);
+                ArrayList<Object[][]> data = g.addUpdateOrDeleteAndGetLastId("SP_AGREGAR_MATERIALES_X_COMBINACION", encabezado);
+                /*FIN ENCABEZADO*/
+                if (data.size() > 0) {
+                    Object[][] ID = data.get(0);/*OBTENER EL ID DEL ENCABEZADO*/
+                    System.out.println("ID " + String.valueOf(ID[0][0]));
+                    /*DETALLE*/
+                    System.out.println("* * * DETALLE * * *");
+                    for (int i = 0; i < nuevo.tblMaterialesAgregados.getRowCount(); i++) {
+                        detalle.add(Integer.parseInt(String.valueOf(ID[0][0])));
+                        detalle.add(Integer.parseInt(nuevo.tblMaterialesAgregados.getValueAt(i, 0).toString()));
+                        detalle.add(Integer.parseInt(nuevo.tblMaterialesAgregados.getValueAt(i, 1).toString()));
+                        fechatiempo = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(Calendar.getInstance().getTime());
+                        detalle.add(Integer.parseInt(nuevo.tblMaterialesAgregados.getValueAt(i, 2).toString()));
+                        detalle.add(fechatiempo);
+                        System.out.println("ID: " + nuevo.tblMaterialesAgregados.getValueAt(i, 0).toString() + "\tMATERIAL: " + nuevo.tblMaterialesAgregados.getValueAt(i, 1).toString());
+                    }
+                    System.out.println("* * * FIN DETALLE * * *");
+
+                    /*FIN DETALLE*/
+                    JOptionPane.showMessageDialog(null, "MATERIAL POR COMBINACION AGREGADO", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
                     nuevo.dispose();
                     materialesxcombinacion.getRecords();
                 } else {
-                    JOptionPane.showMessageDialog(null, "NO SE HA PODIDO AGREGAR EL ESTILO", "NO SE HA PODIDO AGREGAR EL ESTILO", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "NO SE HA PODIDO AGREGAR EL MATERIAL POR COMBINACION", "NO SE HA PODIDO AGREGAR EL ESTILO", JOptionPane.ERROR_MESSAGE);
                 }
-//            } else {
-//                JOptionPane.showMessageDialog(null, "DEBE DE ELEGIR UNA LINEA Y UNA CLAVE", "NO SE HA PODIDO AGREGAR EL ESTILO", JOptionPane.ERROR_MESSAGE);
-//            }
-//        } catch (HeadlessException e) {
-//            JOptionPane.showMessageDialog(null, "NO SE HA PODIDO REGISTRAR EL ESTILO", "ERROR AL GUARDAR", JOptionPane.ERROR_MESSAGE);
-//        } catch (IOException ex) {
-//            Logger.getLogger(CtrlMaterialesXCombinacion.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+            } else {
+                JOptionPane.showMessageDialog(null, "DEBE DE SELECCIONAR UN ESTILO Y UNA COMBINACIÓN", "ATENCIÓN", JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "ERROR AL AGREGAR MXC " + ex.getMessage());
+            ex.printStackTrace();
+        }
     }
 
     public void onEditar(int IDX) {
@@ -299,9 +313,9 @@ public class CtrlMaterialesXCombinacion {
 
     public void onModificar() {
 //        try {
-            ArrayList<Object> a = new ArrayList<>();
-            Object x = null;
-            String Foto = "";
+        ArrayList<Object> a = new ArrayList<>();
+        Object x = null;
+        String Foto = "";
 //            if (!editar.Linea.getSelectedItem().toString().equals("") && !editar.Clave.getText().equals("")) {
 //                a.add(temp);/*ID*/
 //                a.add(getID(lineas, editar.Linea.getSelectedItem().toString()));
@@ -386,20 +400,20 @@ public class CtrlMaterialesXCombinacion {
 //                }
 //                a.add(editar.MaquilaPlantilla.getSelectedItem().toString());
 //                a.add(editar.TipoDeConstruccion.getText());
-                if (!files_dir.exists()) {
-                    files_dir.mkdir();
-                }
+        if (!files_dir.exists()) {
+            files_dir.mkdir();
+        }
 //                puede servir para testear
 //                for (int i = 0; i < a.size(); i++) {
 //                    System.out.println(i + ".-" + String.valueOf(a.get(i)));
 //                }
-                if (g.addUpdateOrDelete("SP_MODIFICAR_ESTILO", a)) {
-                    JOptionPane.showMessageDialog(null, "ESTILO MODIFICADO", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
-                    editar.dispose();
-                    materialesxcombinacion.getRecords();
-                } else {
-                    JOptionPane.showMessageDialog(null, "NO SE HA PODIDO MODIFICAR EL ESTILO", "NO SE HA PODIDO MODIFICAR EL ESTILO", JOptionPane.ERROR_MESSAGE);
-                }
+        if (g.addUpdateOrDelete("SP_MODIFICAR_ESTILO", a)) {
+            JOptionPane.showMessageDialog(null, "ESTILO MODIFICADO", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
+            editar.dispose();
+            materialesxcombinacion.getRecords();
+        } else {
+            JOptionPane.showMessageDialog(null, "NO SE HA PODIDO MODIFICAR EL ESTILO", "NO SE HA PODIDO MODIFICAR EL ESTILO", JOptionPane.ERROR_MESSAGE);
+        }
 //            } else {
 //                JOptionPane.showMessageDialog(null, "DEBE DE ELEGIR UNA LINEA Y UNA CLAVE", "NO SE HA PODIDO MODIFICAR EL ESTILO", JOptionPane.ERROR_MESSAGE);
 //            }
@@ -425,7 +439,6 @@ public class CtrlMaterialesXCombinacion {
             JOptionPane.showMessageDialog(null, "NO SE HA PODIDO ELIMINAR EL ESTILO", "ERROR AL ELIMINAR", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
 
     public final void getEstilos() {
         try {
@@ -446,7 +459,45 @@ public class CtrlMaterialesXCombinacion {
             System.out.println("ERROR\n" + e.getMessage());
             e.printStackTrace();/*INDICA LA LINEA DONDE OCURRE EL PROBLEMA*/
         }
-    } 
+    }
+
+    public final void getCombinaciones() {
+        try {
+            combinaciones = new ArrayList<>();
+            Item combinacion = null;
+            nuevo.Combinacion.addItem("");
+            editar.Combinacion.addItem("");
+            for (Iterator it = g.fill("SP_OBTENER_COMBINACIONES_MXC").iterator(); it.hasNext();) {
+                Object[] item = (Object[]) it.next();
+                combinacion = new Item(Integer.parseInt(String.valueOf(item[0])), String.valueOf(item[1]));
+                combinaciones.add(combinacion);
+                nuevo.Combinacion.addItem(String.valueOf(item[1]));
+                editar.Combinacion.addItem(String.valueOf(item[1]));
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "NO SE HAN PODIDO OBTENER LAS COMBINACIONES", "ERROR AL OBTENER", JOptionPane.ERROR_MESSAGE);
+
+            System.out.println("ERROR\n" + e.getMessage());
+            e.printStackTrace();/*INDICA LA LINEA DONDE OCURRE EL PROBLEMA*/
+        }
+    }
+
+    DefaultTableModel dtm;
+    private TableRowSorter<TableModel> filtrador;
+
+    public final void getMateriales() {
+        try {
+            ArrayList<Object> o = new ArrayList<>();
+            o.add(99999999);
+            ArrayList<Object[][]> a = g.findByParams("SP_OBTENER_MATERIALES_MXC", o);
+            dtm = g.getModelFill(a.get(0), g.getDimensional(a.get(1)));
+            nuevo.tblMateriales.setModel(dtm);
+            filtrador = new TableRowSorter<>(dtm);
+            nuevo.tblMateriales.setRowSorter(filtrador);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }
 
     public int getID(ArrayList<Item> x, String selected_item) {
         int id = 0;
@@ -459,31 +510,5 @@ public class CtrlMaterialesXCombinacion {
             }
         }
         return id;
-    }
-
-    /*
-        HoldOn implementation for Java
-     */
-    final WaitLayerUI layerUI = new WaitLayerUI();
-    JPanel pnl = new JPanel();
-    Timer stopper;
-
-    public void HoldOn(JPanel pnlContenedor) {
-
-        this.pnl = pnlContenedor;
-        JLayer<JPanel> jlayer = new JLayer<>(this.pnl, layerUI);
-        stopper = new Timer(1000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                layerUI.stop();
-            }
-        });
-        stopper.setRepeats(false);
-        jlayer.setSize(pnlContenedor.getSize());
-        pnlContenedor.add(jlayer);
-        layerUI.start();
-        if (!stopper.isRunning()) {
-            stopper.start();
-        }
     }
 }

@@ -141,6 +141,7 @@ public class MaterialesXCombinacion {
 
     public void setVisible() {
         if (vmaterialesxcombinacion.isShowing()) {
+            
             //mensaje de que está abierto si se desea
         } else {
             mnu.dpContenedor.add(vmaterialesxcombinacion);
@@ -171,7 +172,7 @@ public class MaterialesXCombinacion {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
-    } 
+    }
     /*NO EDITAR ESTA PARTE*/
     public static vMaterialesXCombinacion getInstance() {
         return vmaterialesxcombinacion;
