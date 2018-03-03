@@ -103,7 +103,7 @@ public class mdlNuevo extends javax.swing.JDialog {
 
         jLabel12.setText("Precio tope");
 
-        FechaUltimoInventario.setCurrentView(new datechooser.view.appearance.AppearancesList("Swing",
+        FechaUltimoInventario.setCurrentView(new datechooser.view.appearance.AppearancesList("custom",
             new datechooser.view.appearance.ViewAppearance("custom",
                 new datechooser.view.appearance.swing.SwingCellAppearance(new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 11),
                     new java.awt.Color(0, 0, 0),
@@ -152,6 +152,8 @@ public class mdlNuevo extends javax.swing.JDialog {
 } catch (datechooser.model.exeptions.IncompatibleDataExeption e1) {
     e1.printStackTrace();
     }
+    FechaUltimoInventario.setFieldFont(new java.awt.Font("Tahoma", java.awt.Font.BOLD, 9));
+    FechaUltimoInventario.setNavigateFont(new java.awt.Font("Serif", java.awt.Font.BOLD, 9));
 
     jLabel13.setText("Fecha ultimo inventario");
 

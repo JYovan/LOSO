@@ -61,14 +61,8 @@ public class CtrlMaterialesXCombinacion {
     MaterialesXCombinacion materialesxcombinacion;
     vMaterialesXCombinacion vmaterialesxcombinacion;
     int temp = 0;
-    boolean tiene_foto = false;
-    ArrayList<Item> lineas = new ArrayList<>();
-    ArrayList<Item> familias = new ArrayList<>();
-    ArrayList<Item> series = new ArrayList<>();
-    ArrayList<Item> hormas = new ArrayList<>();
-    ArrayList<Item> maquilas = new ArrayList<>();
-    ArrayList<Item> temporadas = new ArrayList<>();
-    ArrayList<Item> tipo_materialesxcombinacion = new ArrayList<>();
+    boolean tiene_foto = false; 
+    ArrayList<Item> estilos = new ArrayList<>(); 
     JFileChooser fc;
     vMenu mnu;
 
@@ -210,7 +204,7 @@ public class CtrlMaterialesXCombinacion {
 //                }
 //                a.add(nuevo.Notas.getText());
 //                a.add(nuevo.Ano.getText().equals("") ? null : Integer.parseInt(nuevo.Ano.getText()));
-//                x = getID(temporadas, nuevo.Temporada.getSelectedItem().toString());
+//                x = getID(estilos, nuevo.Temporada.getSelectedItem().toString());
 //                if (Integer.parseInt(String.valueOf(x)) != 0) {
 //                    a.add(x);
 //                } else {
@@ -369,7 +363,7 @@ public class CtrlMaterialesXCombinacion {
 //                a.add(editar.Notas.getText());
 //                a.add(editar.Ano.getText().equals("") ? null : Integer.parseInt(editar.Ano.getText()));
 //                if (editar.Temporada.getSelectedIndex() != -1) {
-//                    x = getID(temporadas, editar.Temporada.getSelectedItem().toString());
+//                    x = getID(estilos, editar.Temporada.getSelectedItem().toString());
 //                    if (Integer.parseInt(String.valueOf(x)) != 0) {
 //                        a.add(x);
 //                    } else {
@@ -435,14 +429,14 @@ public class CtrlMaterialesXCombinacion {
 
     public final void getEstilos() {
         try {
-            temporadas = new ArrayList<>();
-            Item temporada = null;
+            estilos = new ArrayList<>();
+            Item estilo = null;
             nuevo.Estilo.addItem("");
             editar.Estilo.addItem("");
             for (Iterator it = g.fill("SP_OBTENER_ESTILOS_MXC").iterator(); it.hasNext();) {
                 Object[] item = (Object[]) it.next();
-                temporada = new Item(Integer.parseInt(String.valueOf(item[0])), String.valueOf(item[1]));
-                temporadas.add(temporada);
+                estilo = new Item(Integer.parseInt(String.valueOf(item[0])), String.valueOf(item[1]));
+                estilos.add(estilo);
                 nuevo.Estilo.addItem(String.valueOf(item[1]));
                 editar.Estilo.addItem(String.valueOf(item[1]));
             }
