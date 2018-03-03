@@ -5,17 +5,22 @@
  */
 package application.views;
 
+import application.config.ManejadorTecla;
+
 /**
  *
- * @author Administrador
+ * @author Christian
  */
-public class vMateriales extends javax.swing.JFrame {
+public class vMateriales extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form vMateriales
      */
+    ManejadorTecla manejador = new ManejadorTecla();
     public vMateriales() {
         initComponents();
+        this.txtBusqueda.addKeyListener(manejador);
+        
     }
 
     /**
@@ -44,7 +49,19 @@ public class vMateriales extends javax.swing.JFrame {
         btnPdf = new javax.swing.JButton();
         btnExportar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 255, 255));
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
+        setTitle("MATERIALES");
+        setToolTipText("");
+        setFrameIcon(null);
+        try {
+            setSelected(true);
+        } catch (java.beans.PropertyVetoException e1) {
+            e1.printStackTrace();
+        }
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -69,33 +86,41 @@ public class vMateriales extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblMateriales);
 
+        jToolBar1.setBackground(new java.awt.Color(255, 255, 255));
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
 
+        btnNuevo.setBackground(new java.awt.Color(255, 255, 255));
         btnNuevo.setText("NUEVO");
         btnNuevo.setToolTipText("");
         btnNuevo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jToolBar1.add(btnNuevo);
 
+        btnEditar.setBackground(new java.awt.Color(255, 255, 255));
         btnEditar.setText("EDITAR");
         btnEditar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jToolBar1.add(btnEditar);
 
+        btnRefrescar.setBackground(new java.awt.Color(255, 255, 255));
         btnRefrescar.setText("REFRESCAR");
         btnRefrescar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jToolBar1.add(btnRefrescar);
 
+        btnEliminar.setBackground(new java.awt.Color(255, 255, 255));
         btnEliminar.setText("ELIMINAR");
         btnEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jToolBar1.add(btnEliminar);
 
+        btnExcel.setBackground(new java.awt.Color(255, 255, 255));
         btnExcel.setText("EXCEL");
         jToolBar1.add(btnExcel);
 
+        btnPdf.setBackground(new java.awt.Color(255, 255, 255));
         btnPdf.setText("PDF");
         btnPdf.setToolTipText("");
         jToolBar1.add(btnPdf);
 
+        btnExportar.setBackground(new java.awt.Color(255, 255, 255));
         btnExportar.setText("EXPORTAR");
         btnExportar.setToolTipText("");
         btnExportar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -116,7 +141,7 @@ public class vMateriales extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnAdelante)
                 .addContainerGap())
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 717, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 784, Short.MAX_VALUE)
             .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
@@ -131,8 +156,8 @@ public class vMateriales extends javax.swing.JFrame {
                     .addComponent(btnAdelante)
                     .addComponent(btnAtras)
                     .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

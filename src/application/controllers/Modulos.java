@@ -8,12 +8,12 @@ package application.controllers;
 import application.config.Generic;
 import application.config.TextPrompt;
 import application.controllers.modulos.CtrlModulos;
+import application.views.vMenu;
 import application.views.vModulos;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -27,14 +27,10 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.design.JRDesignQuery;
 import net.sf.jasperreports.engine.design.JasperDesign;
-import net.sf.jasperreports.engine.xml.JRXmlLoader;
 
 import net.sf.jasperreports.view.JasperViewer;
 
@@ -53,20 +49,25 @@ public class Modulos {
     JasperPrint print;
     JDialog viewer;
     JasperViewer jv;
+    vMenu menu;
+    CtrlModulos mod;
 
     private TableRowSorter<TableModel> filtrador;
 
-    public Modulos(Generic g) {
+    public Modulos(Generic g, JFrame parent) {
         this.g = g;
+        this.menu = (vMenu) parent;
         vmodulos = new vModulos();
+        mod = new CtrlModulos(vmodulos, g, this, menu);
+        
         vmodulos.btnNuevo.addActionListener((e) -> {
-            (new CtrlModulos(vmodulos, g, this)).setVisible();
+            mod.setVisible();
         });
         vmodulos.btnEditar.addActionListener((e) -> {
             try {
                 if (vmodulos.tblModulos.getSelectedRow() >= 0) {
                     int ID = Integer.parseInt(vmodulos.tblModulos.getValueAt(vmodulos.tblModulos.getSelectedRow(), 0).toString());
-                    (new CtrlModulos(vmodulos, g, this)).onEditar(ID);
+                    mod.onEditar(ID);
                 } else {
                     Toolkit.getDefaultToolkit().beep();
                     JOptionPane.showMessageDialog(null, "DEBE DE SELECCIONAR UN REGISTRO", "ATENCIÓN", JOptionPane.WARNING_MESSAGE);
@@ -81,7 +82,7 @@ public class Modulos {
                 int i = JOptionPane.showConfirmDialog(null, "¿Estás Seguro?", "Confirmar Eliminar", JOptionPane.YES_NO_OPTION);
                 if (i == 0) {
                     int ID = Integer.parseInt(vmodulos.tblModulos.getValueAt(vmodulos.tblModulos.getSelectedRow(), 0).toString());
-                    (new CtrlModulos(vmodulos, g, this)).onEliminar(ID);
+                    mod.onEliminar(ID);
                 }
 
             } else {
@@ -140,9 +141,19 @@ public class Modulos {
     }
 
     public void setVisible() {
-        vmodulos.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/LS.png")));
-        vmodulos.setLocationRelativeTo(null);
-        vmodulos.setVisible(true);
+        if (vmodulos.isShowing()) {
+            //mensaje de que está abierto si se desea
+        } else {
+            menu.dpContenedor.add(vmodulos);
+
+            Dimension desktopSize = menu.dpContenedor.getSize();
+            Dimension jInternalFrameSize = vmodulos.getSize();
+            vmodulos.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
+                    (desktopSize.height - jInternalFrameSize.height) / 2);
+            vmodulos.setFrameIcon(null);
+            vmodulos.show();
+        }
+
     }
 
     public final void getRecords() {

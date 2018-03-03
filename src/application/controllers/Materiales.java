@@ -9,6 +9,8 @@ import application.config.Generic;
 import application.config.TextPrompt;
 import application.controllers.materiales.CtrlMateriales;
 import application.views.vMateriales; 
+import application.views.vMenu;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
@@ -16,6 +18,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.event.DocumentEvent;
@@ -44,20 +47,24 @@ public class Materiales {
     JasperPrint print;
     JDialog viewer;
     JasperViewer jv;
+    CtrlMateriales mat;
+    vMenu menu;
 
     private TableRowSorter<TableModel> filtrador;
 
-    public Materiales(Generic g) {
+    public Materiales(Generic g,JFrame parent) {
+        this.menu =  (vMenu)parent;
         this.g = g;
         vmateriales = new vMateriales();
+        mat =  new CtrlMateriales(vmateriales, g, this,menu);
         vmateriales.btnNuevo.addActionListener((e) -> {
-            (new CtrlMateriales(vmateriales, g, this)).setVisible();
+            mat.setVisible();
         });
         vmateriales.btnEditar.addActionListener((e) -> {
             try {
                 if (vmateriales.tblMateriales.getSelectedRow() >= 0) {
                     int ID = Integer.parseInt(vmateriales.tblMateriales.getValueAt(vmateriales.tblMateriales.getSelectedRow(), 0).toString());
-                    (new CtrlMateriales(vmateriales, g, this)).onEditar(ID);
+                    mat.onEditar(ID);
                 } else {
                     Toolkit.getDefaultToolkit().beep();
                     JOptionPane.showMessageDialog(null, "DEBE DE SELECCIONAR UN REGISTRO", "ATENCIÓN", JOptionPane.WARNING_MESSAGE);
@@ -72,7 +79,7 @@ public class Materiales {
                 int i = JOptionPane.showConfirmDialog(null, "¿Estás Seguro?", "Confirmar Eliminar", JOptionPane.YES_NO_OPTION);
                 if (i == 0) {
                     int ID = Integer.parseInt(vmateriales.tblMateriales.getValueAt(vmateriales.tblMateriales.getSelectedRow(), 0).toString());
-                    (new CtrlMateriales(vmateriales, g, this)).onEliminar(ID);
+                    mat.onEliminar(ID);
                 }
 
             } else {
@@ -131,9 +138,18 @@ public class Materiales {
     }
 
     public void setVisible() {
-        vmateriales.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/LS.png")));
-        vmateriales.setLocationRelativeTo(null);
-        vmateriales.setVisible(true);
+         if (vmateriales.isShowing()) {
+            //mensaje de que está abierto si se desea
+        } else {
+            menu.dpContenedor.add(vmateriales);
+
+            Dimension desktopSize = menu.dpContenedor.getSize();
+            Dimension jInternalFrameSize = vmateriales.getSize();
+            vmateriales.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
+                    (desktopSize.height - jInternalFrameSize.height) / 2);
+            vmateriales.setFrameIcon(null);
+            vmateriales.show();
+        }
     }
 
     public final void getRecords() {

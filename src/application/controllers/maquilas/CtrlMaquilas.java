@@ -4,41 +4,42 @@ import application.config.Generic;
 import application.controllers.Maquilas;
 import application.helpers.Item;
 import application.third_party.Resources;
-import application.views.maquilas.mdlEditar;
-import application.views.maquilas.mdlNuevo;
+import application.views.maquilas.mdlIEditar;
+import application.views.maquilas.mdlINuevo;
 import application.views.vMaquilas;
+import application.views.vMenu;
+import java.awt.Dimension;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 public class CtrlMaquilas {
 
-    mdlNuevo nuevo;
-    mdlEditar editar;
+    mdlINuevo nuevo;
+    mdlIEditar editar;
     Generic g;
     Maquilas maquilas;
     vMaquilas vmaquilas;
     int temp = 0;
     Resources rsc;
-    
-    
-    
-    public CtrlMaquilas(JFrame parent, Generic g, Maquilas maquilas) {
-        nuevo = new mdlNuevo(parent, true);
-        editar = new mdlEditar(parent, true);
+    vMenu menu;
+
+    public CtrlMaquilas(JInternalFrame parent, Generic g, Maquilas maquilas, JFrame menu) {
+        this.menu = (vMenu) menu;
+        nuevo = new mdlINuevo();
+        editar = new mdlIEditar();
         this.vmaquilas = (vMaquilas) parent;
         this.g = g;
         this.maquilas = maquilas;
         rsc = new Resources();
-        
+
         //Ayuda en captura combo box
-       
-    
         nuevo.btnGuardar.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -49,11 +50,11 @@ public class CtrlMaquilas {
                     nuevo.dispose();
                 }
             }
-            
+
             @Override
             public void keyTyped(KeyEvent e) {
             }
-            
+
             @Override
             public void keyReleased(KeyEvent e) {
             }
@@ -64,7 +65,7 @@ public class CtrlMaquilas {
         editar.btnGuardar.addActionListener((e) -> {
             onModificar();
         });
-        
+
         nuevo.txtClave.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -72,36 +73,35 @@ public class CtrlMaquilas {
                     nuevo.dispose();
                 }
             }
-            
+
             @Override
             public void keyTyped(KeyEvent e) {
             }
-            
+
             @Override
             public void keyReleased(KeyEvent e) {
             }
         });
-        
+
         nuevo.txtNombre.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
-                
+
                 if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
                     editar.dispose();
                 }
             }
-            
+
             @Override
             public void keyTyped(KeyEvent e) {
-               
-                
+
             }
-            
+
             @Override
             public void keyReleased(KeyEvent e) {
             }
         });
-        
+
         nuevo.txtContacto.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -112,11 +112,11 @@ public class CtrlMaquilas {
                     nuevo.dispose();
                 }
             }
-            
+
             @Override
             public void keyTyped(KeyEvent e) {
             }
-            
+
             @Override
             public void keyReleased(KeyEvent e) {
             }
@@ -128,36 +128,35 @@ public class CtrlMaquilas {
                     editar.dispose();
                 }
             }
-            
+
             @Override
             public void keyTyped(KeyEvent e) {
             }
-            
+
             @Override
             public void keyReleased(KeyEvent e) {
             }
         });
-        
+
         editar.txtNombre.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
-                
+
                 if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
                     editar.dispose();
                 }
             }
-            
+
             @Override
             public void keyTyped(KeyEvent e) {
-                
-                
+
             }
-            
+
             @Override
             public void keyReleased(KeyEvent e) {
             }
         });
-        
+
         editar.txtContacto.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -168,32 +167,36 @@ public class CtrlMaquilas {
                     editar.dispose();
                 }
             }
-            
+
             @Override
             public void keyTyped(KeyEvent e) {
             }
-            
+
             @Override
             public void keyReleased(KeyEvent e) {
             }
         });
 
-      
     }
-    
-    
 
     public void setVisible() {
-        nuevo.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/96/icons8_Idea_96px.png")));
-        nuevo.setLocationRelativeTo(null);
-        nuevo.setVisible(true);
+         if (!nuevo.isShowing()) {
+            menu.dpContenedor.add(nuevo);
+            Dimension desktopSize = menu.dpContenedor.getSize();
+            Dimension jInternalFrameSize = nuevo.getSize();
+            nuevo.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
+                    (desktopSize.height - jInternalFrameSize.height) / 2);
+            nuevo.setFrameIcon(null);
+            nuevo.show();
+            nuevo.toFront();
+        }
     }
 
     public void onGuardar() {
         try {
             ArrayList<Object> a = new ArrayList<>();
 
-             a.add(nuevo.txtClave.getText());
+            a.add(nuevo.txtClave.getText());
             a.add(nuevo.txtNombre.getText());
             a.add(nuevo.txtDireccion.getText());
             a.add(nuevo.txtTelefono.getText());
@@ -224,9 +227,16 @@ public class CtrlMaquilas {
             editar.txtTelefono.setText(String.valueOf((data[0][4] != null) ? data[0][4] : ""));
             editar.txtContacto.setText((data[0][5] != null) ? data[0][5].toString() : "");
             editar.cmbEstatus.setSelectedItem((data[0][6] != null) ? data[0][6].toString() : "");
-            editar.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/96/icons8_Idea_96px.png")));
-            editar.setLocationRelativeTo(null);
-            editar.setVisible(true);
+            if (!editar.isShowing()) {
+                menu.dpContenedor.add(editar);
+                Dimension desktopSize = menu.dpContenedor.getSize();
+                Dimension jInternalFrameSize = editar.getSize();
+                editar.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
+                        (desktopSize.height - jInternalFrameSize.height) / 2);
+                editar.setFrameIcon(null);
+                editar.show();
+                editar.toFront();
+            }
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "NO SE HA PODIDO EDITAR EL REGISTRO", "ERROR AL EDITAR", JOptionPane.ERROR_MESSAGE);
         }

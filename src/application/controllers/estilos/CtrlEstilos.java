@@ -11,9 +11,11 @@ import application.controllers.Estilos;
 import application.helpers.Item;
 import application.third_party.ImageUtils;
 import application.third_party.WaitLayerUI;
-import application.views.estilos.mdlEditar;
-import application.views.estilos.mdlNuevo;
+import application.views.estilos.mdlIEditar;
+import application.views.estilos.mdlINuevo;
 import application.views.vEstilos;
+import application.views.vMenu;
+import java.awt.Dimension;
 import java.awt.HeadlessException;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -37,6 +39,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JLayer;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -51,8 +54,8 @@ import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
  */
 public class CtrlEstilos {
 
-    mdlNuevo nuevo;
-    mdlEditar editar;
+    mdlINuevo nuevo;
+    mdlIEditar editar;
     Generic g;
     Estilos estilos;
     vEstilos vestilos;
@@ -66,33 +69,35 @@ public class CtrlEstilos {
     ArrayList<Item> temporadas = new ArrayList<>();
     ArrayList<Item> tipo_estilos = new ArrayList<>();
     JFileChooser fc;
+    vMenu menu;
 
-    public CtrlEstilos(JFrame parent, Generic g, Estilos estilos) {
+    public CtrlEstilos(JInternalFrame parent, Generic g, Estilos estilos, JFrame menu) {
         /*NO SE DEBE DE LLAMAR NADA SI NO SE DEFINEN ESTAS ASIGNACIONES*/
-        nuevo = new mdlNuevo(parent, true);
-        editar = new mdlEditar(parent, true);
+        this.menu = (vMenu) menu; 
+        nuevo = new mdlINuevo();
+        editar = new mdlIEditar();
         this.vestilos = (vEstilos) parent;
         this.g = g;
         this.estilos = estilos;
         //Ayuda en captura combos nuevo estilo
-        AutoCompleteDecorator.decorate(this.nuevo.Linea);
+        
         AutoCompleteDecorator.decorate(this.nuevo.Familia);
         AutoCompleteDecorator.decorate(this.nuevo.Serie);
+        AutoCompleteDecorator.decorate(this.nuevo.Linea);
         AutoCompleteDecorator.decorate(this.nuevo.Horma);
         AutoCompleteDecorator.decorate(this.nuevo.Maquila);
         AutoCompleteDecorator.decorate(this.nuevo.Temporada);
         AutoCompleteDecorator.decorate(this.nuevo.Tipo);
-        AutoCompleteDecorator.decorate(this.nuevo.Linea);
         AutoCompleteDecorator.decorate(this.nuevo.MaquilaPlantilla);
         //Ayuda en captura combos editar estilo
-        AutoCompleteDecorator.decorate(this.editar.Linea);
+        
         AutoCompleteDecorator.decorate(this.editar.Familia);
         AutoCompleteDecorator.decorate(this.editar.Serie);
+        AutoCompleteDecorator.decorate(this.editar.Linea);
         AutoCompleteDecorator.decorate(this.editar.Horma);
         AutoCompleteDecorator.decorate(this.editar.Maquila);
         AutoCompleteDecorator.decorate(this.editar.Temporada);
         AutoCompleteDecorator.decorate(this.editar.Tipo);
-        AutoCompleteDecorator.decorate(this.editar.Linea);
         AutoCompleteDecorator.decorate(this.editar.MaquilaPlantilla);
         /*NUEVO*/
         nuevo.Ano.addKeyListener(new KeyListener() {
@@ -308,9 +313,16 @@ public class CtrlEstilos {
     }
 
     public void setVisible() {
-        nuevo.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/96/icons8_Idea_96px.png")));
-        nuevo.setLocationRelativeTo(null);
-        nuevo.setVisible(true);
+        if (!nuevo.isShowing()) {
+            menu.dpContenedor.add(nuevo);
+            Dimension desktopSize = menu.dpContenedor.getSize();
+            Dimension jInternalFrameSize = nuevo.getSize();
+            nuevo.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
+                    (desktopSize.height - jInternalFrameSize.height) / 2);
+            nuevo.setFrameIcon(null);
+            nuevo.show();
+            nuevo.toFront();
+        }
     }
 
     BufferedImage bufi = null;
@@ -443,9 +455,16 @@ public class CtrlEstilos {
             editar.MaquilaPlantilla.getModel().setSelectedItem(String.valueOf(data[0][19]));
             editar.TipoDeConstruccion.setText(String.valueOf(data[0][20]));
 
-            editar.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/96/icons8_Idea_96px.png")));
-            editar.setLocationRelativeTo(null);
-            editar.setVisible(true);
+            if (!editar.isShowing()) {
+                    menu.dpContenedor.add(editar);
+                    Dimension desktopSize = menu.dpContenedor.getSize();
+                    Dimension jInternalFrameSize = editar.getSize();
+                    editar.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
+                            (desktopSize.height - jInternalFrameSize.height) / 2);
+                    editar.setFrameIcon(null);
+                    editar.show();
+                    editar.toFront();
+                }
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "NO SE HA PODIDO EDITAR EL ESTILO", "ERROR AL EDITAR", JOptionPane.ERROR_MESSAGE);
         }

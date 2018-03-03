@@ -10,10 +10,12 @@ import application.controllers.Materiales;
 import application.helpers.Item;
 import application.third_party.ImageUtils;
 import application.third_party.WaitLayerUI;
-import application.views.materiales.mdlEditar;
-import application.views.materiales.mdlNuevo;
+import application.views.materiales.mdlIEditar;
+import application.views.materiales.mdlINuevo;
 import application.views.vMateriales;
+import application.views.vMenu;
 import datechooser.model.exeptions.IncompatibleDataExeption;
+import java.awt.Dimension;
 import java.awt.HeadlessException;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -38,6 +40,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JLayer;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -52,8 +55,8 @@ import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
  */
 public class CtrlMateriales {
 
-    mdlNuevo nuevo;
-    mdlEditar editar;
+    mdlINuevo nuevo;
+    mdlIEditar editar;
     Generic g;
     Materiales materiales;
     vMateriales vmateriales;
@@ -66,11 +69,14 @@ public class CtrlMateriales {
     ArrayList<Item> tipos = new ArrayList<>();
     ArrayList<Item> estatus = new ArrayList<>();
     JFileChooser fc;
+    vMenu menu;
 
-    public CtrlMateriales(JFrame parent, Generic g, Materiales materiales) {
+    public CtrlMateriales(JInternalFrame parent, Generic g, Materiales materiales, JFrame menu) {
+        
+        this.menu =  (vMenu) menu;
         /*NO SE DEBE DE LLAMAR NADA SI NO SE DEFINEN ESTAS ASIGNACIONES*/
-        nuevo = new mdlNuevo(parent, true);
-        editar = new mdlEditar(parent, true);
+        nuevo = new mdlINuevo();
+        editar = new mdlIEditar();
         this.vmateriales = (vMateriales) parent;
         this.g = g;
         this.materiales = materiales;
@@ -159,9 +165,16 @@ public class CtrlMateriales {
     }
 
     public void setVisible() {
-        nuevo.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/96/icons8_Idea_96px.png")));
-        nuevo.setLocationRelativeTo(null);
-        nuevo.setVisible(true);
+       if (!nuevo.isShowing()) {
+            menu.dpContenedor.add(nuevo);
+            Dimension desktopSize = menu.dpContenedor.getSize();
+            Dimension jInternalFrameSize = nuevo.getSize();
+            nuevo.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
+                    (desktopSize.height - jInternalFrameSize.height) / 2);
+            nuevo.setFrameIcon(null);
+            nuevo.show();
+            nuevo.toFront();
+        }
     }
 
     BufferedImage bufi = null;
@@ -272,9 +285,16 @@ public class CtrlMateriales {
             if (data[0][14] != null) {
                 editar.Estatus.getModel().setSelectedItem(data[0][14]);
             }
-            editar.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/96/icons8_Idea_96px.png")));
-            editar.setLocationRelativeTo(null);
-            editar.setVisible(true);
+            if (!editar.isShowing()) {
+                menu.dpContenedor.add(editar);
+                Dimension desktopSize = menu.dpContenedor.getSize();
+                Dimension jInternalFrameSize = editar.getSize();
+                editar.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
+                        (desktopSize.height - jInternalFrameSize.height) / 2);
+                editar.setFrameIcon(null);
+                editar.show();
+                editar.toFront();
+            }
         } catch (NumberFormatException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "NO SE HA PODIDO EDITAR EL MATERIAL", "ERROR AL EDITAR", JOptionPane.ERROR_MESSAGE);

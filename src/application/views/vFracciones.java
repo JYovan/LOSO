@@ -84,33 +84,41 @@ public class vFracciones extends javax.swing.JInternalFrame {
         ));
         jScrollPane3.setViewportView(tblFracciones);
 
+        jToolBar3.setBackground(new java.awt.Color(255, 255, 255));
         jToolBar3.setFloatable(false);
         jToolBar3.setRollover(true);
 
+        btnNuevo.setBackground(new java.awt.Color(255, 255, 255));
         btnNuevo.setText("NUEVO");
         btnNuevo.setToolTipText("");
         btnNuevo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jToolBar3.add(btnNuevo);
 
+        btnEditar.setBackground(new java.awt.Color(255, 255, 255));
         btnEditar.setText("EDITAR");
         btnEditar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jToolBar3.add(btnEditar);
 
+        btnRefrescar.setBackground(new java.awt.Color(255, 255, 255));
         btnRefrescar.setText("REFRESCAR");
         btnRefrescar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jToolBar3.add(btnRefrescar);
 
+        btnEliminar.setBackground(new java.awt.Color(255, 255, 255));
         btnEliminar.setText("ELIMINAR");
         btnEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jToolBar3.add(btnEliminar);
 
+        btnExcel.setBackground(new java.awt.Color(255, 255, 255));
         btnExcel.setText("EXCEL");
         jToolBar3.add(btnExcel);
 
+        btnPdf.setBackground(new java.awt.Color(255, 255, 255));
         btnPdf.setText("PDF");
         btnPdf.setToolTipText("");
         jToolBar3.add(btnPdf);
 
+        btnExportar.setBackground(new java.awt.Color(255, 255, 255));
         btnExportar.setText("EXPORTAR");
         btnExportar.setToolTipText("");
         btnExportar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -147,7 +155,7 @@ public class vFracciones extends javax.swing.JInternalFrame {
                     .addComponent(btnAtras)
                     .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

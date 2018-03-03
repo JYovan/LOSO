@@ -8,9 +8,11 @@ package application.controllers.modulos;
 import application.config.Generic;
 import application.config.TextPrompt;
 import application.controllers.Modulos;
-import application.views.modulos.mdlEditar;
-import application.views.modulos.mdlNuevo;
+import application.views.modulos.mdlIEditar;
+import application.views.modulos.mdlINuevo;
 import application.views.vModulos;
+import application.views.vMenu;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
@@ -21,6 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
@@ -30,21 +33,21 @@ import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
  */
 public class CtrlModulos {
 
-    mdlNuevo nuevo;
-    mdlEditar editar;
+    mdlINuevo nuevo;
+    mdlIEditar editar;
     Generic g;
     Modulos modulos;
     vModulos vmodulos;
     int temp = 0;
+    vMenu menu;
 
-    public CtrlModulos(JFrame parent, Generic g, Modulos modulos) {
-        nuevo = new mdlNuevo(parent, true);
-        editar = new mdlEditar(parent, true);
+    public CtrlModulos(JInternalFrame parent, Generic g, Modulos modulos, JFrame menu) {
+        nuevo = new mdlINuevo();
+        editar = new mdlIEditar();
         this.vmodulos = (vModulos) parent;
         this.g = g;
         this.modulos = modulos;
-        
-    
+        this.menu = (vMenu) menu;
 
         nuevo.btnGuardar.addKeyListener(new KeyListener() {
             @Override
@@ -119,9 +122,16 @@ public class CtrlModulos {
     }
 
     public void setVisible() {
-        nuevo.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/96/icons8_Idea_96px.png")));
-        nuevo.setLocationRelativeTo(null);
-        nuevo.setVisible(true);
+        if (!nuevo.isShowing()) {
+            menu.dpContenedor.add(nuevo);
+            Dimension desktopSize = menu.dpContenedor.getSize();
+            Dimension jInternalFrameSize = nuevo.getSize();
+            nuevo.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
+                    (desktopSize.height - jInternalFrameSize.height) / 2);
+            nuevo.setFrameIcon(null);
+            nuevo.show();
+            nuevo.toFront();
+        }
     }
 
     public void onGuardar() {
@@ -153,9 +163,16 @@ public class CtrlModulos {
             Object[][] data = usuario.get(0);
             if (data != null) {
                 editar.Modulo.setText(String.valueOf((data[0][1] != null) ? data[0][1] : ""));
-                editar.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/96/icons8_Idea_96px.png")));
-                editar.setLocationRelativeTo(null);
-                editar.setVisible(true);
+                if (!editar.isShowing()) {
+                    menu.dpContenedor.add(editar);
+                    Dimension desktopSize = menu.dpContenedor.getSize();
+                    Dimension jInternalFrameSize = editar.getSize();
+                    editar.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
+                            (desktopSize.height - jInternalFrameSize.height) / 2);
+                    editar.setFrameIcon(null);
+                    editar.show();
+                    editar.toFront();
+                }
             } else {
                 JOptionPane.showMessageDialog(null, "NO SE HA PODIDO EDITAR EL MODULO", "ERROR AL EDITAR", JOptionPane.ERROR_MESSAGE);
             }
