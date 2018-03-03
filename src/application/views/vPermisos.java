@@ -4,16 +4,17 @@
  * and open the template in the editor.
  */
 package application.views;
+
 import application.config.ManejadorTecla;
 
 /**
  *
- * @author Administrador
+ * @author Christian
  */
-public class vPermisos extends javax.swing.JFrame {
+public class vPermisos extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form vUsuarios
+     * Creates new form vPermisos
      */
     ManejadorTecla manejador = new ManejadorTecla();
     public vPermisos() {
@@ -44,8 +45,17 @@ public class vPermisos extends javax.swing.JFrame {
         btnRefrescar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("GESTION DE PERMISOS");
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
+        setTitle("PERMISOS");
+        setFrameIcon(null);
+        try {
+            setSelected(true);
+        } catch (java.beans.PropertyVetoException e1) {
+            e1.printStackTrace();
+        }
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -71,22 +81,27 @@ public class vPermisos extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblPermisos);
 
+        jToolBar1.setBackground(new java.awt.Color(255, 255, 255));
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
 
+        btnNuevo.setBackground(new java.awt.Color(255, 255, 255));
         btnNuevo.setText("NUEVO");
         btnNuevo.setToolTipText("");
         btnNuevo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jToolBar1.add(btnNuevo);
 
+        btnEditar.setBackground(new java.awt.Color(255, 255, 255));
         btnEditar.setText("EDITAR");
         btnEditar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jToolBar1.add(btnEditar);
 
+        btnRefrescar.setBackground(new java.awt.Color(255, 255, 255));
         btnRefrescar.setText("REFRESCAR");
         btnRefrescar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jToolBar1.add(btnRefrescar);
 
+        btnEliminar.setBackground(new java.awt.Color(255, 255, 255));
         btnEliminar.setText("ELIMINAR");
         btnEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jToolBar1.add(btnEliminar);
@@ -106,7 +121,7 @@ public class vPermisos extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnAdelante)
                 .addContainerGap())
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 743, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 784, Short.MAX_VALUE)
             .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
@@ -122,10 +137,8 @@ public class vPermisos extends javax.swing.JFrame {
                     .addComponent(btnAtras)
                     .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE))
         );
-
-        jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnAdelante, btnAtras, txtBusqueda});
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

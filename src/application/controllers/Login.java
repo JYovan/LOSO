@@ -8,36 +8,19 @@ package application.controllers;
 import application.config.Generic;
 import application.config.TextPrompt;
 import application.views.vLogin;
-import de.javasoft.plaf.synthetica.SyntheticaAluOxideLookAndFeel;
-import de.javasoft.plaf.synthetica.SyntheticaBlackEyeLookAndFeel;
-import de.javasoft.plaf.synthetica.SyntheticaBlackMoonLookAndFeel;
-import de.javasoft.plaf.synthetica.SyntheticaBlackStarLookAndFeel;
-import de.javasoft.plaf.synthetica.SyntheticaBlueIceLookAndFeel;
-import de.javasoft.plaf.synthetica.SyntheticaBlueMoonLookAndFeel;
-import de.javasoft.plaf.synthetica.SyntheticaBlueSteelLookAndFeel;
-import de.javasoft.plaf.synthetica.SyntheticaClassyLookAndFeel;
-import de.javasoft.plaf.synthetica.SyntheticaGreenDreamLookAndFeel;
-import de.javasoft.plaf.synthetica.SyntheticaMauveMetallicLookAndFeel;
-import de.javasoft.plaf.synthetica.SyntheticaSilverMoonLookAndFeel;
-import de.javasoft.plaf.synthetica.SyntheticaSimple2DLookAndFeel;
-import de.javasoft.plaf.synthetica.SyntheticaSkyMetallicLookAndFeel;
-import de.javasoft.plaf.synthetica.SyntheticaWhiteVisionLookAndFeel;
+import java.awt.Color;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import java.awt.Font;
 import java.awt.HeadlessException;
-import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
-import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
-import org.jvnet.substance.SubstanceLookAndFeel;
 
 /**
  *
@@ -89,20 +72,29 @@ public class Login {
         login.setLocationRelativeTo(null);
         login.setVisible(true);
     }
-//SyntheticaAluOxideLookAndFeel
-//SaharaSkin  ModerateSkin
 
     public static void main(String[] args) {
 
         try {
-            for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (Exception e) {
-            // If Nimbus is not available, you can set the GUI to another look and feel.
+            //UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+
+            UIManager.put("MenuBar.background", Color.WHITE);
+            UIManager.put("Menu.background", Color.WHITE);
+            UIManager.put("MenuItem.background", Color.WHITE);
+            UIManager.put("Separator.background", Color.WHITE);
+            UIManager.put("MenuItem.opaque", true);
+            UIManager.put("Menu.opaque", true);
+            UIManager.put("MenuBar.opaque", true);
+
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         SwingUtilities.invokeLater(new Runnable() {
@@ -111,28 +103,6 @@ public class Login {
             }
         });
 
-//substanc error en combo box
-//        SwingUtilities.invokeLater(new Runnable() {
-//            public void run() {
-//                try {
-//                   SubstanceLookAndFeel.setSkin("org.jvnet.substance.skin.ModerateSkin");
-//
-//                } catch (Exception e) {
-//                    System.out.println("Substance Graphite failed to initialize");
-//                }
-//                JFrame.setDefaultLookAndFeelDecorated(Boolean.TRUE);
-//                (new Login()).setVisible();
-//            }
-//        });
-//sintetica error al ocultar barra de herramientas
-//        try {
-//            UIManager.setLookAndFeel(new SyntheticaAluOxideLookAndFeel());
-//            
-//        } catch (ParseException | UnsupportedLookAndFeelException e) {
-//            JOptionPane.showMessageDialog(null, "Error en Look an Feel" + e.getMessage(), null, JOptionPane.ERROR_MESSAGE);
-//        }
-//        JFrame.setDefaultLookAndFeelDecorated(Boolean.TRUE);
-//        (new Login()).setVisible();
     }
 
     public void onAcceder() {

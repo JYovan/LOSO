@@ -5,16 +5,22 @@
  */
 package application.controllers;
 
+import application.config.Fondo;
 import application.config.Generic;
 import application.third_party.Resources;
 import application.views.vMenu;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.InputStream;
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 
 /**
  *
@@ -43,15 +49,15 @@ public class Menu {
         this.g = g;
         menu = new vMenu();
 
-        m = new Modulos(g);
+        m = new Modulos(g, menu);
         u = new Usuarios(g, menu);
-        p = new Permisos(g);
+        p = new Permisos(g, menu);
         c = new Catalogos(g, menu);
         lin = new Lineas(g, menu);
-        est = new Estilos(g);
-        maq = new Maquilas(g);
+        est = new Estilos(g, menu);
+        maq = new Maquilas(g, menu);
         comb = new Combinaciones(g, menu);
-        mat = new Materiales(g);
+        mat = new Materiales(g, menu);
         fra = new Fracciones(g, menu);
         mxc = new MaterialesXCombinacion(g, menu);
 
@@ -70,7 +76,7 @@ public class Menu {
             mxc.getRecords();
             mxc.setVisible();
         });
-        
+
         menu.mnuFracciones.addActionListener((e) -> {
             fra.getRecords();
             fra.setVisible();
@@ -203,8 +209,11 @@ public class Menu {
 
     public void setVisible() {
 
-        menu.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/LS.png")));
+        
 
+        InputStream foto1 = this.getClass().getResourceAsStream("/media/lsbck.png");
+        cargarImagen(menu.dpContenedor, foto1);
+        menu.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/LS.png")));
         menu.setExtendedState(menu.getExtendedState() | JFrame.MAXIMIZED_BOTH);
         menu.setVisible(true);
 
@@ -216,4 +225,14 @@ public class Menu {
 //        menu.setLocationRelativeTo(null);
 //        menu.setVisible(true);
     }
+
+    public void cargarImagen(javax.swing.JDesktopPane jDeskp, InputStream fileImagen) {
+        try {
+            BufferedImage image = ImageIO.read(fileImagen);
+            jDeskp.setBorder(new Fondo(image));
+        } catch (Exception e) {
+            System.out.println("Imagen no disponible");
+        }
+    }
+
 }

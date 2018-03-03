@@ -5,22 +5,39 @@
  */
 package application.views.estilos;
 
-import application.views.lineas.*;
 import application.config.ManejadorTecla;
 
 /**
  *
  * @author Christian
  */
-public class mdlEditar extends javax.swing.JDialog {
+public class mdlIEditar extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form mdlEditar
+     * Creates new form mdlIEditar
      */
-    private static final long serialVersionUID = 1553479543827182909L;
-    public mdlEditar(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    ManejadorTecla manejador = new ManejadorTecla();
+    public mdlIEditar() {
         initComponents();
+        this.Ano.addKeyListener(manejador);
+        this.Clave.addKeyListener(manejador);
+        this.Descripcion.addKeyListener(manejador);
+        this.Desperdicio.addKeyListener(manejador);
+        this.Estatus.addKeyListener(manejador);
+        this.Familia.addKeyListener(manejador);
+        this.Genero.addKeyListener(manejador);
+        this.Herramental.addKeyListener(manejador);
+        this.Horma.addKeyListener(manejador);
+        this.Liberado.addKeyListener(manejador);
+        this.Linea.addKeyListener(manejador);
+        this.Maquila.addKeyListener(manejador);
+        this.MaquilaPlantilla.addKeyListener(manejador);
+        this.Notas.addKeyListener(manejador);
+        this.PuntoCentral.addKeyListener(manejador);
+        this.Serie.addKeyListener(manejador);
+        this.Temporada.addKeyListener(manejador);
+        this.Tipo.addKeyListener(manejador);
+        this.TipoDeConstruccion.addKeyListener(manejador);
     }
 
     /**
@@ -74,8 +91,15 @@ public class mdlEditar extends javax.swing.JDialog {
         jLabel18 = new javax.swing.JLabel();
         Estatus = new javax.swing.JComboBox<>();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setClosable(true);
+        setIconifiable(true);
         setTitle("EDITAR ESTILO");
+        setFrameIcon(null);
+        try {
+            setSelected(true);
+        } catch (java.beans.PropertyVetoException e1) {
+            e1.printStackTrace();
+        }
 
         plnNuevo.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -232,54 +256,15 @@ public class mdlEditar extends javax.swing.JDialog {
             .addGroup(plnNuevoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(plnNuevoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(plnNuevoLayout.createSequentialGroup()
-                        .addComponent(Foto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(42, 42, 42))
-                    .addGroup(plnNuevoLayout.createSequentialGroup()
-                        .addGroup(plnNuevoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, plnNuevoLayout.createSequentialGroup()
-                                .addComponent(jLabel15)
-                                .addGap(0, 0, 0)
-                                .addGroup(plnNuevoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(Ano, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(Descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel3)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(plnNuevoLayout.createSequentialGroup()
-                                .addGroup(plnNuevoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel14)
-                                    .addComponent(jLabel11))
-                                .addGap(0, 0, 0)
-                                .addComponent(Clave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(plnNuevoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(plnNuevoLayout.createSequentialGroup()
-                                        .addGap(0, 0, Short.MAX_VALUE)
-                                        .addComponent(jLabel2)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addGroup(plnNuevoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(Serie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(Linea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(Horma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addGroup(plnNuevoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(plnNuevoLayout.createSequentialGroup()
-                                                .addComponent(jLabel12)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(Desperdicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addComponent(jLabel1)
-                                            .addGroup(plnNuevoLayout.createSequentialGroup()
-                                                .addGap(20, 20, 20)
-                                                .addComponent(Familia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(plnNuevoLayout.createSequentialGroup()
-                                                .addComponent(jLabel16)
-                                                .addGap(4, 4, 4)
-                                                .addComponent(PuntoCentral, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                    .addGroup(plnNuevoLayout.createSequentialGroup()
-                                        .addComponent(jLabel10)
-                                        .addGap(0, 0, Short.MAX_VALUE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, plnNuevoLayout.createSequentialGroup()
+                        .addComponent(jLabel15)
+                        .addGap(0, 0, 0)
+                        .addGroup(plnNuevoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Ano, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel3)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(plnNuevoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
                             .addComponent(jLabel13))
@@ -318,11 +303,46 @@ public class mdlEditar extends javax.swing.JDialog {
                         .addGroup(plnNuevoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(MaquilaPlantilla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnGuardar)
-                            .addComponent(Estatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap())
+                            .addComponent(Estatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, plnNuevoLayout.createSequentialGroup()
+                        .addGroup(plnNuevoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel14)
+                            .addComponent(jLabel11))
+                        .addGap(0, 0, 0)
+                        .addComponent(Clave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(plnNuevoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(plnNuevoLayout.createSequentialGroup()
+                                .addGap(0, 12, Short.MAX_VALUE)
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(plnNuevoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(Serie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(Linea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(Horma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(plnNuevoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(plnNuevoLayout.createSequentialGroup()
+                                        .addComponent(jLabel12)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(Desperdicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel1)
+                                    .addGroup(plnNuevoLayout.createSequentialGroup()
+                                        .addGap(20, 20, 20)
+                                        .addComponent(Familia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(plnNuevoLayout.createSequentialGroup()
+                                        .addComponent(jLabel16)
+                                        .addGap(4, 4, 4)
+                                        .addComponent(PuntoCentral, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(plnNuevoLayout.createSequentialGroup()
+                                .addComponent(jLabel10)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(229, 229, 229))
+                    .addGroup(plnNuevoLayout.createSequentialGroup()
+                        .addComponent(Foto, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
-
-        plnNuevoLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {Estatus, Familia, Genero, Horma, Linea, Maquila, MaquilaPlantilla, Serie, Temporada, Tipo});
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -346,7 +366,6 @@ public class mdlEditar extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_TipoDeConstruccionActionPerformed
 
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JTextField Ano;

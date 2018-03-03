@@ -84,33 +84,41 @@ public class vCombinaciones extends javax.swing.JInternalFrame {
         ));
         jScrollPane3.setViewportView(tblCombinaciones);
 
+        jToolBar3.setBackground(new java.awt.Color(255, 255, 255));
         jToolBar3.setFloatable(false);
         jToolBar3.setRollover(true);
 
+        btnNuevo.setBackground(new java.awt.Color(255, 255, 255));
         btnNuevo.setText("NUEVO");
         btnNuevo.setToolTipText("");
         btnNuevo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jToolBar3.add(btnNuevo);
 
+        btnEditar.setBackground(new java.awt.Color(255, 255, 255));
         btnEditar.setText("EDITAR");
         btnEditar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jToolBar3.add(btnEditar);
 
+        btnRefrescar.setBackground(new java.awt.Color(255, 255, 255));
         btnRefrescar.setText("REFRESCAR");
         btnRefrescar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jToolBar3.add(btnRefrescar);
 
+        btnEliminar.setBackground(new java.awt.Color(255, 255, 255));
         btnEliminar.setText("ELIMINAR");
         btnEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jToolBar3.add(btnEliminar);
 
+        btnExcel.setBackground(new java.awt.Color(255, 255, 255));
         btnExcel.setText("EXCEL");
         jToolBar3.add(btnExcel);
 
+        btnPdf.setBackground(new java.awt.Color(255, 255, 255));
         btnPdf.setText("PDF");
         btnPdf.setToolTipText("");
         jToolBar3.add(btnPdf);
 
+        btnExportar.setBackground(new java.awt.Color(255, 255, 255));
         btnExportar.setText("EXPORTAR");
         btnExportar.setToolTipText("");
         btnExportar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));

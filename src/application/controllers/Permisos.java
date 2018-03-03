@@ -8,7 +8,9 @@ package application.controllers;
 import application.config.Generic;
 import application.config.TextPrompt;
 import application.controllers.permisos.CtrlPermisos;
+import application.views.vMenu;
 import application.views.vPermisos;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
@@ -16,6 +18,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.event.DocumentEvent;
@@ -45,20 +48,24 @@ public class Permisos {
     JasperPrint print;
     JDialog viewer;
     JasperViewer jv;
+    vMenu menu;
+    CtrlPermisos per;
 
     private TableRowSorter<TableModel> filtrador;
 
-    public Permisos(Generic g) {
+    public Permisos(Generic g,JFrame parent) {
         this.g = g;
+        this.menu = (vMenu) parent;
+        per = new CtrlPermisos(vpermisos, g, this,menu);
         vpermisos = new vPermisos();
         vpermisos.btnNuevo.addActionListener((e) -> {
-            (new CtrlPermisos(vpermisos, g, this)).setVisible();
+            (new CtrlPermisos(vpermisos, g, this,menu)).setVisible();
         });
         vpermisos.btnEditar.addActionListener((e) -> {
             try {
                 if (vpermisos.tblPermisos.getSelectedRow() >= 0) {
                     int ID = Integer.parseInt(vpermisos.tblPermisos.getValueAt(vpermisos.tblPermisos.getSelectedRow(), 0).toString());
-                    (new CtrlPermisos(vpermisos, g, this)).onEditar(ID);
+                    per.onEditar(ID);
                 } else {
                     Toolkit.getDefaultToolkit().beep();
                     JOptionPane.showMessageDialog(null, "DEBE DE SELECCIONAR UN REGISTRO", "ATENCIÓN", JOptionPane.WARNING_MESSAGE);
@@ -73,7 +80,7 @@ public class Permisos {
                 int i = JOptionPane.showConfirmDialog(null, "¿Estás Seguro?", "Confirmar Eliminar", JOptionPane.YES_NO_OPTION);
                 if (i == 0) {
                     int ID = Integer.parseInt(vpermisos.tblPermisos.getValueAt(vpermisos.tblPermisos.getSelectedRow(), 0).toString());
-                    (new CtrlPermisos(vpermisos, g, this)).onEliminar(ID);
+                    per.onEliminar(ID);
                 }
 
             } else {
@@ -132,9 +139,18 @@ public class Permisos {
     }
 
     public void setVisible() {
-        vpermisos.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/LS.png")));
-        vpermisos.setLocationRelativeTo(null);
-        vpermisos.setVisible(true);
+         if (vpermisos.isShowing()) {
+            //mensaje de que está abierto si se desea
+        } else {
+            menu.dpContenedor.add(vpermisos);
+
+            Dimension desktopSize = menu.dpContenedor.getSize();
+            Dimension jInternalFrameSize = vpermisos.getSize();
+            vpermisos.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
+                    (desktopSize.height - jInternalFrameSize.height) / 2);
+            vpermisos.setFrameIcon(null);
+            vpermisos.show();
+        }
     }
 
     public final void getRecords() {

@@ -79,7 +79,7 @@ public class vMenu extends javax.swing.JFrame {
         setTitle("Calzado Lobo Solo v.1.0.0");
         setBackground(new java.awt.Color(255, 255, 255));
 
-        dpContenedor.setBackground(new java.awt.Color(255, 255, 255));
+        dpContenedor.setBackground(new java.awt.Color(228, 207, 132));
 
         javax.swing.GroupLayout dpContenedorLayout = new javax.swing.GroupLayout(dpContenedor);
         dpContenedor.setLayout(dpContenedorLayout);
@@ -92,22 +92,29 @@ public class vMenu extends javax.swing.JFrame {
             .addGap(0, 583, Short.MAX_VALUE)
         );
 
+        jMenuBar1.setBackground(new java.awt.Color(255, 255, 255));
+
+        jMenu2.setBackground(new java.awt.Color(255, 255, 255));
         jMenu2.setText("Fichas Técnicas");
         jMenu2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
+        jMenuItem8.setBackground(new java.awt.Color(255, 255, 255));
         jMenuItem8.setText("Fichas Técnicas");
         jMenuItem8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu2.add(jMenuItem8);
 
+        mnuMatxCombinacion.setBackground(new java.awt.Color(255, 255, 255));
         mnuMatxCombinacion.setText("Materiales por Combinación");
         mnuMatxCombinacion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu2.add(mnuMatxCombinacion);
 
+        mnuFraccionesPorEstilo.setBackground(new java.awt.Color(255, 255, 255));
         mnuFraccionesPorEstilo.setText("Fracciones por Estilo");
         jMenu2.add(mnuFraccionesPorEstilo);
 
         jMenuBar1.add(jMenu2);
 
+        jMenu5.setBackground(new java.awt.Color(255, 255, 255));
         jMenu5.setText("Pedidos");
         jMenu5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
@@ -117,6 +124,7 @@ public class vMenu extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu5);
 
+        jMenu3.setBackground(new java.awt.Color(255, 255, 255));
         jMenu3.setText("Producción");
         jMenu3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
@@ -126,6 +134,7 @@ public class vMenu extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu3);
 
+        jMenu14.setBackground(new java.awt.Color(255, 255, 255));
         jMenu14.setText("Catálogos");
         jMenu14.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
@@ -143,6 +152,8 @@ public class vMenu extends javax.swing.JFrame {
 
         mnuMaquilas.setText("Maquilas");
         jMenu14.add(mnuMaquilas);
+
+        jSeparator3.setOpaque(true);
         jMenu14.add(jSeparator3);
 
         mnuLineas.setText("Lineas");
@@ -156,6 +167,8 @@ public class vMenu extends javax.swing.JFrame {
         mnuCombinaciones.setText("Combinaciones ");
         mnuCombinaciones.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu14.add(mnuCombinaciones);
+
+        jSeparator4.setOpaque(true);
         jMenu14.add(jSeparator4);
 
         mnuFracciones.setText("Mano de Obra (Fracciones)");
@@ -168,9 +181,11 @@ public class vMenu extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu14);
 
+        jMenu4.setBackground(new java.awt.Color(255, 255, 255));
         jMenu4.setText("Configuración");
         jMenu4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
+        jMenu1.setBackground(new java.awt.Color(255, 255, 255));
         jMenu1.setText("Generales");
 
         mnuUnidades.setText("Unidades");
@@ -210,6 +225,9 @@ public class vMenu extends javax.swing.JFrame {
 
         mnuRutas.setText("Rutas");
         jMenu1.add(mnuRutas);
+
+        jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
+        jSeparator1.setOpaque(true);
         jMenu1.add(jSeparator1);
 
         mnuPiezas.setText("Piezas");
@@ -236,6 +254,8 @@ public class vMenu extends javax.swing.JFrame {
         mnuUsuarios.setText("Usuarios");
         mnuUsuarios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu10.add(mnuUsuarios);
+
+        jSeparator2.setOpaque(true);
         jMenu10.add(jSeparator2);
 
         mnuPermisos.setText("Permisos");
@@ -250,6 +270,7 @@ public class vMenu extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu4);
 
+        mSalir.setBackground(new java.awt.Color(255, 255, 255));
         mSalir.setText("Salir");
         mSalir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenuBar1.add(mSalir);

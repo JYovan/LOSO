@@ -9,6 +9,8 @@ import application.config.Generic;
 import application.config.TextPrompt;
 import application.controllers.estilos.CtrlEstilos;
 import application.views.vEstilos;
+import application.views.vMenu;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
@@ -16,6 +18,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.event.DocumentEvent;
@@ -45,20 +48,25 @@ public class Estilos {
     JasperPrint print;
     JDialog viewer;
     JasperViewer jv;
+    vMenu menu;
+    CtrlEstilos est;
 
     private TableRowSorter<TableModel> filtrador;
 
-    public Estilos(Generic g) {
+    public Estilos(Generic g, JFrame parent) {
         this.g = g;
+        this.menu =  (vMenu)parent;
         vestilos = new vEstilos();
+        est = new CtrlEstilos(vestilos, g, this,menu);
+        
         vestilos.btnNuevo.addActionListener((e) -> {
-            (new CtrlEstilos(vestilos, g, this)).setVisible();
+            est.setVisible();
         });
         vestilos.btnEditar.addActionListener((e) -> {
             try {
                 if (vestilos.tblEstilos.getSelectedRow() >= 0) {
                     int ID = Integer.parseInt(vestilos.tblEstilos.getValueAt(vestilos.tblEstilos.getSelectedRow(), 0).toString());
-                    (new CtrlEstilos(vestilos, g, this)).onEditar(ID);
+                    est.onEditar(ID);
                 } else {
                     Toolkit.getDefaultToolkit().beep();
                     JOptionPane.showMessageDialog(null, "DEBE DE SELECCIONAR UN REGISTRO", "ATENCIÓN", JOptionPane.WARNING_MESSAGE);
@@ -73,7 +81,7 @@ public class Estilos {
                 int i = JOptionPane.showConfirmDialog(null, "¿Estás Seguro?", "Confirmar Eliminar", JOptionPane.YES_NO_OPTION);
                 if (i == 0) {
                     int ID = Integer.parseInt(vestilos.tblEstilos.getValueAt(vestilos.tblEstilos.getSelectedRow(), 0).toString());
-                    (new CtrlEstilos(vestilos, g, this)).onEliminar(ID);
+                    est.onEliminar(ID);
                 }
 
             } else {
@@ -132,9 +140,18 @@ public class Estilos {
     }
 
     public void setVisible() {
-        vestilos.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/LS.png")));
-        vestilos.setLocationRelativeTo(null);
-        vestilos.setVisible(true);
+        if (vestilos.isShowing()) {
+            //mensaje de que está abierto si se desea
+        } else {
+            menu.dpContenedor.add(vestilos);
+
+            Dimension desktopSize = menu.dpContenedor.getSize();
+            Dimension jInternalFrameSize = vestilos.getSize();
+            vestilos.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
+                    (desktopSize.height - jInternalFrameSize.height) / 2);
+            vestilos.setFrameIcon(null);
+            vestilos.show();
+        }
     }
 
     public final void getRecords() {

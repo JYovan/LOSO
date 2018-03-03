@@ -9,6 +9,8 @@ import application.config.Generic;
 import application.config.TextPrompt;
 import application.controllers.maquilas.CtrlMaquilas;
 import application.views.vMaquilas;
+import application.views.vMenu;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
@@ -49,24 +51,28 @@ public class Maquilas {
     JasperPrint print;
     JDialog viewer;
     JasperViewer jv;
+    vMenu menu;
+    CtrlMaquilas maq;
 
     private TableRowSorter<TableModel> filtrador;
     
     
-       public Maquilas(Generic g) {
+       public Maquilas(Generic g, JFrame parent) {
         this.g = g;
+        this.menu = (vMenu)parent;
+        maq =  new CtrlMaquilas(vmaquilas, g, this, menu);
         vmaquilas = new vMaquilas();
         vmaquilas.btnNuevo.addActionListener((e) -> {
-            (new CtrlMaquilas(vmaquilas, g, this)).setVisible();
+            maq.setVisible();
         });
         vmaquilas.btnExportar.addActionListener((e) -> {
-            getReporteUsuarios();
+            
         });
         vmaquilas.btnEditar.addActionListener((e) -> {
             try {
                 if (vmaquilas.tblMaquilas.getSelectedRow() >= 0) {
                     int ID = Integer.parseInt(vmaquilas.tblMaquilas.getValueAt(vmaquilas.tblMaquilas.getSelectedRow(), 0).toString());
-                    (new CtrlMaquilas(vmaquilas, g, this)).onEditar(ID);
+                    maq.onEditar(ID);
                 } else {
                     Toolkit.getDefaultToolkit().beep();
                     JOptionPane.showMessageDialog(null, "DEBE DE SELECCIONAR UN REGISTRO", "ATENCIÓN", JOptionPane.WARNING_MESSAGE);
@@ -82,7 +88,7 @@ public class Maquilas {
                 int i = JOptionPane.showConfirmDialog(null, "¿Estás Seguro?", "Confirmar Eliminar", JOptionPane.YES_NO_OPTION);
                 if (i == 0) {
                     int ID = Integer.parseInt(vmaquilas.tblMaquilas.getValueAt(vmaquilas.tblMaquilas.getSelectedRow(), 0).toString());
-                    (new CtrlMaquilas(vmaquilas, g, this)).onEliminar(ID);
+                    maq.onEliminar(ID);
                 }
 
             } else {
@@ -139,9 +145,18 @@ public class Maquilas {
     }
 
     public void setVisible() {
-        vmaquilas.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/LS.png")));
-        vmaquilas.setLocationRelativeTo(null);
-        vmaquilas.setVisible(true);
+        if (vmaquilas.isShowing()) {
+            //mensaje de que está abierto si se desea
+        } else {
+            menu.dpContenedor.add(vmaquilas);
+
+            Dimension desktopSize = menu.dpContenedor.getSize();
+            Dimension jInternalFrameSize = vmaquilas.getSize();
+            vmaquilas.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
+                    (desktopSize.height - jInternalFrameSize.height) / 2);
+            vmaquilas.setFrameIcon(null);
+            vmaquilas.show();
+        }
     }
 
     public final void getRecords() {
@@ -163,44 +178,44 @@ public class Maquilas {
         }
     }
 
-    public void getReporteUsuarios() {
-        try {
-            viewer = new JDialog(vmaquilas, "Usuarios - Reporte de Listado de Usuarios", true);
-            report = JasperCompileManager.compileReport("jrxml/Usuarios.jrxml");
-            print = JasperFillManager.fillReport(report, null, g.getCurrentConnection());
-            jv = new JasperViewer(print, false);
-            viewer.getContentPane().add(jv.getContentPane());
-            jv.setExtendedState(JFrame.MAXIMIZED_BOTH);
-            viewer.setSize(jv.getSize());
-            viewer.setLocationRelativeTo(null);
-            viewer.setVisible(true);
-        } catch (JRException e) {
-            JOptionPane.showMessageDialog(null, "NO SE HA PODIDO GENERAR EL REPORTE DE USUARIOS\n" + e.getMessage(), "ERROR AL GENERAR", JOptionPane.ERROR_MESSAGE);
-        }
-    }
+//    public void getReporteUsuarios() {
+//        try {
+//            viewer = new JDialog(vmaquilas, "Usuarios - Reporte de Listado de Usuarios", true);
+//            report = JasperCompileManager.compileReport("jrxml/Usuarios.jrxml");
+//            print = JasperFillManager.fillReport(report, null, g.getCurrentConnection());
+//            jv = new JasperViewer(print, false);
+//            viewer.getContentPane().add(jv.getContentPane());
+//            jv.setExtendedState(JFrame.MAXIMIZED_BOTH);
+//            viewer.setSize(jv.getSize());
+//            viewer.setLocationRelativeTo(null);
+//            viewer.setVisible(true);
+//        } catch (JRException e) {
+//            JOptionPane.showMessageDialog(null, "NO SE HA PODIDO GENERAR EL REPORTE DE USUARIOS\n" + e.getMessage(), "ERROR AL GENERAR", JOptionPane.ERROR_MESSAGE);
+//        }
+//    }
 
-    public void getReporteUsuariosSQL() {
-        try {
-            viewer = new JDialog(vmaquilas, "Usuarios - Reporte de Listado de Usuarios", true);
-            report = JasperCompileManager.compileReport("jrxml/Usuarios.jrxml");
-            String sql = "SELECT v.vm_id Id, v.vm_folio Folio, v.vm_ncuenta NoCuenta, v.vm_femision Emitido, v.vm_nrecibo NoRecibo, v.vm_fentrega Entrega, v.vm_ingreso Ingreso,dp.dp_nombre Dependencia,lt.lugt_nombre LugarTrabajo, v.vm_estatus Estatus, v.vm_registro Registro\n"
-                    + "FROM vale_m v INNER JOIN lugar_trabajo lt INNER JOIN dependencias dp\n"
-                    + "ON v.fk_lugt_vm = lt.lugt_id AND lt.fk_dp_lugt = dp.dp_id ORDER BY vm_id desc limit 1";
-            JRDesignQuery newQuery = new JRDesignQuery();
-            newQuery.setText(sql);
-            jd.setQuery(newQuery);
-            JasperReport jr = JasperCompileManager.compileReport(jd);
-            JasperPrint jp = JasperFillManager.fillReport(jr, null, g.getCurrentConnection());
-            jv = new JasperViewer(jp, false);
-            viewer.getContentPane().add(jv.getContentPane());
-            jv.setExtendedState(JFrame.MAXIMIZED_BOTH);
-            viewer.setSize(jv.getSize());
-            viewer.setLocationRelativeTo(null);
-            viewer.setVisible(true);
-        } catch (JRException e) {
-            JOptionPane.showMessageDialog(null, "NO SE HA PODIDO GENERAR EL REPORTE DE USUARIOS\n" + e.getMessage(), "ERROR AL GENERAR", JOptionPane.ERROR_MESSAGE);
-        }
-    }
+//    public void getReporteUsuariosSQL() {
+//        try {
+//            viewer = new JDialog(vmaquilas, "Usuarios - Reporte de Listado de Usuarios", true);
+//            report = JasperCompileManager.compileReport("jrxml/Usuarios.jrxml");
+//            String sql = "SELECT v.vm_id Id, v.vm_folio Folio, v.vm_ncuenta NoCuenta, v.vm_femision Emitido, v.vm_nrecibo NoRecibo, v.vm_fentrega Entrega, v.vm_ingreso Ingreso,dp.dp_nombre Dependencia,lt.lugt_nombre LugarTrabajo, v.vm_estatus Estatus, v.vm_registro Registro\n"
+//                    + "FROM vale_m v INNER JOIN lugar_trabajo lt INNER JOIN dependencias dp\n"
+//                    + "ON v.fk_lugt_vm = lt.lugt_id AND lt.fk_dp_lugt = dp.dp_id ORDER BY vm_id desc limit 1";
+//            JRDesignQuery newQuery = new JRDesignQuery();
+//            newQuery.setText(sql);
+//            jd.setQuery(newQuery);
+//            JasperReport jr = JasperCompileManager.compileReport(jd);
+//            JasperPrint jp = JasperFillManager.fillReport(jr, null, g.getCurrentConnection());
+//            jv = new JasperViewer(jp, false);
+//            viewer.getContentPane().add(jv.getContentPane());
+//            jv.setExtendedState(JFrame.MAXIMIZED_BOTH);
+//            viewer.setSize(jv.getSize());
+//            viewer.setLocationRelativeTo(null);
+//            viewer.setVisible(true);
+//        } catch (JRException e) {
+//            JOptionPane.showMessageDialog(null, "NO SE HA PODIDO GENERAR EL REPORTE DE USUARIOS\n" + e.getMessage(), "ERROR AL GENERAR", JOptionPane.ERROR_MESSAGE);
+//        }
+//    }
 
     public static boolean isEmailValid(String email) {
         final Pattern EMAIL_REGEX = Pattern.compile("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", Pattern.CASE_INSENSITIVE);

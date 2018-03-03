@@ -71,6 +71,7 @@ public class vUsuarios extends javax.swing.JInternalFrame {
         btnAtras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/16/regresar.png"))); // NOI18N
 
         txtBusqueda.setToolTipText("USUARIO, CORREO");
+        txtBusqueda.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
 
         tblUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -85,33 +86,41 @@ public class vUsuarios extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(tblUsuarios);
 
+        jToolBar1.setBackground(new java.awt.Color(255, 255, 255));
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
 
+        btnNuevo.setBackground(new java.awt.Color(255, 255, 255));
         btnNuevo.setText("NUEVO");
         btnNuevo.setToolTipText("");
         btnNuevo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jToolBar1.add(btnNuevo);
 
+        btnEditar.setBackground(new java.awt.Color(255, 255, 255));
         btnEditar.setText("EDITAR");
         btnEditar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jToolBar1.add(btnEditar);
 
+        btnRefrescar.setBackground(new java.awt.Color(255, 255, 255));
         btnRefrescar.setText("REFRESCAR");
         btnRefrescar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jToolBar1.add(btnRefrescar);
 
+        btnEliminar.setBackground(new java.awt.Color(255, 255, 255));
         btnEliminar.setText("ELIMINAR");
         btnEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jToolBar1.add(btnEliminar);
 
+        btnExcel.setBackground(new java.awt.Color(255, 255, 255));
         btnExcel.setText("EXCEL");
         jToolBar1.add(btnExcel);
 
+        btnPdf.setBackground(new java.awt.Color(255, 255, 255));
         btnPdf.setText("PDF");
         btnPdf.setToolTipText("");
         jToolBar1.add(btnPdf);
 
+        btnExportar.setBackground(new java.awt.Color(255, 255, 255));
         btnExportar.setText("EXPORTAR");
         btnExportar.setToolTipText("");
         btnExportar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -147,8 +156,8 @@ public class vUsuarios extends javax.swing.JInternalFrame {
                     .addComponent(btnAdelante)
                     .addComponent(btnAtras)
                     .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

@@ -4,23 +4,17 @@
  * and open the template in the editor.
  */
 package application.views.permisos;
-import application.views.usuarios.*;
-import application.config.ManejadorTecla;
-import javax.swing.JFrame;
 
 /**
  *
- * @author Administrador
+ * @author Christian
  */
-public class mdlNuevo extends javax.swing.JDialog {
+public class mdlINuevo extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form mdlNuevo
+     * Creates new form mdlINuevo
      */
-    ManejadorTecla manejador = new ManejadorTecla();
-    
-    public mdlNuevo(JFrame parent, boolean modal) {
-        super(parent, modal);
+    public mdlINuevo() {
         initComponents();
     }
 
@@ -47,26 +41,40 @@ public class mdlNuevo extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setClosable(true);
+        setIconifiable(true);
         setTitle("NUEVO PERMISO");
-        setResizable(false);
+        setToolTipText("");
+        setFrameIcon(null);
+        try {
+            setSelected(true);
+        } catch (java.beans.PropertyVetoException e1) {
+            e1.printStackTrace();
+        }
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         btnGuardar.setText("Guardar");
 
+        Ver.setBackground(new java.awt.Color(255, 255, 255));
         Ver.setText("VER");
 
+        Crear.setBackground(new java.awt.Color(255, 255, 255));
         Crear.setText("CREAR");
 
+        Modificar.setBackground(new java.awt.Color(255, 255, 255));
         Modificar.setText("MODIFICAR");
 
+        Eliminar.setBackground(new java.awt.Color(255, 255, 255));
         Eliminar.setText("ELIMINAR");
 
+        Consultar.setBackground(new java.awt.Color(255, 255, 255));
         Consultar.setText("CONSULTAR");
 
+        Reportes.setBackground(new java.awt.Color(255, 255, 255));
         Reportes.setText("REPORTES");
 
+        Buscar.setBackground(new java.awt.Color(255, 255, 255));
         Buscar.setText("BUSCAR");
 
         jLabel1.setText("Usuario");
@@ -78,36 +86,30 @@ public class mdlNuevo extends javax.swing.JDialog {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(Modulo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Usuario, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Buscar)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(Ver)
-                                    .addComponent(Modificar))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(Consultar)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(Crear))
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(btnGuardar)
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addComponent(Eliminar)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(Reportes)))))))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(Ver)
+                                .addComponent(Modificar)
+                                .addComponent(Buscar))
+                            .addGap(18, 18, 18)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(Eliminar)
+                                .addComponent(Consultar)
+                                .addComponent(Crear))
+                            .addGap(18, 18, 18)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(Reportes)
+                                .addComponent(btnGuardar))
+                            .addGap(61, 61, 61))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(Modulo, javax.swing.GroupLayout.Alignment.LEADING, 0, 281, Short.MAX_VALUE)
+                            .addComponent(Usuario, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(jLabel1)
-                    .addComponent(jLabel2))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel2)))
         );
-
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {Buscar, Consultar, Crear, Eliminar, Modificar, Reportes, Ver, btnGuardar});
-
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -123,28 +125,29 @@ public class mdlNuevo extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Ver)
                     .addComponent(Consultar)
-                    .addComponent(Crear))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Eliminar)
-                    .addComponent(Modificar)
                     .addComponent(Reportes))
-                .addGap(18, 18, 18)
+                .addGap(3, 3, 3)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Modificar)
+                    .addComponent(Eliminar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Buscar)
-                    .addComponent(btnGuardar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(Crear))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnGuardar)
+                .addGap(20, 20, 20))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();

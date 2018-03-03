@@ -11,7 +11,7 @@ import application.config.ManejadorTecla;
  *
  * @author Christian
  */
-public class vMaquilas extends javax.swing.JFrame {
+public class vMaquilas extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form vMaquilas
@@ -48,8 +48,18 @@ public class vMaquilas extends javax.swing.JFrame {
         btnPdf = new javax.swing.JButton();
         btnExportar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 255, 255));
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
         setTitle("MAQUILAS");
+        setFrameIcon(null);
+        try {
+            setSelected(true);
+        } catch (java.beans.PropertyVetoException e1) {
+            e1.printStackTrace();
+        }
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -74,33 +84,41 @@ public class vMaquilas extends javax.swing.JFrame {
         ));
         jScrollPane3.setViewportView(tblMaquilas);
 
+        jToolBar3.setBackground(new java.awt.Color(255, 255, 255));
         jToolBar3.setFloatable(false);
         jToolBar3.setRollover(true);
 
+        btnNuevo.setBackground(new java.awt.Color(255, 255, 255));
         btnNuevo.setText("NUEVO");
         btnNuevo.setToolTipText("");
         btnNuevo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jToolBar3.add(btnNuevo);
 
+        btnEditar.setBackground(new java.awt.Color(255, 255, 255));
         btnEditar.setText("EDITAR");
         btnEditar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jToolBar3.add(btnEditar);
 
+        btnRefrescar.setBackground(new java.awt.Color(255, 255, 255));
         btnRefrescar.setText("REFRESCAR");
         btnRefrescar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jToolBar3.add(btnRefrescar);
 
+        btnEliminar.setBackground(new java.awt.Color(255, 255, 255));
         btnEliminar.setText("ELIMINAR");
         btnEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jToolBar3.add(btnEliminar);
 
+        btnExcel.setBackground(new java.awt.Color(255, 255, 255));
         btnExcel.setText("EXCEL");
         jToolBar3.add(btnExcel);
 
+        btnPdf.setBackground(new java.awt.Color(255, 255, 255));
         btnPdf.setText("PDF");
         btnPdf.setToolTipText("");
         jToolBar3.add(btnPdf);
 
+        btnExportar.setBackground(new java.awt.Color(255, 255, 255));
         btnExportar.setText("EXPORTAR");
         btnExportar.setToolTipText("");
         btnExportar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -121,7 +139,7 @@ public class vMaquilas extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnAdelante)
                 .addContainerGap())
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 791, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 784, Short.MAX_VALUE)
             .addComponent(jToolBar3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
@@ -137,7 +155,7 @@ public class vMaquilas extends javax.swing.JFrame {
                     .addComponent(btnAtras)
                     .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -157,7 +175,6 @@ public class vMaquilas extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton btnAdelante;
