@@ -5,56 +5,37 @@
  */
 package application.controllers.materialesxcombinacion;
 
-import application.controllers.materialesxcombinacion.*;
-import application.controllers.materialesxcombinacion.*;
 import application.config.Generic;
+import application.config.TextPrompt;
 import application.controllers.MaterialesXCombinacion;
-import static application.controllers.MaterialesXCombinacion.vmaterialesxcombinacion;
 import application.helpers.Item;
-import application.third_party.ImageUtils;
-import application.third_party.WaitLayerUI;
 import application.views.materialesxcombinacion.mdlEditar;
 import application.views.materialesxcombinacion.mdlNuevo;
 import application.views.vMaterialesXCombinacion;
 import application.views.vMenu;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.HeadlessException;
-import java.awt.Image;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.Collections;
 import java.util.Iterator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
+import java.util.stream.IntStream;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
-import javax.swing.JLayer;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.RowFilter;
-import javax.swing.Timer;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-import org.apache.commons.io.FilenameUtils;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 /**
@@ -86,17 +67,45 @@ public class CtrlMaterialesXCombinacion {
         //Ayuda en captura combos nuevo estilo
         AutoCompleteDecorator.decorate(this.nuevo.Estilo);
         AutoCompleteDecorator.decorate(this.nuevo.Combinacion);
+        AutoCompleteDecorator.decorate(this.nuevo.Tipo);
         //Ayuda en captura combos editar estilo
         AutoCompleteDecorator.decorate(this.editar.Estilo);
         AutoCompleteDecorator.decorate(this.editar.Combinacion);
+        AutoCompleteDecorator.decorate(this.editar.Tipo);
         /*NUEVO*/
-        nuevo.btnAgregar.addActionListener((e) -> {
-            Float Consumo = Float.parseFloat(nuevo.Consumo.getValue().toString());
-            if (Consumo > 0) {
-                System.out.println("CONSUMO: " + Consumo);
-                nuevo.Consumo.setValue(0);
+        nuevo.btnRefrescar.addActionListener((e) -> {
+            getMateriales();
+        });
+        nuevo.btnEliminar.addActionListener((e) -> {
+            int row = nuevo.tblMaterialesAgregados.getSelectedRow();
+            if (row != -1) {
+                DefaultTableModel model = (DefaultTableModel) nuevo.tblMaterialesAgregados.getModel();
+                IntStream.of(nuevo.tblMaterialesAgregados.getSelectedRows()).boxed().sorted(Collections.reverseOrder()).forEach(model::removeRow);
             } else {
-                JOptionPane.showMessageDialog(null, "DEBE DE ESTABLECER UN CONSUMO", "ATENCIÓN", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "DEBE DE SELECCIONAR UN MATERIAL AGREGADO", "ATENCIÓN", JOptionPane.WARNING_MESSAGE);
+            }
+        });
+        nuevo.btnAgregar.addActionListener((e) -> {
+            int row = nuevo.tblMateriales.getSelectedRow();
+            if (row != -1) {
+                Float Consumo = Float.parseFloat(nuevo.Consumo.getValue().toString());
+                if (Consumo > 0) {
+                    int ID = Integer.parseInt(nuevo.tblMateriales.getModel().getValueAt(nuevo.tblMateriales.getSelectedRow(), 0).toString());
+                    DefaultTableModel model = (DefaultTableModel) nuevo.tblMaterialesAgregados.getModel();
+                    model.addRow(
+                            new Object[]{
+                                ID/*ID*/,
+                                nuevo.tblMateriales.getValueAt(nuevo.tblMateriales.getSelectedRow(), 0).toString()/*MATERIAL*/,
+                                nuevo.tblMateriales.getValueAt(nuevo.tblMateriales.getSelectedRow(), 1).toString()/*U.M.*/,
+                                nuevo.tblMateriales.getValueAt(nuevo.tblMateriales.getSelectedRow(), 2).toString()/*PRECIO*/,
+                                String.valueOf(nuevo.Consumo.getValue()),
+                                nuevo.Tipo.getSelectedItem().toString()});
+                    nuevo.Consumo.setValue(0);
+                } else {
+                    JOptionPane.showMessageDialog(null, "DEBE DE ESTABLECER UN CONSUMO", "ATENCIÓN", JOptionPane.WARNING_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "DEBE DE SELECCIONAR UN MATERIAL", "ATENCIÓN", JOptionPane.WARNING_MESSAGE);
             }
         });
         nuevo.btnGuardar.addKeyListener(new KeyListener() {
@@ -139,6 +148,9 @@ public class CtrlMaterialesXCombinacion {
         });
 
         /*EDITAR*/
+        editar.btnRefrescar.addActionListener((e) -> {
+            getMateriales();
+        });
         editar.btnGuardar.addActionListener((e) -> {
             onModificar();
         });
@@ -185,8 +197,11 @@ public class CtrlMaterialesXCombinacion {
             }
         });
         /*PLACEHOLDERS*/
+        TextPrompt placeholder = new TextPrompt("BUSCA POR MATERIAL...", nuevo.BuscarMateriales);
+        placeholder.changeAlpha(0.75f);
+        placeholder.changeStyle(Font.ITALIC);
 
- /*INVOCAR METODOS QUE RELLENAN DATOS*/
+        /*INVOCAR METODOS QUE RELLENAN DATOS*/
         getEstilos();
         getCombinaciones();
 
@@ -232,12 +247,16 @@ public class CtrlMaterialesXCombinacion {
                     /*DETALLE*/
                     System.out.println("* * * DETALLE * * *");
                     for (int i = 0; i < nuevo.tblMaterialesAgregados.getRowCount(); i++) {
-                        detalle.add(Integer.parseInt(String.valueOf(ID[0][0])));
-                        detalle.add(Integer.parseInt(nuevo.tblMaterialesAgregados.getValueAt(i, 0).toString()));
+//                        @IDX INT, @Material INT, @Consumo FLOAT, @Tipo INT,@Registro VARCHAR(25)
+                        detalle.add(Integer.parseInt(String.valueOf(ID[0][0])));/*ID*/
+                        detalle.add(Integer.parseInt(nuevo.tblMaterialesAgregados.getValueAt(i, 0).toString()));/*MATERIAL*/
                         detalle.add(Integer.parseInt(nuevo.tblMaterialesAgregados.getValueAt(i, 1).toString()));
                         fechatiempo = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(Calendar.getInstance().getTime());
                         detalle.add(Integer.parseInt(nuevo.tblMaterialesAgregados.getValueAt(i, 2).toString()));
                         detalle.add(fechatiempo);
+                        if (g.addUpdateOrDelete("SP_AGREGAR_MATERIALES_X_COMBINACION_DETALLE", detalle)) {
+                            JOptionPane.showMessageDialog(null, "MATERIAL POR COMBINACION NO AGREGADO\n", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
+                        }
                         System.out.println("ID: " + nuevo.tblMaterialesAgregados.getValueAt(i, 0).toString() + "\tMATERIAL: " + nuevo.tblMaterialesAgregados.getValueAt(i, 1).toString());
                     }
                     System.out.println("* * * FIN DETALLE * * *");
@@ -494,6 +513,8 @@ public class CtrlMaterialesXCombinacion {
             nuevo.tblMateriales.setModel(dtm);
             filtrador = new TableRowSorter<>(dtm);
             nuevo.tblMateriales.setRowSorter(filtrador);
+            nuevo.tblMateriales.removeColumn(nuevo.tblMateriales.getColumnModel().getColumn(0));
+            nuevo.tblMaterialesAgregados.removeColumn(nuevo.tblMaterialesAgregados.getColumnModel().getColumn(0));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
