@@ -308,6 +308,9 @@ public class CtrlMaterialesXCombinacion {
                     JOptionPane.showMessageDialog(null, "MATERIAL POR COMBINACION AGREGADO", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
                     nuevo.dispose();
                     materialesxcombinacion.getRecords();
+                    mnu.dpContenedor.remove(nuevo);
+                    materialesxcombinacion.setVisible();
+                    
                 } else {
                     JOptionPane.showMessageDialog(null, "NO SE HA PODIDO AGREGAR EL MATERIAL POR COMBINACION", "NO SE HA PODIDO AGREGAR EL ESTILO", JOptionPane.ERROR_MESSAGE);
                 }
@@ -329,6 +332,8 @@ public class CtrlMaterialesXCombinacion {
             ArrayList<Object[][]> x = g.findByParams("SP_MATERIALES_X_COMBINACION_X_ID", a);
             Object[][] data = x.get(0);
             editar.setVisible(true);
+            //mnu.dpContenedor.remove(editar);
+            //materialesxcombinacion.setVisible();
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "NO SE HA PODIDO EDITAR EL ESTILO", "ERROR AL EDITAR", JOptionPane.ERROR_MESSAGE);
         }
