@@ -73,14 +73,14 @@ public class CtrlEstilos {
 
     public CtrlEstilos(JInternalFrame parent, Generic g, Estilos estilos, JFrame menu) {
         /*NO SE DEBE DE LLAMAR NADA SI NO SE DEFINEN ESTAS ASIGNACIONES*/
-        this.menu = (vMenu) menu; 
+        this.menu = (vMenu) menu;
         nuevo = new mdlINuevo();
         editar = new mdlIEditar();
         this.vestilos = (vEstilos) parent;
         this.g = g;
         this.estilos = estilos;
         //Ayuda en captura combos nuevo estilo
-        
+
         AutoCompleteDecorator.decorate(this.nuevo.Familia);
         AutoCompleteDecorator.decorate(this.nuevo.Serie);
         AutoCompleteDecorator.decorate(this.nuevo.Linea);
@@ -90,7 +90,7 @@ public class CtrlEstilos {
         AutoCompleteDecorator.decorate(this.nuevo.Tipo);
         AutoCompleteDecorator.decorate(this.nuevo.MaquilaPlantilla);
         //Ayuda en captura combos editar estilo
-        
+
         AutoCompleteDecorator.decorate(this.editar.Familia);
         AutoCompleteDecorator.decorate(this.editar.Serie);
         AutoCompleteDecorator.decorate(this.editar.Linea);
@@ -302,18 +302,17 @@ public class CtrlEstilos {
         /*PLACEHOLDERS*/
 
  /*INVOCAR METODOS QUE RELLENAN DATOS*/
-        getLineas();
-        getSeries();
-        getFamilias();
-        getHormas();
-        getMaquilas();
-        getTemporadas();
-        getTipoEstilo();
-
     }
 
     public void setVisible() {
         if (!nuevo.isShowing()) {
+            getLineas();
+            getSeries();
+            getFamilias();
+            getHormas();
+            getMaquilas();
+            getTemporadas();
+            getTipoEstilo();
             menu.dpContenedor.add(nuevo);
             Dimension desktopSize = menu.dpContenedor.getSize();
             Dimension jInternalFrameSize = nuevo.getSize();
@@ -332,8 +331,13 @@ public class CtrlEstilos {
         try {
             ArrayList<Object> a = new ArrayList<>();
             Object x = null;
-            String ext = FilenameUtils.getExtension(fc.getSelectedFile().getName());
-            String Foto = "files/" + nuevo.Clave.getText() + "." + ext;
+            String ext = "";
+            String Foto = "";
+            if (bufi != null) {
+                ext = FilenameUtils.getExtension(fc.getSelectedFile().getName());
+                Foto = "files/" + nuevo.Clave.getText() + "." + ext;
+            }
+
             if (!nuevo.Linea.getSelectedItem().toString().equals("") && !nuevo.Clave.getText().equals("")) {
                 a.add(getID(lineas, nuevo.Linea.getSelectedItem().toString()));
                 a.add((nuevo.Clave.getText().equals("") ? "" : nuevo.Clave.getText()));
@@ -392,7 +396,10 @@ public class CtrlEstilos {
                     files_dir.mkdir();
                 }
                 System.out.println(fc.getSelectedFile().getName());
-                ImageIO.write(bufi, "png", new File(Foto));
+                if (bufi != null) {
+                    ImageIO.write(bufi, "png", new File(Foto));
+                }
+
                 if (g.addUpdateOrDelete("SP_AGREGAR_ESTILO", a)) {
                     JOptionPane.showMessageDialog(null, "ESTILO AGREGADO", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
                     nuevo.dispose();
@@ -456,15 +463,15 @@ public class CtrlEstilos {
             editar.TipoDeConstruccion.setText(String.valueOf(data[0][20]));
 
             if (!editar.isShowing()) {
-                    menu.dpContenedor.add(editar);
-                    Dimension desktopSize = menu.dpContenedor.getSize();
-                    Dimension jInternalFrameSize = editar.getSize();
-                    editar.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
-                            (desktopSize.height - jInternalFrameSize.height) / 2);
-                    editar.setFrameIcon(null);
-                    editar.show();
-                    editar.toFront();
-                }
+                menu.dpContenedor.add(editar);
+                Dimension desktopSize = menu.dpContenedor.getSize();
+                Dimension jInternalFrameSize = editar.getSize();
+                editar.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
+                        (desktopSize.height - jInternalFrameSize.height) / 2);
+                editar.setFrameIcon(null);
+                editar.show();
+                editar.toFront();
+            }
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "NO SE HA PODIDO EDITAR EL ESTILO", "ERROR AL EDITAR", JOptionPane.ERROR_MESSAGE);
         }
@@ -603,7 +610,9 @@ public class CtrlEstilos {
         try {
             lineas = new ArrayList<>();
             Item linea = null;
-            nuevo.Linea.addItem("");
+            nuevo.Linea.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{""}));/*REINICIA EL MODELO*/
+            editar.Linea.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{""}));/*REINICIA EL MODELO*/
+
             for (Iterator it = g.fill("SP_OBTENER_LINEAS").iterator(); it.hasNext();) {
                 Object[] item = (Object[]) it.next();
                 linea = new Item(Integer.parseInt(String.valueOf(item[0])), String.valueOf(item[1]));
@@ -622,8 +631,8 @@ public class CtrlEstilos {
         try {
             familias = new ArrayList<>();
             Item familia = null;
-            nuevo.Familia.addItem("");
-            editar.Familia.addItem("");
+            nuevo.Familia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{""}));/*REINICIA EL MODELO*/
+            editar.Familia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{""}));/*REINICIA EL MODELO*/
             for (Iterator it = g.fill("SP_OBTENER_FAMILIAS").iterator(); it.hasNext();) {
                 Object[] item = (Object[]) it.next();
                 familia = new Item(Integer.parseInt(String.valueOf(item[0])), String.valueOf(item[1]));
@@ -643,8 +652,8 @@ public class CtrlEstilos {
         try {
             series = new ArrayList<>();
             Item serie = null;
-            nuevo.Serie.addItem("");
-            editar.Serie.addItem("");
+            nuevo.Serie.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{""}));/*REINICIA EL MODELO*/
+            editar.Serie.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{""}));/*REINICIA EL MODELO*/
             for (Iterator it = g.fill("SP_OBTENER_SERIES").iterator(); it.hasNext();) {
                 Object[] item = (Object[]) it.next();
                 serie = new Item(Integer.parseInt(String.valueOf(item[0])), String.valueOf(item[1]));
@@ -664,8 +673,8 @@ public class CtrlEstilos {
         try {
             hormas = new ArrayList<>();
             Item horma = null;
-            nuevo.Horma.addItem("");
-            editar.Horma.addItem("");
+            nuevo.Horma.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{""}));/*REINICIA EL MODELO*/
+            editar.Horma.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{""}));/*REINICIA EL MODELO*/
             for (Iterator it = g.fill("SP_OBTENER_HORMAS").iterator(); it.hasNext();) {
                 Object[] item = (Object[]) it.next();
                 horma = new Item(Integer.parseInt(String.valueOf(item[0])), String.valueOf(item[1]));
@@ -685,8 +694,8 @@ public class CtrlEstilos {
         try {
             maquilas = new ArrayList<>();
             Item maquila = null;
-            nuevo.Maquila.addItem("");
-            editar.Maquila.addItem("");
+            nuevo.Maquila.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{""}));/*REINICIA EL MODELO*/
+            editar.Maquila.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{""}));/*REINICIA EL MODELO*/
             for (Iterator it = g.fill("SP_OBTENER_MAQUILAS").iterator(); it.hasNext();) {
                 Object[] item = (Object[]) it.next();
                 maquila = new Item(Integer.parseInt(String.valueOf(item[0])), String.valueOf(item[1]));
@@ -706,8 +715,8 @@ public class CtrlEstilos {
         try {
             temporadas = new ArrayList<>();
             Item temporada = null;
-            nuevo.Temporada.addItem("");
-            editar.Temporada.addItem("");
+            nuevo.Temporada.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{""}));/*REINICIA EL MODELO*/
+            editar.Temporada.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{""}));/*REINICIA EL MODELO*/
             for (Iterator it = g.fill("SP_OBTENER_TEMPORADAS").iterator(); it.hasNext();) {
                 Object[] item = (Object[]) it.next();
                 temporada = new Item(Integer.parseInt(String.valueOf(item[0])), String.valueOf(item[1]));
@@ -727,8 +736,8 @@ public class CtrlEstilos {
         try {
             tipo_estilos = new ArrayList<>();
             Item tipo_estilo = null;
-            nuevo.Tipo.addItem("");
-            editar.Tipo.addItem("");
+            nuevo.Tipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{""}));/*REINICIA EL MODELO*/
+            editar.Tipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{""}));/*REINICIA EL MODELO*/
             for (Iterator it = g.fill("SP_OBTENER_TIPOS_ESTILO").iterator(); it.hasNext();) {
                 Object[] item = (Object[]) it.next();
                 tipo_estilo = new Item(Integer.parseInt(String.valueOf(item[0])), String.valueOf(item[1]));

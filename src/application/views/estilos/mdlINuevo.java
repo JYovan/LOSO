@@ -94,7 +94,7 @@ public class mdlINuevo extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setIconifiable(true);
-        setTitle("NUEVO USUARIO");
+        setTitle("NUEVO ESTILO");
         setToolTipText("");
         setFrameIcon(null);
         try {
