@@ -202,9 +202,11 @@ public class CtrlMaterialesXCombinacion {
         placeholder.changeStyle(Font.ITALIC);
 
         /*INVOCAR METODOS QUE RELLENAN DATOS*/
-        getEstilos();
-        getCombinaciones();
+    }
 
+    public void onReiniciarValores() {
+        nuevo.tblMaterialesAgregados.removeRowSelectionInterval(0, 99999);
+        editar.tblMaterialesAgregados.removeRowSelectionInterval(0, 99999);
     }
 
     public void setVisible() {
@@ -218,6 +220,8 @@ public class CtrlMaterialesXCombinacion {
             nuevo.show();
             nuevo.toFront();
             getMateriales();
+            getEstilos();
+            getCombinaciones();
         }
     }
 
@@ -284,43 +288,7 @@ public class CtrlMaterialesXCombinacion {
             ArrayList<Object> a = new ArrayList<>();
             a.add(IDX);
             ArrayList<Object[][]> x = g.findByParams("SP_ESTILO_X_ID", a);
-            Object[][] data = x.get(0);
-//            if (data[0][1] != null) {
-//                editar.Linea.getModel().setSelectedItem(data[0][1]);
-//            }
-//            editar.Clave.setText(String.valueOf(data[0][2]));
-//            editar.Descripcion.setText(String.valueOf(data[0][3]));
-//            if (data[0][4] != null) {
-//                editar.Familia.getModel().setSelectedItem(data[0][4]);
-//            }
-//            if (data[0][5] != null) {
-//                editar.Serie.getModel().setSelectedItem(data[0][5]);
-//            }
-//            if (data[0][6] != null) {
-//                editar.Horma.getModel().setSelectedItem(data[0][6]);
-//            }
-//            if (data[0][7] != null) {
-//                editar.Genero.getModel().setSelectedItem(data[0][7]);
-//            }
-//            editar.Foto.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage((String.valueOf(data[0][8]))).getScaledInstance(350, 350, Image.SCALE_SMOOTH)));
-//            if (data[0][9] != null) {
-//                editar.Estatus.getModel().setSelectedItem(data[0][9]);
-//            }
-//            editar.Desperdicio.setText(String.valueOf(data[0][10]));
-//            if (String.valueOf(data[0][11]).equals("0") || String.valueOf(data[0][11]).equals("null")) {
-//                editar.Liberado.setSelected(false);
-//            } else {
-//                editar.Liberado.setSelected(true);
-//            }
-//            editar.Herramental.setText(String.valueOf(data[0][12]));
-//            editar.Maquila.getModel().setSelectedItem(String.valueOf(data[0][13]));
-//            editar.Notas.setText(String.valueOf(data[0][14]));
-//            editar.Ano.setText((String.valueOf(data[0][15]).equals("null")) ? "" : String.valueOf(data[0][15]));
-//            editar.Temporada.getModel().setSelectedItem(String.valueOf(data[0][16]));
-//            editar.PuntoCentral.setText((String.valueOf(data[0][17]).equals("null") ? "" : String.valueOf(data[0][17])));
-//            editar.Tipo.getModel().setSelectedItem(data[0][18]);
-//            editar.MaquilaPlantilla.getModel().setSelectedItem(String.valueOf(data[0][19]));
-//            editar.TipoDeConstruccion.setText(String.valueOf(data[0][20]));
+            Object[][] data = x.get(0); 
 //
 //            editar.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/96/icons8_Idea_96px.png")));
 //            editar.setLocationRelativeTo(null);
@@ -459,12 +427,12 @@ public class CtrlMaterialesXCombinacion {
         }
     }
 
-    public final void getEstilos() {
+    public void getEstilos() {
         try {
+            nuevo.Estilo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{""}));/*REINICIA EL MODELO*/
+            editar.Estilo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{""}));/*REINICIA EL MODELO*/
             estilos = new ArrayList<>();
             Item estilo = null;
-            nuevo.Estilo.addItem("");
-            editar.Estilo.addItem("");
             for (Iterator it = g.fill("SP_OBTENER_ESTILOS_MXC").iterator(); it.hasNext();) {
                 Object[] item = (Object[]) it.next();
                 estilo = new Item(Integer.parseInt(String.valueOf(item[0])), String.valueOf(item[1]));
@@ -484,8 +452,12 @@ public class CtrlMaterialesXCombinacion {
         try {
             combinaciones = new ArrayList<>();
             Item combinacion = null;
-            nuevo.Combinacion.addItem("");
-            editar.Combinacion.addItem("");
+            nuevo.Combinacion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{""}));/*REINICIA EL MODELO*/
+            editar.Combinacion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{""}));/*REINICIA EL MODELO*/
+
+            g.fill("SP_OBTENER_COMBINACIONES_MXC").forEach((t) -> {
+                System.out.println(t);
+            });
             for (Iterator it = g.fill("SP_OBTENER_COMBINACIONES_MXC").iterator(); it.hasNext();) {
                 Object[] item = (Object[]) it.next();
                 combinacion = new Item(Integer.parseInt(String.valueOf(item[0])), String.valueOf(item[1]));
