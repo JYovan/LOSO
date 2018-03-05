@@ -61,6 +61,9 @@ public class MaterialesXCombinacion {
         vmaterialesxcombinacion.btnNuevo.addActionListener((e) -> {
             cu.setVisible();
             vmaterialesxcombinacion.dispose();
+            mnu.dpContenedor.remove(vmaterialesxcombinacion);
+            vmaterialesxcombinacion.dispose();
+
         });
         vmaterialesxcombinacion.btnExportar.addActionListener((e) -> {
         });
@@ -69,6 +72,8 @@ public class MaterialesXCombinacion {
                 if (vmaterialesxcombinacion.tblMaterialesXCombinacion.getSelectedRow() >= 0) {
 
                     int ID = Integer.parseInt(vmaterialesxcombinacion.tblMaterialesXCombinacion.getValueAt(vmaterialesxcombinacion.tblMaterialesXCombinacion.getSelectedRow(), 0).toString());
+                    vmaterialesxcombinacion.dispose();
+                    mnu.dpContenedor.remove(vmaterialesxcombinacion);
                     cu.onEditar(ID);
                 } else {
                     Toolkit.getDefaultToolkit().beep();
