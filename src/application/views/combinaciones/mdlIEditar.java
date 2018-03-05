@@ -5,6 +5,8 @@
  */
 package application.views.combinaciones;
 
+import application.config.ManejadorTecla;
+
 /**
  *
  * @author Christian
@@ -14,8 +16,14 @@ public class mdlIEditar extends javax.swing.JInternalFrame {
     /**
      * Creates new form mdlIEditar
      */
+    ManejadorTecla manejador = new ManejadorTecla();
     public mdlIEditar() {
         initComponents();
+        this.txtClave.addKeyListener(manejador);
+        this.txtDescripcion.addKeyListener(manejador);
+        this.cmbEstilo.addKeyListener(manejador);
+        this.cmbLinea.addKeyListener(manejador);
+        this.cmbEstatus.addKeyListener(manejador);
     }
 
     /**

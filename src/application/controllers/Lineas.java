@@ -58,6 +58,8 @@ public class Lineas {
         this.menu = (vMenu) parent;
         lin = new CtrlLineas(vlineas, g, this, menu);
         vlineas.btnNuevo.addActionListener((e) -> {
+            vlineas.dispose();
+            menu.dpContenedor.remove(vlineas);
             lin.setVisible();
         });
         vlineas.btnExportar.addActionListener((e) -> {
@@ -67,6 +69,8 @@ public class Lineas {
             try {
                 if (vlineas.tblLineas.getSelectedRow() >= 0) {
                     int ID = Integer.parseInt(vlineas.tblLineas.getValueAt(vlineas.tblLineas.getSelectedRow(), 0).toString());
+                    vlineas.dispose();
+                    menu.dpContenedor.remove(vlineas);
                     lin.onEditar(ID);
                 } else {
                     Toolkit.getDefaultToolkit().beep();

@@ -53,18 +53,23 @@ public class Permisos {
 
     private TableRowSorter<TableModel> filtrador;
 
-    public Permisos(Generic g,JFrame parent) {
+    public Permisos(Generic g, JFrame parent) {
         this.g = g;
         this.menu = (vMenu) parent;
-        per = new CtrlPermisos(vpermisos, g, this,menu);
+        per = new CtrlPermisos(vpermisos, g, this, menu);
         vpermisos = new vPermisos();
         vpermisos.btnNuevo.addActionListener((e) -> {
-            (new CtrlPermisos(vpermisos, g, this,menu)).setVisible();
+            vpermisos.dispose();
+            menu.dpContenedor.remove(vpermisos);
+            per.setVisible();
         });
         vpermisos.btnEditar.addActionListener((e) -> {
             try {
                 if (vpermisos.tblPermisos.getSelectedRow() >= 0) {
                     int ID = Integer.parseInt(vpermisos.tblPermisos.getValueAt(vpermisos.tblPermisos.getSelectedRow(), 0).toString());
+                    vpermisos.dispose();
+                    menu.dpContenedor.remove(vpermisos);
+                    per.setVisible();
                     per.onEditar(ID);
                 } else {
                     Toolkit.getDefaultToolkit().beep();
@@ -139,7 +144,7 @@ public class Permisos {
     }
 
     public void setVisible() {
-         if (vpermisos.isShowing()) {
+        if (vpermisos.isShowing()) {
             //mensaje de que está abierto si se desea
         } else {
             menu.dpContenedor.add(vpermisos);

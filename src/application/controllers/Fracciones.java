@@ -1,4 +1,3 @@
-
 package application.controllers;
 
 import application.config.Generic;
@@ -22,8 +21,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-
 public class Fracciones {
+
     private static vFracciones vfracciones;
     DefaultTableModel dtm;
     Generic g;
@@ -31,20 +30,24 @@ public class Fracciones {
     CtrlFracciones fra;
 
     private TableRowSorter<TableModel> filtrador;
-    
-        public Fracciones(Generic g, JFrame parent) {
+
+    public Fracciones(Generic g, JFrame parent) {
         this.g = g;
         this.mnu = (vMenu) parent;
         fra = new CtrlFracciones(vfracciones, g, this, mnu);
         vfracciones = new vFracciones();
         vfracciones.btnNuevo.addActionListener((e) -> {
+            vfracciones.dispose();
+            mnu.dpContenedor.remove(vfracciones);
             fra.setVisible();
         });
-     
+
         vfracciones.btnEditar.addActionListener((e) -> {
             try {
                 if (vfracciones.tblFracciones.getSelectedRow() >= 0) {
                     int ID = Integer.parseInt(vfracciones.tblFracciones.getValueAt(vfracciones.tblFracciones.getSelectedRow(), 0).toString());
+                    vfracciones.dispose();
+                    mnu.dpContenedor.remove(vfracciones);
                     fra.onEditar(ID);
                 } else {
                     Toolkit.getDefaultToolkit().beep();
@@ -118,8 +121,8 @@ public class Fracciones {
     }
 
     public void setVisible() {
-        
-         if (vfracciones.isShowing()) {
+
+        if (vfracciones.isShowing()) {
             //mensaje de que está abierto si se desea
         } else {
             mnu.dpContenedor.add(vfracciones);
@@ -156,5 +159,5 @@ public class Fracciones {
     public static vFracciones getInstance() {
         return vfracciones;
     }
-    
+
 }

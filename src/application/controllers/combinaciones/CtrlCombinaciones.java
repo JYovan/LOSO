@@ -11,6 +11,7 @@ import application.views.vMenu;
 import java.awt.Dimension;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
@@ -18,6 +19,8 @@ import java.util.Iterator;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
+import javax.swing.event.InternalFrameAdapter;
+import javax.swing.event.InternalFrameEvent;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 public class CtrlCombinaciones {
@@ -31,7 +34,7 @@ public class CtrlCombinaciones {
     Resources rsc;
     vMenu menu;
 
-    public CtrlCombinaciones(JInternalFrame parent, Generic g, Combinaciones combinaciones,JFrame menu) {
+    public CtrlCombinaciones(JInternalFrame parent, Generic g, Combinaciones combinaciones, JFrame menu) {
         this.menu = (vMenu) menu;
         nuevo = new mdlINuevo();
         editar = new mdlIEditar();
@@ -45,14 +48,27 @@ public class CtrlCombinaciones {
         AutoCompleteDecorator.decorate(this.editar.cmbEstilo);
         AutoCompleteDecorator.decorate(this.editar.cmbLinea);
 
+        nuevo.addInternalFrameListener(new InternalFrameAdapter() {
+            @Override
+            public void internalFrameClosing(InternalFrameEvent e) {
+                Combinaciones com = combinaciones;
+                com.setVisible();
+
+            }
+        });
+        editar.addInternalFrameListener(new InternalFrameAdapter() {
+            @Override
+            public void internalFrameClosing(InternalFrameEvent e) {
+                Combinaciones com = combinaciones;
+                com.setVisible();
+            }
+        });
+
         nuevo.btnGuardar.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     onGuardar();
-                }
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    nuevo.dispose();
                 }
             }
 
@@ -71,90 +87,17 @@ public class CtrlCombinaciones {
             onModificar();
         });
 
-        nuevo.txtClave.addKeyListener(new KeyListener() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    nuevo.dispose();
-                }
-            }
-
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-        });
-
-        nuevo.txtDescripcion.addKeyListener(new KeyListener() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    editar.dispose();
-                }
-            }
-
-            @Override
-            public void keyTyped(KeyEvent e) {
-
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-        });
-
         nuevo.cmbEstilo.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     onGuardar();
                 }
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    nuevo.dispose();
-                }
+
             }
 
             @Override
             public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-        });
-        editar.txtClave.addKeyListener(new KeyListener() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    editar.dispose();
-                }
-            }
-
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-        });
-
-        editar.txtDescripcion.addKeyListener(new KeyListener() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    editar.dispose();
-                }
-            }
-
-            @Override
-            public void keyTyped(KeyEvent e) {
-
             }
 
             @Override
@@ -168,9 +111,7 @@ public class CtrlCombinaciones {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     onModificar();
                 }
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    editar.dispose();
-                }
+
             }
 
             @Override
@@ -187,7 +128,12 @@ public class CtrlCombinaciones {
     }
 
     public void setVisible() {
-      if(!nuevo.isShowing()){
+        if (!nuevo.isShowing()) {
+            nuevo.txtClave.setText("");
+            nuevo.txtDescripcion.setText("");
+            nuevo.cmbEstilo.setSelectedIndex(0);
+            nuevo.cmbLinea.setSelectedIndex(0);
+
             menu.dpContenedor.add(nuevo);
             Dimension desktopSize = menu.dpContenedor.getSize();
             Dimension jInternalFrameSize = nuevo.getSize();
@@ -197,6 +143,7 @@ public class CtrlCombinaciones {
             nuevo.show();
             nuevo.toFront();
         }
+        nuevo.txtClave.requestFocus();
     }
 
     public void onGuardar() {
@@ -223,6 +170,8 @@ public class CtrlCombinaciones {
                 JOptionPane.showMessageDialog(null, "REGISTRO AGREGADO", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
                 nuevo.dispose();
                 combinaciones.getRecords();
+                menu.dpContenedor.remove(nuevo);
+                combinaciones.setVisible();
             } else {
                 JOptionPane.showMessageDialog(null, "NO SE HA PODIDO AGREGAR EL REGISTRO", "NO SE HA PODIDO AGREGAR EL REGISTRO", JOptionPane.ERROR_MESSAGE);
             }
@@ -243,16 +192,17 @@ public class CtrlCombinaciones {
             editar.cmbLinea.setSelectedItem((data[0][3] != null) ? data[0][3].toString() : "");
             editar.cmbEstilo.setSelectedItem((data[0][4] != null) ? data[0][4].toString() : "");
             editar.cmbEstatus.setSelectedItem((data[0][5] != null) ? data[0][5].toString() : "");
-            if(!editar.isShowing()){
-            menu.dpContenedor.add(editar);
-            Dimension desktopSize = menu.dpContenedor.getSize();
-            Dimension jInternalFrameSize = editar.getSize();
-            editar.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
-                    (desktopSize.height - jInternalFrameSize.height) / 2);
-            editar.setFrameIcon(null);
-            editar.show();
-            editar.toFront();
-        }
+            if (!editar.isShowing()) {
+                menu.dpContenedor.add(editar);
+                Dimension desktopSize = menu.dpContenedor.getSize();
+                Dimension jInternalFrameSize = editar.getSize();
+                editar.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
+                        (desktopSize.height - jInternalFrameSize.height) / 2);
+                editar.setFrameIcon(null);
+                editar.show();
+                editar.toFront();
+            }
+            editar.txtClave.requestFocus();
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "NO SE HA PODIDO EDITAR EL REGISTRO", "ERROR AL EDITAR", JOptionPane.ERROR_MESSAGE);
         }
@@ -265,7 +215,6 @@ public class CtrlCombinaciones {
             a.add(temp);
             a.add(editar.txtClave.getText());
             a.add(editar.txtDescripcion.getText());
-            a.add(editar.cmbEstatus.getSelectedItem().toString());
 
             if (editar.cmbLinea.getSelectedIndex() != -1) {
                 x = getID(lineas, editar.cmbLinea.getSelectedItem().toString());
@@ -277,7 +226,7 @@ public class CtrlCombinaciones {
             } else {
                 a.add(null);
             }
-            
+
             if (editar.cmbEstilo.getSelectedIndex() != -1) {
                 x = getID(estilos, editar.cmbEstilo.getSelectedItem().toString());
                 if (Integer.parseInt(String.valueOf(x)) != 0) {
@@ -289,10 +238,14 @@ public class CtrlCombinaciones {
                 a.add(null);
             }
 
+            a.add(editar.cmbEstatus.getSelectedItem().toString());
+
             if (!editar.txtClave.getText().equals("") && g.addUpdateOrDelete("SP_MODIFICAR_COMBINACION", a)) {
                 JOptionPane.showMessageDialog(null, "REGISTRO MODIFICADO", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
                 editar.dispose();
                 combinaciones.getRecords();
+                menu.dpContenedor.remove(editar);
+                combinaciones.setVisible();
             } else {
                 JOptionPane.showMessageDialog(null, "NO SE HA PODIDO MODIFICAR EL REGISTRO", "ERROR AL MODIFICAR EL REGISTRO", JOptionPane.ERROR_MESSAGE);
             }

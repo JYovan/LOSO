@@ -48,6 +48,7 @@ public class vMenu extends javax.swing.JFrame {
         mnuLineas = new javax.swing.JMenuItem();
         mnuEstilos = new javax.swing.JMenuItem();
         mnuCombinaciones = new javax.swing.JMenuItem();
+        mnuSeries = new javax.swing.JMenuItem();
         jSeparator4 = new javax.swing.JPopupMenu.Separator();
         mnuFracciones = new javax.swing.JMenuItem();
         mnuMateriales = new javax.swing.JMenuItem();
@@ -59,7 +60,6 @@ public class vMenu extends javax.swing.JFrame {
         mnuCondicionesPago = new javax.swing.JMenuItem();
         mnuBancos = new javax.swing.JMenuItem();
         mnuFamilias = new javax.swing.JMenuItem();
-        mnuSeries = new javax.swing.JMenuItem();
         mnuDepartamentos = new javax.swing.JMenuItem();
         mnuTrasnportes = new javax.swing.JMenuItem();
         mnuRutas = new javax.swing.JMenuItem();
@@ -168,6 +168,10 @@ public class vMenu extends javax.swing.JFrame {
         mnuCombinaciones.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu14.add(mnuCombinaciones);
 
+        mnuSeries.setText("Series");
+        mnuSeries.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jMenu14.add(mnuSeries);
+
         jSeparator4.setOpaque(true);
         jMenu14.add(jSeparator4);
 
@@ -211,10 +215,6 @@ public class vMenu extends javax.swing.JFrame {
         mnuFamilias.setText("Familias");
         mnuFamilias.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu1.add(mnuFamilias);
-
-        mnuSeries.setText("Series");
-        mnuSeries.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jMenu1.add(mnuSeries);
 
         mnuDepartamentos.setText("Departamentos");
         mnuDepartamentos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));

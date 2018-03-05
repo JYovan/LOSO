@@ -59,14 +59,18 @@ public class Modulos {
         this.menu = (vMenu) parent;
         vmodulos = new vModulos();
         mod = new CtrlModulos(vmodulos, g, this, menu);
-        
+
         vmodulos.btnNuevo.addActionListener((e) -> {
+            vmodulos.dispose();
+            menu.dpContenedor.remove(vmodulos);
             mod.setVisible();
         });
         vmodulos.btnEditar.addActionListener((e) -> {
             try {
                 if (vmodulos.tblModulos.getSelectedRow() >= 0) {
                     int ID = Integer.parseInt(vmodulos.tblModulos.getValueAt(vmodulos.tblModulos.getSelectedRow(), 0).toString());
+                    vmodulos.dispose();
+                    menu.dpContenedor.remove(vmodulos);
                     mod.onEditar(ID);
                 } else {
                     Toolkit.getDefaultToolkit().beep();

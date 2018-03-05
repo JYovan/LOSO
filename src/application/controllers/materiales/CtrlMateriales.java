@@ -45,6 +45,8 @@ import javax.swing.JLayer;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+import javax.swing.event.InternalFrameAdapter;
+import javax.swing.event.InternalFrameEvent;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import org.apache.commons.io.FilenameUtils;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
@@ -72,15 +74,15 @@ public class CtrlMateriales {
     vMenu menu;
 
     public CtrlMateriales(JInternalFrame parent, Generic g, Materiales materiales, JFrame menu) {
-        
-        this.menu =  (vMenu) menu;
+
+        this.menu = (vMenu) menu;
         /*NO SE DEBE DE LLAMAR NADA SI NO SE DEFINEN ESTAS ASIGNACIONES*/
         nuevo = new mdlINuevo();
         editar = new mdlIEditar();
         this.vmateriales = (vMateriales) parent;
         this.g = g;
         this.materiales = materiales;
-        
+
         //Ayuda en captura combo box
         AutoCompleteDecorator.decorate(this.nuevo.Departamento);
         AutoCompleteDecorator.decorate(this.nuevo.Familia);
@@ -95,15 +97,28 @@ public class CtrlMateriales {
         AutoCompleteDecorator.decorate(this.editar.UnidadConsumo);
         AutoCompleteDecorator.decorate(this.editar.Tipo);
         AutoCompleteDecorator.decorate(this.editar.Estatus);
+
+        nuevo.addInternalFrameListener(new InternalFrameAdapter() {
+            @Override
+            public void internalFrameClosing(InternalFrameEvent e) {
+                Materiales mat = materiales;
+                mat.setVisible();
+            }
+        });
+        editar.addInternalFrameListener(new InternalFrameAdapter() {
+            @Override
+            public void internalFrameClosing(InternalFrameEvent e) {
+                Materiales mat = materiales;
+                mat.setVisible();
+            }
+        });
+
         /*NUEVO*/
         nuevo.btnGuardar.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     onGuardar();
-                }
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    nuevo.dispose();
                 }
             }
 
@@ -118,42 +133,11 @@ public class CtrlMateriales {
         nuevo.btnGuardar.addActionListener((e) -> {
             onGuardar();
         });
-        nuevo.btnGuardar.addKeyListener(new KeyListener() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    nuevo.dispose();
-                }
-            }
 
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-        });
 
         /*EDITAR*/
         editar.btnGuardar.addActionListener((e) -> {
             onModificar();
-        });
-        editar.btnGuardar.addKeyListener(new KeyListener() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    nuevo.dispose();
-                }
-            }
-
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
         });
 
         /*PLACEHOLDERS*/
@@ -165,7 +149,24 @@ public class CtrlMateriales {
     }
 
     public void setVisible() {
-       if (!nuevo.isShowing()) {
+        if (!nuevo.isShowing()) {
+
+            nuevo.Descripcion.setText("");
+            nuevo.Existencia.setValue(0);
+            nuevo.Material.setText("");
+            nuevo.FechaUltimoInventario.setText("");
+            nuevo.Maximo.setValue(0);
+            nuevo.Minimo.setValue(0);
+            nuevo.PrecioLista.setValue(0);
+            nuevo.PrecioTope.setValue(0);
+
+            nuevo.UnidadCompra.setSelectedIndex(0);
+            nuevo.UnidadConsumo.setSelectedIndex(0);
+            nuevo.Departamento.setSelectedIndex(0);
+            nuevo.Estatus.setSelectedIndex(0);
+            nuevo.Familia.setSelectedIndex(0);
+            nuevo.Tipo.setSelectedIndex(0);
+
             menu.dpContenedor.add(nuevo);
             Dimension desktopSize = menu.dpContenedor.getSize();
             Dimension jInternalFrameSize = nuevo.getSize();
@@ -175,6 +176,7 @@ public class CtrlMateriales {
             nuevo.show();
             nuevo.toFront();
         }
+        nuevo.Material.requestFocus();
     }
 
     BufferedImage bufi = null;
@@ -227,6 +229,9 @@ public class CtrlMateriales {
                     JOptionPane.showMessageDialog(null, "MATERIAL AGREGADO", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
                     nuevo.dispose();
                     materiales.getRecords();
+                    menu.dpContenedor.remove(nuevo);
+                    materiales.setVisible();
+
                 } else {
                     JOptionPane.showMessageDialog(null, "NO SE HA PODIDO AGREGAR EL MATERIAL", "NO SE HA PODIDO AGREGAR EL MATERIAL", JOptionPane.ERROR_MESSAGE);
                 }
@@ -295,6 +300,7 @@ public class CtrlMateriales {
                 editar.show();
                 editar.toFront();
             }
+            editar.Material.requestFocus();
         } catch (NumberFormatException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "NO SE HA PODIDO EDITAR EL MATERIAL", "ERROR AL EDITAR", JOptionPane.ERROR_MESSAGE);
@@ -369,6 +375,8 @@ public class CtrlMateriales {
             JOptionPane.showMessageDialog(null, "MATERIAL MODIFICADO", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
             editar.dispose();
             materiales.getRecords();
+            menu.dpContenedor.remove(editar);
+            materiales.setVisible();
         } else {
             JOptionPane.showMessageDialog(null, "NO SE HA PODIDO MODIFICAR EL MATERIAL", "NO SE HA PODIDO MODIFICAR EL MATERIAL", JOptionPane.ERROR_MESSAGE);
         }

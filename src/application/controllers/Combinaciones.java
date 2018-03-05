@@ -58,6 +58,8 @@ public class Combinaciones {
         this.mnu = (vMenu) parent;
         comb = new CtrlCombinaciones(vcombinaciones, g, this, mnu);
         vcombinaciones.btnNuevo.addActionListener((e) -> {
+            vcombinaciones.dispose();
+            mnu.dpContenedor.remove(vcombinaciones);
             comb.setVisible();
         });
      
@@ -65,6 +67,8 @@ public class Combinaciones {
             try {
                 if (vcombinaciones.tblCombinaciones.getSelectedRow() >= 0) {
                     int ID = Integer.parseInt(vcombinaciones.tblCombinaciones.getValueAt(vcombinaciones.tblCombinaciones.getSelectedRow(), 0).toString());
+                    vcombinaciones.dispose();
+                    mnu.dpContenedor.remove(vcombinaciones);
                     comb.onEditar(ID);
                 } else {
                     Toolkit.getDefaultToolkit().beep();

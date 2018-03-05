@@ -8,7 +8,7 @@ package application.controllers;
 import application.config.Generic;
 import application.config.TextPrompt;
 import application.controllers.materiales.CtrlMateriales;
-import application.views.vMateriales; 
+import application.views.vMateriales;
 import application.views.vMenu;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -52,18 +52,23 @@ public class Materiales {
 
     private TableRowSorter<TableModel> filtrador;
 
-    public Materiales(Generic g,JFrame parent) {
-        this.menu =  (vMenu)parent;
+    public Materiales(Generic g, JFrame parent) {
+        this.menu = (vMenu) parent;
         this.g = g;
         vmateriales = new vMateriales();
-        mat =  new CtrlMateriales(vmateriales, g, this,menu);
+        mat = new CtrlMateriales(vmateriales, g, this, menu);
         vmateriales.btnNuevo.addActionListener((e) -> {
+            vmateriales.dispose();
+            menu.dpContenedor.remove(vmateriales);
             mat.setVisible();
         });
         vmateriales.btnEditar.addActionListener((e) -> {
             try {
                 if (vmateriales.tblMateriales.getSelectedRow() >= 0) {
                     int ID = Integer.parseInt(vmateriales.tblMateriales.getValueAt(vmateriales.tblMateriales.getSelectedRow(), 0).toString());
+                    vmateriales.dispose();
+                    menu.dpContenedor.remove(vmateriales);
+                    mat.setVisible();
                     mat.onEditar(ID);
                 } else {
                     Toolkit.getDefaultToolkit().beep();
@@ -138,7 +143,7 @@ public class Materiales {
     }
 
     public void setVisible() {
-         if (vmateriales.isShowing()) {
+        if (vmateriales.isShowing()) {
             //mensaje de que está abierto si se desea
         } else {
             menu.dpContenedor.add(vmateriales);
@@ -176,4 +181,3 @@ public class Materiales {
         return vmateriales;
     }
 }
-

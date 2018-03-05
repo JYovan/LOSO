@@ -60,6 +60,8 @@ public class Usuarios {
         cu = new CtrlUsuarios(vusuarios, g, this, mnu);
         vusuarios = new vUsuarios();
         vusuarios.btnNuevo.addActionListener((e) -> {
+            vusuarios.dispose();
+            mnu.dpContenedor.remove(vusuarios);
             cu.setVisible();
         });
         vusuarios.btnExportar.addActionListener((e) -> {
@@ -69,6 +71,8 @@ public class Usuarios {
             try {
                 if (vusuarios.tblUsuarios.getSelectedRow() >= 0) {
                     int ID = Integer.parseInt(vusuarios.tblUsuarios.getValueAt(vusuarios.tblUsuarios.getSelectedRow(), 0).toString());
+                    vusuarios.dispose();
+                    mnu.dpContenedor.remove(vusuarios);
                     cu.onEditar(ID);
                 } else {
                     Toolkit.getDefaultToolkit().beep();

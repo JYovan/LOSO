@@ -18,6 +18,8 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
+import javax.swing.event.InternalFrameAdapter;
+import javax.swing.event.InternalFrameEvent;
 
 public class CtrlCatalogos {
 
@@ -40,15 +42,32 @@ public class CtrlCatalogos {
         this.vcatalogos = (vCatalogos) parent;
         this.g = g;
         this.catalogos = catalogos;
+        
+        
+        
+        nuevo.addInternalFrameListener(new InternalFrameAdapter() {
+            @Override
+            public void internalFrameClosing(InternalFrameEvent e) {
+                Catalogos cat = catalogos;
+                cat.setVisible();
+                
+            }
+        });
+        editar.addInternalFrameListener(new InternalFrameAdapter() {
+            @Override
+            public void internalFrameClosing(InternalFrameEvent e) {
+                Catalogos cat = catalogos;
+                cat.setVisible();
+            }
+        });
+        
+        
         nuevo.btnGuardar.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     onGuardar();
                 }
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    nuevo.dispose();
-                }
             }
 
             @Override
@@ -59,28 +78,15 @@ public class CtrlCatalogos {
             public void keyReleased(KeyEvent e) {
             }
         });
+
         nuevo.btnGuardar.addActionListener((e) -> {
             onGuardar();
+        
+
         });
         editar.btnGuardar.addActionListener((e) -> {
             onModificar();
-        });
-
-        nuevo.SValue.addKeyListener(new KeyListener() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    nuevo.dispose();
-                }
-            }
-
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
+         
         });
 
         nuevo.IValue.addKeyListener(new KeyListener() {
@@ -125,25 +131,6 @@ public class CtrlCatalogos {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     onGuardar();
                 }
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    nuevo.dispose();
-                }
-            }
-
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-        });
-        editar.SValue.addKeyListener(new KeyListener() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    editar.dispose();
-                }
             }
 
             @Override
@@ -177,9 +164,6 @@ public class CtrlCatalogos {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     onModificar();
                 }
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    editar.dispose();
-                }
             }
 
             @Override
@@ -211,27 +195,31 @@ public class CtrlCatalogos {
             }
         });
 
-        /*PLACEHOLDERS*/
-//        TextPrompt placeholders = new TextPrompt("CLAVE", nuevo.SValue);
-//        placeholders.changeAlpha(0.75f);
-//        placeholders.changeStyle(Font.BOLD);
-//        placeholders = new TextPrompt("ORDEN", nuevo.IValue);
-//        placeholders.changeAlpha(0.75f);
-//        placeholders.changeStyle(Font.BOLD);
-//        placeholders = new TextPrompt("DESCRIPCIÓN", nuevo.Valor_Text);
-//        placeholders.changeAlpha(0.75f);
-//        placeholders.changeStyle(Font.BOLD);
-//        placeholders = new TextPrompt("VALOR", nuevo.Valor_Num);
-//        placeholders.changeAlpha(0.75f);
-//        placeholders.changeStyle(Font.BOLD);
-//        placeholders = new TextPrompt("CAMPO ESPECIAL", nuevo.Special);
-//        placeholders.changeAlpha(0.75f);
-//        placeholders.changeStyle(Font.BOLD);
+
+    }
+
+    public void onMostrarTablero() {
+        menu.dpContenedor.add(vcatalogos);
+
+        Dimension desktopSize = menu.dpContenedor.getSize();
+        Dimension jInternalFrameSize = vcatalogos.getSize();
+        vcatalogos.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
+                (desktopSize.height - jInternalFrameSize.height) / 2);
+        vcatalogos.setFrameIcon(null);
+        vcatalogos.setTitle(this.TipoCatalogo);
+        vcatalogos.show();
     }
 
     public void setVisible() {
-        
-           if(!nuevo.isShowing()){
+
+        if (!nuevo.isShowing()) {
+
+            nuevo.IValue.setText("");
+            nuevo.SValue.setText("");
+            nuevo.Special.setText("");
+            nuevo.Valor_Num.setText("");
+            nuevo.Valor_Text.setText("");
+
             menu.dpContenedor.add(nuevo);
             Dimension desktopSize = menu.dpContenedor.getSize();
             Dimension jInternalFrameSize = nuevo.getSize();
@@ -241,6 +229,8 @@ public class CtrlCatalogos {
             nuevo.show();
             nuevo.toFront();
         }
+
+        nuevo.SValue.requestFocus();
 
     }
 
@@ -259,6 +249,9 @@ public class CtrlCatalogos {
                 JOptionPane.showMessageDialog(null, "REGISTRO AGREGADO", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
                 nuevo.dispose();
                 catalogos.getRecords();
+                menu.dpContenedor.remove(nuevo);
+                catalogos.setVisible();
+
             } else {
                 JOptionPane.showMessageDialog(null, "NO SE HA PODIDO AGREGAR EL REGISTRO", "NO SE HA PODIDO AGREGAR EL REGISTRO", JOptionPane.ERROR_MESSAGE);
             }
@@ -280,19 +273,18 @@ public class CtrlCatalogos {
             editar.Valor_Num.setText(String.valueOf((data[0][3] != null) ? data[0][3] : ""));
             editar.Special.setText(String.valueOf((data[0][4] != null) ? data[0][4] : ""));
             editar.cmbEstatus.setSelectedItem((data[0][5] != null) ? data[0][5].toString() : "");
-            
-            if(!editar.isShowing()){
-            menu.dpContenedor.add(editar);
-            Dimension desktopSize = menu.dpContenedor.getSize();
-            Dimension jInternalFrameSize = editar.getSize();
-            editar.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
-                    (desktopSize.height - jInternalFrameSize.height) / 2);
-            editar.setFrameIcon(null);
-            editar.show();
-            editar.toFront();
-        }
-            
-            
+
+            if (!editar.isShowing()) {
+                menu.dpContenedor.add(editar);
+                Dimension desktopSize = menu.dpContenedor.getSize();
+                Dimension jInternalFrameSize = editar.getSize();
+                editar.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
+                        (desktopSize.height - jInternalFrameSize.height) / 2);
+                editar.setFrameIcon(null);
+                editar.show();
+                editar.toFront();
+            }
+            editar.SValue.requestFocus();
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "NO SE HA PODIDO EDITAR EL REGISTRO", "ERROR AL EDITAR", JOptionPane.ERROR_MESSAGE);
         }
@@ -313,6 +305,9 @@ public class CtrlCatalogos {
                 JOptionPane.showMessageDialog(null, "REGISTRO MODIFICADO", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
                 editar.dispose();
                 catalogos.getRecords();
+                menu.dpContenedor.remove(editar);
+                catalogos.setVisible();
+
             } else {
                 JOptionPane.showMessageDialog(null, "NO SE HA PODIDO MODIFICAR EL REGISTRO", "ERROR AL MODIFICAR EL REGISTRO", JOptionPane.ERROR_MESSAGE);
             }

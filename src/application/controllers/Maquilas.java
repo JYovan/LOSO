@@ -55,23 +55,26 @@ public class Maquilas {
     CtrlMaquilas maq;
 
     private TableRowSorter<TableModel> filtrador;
-    
-    
-       public Maquilas(Generic g, JFrame parent) {
+
+    public Maquilas(Generic g, JFrame parent) {
         this.g = g;
-        this.menu = (vMenu)parent;
-        maq =  new CtrlMaquilas(vmaquilas, g, this, menu);
+        this.menu = (vMenu) parent;
+        maq = new CtrlMaquilas(vmaquilas, g, this, menu);
         vmaquilas = new vMaquilas();
         vmaquilas.btnNuevo.addActionListener((e) -> {
+            vmaquilas.dispose();
+            menu.dpContenedor.remove(vmaquilas);
             maq.setVisible();
         });
         vmaquilas.btnExportar.addActionListener((e) -> {
-            
+
         });
         vmaquilas.btnEditar.addActionListener((e) -> {
             try {
                 if (vmaquilas.tblMaquilas.getSelectedRow() >= 0) {
                     int ID = Integer.parseInt(vmaquilas.tblMaquilas.getValueAt(vmaquilas.tblMaquilas.getSelectedRow(), 0).toString());
+                    vmaquilas.dispose();
+                    menu.dpContenedor.remove(vmaquilas);
                     maq.onEditar(ID);
                 } else {
                     Toolkit.getDefaultToolkit().beep();
@@ -193,7 +196,6 @@ public class Maquilas {
 //            JOptionPane.showMessageDialog(null, "NO SE HA PODIDO GENERAR EL REPORTE DE USUARIOS\n" + e.getMessage(), "ERROR AL GENERAR", JOptionPane.ERROR_MESSAGE);
 //        }
 //    }
-
 //    public void getReporteUsuariosSQL() {
 //        try {
 //            viewer = new JDialog(vmaquilas, "Usuarios - Reporte de Listado de Usuarios", true);
@@ -216,7 +218,6 @@ public class Maquilas {
 //            JOptionPane.showMessageDialog(null, "NO SE HA PODIDO GENERAR EL REPORTE DE USUARIOS\n" + e.getMessage(), "ERROR AL GENERAR", JOptionPane.ERROR_MESSAGE);
 //        }
 //    }
-
     public static boolean isEmailValid(String email) {
         final Pattern EMAIL_REGEX = Pattern.compile("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", Pattern.CASE_INSENSITIVE);
         return EMAIL_REGEX.matcher(email).matches();
@@ -226,7 +227,5 @@ public class Maquilas {
     public static vMaquilas getInstance() {
         return vmaquilas;
     }
-    
-    
 
 }

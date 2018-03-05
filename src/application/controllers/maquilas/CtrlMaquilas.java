@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
+import javax.swing.event.InternalFrameAdapter;
+import javax.swing.event.InternalFrameEvent;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 public class CtrlMaquilas {
@@ -38,6 +40,22 @@ public class CtrlMaquilas {
         this.g = g;
         this.maquilas = maquilas;
         rsc = new Resources();
+        
+        
+        nuevo.addInternalFrameListener(new InternalFrameAdapter() {
+            @Override
+            public void internalFrameClosing(InternalFrameEvent e) {
+                Maquilas maq = maquilas;
+                maq.setVisible();
+            }
+        });
+        editar.addInternalFrameListener(new InternalFrameAdapter() {
+            @Override
+            public void internalFrameClosing(InternalFrameEvent e) {
+                Maquilas maq = maquilas;
+                maq.setVisible();
+            }
+        });
 
         //Ayuda en captura combo box
         nuevo.btnGuardar.addKeyListener(new KeyListener() {
@@ -45,9 +63,6 @@ public class CtrlMaquilas {
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     onGuardar();
-                }
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    nuevo.dispose();
                 }
             }
 
@@ -66,41 +81,7 @@ public class CtrlMaquilas {
             onModificar();
         });
 
-        nuevo.txtClave.addKeyListener(new KeyListener() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    nuevo.dispose();
-                }
-            }
-
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-        });
-
-        nuevo.txtNombre.addKeyListener(new KeyListener() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    editar.dispose();
-                }
-            }
-
-            @Override
-            public void keyTyped(KeyEvent e) {
-
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-        });
+     
 
         nuevo.txtContacto.addKeyListener(new KeyListener() {
             @Override
@@ -108,9 +89,6 @@ public class CtrlMaquilas {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     onGuardar();
                 }
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    nuevo.dispose();
-                }
             }
 
             @Override
@@ -121,50 +99,14 @@ public class CtrlMaquilas {
             public void keyReleased(KeyEvent e) {
             }
         });
-        editar.txtClave.addKeyListener(new KeyListener() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    editar.dispose();
-                }
-            }
+    
 
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-        });
-
-        editar.txtNombre.addKeyListener(new KeyListener() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    editar.dispose();
-                }
-            }
-
-            @Override
-            public void keyTyped(KeyEvent e) {
-
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-        });
 
         editar.txtContacto.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     onModificar();
-                }
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    editar.dispose();
                 }
             }
 
@@ -180,7 +122,14 @@ public class CtrlMaquilas {
     }
 
     public void setVisible() {
-         if (!nuevo.isShowing()) {
+        if (!nuevo.isShowing()) {
+
+            nuevo.txtClave.setText("");
+            nuevo.txtContacto.setText("");
+            nuevo.txtDireccion.setText("");
+            nuevo.txtNombre.setText("");
+            nuevo.txtTelefono.setText("");
+
             menu.dpContenedor.add(nuevo);
             Dimension desktopSize = menu.dpContenedor.getSize();
             Dimension jInternalFrameSize = nuevo.getSize();
@@ -190,6 +139,7 @@ public class CtrlMaquilas {
             nuevo.show();
             nuevo.toFront();
         }
+        nuevo.txtClave.requestFocus();
     }
 
     public void onGuardar() {
@@ -206,6 +156,8 @@ public class CtrlMaquilas {
                 JOptionPane.showMessageDialog(null, "REGISTRO AGREGADO", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
                 nuevo.dispose();
                 maquilas.getRecords();
+                menu.dpContenedor.remove(nuevo);
+                maquilas.setVisible();
             } else {
                 JOptionPane.showMessageDialog(null, "NO SE HA PODIDO AGREGAR EL REGISTRO", "NO SE HA PODIDO AGREGAR EL REGISTRO", JOptionPane.ERROR_MESSAGE);
             }
@@ -237,6 +189,7 @@ public class CtrlMaquilas {
                 editar.show();
                 editar.toFront();
             }
+            editar.txtClave.requestFocus();
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "NO SE HA PODIDO EDITAR EL REGISTRO", "ERROR AL EDITAR", JOptionPane.ERROR_MESSAGE);
         }
@@ -258,6 +211,8 @@ public class CtrlMaquilas {
                 JOptionPane.showMessageDialog(null, "REGISTRO MODIFICADO", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
                 editar.dispose();
                 maquilas.getRecords();
+                menu.dpContenedor.remove(editar);
+                maquilas.setVisible();
             } else {
                 JOptionPane.showMessageDialog(null, "NO SE HA PODIDO MODIFICAR EL REGISTRO", "ERROR AL MODIFICAR EL REGISTRO", JOptionPane.ERROR_MESSAGE);
             }

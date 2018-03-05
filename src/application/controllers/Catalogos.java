@@ -8,19 +8,15 @@ package application.controllers;
 import application.config.Generic;
 import application.config.TextPrompt;
 import application.controllers.catalogos.CtrlCatalogos;
-import application.controllers.usuarios.CtrlUsuarios;
 import application.views.vCatalogos;
 import application.views.vMenu;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.regex.Pattern;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -62,6 +58,9 @@ public class Catalogos {
 
         vcatalogos.btnNuevo.addActionListener((e) -> {
             //(new CtrlCatalogos(vcatalogos, g, this, TipoCatalogo)).setVisible();
+            vcatalogos.dispose();
+            mnu.dpContenedor.remove(vcatalogos);
+
             cat.setVisible();
 
         });
@@ -70,6 +69,8 @@ public class Catalogos {
             try {
                 if (vcatalogos.tblCatalogos.getSelectedRow() >= 0) {
                     int ID = Integer.parseInt(vcatalogos.tblCatalogos.getModel().getValueAt(vcatalogos.tblCatalogos.getSelectedRow(), 0).toString());
+                    vcatalogos.dispose();
+                    mnu.dpContenedor.remove(vcatalogos);
                     cat.onEditar(ID);
                 } else {
                     Toolkit.getDefaultToolkit().beep();
@@ -144,7 +145,7 @@ public class Catalogos {
     }
 
     public void setVisible() {
-         if (vcatalogos.isShowing()) {
+        if (vcatalogos.isShowing()) {
             //mensaje de que está abierto si se desea
         } else {
             mnu.dpContenedor.add(vcatalogos);
@@ -157,7 +158,7 @@ public class Catalogos {
             vcatalogos.setTitle(TipoCatalogo);
             vcatalogos.show();
         }
-   
+
     }
 
     public final void getRecords() {
@@ -181,9 +182,7 @@ public class Catalogos {
 //                row++;
 //            }
             vcatalogos.tblCatalogos.removeColumn(vcatalogos.tblCatalogos.getColumnModel().getColumn(0));
-          
-             
-            
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }

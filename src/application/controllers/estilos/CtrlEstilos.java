@@ -44,6 +44,8 @@ import javax.swing.JLayer;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+import javax.swing.event.InternalFrameAdapter;
+import javax.swing.event.InternalFrameEvent;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import org.apache.commons.io.FilenameUtils;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
@@ -99,6 +101,24 @@ public class CtrlEstilos {
         AutoCompleteDecorator.decorate(this.editar.Temporada);
         AutoCompleteDecorator.decorate(this.editar.Tipo);
         AutoCompleteDecorator.decorate(this.editar.MaquilaPlantilla);
+        
+        
+        nuevo.addInternalFrameListener(new InternalFrameAdapter() {
+            @Override
+            public void internalFrameClosing(InternalFrameEvent e) {
+                Estilos est = estilos;
+                est.setVisible();
+
+            }
+        });
+        editar.addInternalFrameListener(new InternalFrameAdapter() {
+            @Override
+            public void internalFrameClosing(InternalFrameEvent e) {
+                Estilos est = estilos;
+                est.setVisible();
+            }
+        });
+        
         /*NUEVO*/
         nuevo.Ano.addKeyListener(new KeyListener() {
             @Override
@@ -132,33 +152,14 @@ public class CtrlEstilos {
             public void keyReleased(KeyEvent e) {
             }
         });
-        nuevo.Clave.addKeyListener(new KeyListener() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    editar.dispose();
-                }
-            }
-
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-        });
+      
         nuevo.btnGuardar.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     onGuardar();
                 }
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    nuevo.dispose();
-                }
             }
-
             @Override
             public void keyTyped(KeyEvent e) {
             }
@@ -170,22 +171,7 @@ public class CtrlEstilos {
         nuevo.btnGuardar.addActionListener((e) -> {
             onGuardar();
         });
-        nuevo.btnGuardar.addKeyListener(new KeyListener() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    nuevo.dispose();
-                }
-            }
-
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-        });
+       
         nuevo.Foto.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -241,41 +227,11 @@ public class CtrlEstilos {
             public void keyReleased(KeyEvent e) {
             }
         });
-        editar.Clave.addKeyListener(new KeyListener() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    editar.dispose();
-                }
-            }
-
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-        });
+       
         editar.btnGuardar.addActionListener((e) -> {
             onModificar();
         });
-        editar.btnGuardar.addKeyListener(new KeyListener() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    nuevo.dispose();
-                }
-            }
-
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-        });
+       
         editar.Foto.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -313,6 +269,27 @@ public class CtrlEstilos {
             getMaquilas();
             getTemporadas();
             getTipoEstilo();
+
+            nuevo.Ano.setText("");
+            nuevo.Clave.setText("");
+            nuevo.Descripcion.setText("");
+            nuevo.Desperdicio.setText("");
+            nuevo.Herramental.setText("");
+            nuevo.Notas.setText("");
+            nuevo.PuntoCentral.setText("");
+            nuevo.TipoDeConstruccion.setText("");
+            nuevo.Liberado.setSelected(false);
+
+            nuevo.Estatus.setSelectedIndex(0);
+            nuevo.Familia.setSelectedIndex(0);
+            nuevo.Horma.setSelectedIndex(0);
+            nuevo.Linea.setSelectedIndex(0);
+            nuevo.Maquila.setSelectedIndex(0);
+            nuevo.MaquilaPlantilla.setSelectedIndex(0);
+            nuevo.Serie.setSelectedIndex(0);
+            nuevo.Temporada.setSelectedIndex(0);
+            nuevo.Tipo.setSelectedIndex(0);
+
             menu.dpContenedor.add(nuevo);
             Dimension desktopSize = menu.dpContenedor.getSize();
             Dimension jInternalFrameSize = nuevo.getSize();
@@ -322,6 +299,7 @@ public class CtrlEstilos {
             nuevo.show();
             nuevo.toFront();
         }
+        nuevo.Clave.requestFocus();
     }
 
     BufferedImage bufi = null;
@@ -404,6 +382,8 @@ public class CtrlEstilos {
                     JOptionPane.showMessageDialog(null, "ESTILO AGREGADO", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
                     nuevo.dispose();
                     estilos.getRecords();
+                    menu.dpContenedor.remove(nuevo);
+                    estilos.setVisible();
                 } else {
                     JOptionPane.showMessageDialog(null, "NO SE HA PODIDO AGREGAR EL ESTILO", "NO SE HA PODIDO AGREGAR EL ESTILO", JOptionPane.ERROR_MESSAGE);
                 }
@@ -419,6 +399,15 @@ public class CtrlEstilos {
 
     public void onEditar(int IDX) {
         try {
+
+            getLineas();
+            getSeries();
+            getFamilias();
+            getHormas();
+            getMaquilas();
+            getTemporadas();
+            getTipoEstilo();
+
             bufi = null;
             temp = IDX;
             ArrayList<Object> a = new ArrayList<>();
@@ -461,7 +450,7 @@ public class CtrlEstilos {
             editar.Tipo.getModel().setSelectedItem(data[0][18]);
             editar.MaquilaPlantilla.getModel().setSelectedItem(String.valueOf(data[0][19]));
             editar.TipoDeConstruccion.setText(String.valueOf(data[0][20]));
-
+            editar.Clave.requestFocus();
             if (!editar.isShowing()) {
                 menu.dpContenedor.add(editar);
                 Dimension desktopSize = menu.dpContenedor.getSize();
@@ -577,6 +566,8 @@ public class CtrlEstilos {
                     JOptionPane.showMessageDialog(null, "ESTILO MODIFICADO", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
                     editar.dispose();
                     estilos.getRecords();
+                    menu.dpContenedor.remove(editar);
+                    estilos.setVisible();
                 } else {
                     JOptionPane.showMessageDialog(null, "NO SE HA PODIDO MODIFICAR EL ESTILO", "NO SE HA PODIDO MODIFICAR EL ESTILO", JOptionPane.ERROR_MESSAGE);
                 }

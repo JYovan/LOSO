@@ -14,7 +14,6 @@ import application.views.vPermisos;
 import application.views.vMenu;
 import java.awt.Dimension;
 import java.awt.HeadlessException;
-import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.text.DateFormat;
@@ -22,10 +21,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
+import javax.swing.event.InternalFrameAdapter;
+import javax.swing.event.InternalFrameEvent;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 /**
@@ -54,6 +54,23 @@ public class CtrlPermisos {
         this.permisos = permisos;
         AutoCompleteDecorator.decorate(this.nuevo.Modulo);
         AutoCompleteDecorator.decorate(this.nuevo.Usuario);
+        
+        nuevo.addInternalFrameListener(new InternalFrameAdapter() {
+            @Override
+            public void internalFrameClosing(InternalFrameEvent e) {
+                Permisos per = permisos;
+                per.setVisible();
+            }
+        });
+        editar.addInternalFrameListener(new InternalFrameAdapter() {
+            @Override
+            public void internalFrameClosing(InternalFrameEvent e) {
+                Permisos per = permisos;
+                per.setVisible();
+            }
+        });
+        
+        
         nuevo.Modulo.addActionListener((e) -> {
             for (Item modulo : modulos) {
                 if (modulo.getDescription().equals(nuevo.Modulo.getSelectedItem().toString())) {
@@ -67,9 +84,6 @@ public class CtrlPermisos {
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     onGuardar();
-                }
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    nuevo.dispose();
                 }
             }
 
@@ -87,38 +101,8 @@ public class CtrlPermisos {
         editar.btnGuardar.addActionListener((e) -> {
             onModificar();
         });
-        nuevo.Usuario.addKeyListener(new KeyListener() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    nuevo.dispose();
-                }
-            }
-
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-        });
-        editar.Usuario.addKeyListener(new KeyListener() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    editar.dispose();
-                }
-            }
-
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-        });
+       
+     
         /*INVOCAR METODOS QUE RELLENAN DATOS*/
         getModulos();
         getUsuarios();
@@ -126,6 +110,16 @@ public class CtrlPermisos {
 
     public void setVisible() {
         if (!nuevo.isShowing()) {
+            nuevo.Ver.setSelected(false);
+            nuevo.Reportes.setSelected(false);
+            nuevo.Modificar.setSelected(false);
+            nuevo.Eliminar.setSelected(false);
+            nuevo.Crear.setSelected(false);
+            nuevo.Consultar.setSelected(false);
+            nuevo.Buscar.setSelected(false);
+            nuevo.Usuario.setSelectedIndex(0);
+            nuevo.Modulo.setSelectedIndex(0);
+            
             menu.dpContenedor.add(nuevo);
             Dimension desktopSize = menu.dpContenedor.getSize();
             Dimension jInternalFrameSize = nuevo.getSize();
@@ -135,6 +129,7 @@ public class CtrlPermisos {
             nuevo.show();
             nuevo.toFront();
         }
+        nuevo.Modulo.requestFocus();
     }
 
     public void onGuardar() {
@@ -156,6 +151,8 @@ public class CtrlPermisos {
                 JOptionPane.showMessageDialog(null, "PERMISO AGREGADO", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
                 nuevo.dispose();
                 permisos.getRecords();
+                menu.dpContenedor.remove(nuevo);
+                permisos.setVisible();
             } else {
                 JOptionPane.showMessageDialog(null, "NO SE HA PODIDO AGREGAR EL PERMISO", "NO SE HA PODIDO AGREGAR EL PERMISO", JOptionPane.ERROR_MESSAGE);
             }
@@ -190,6 +187,7 @@ public class CtrlPermisos {
                 editar.show();
                 editar.toFront();
             }
+            editar.Modulo.requestFocus();
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "NO SE HA PODIDO EDITAR EL PERMISO", "ERROR AL EDITAR", JOptionPane.ERROR_MESSAGE);
         }
@@ -210,6 +208,8 @@ public class CtrlPermisos {
                 JOptionPane.showMessageDialog(null, "PERMISO MODIFICADO", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
                 editar.dispose();
                 permisos.getRecords();
+                menu.dpContenedor.remove(editar);
+                permisos.setVisible();
             } else {
                 JOptionPane.showMessageDialog(null, "NO SE HA PODIDO MODIFICAR EL PERMISO", "ERROR AL MODIFICAR EL PERMISO", JOptionPane.ERROR_MESSAGE);
             }

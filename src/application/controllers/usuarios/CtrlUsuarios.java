@@ -6,7 +6,6 @@
 package application.controllers.usuarios;
 
 import application.config.Generic;
-import application.config.TextPrompt;
 import application.controllers.Usuarios;
 import application.views.usuarios.mdlIFEditar;
 import application.views.usuarios.mdlIFNuevo;
@@ -31,6 +30,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
+import javax.swing.event.InternalFrameAdapter;
+import javax.swing.event.InternalFrameEvent;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 /**
@@ -55,14 +56,28 @@ public class CtrlUsuarios {
         this.usuarios = usuarios;
         this.mnu = (vMenu) menu;
         AutoCompleteDecorator.decorate(nuevo.Tipo);
+        
+        nuevo.addInternalFrameListener(new InternalFrameAdapter() {
+            @Override
+            public void internalFrameClosing(InternalFrameEvent e) {
+                Usuarios u = usuarios;
+                u.setVisible();
+            }
+        });
+        editar.addInternalFrameListener(new InternalFrameAdapter() {
+            @Override
+            public void internalFrameClosing(InternalFrameEvent e) {
+                Usuarios u = usuarios;
+                u.setVisible();
+            }
+        });
+        
+        
         nuevo.btnGuardar.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     onGuardar();
-                }
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    nuevo.dispose();
                 }
             }
 
@@ -93,31 +108,13 @@ public class CtrlUsuarios {
             }
 
         });
-        nuevo.Usuario.addKeyListener(new KeyListener() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    nuevo.dispose();
-                }
-            }
-
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-        });
+       
         nuevo.Correo.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     onGuardar();
                 }
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    nuevo.dispose();
-                }
             }
 
             @Override
@@ -128,30 +125,12 @@ public class CtrlUsuarios {
             public void keyReleased(KeyEvent e) {
             }
         });
-        editar.Usuario.addKeyListener(new KeyListener() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    editar.dispose();
-                }
-            }
-
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-        });
+ 
         editar.Correo.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     onModificar();
-                }
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    editar.dispose();
                 }
             }
 
@@ -179,11 +158,15 @@ public class CtrlUsuarios {
         /*PLACEHOLDERS*/
 
     }
-    
-   
-    
+
     public void setVisible() {
-        if(!nuevo.isShowing()){
+        if (!nuevo.isShowing()) {
+            nuevo.Usuario.setText("");
+            nuevo.Contrasena.setText("");
+            nuevo.Correo.setText("");
+            nuevo.Foto.setText("");
+            nuevo.Tipo.setSelectedIndex(0);
+
             mnu.dpContenedor.add(nuevo);
             Dimension desktopSize = mnu.dpContenedor.getSize();
             Dimension jInternalFrameSize = nuevo.getSize();
@@ -193,8 +176,7 @@ public class CtrlUsuarios {
             nuevo.show();
             nuevo.toFront();
         }
-  
-       
+        nuevo.Usuario.requestFocus();
     }
 
     public void onGuardar() {
@@ -210,6 +192,8 @@ public class CtrlUsuarios {
                 JOptionPane.showMessageDialog(null, "USUARIO AGREGADO", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
                 nuevo.dispose();
                 usuarios.getRecords();
+                 mnu.dpContenedor.remove(nuevo);
+                usuarios.setVisible();
             } else {
                 JOptionPane.showMessageDialog(null, "NO SE HA PODIDO AGREGAR EL USUARIO", "NO SE HA PODIDO AGREGAR EL USUARIO", JOptionPane.ERROR_MESSAGE);
             }
@@ -240,6 +224,7 @@ public class CtrlUsuarios {
                 editar.show();
                 editar.toFront();
             }
+            editar.Usuario.requestFocus();
 
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "NO SE HA PODIDO EDITAR EL USUARIO", "ERROR AL EDITAR", JOptionPane.ERROR_MESSAGE);
@@ -258,6 +243,8 @@ public class CtrlUsuarios {
                 JOptionPane.showMessageDialog(null, "USUARIO MODIFICADO", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
                 editar.dispose();
                 usuarios.getRecords();
+                mnu.dpContenedor.remove(editar);
+                usuarios.setVisible();
             } else {
                 JOptionPane.showMessageDialog(null, "NO SE HA PODIDO MODIFICAR EL USUARIO", "ERROR AL MODIFICAR EL USUARIO", JOptionPane.ERROR_MESSAGE);
             }

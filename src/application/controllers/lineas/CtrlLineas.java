@@ -7,6 +7,7 @@ package application.controllers.lineas;
 
 import application.config.Generic;
 import application.config.TextPrompt;
+import application.controllers.Fracciones;
 import application.controllers.Lineas;
 import application.helpers.Item;
 import application.third_party.Resources;
@@ -25,6 +26,8 @@ import java.util.Iterator;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
+import javax.swing.event.InternalFrameAdapter;
+import javax.swing.event.InternalFrameEvent;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 /**
@@ -57,6 +60,23 @@ public class CtrlLineas {
         //Ayuda en captura combo box
         AutoCompleteDecorator.decorate(this.nuevo.cmbEstatusMuestra);
         AutoCompleteDecorator.decorate(this.editar.cmbEstatusMuestra);
+        
+        
+        
+         nuevo.addInternalFrameListener(new InternalFrameAdapter() {
+            @Override
+            public void internalFrameClosing(InternalFrameEvent e) {
+                Lineas lin = lineas;
+                lin.setVisible();
+            }
+        });
+        editar.addInternalFrameListener(new InternalFrameAdapter() {
+            @Override
+            public void internalFrameClosing(InternalFrameEvent e) {
+                Lineas lin = lineas;
+                lin.setVisible();
+            }
+        });
 
         nuevo.btnGuardar.addKeyListener(new KeyListener() {
             @Override
@@ -197,22 +217,21 @@ public class CtrlLineas {
             }
         });
 
-        /*PLACEHOLDERS*/
-//        TextPrompt placeholders = new TextPrompt("AÑO", nuevo.txtAno);
-//        placeholders.changeAlpha(0.75f);
-//        placeholders.changeStyle(Font.BOLD);
-//        placeholders = new TextPrompt("CLAVE", nuevo.txtClave);
-//        placeholders.changeAlpha(0.75f);
-//        placeholders.changeStyle(Font.BOLD);
-//        placeholders = new TextPrompt("DESCRIPCIÓN", nuevo.txtDescripcion);
-//        placeholders.changeAlpha(0.75f);
-//        placeholders.changeStyle(Font.BOLD);
+
         getTemporadas();
         getTiposEstilo();
     }
 
     public void setVisible() {
         if (!nuevo.isShowing()) {
+
+            nuevo.txtAno.setText("");
+            nuevo.txtClave.setText("");
+            nuevo.txtDescripcion.setText("");
+
+            nuevo.cmbEstatusMuestra.setSelectedIndex(0);
+            nuevo.cmbTemporada.setSelectedIndex(0);
+
             menu.dpContenedor.add(nuevo);
             Dimension desktopSize = menu.dpContenedor.getSize();
             Dimension jInternalFrameSize = nuevo.getSize();
@@ -222,6 +241,7 @@ public class CtrlLineas {
             nuevo.show();
             nuevo.toFront();
         }
+        nuevo.txtClave.requestFocus();
     }
 
     public void onGuardar() {
@@ -250,6 +270,8 @@ public class CtrlLineas {
                 JOptionPane.showMessageDialog(null, "REGISTRO AGREGADO", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
                 nuevo.dispose();
                 lineas.getRecords();
+                menu.dpContenedor.remove(nuevo);
+                lineas.setVisible();
             } else {
                 JOptionPane.showMessageDialog(null, "NO SE HA PODIDO AGREGAR EL REGISTRO", "NO SE HA PODIDO AGREGAR EL REGISTRO", JOptionPane.ERROR_MESSAGE);
             }
@@ -281,6 +303,7 @@ public class CtrlLineas {
                 editar.show();
                 editar.toFront();
             }
+            editar.txtClave.requestFocus();
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "NO SE HA PODIDO EDITAR EL REGISTRO", "ERROR AL EDITAR", JOptionPane.ERROR_MESSAGE);
         }
@@ -323,6 +346,8 @@ public class CtrlLineas {
                 JOptionPane.showMessageDialog(null, "REGISTRO MODIFICADO", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
                 editar.dispose();
                 lineas.getRecords();
+                menu.dpContenedor.remove(editar);
+                lineas.setVisible();
             } else {
                 JOptionPane.showMessageDialog(null, "NO SE HA PODIDO MODIFICAR EL REGISTRO", "ERROR AL MODIFICAR EL REGISTRO", JOptionPane.ERROR_MESSAGE);
             }

@@ -18,6 +18,8 @@ import java.util.Iterator;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
+import javax.swing.event.InternalFrameAdapter;
+import javax.swing.event.InternalFrameEvent;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 public class CtrlFracciones {
@@ -32,7 +34,7 @@ public class CtrlFracciones {
     vMenu menu;
 
     public CtrlFracciones(JInternalFrame parent, Generic g, Fracciones fracciones, JFrame menu) {
-        this.menu =  (vMenu) menu;
+        this.menu = (vMenu) menu;
         nuevo = new mdlINuevo();
         editar = new mdlIEditar();
         this.vfracciones = (vFracciones) parent;
@@ -42,15 +44,28 @@ public class CtrlFracciones {
         //Ayuda en captura combo box
         AutoCompleteDecorator.decorate(this.nuevo.cmbDepartamento);
         AutoCompleteDecorator.decorate(this.editar.cmbDepartamento);
+        
+        
+        nuevo.addInternalFrameListener(new InternalFrameAdapter() {
+            @Override
+            public void internalFrameClosing(InternalFrameEvent e) {
+                Fracciones fra = fracciones;
+                fra.setVisible();
+            }
+        });
+        editar.addInternalFrameListener(new InternalFrameAdapter() {
+            @Override
+            public void internalFrameClosing(InternalFrameEvent e) {
+                Fracciones fra = fracciones;
+                fra.setVisible();
+            }
+        });
 
         nuevo.btnGuardar.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     onGuardar();
-                }
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    nuevo.dispose();
                 }
             }
 
@@ -69,41 +84,6 @@ public class CtrlFracciones {
             onModificar();
         });
 
-        nuevo.txtClave.addKeyListener(new KeyListener() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    nuevo.dispose();
-                }
-            }
-
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-        });
-
-        nuevo.txtDescripcion.addKeyListener(new KeyListener() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    editar.dispose();
-                }
-            }
-
-            @Override
-            public void keyTyped(KeyEvent e) {
-
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-        });
 
         nuevo.cmbDepartamento.addKeyListener(new KeyListener() {
             @Override
@@ -111,9 +91,6 @@ public class CtrlFracciones {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     onGuardar();
                 }
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    nuevo.dispose();
-                }
             }
 
             @Override
@@ -124,50 +101,13 @@ public class CtrlFracciones {
             public void keyReleased(KeyEvent e) {
             }
         });
-        editar.txtClave.addKeyListener(new KeyListener() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    editar.dispose();
-                }
-            }
-
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-        });
-
-        editar.txtDescripcion.addKeyListener(new KeyListener() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    editar.dispose();
-                }
-            }
-
-            @Override
-            public void keyTyped(KeyEvent e) {
-
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-        });
+   
 
         editar.cmbEstatus.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     onModificar();
-                }
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    editar.dispose();
                 }
             }
 
@@ -181,11 +121,16 @@ public class CtrlFracciones {
         });
 
         getDepartamentos();
-        
+
     }
 
     public void setVisible() {
-         if(!nuevo.isShowing()){
+        if (!nuevo.isShowing()) {
+
+            nuevo.txtClave.setText("");
+            nuevo.txtDescripcion.setText("");
+            nuevo.cmbDepartamento.setSelectedIndex(0);
+
             menu.dpContenedor.add(nuevo);
             Dimension desktopSize = menu.dpContenedor.getSize();
             Dimension jInternalFrameSize = nuevo.getSize();
@@ -195,6 +140,7 @@ public class CtrlFracciones {
             nuevo.show();
             nuevo.toFront();
         }
+        nuevo.txtClave.requestFocus();
     }
 
     public void onGuardar() {
@@ -215,6 +161,8 @@ public class CtrlFracciones {
                 JOptionPane.showMessageDialog(null, "REGISTRO AGREGADO", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
                 nuevo.dispose();
                 fracciones.getRecords();
+                menu.dpContenedor.remove(nuevo);
+                fracciones.setVisible();
             } else {
                 JOptionPane.showMessageDialog(null, "NO SE HA PODIDO AGREGAR EL REGISTRO", "NO SE HA PODIDO AGREGAR EL REGISTRO", JOptionPane.ERROR_MESSAGE);
             }
@@ -232,20 +180,21 @@ public class CtrlFracciones {
             Object[][] data = combinacion.get(0);
             editar.txtClave.setText(String.valueOf((data[0][1] != null) ? data[0][1] : ""));
             editar.txtDescripcion.setText(String.valueOf((data[0][2] != null) ? data[0][2] : ""));
-             if (data[0][3] != null) {
+            if (data[0][3] != null) {
                 editar.cmbDepartamento.getModel().setSelectedItem(data[0][3]);
             }
 
-            if(!editar.isShowing()){
-            menu.dpContenedor.add(editar);
-            Dimension desktopSize = menu.dpContenedor.getSize();
-            Dimension jInternalFrameSize = editar.getSize();
-            editar.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
-                    (desktopSize.height - jInternalFrameSize.height) / 2);
-            editar.setFrameIcon(null);
-            editar.show();
-            editar.toFront();
-        }
+            if (!editar.isShowing()) {
+                menu.dpContenedor.add(editar);
+                Dimension desktopSize = menu.dpContenedor.getSize();
+                Dimension jInternalFrameSize = editar.getSize();
+                editar.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
+                        (desktopSize.height - jInternalFrameSize.height) / 2);
+                editar.setFrameIcon(null);
+                editar.show();
+                editar.toFront();
+            }
+            editar.txtClave.requestFocus();
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "NO SE HA PODIDO EDITAR EL REGISTRO", "ERROR AL EDITAR", JOptionPane.ERROR_MESSAGE);
         }
@@ -258,7 +207,6 @@ public class CtrlFracciones {
             a.add(temp);
             a.add(editar.txtClave.getText());
             a.add(editar.txtDescripcion.getText());
-           
 
             if (editar.cmbDepartamento.getSelectedIndex() != -1) {
                 x = getID(departamentos, editar.cmbDepartamento.getSelectedItem().toString());
@@ -277,6 +225,8 @@ public class CtrlFracciones {
                 JOptionPane.showMessageDialog(null, "REGISTRO MODIFICADO", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
                 editar.dispose();
                 fracciones.getRecords();
+                menu.dpContenedor.remove(editar);
+                fracciones.setVisible();
             } else {
                 JOptionPane.showMessageDialog(null, "NO SE HA PODIDO MODIFICAR EL REGISTRO", "ERROR AL MODIFICAR EL REGISTRO", JOptionPane.ERROR_MESSAGE);
             }
@@ -309,7 +259,7 @@ public class CtrlFracciones {
             nuevo.cmbDepartamento.addItem("");
             editar.cmbDepartamento.addItem("");
             for (Iterator it = g.fill("SP_OBTENER_DEPARTAMENTOS").iterator(); it.hasNext();) {
-                 Object[] item = (Object[]) it.next();
+                Object[] item = (Object[]) it.next();
                 departamento = new Item(Integer.parseInt(String.valueOf(item[0])), String.valueOf(item[1]));
                 departamentos.add(departamento);
                 nuevo.cmbDepartamento.addItem(String.valueOf(item[1]));

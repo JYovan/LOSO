@@ -136,11 +136,6 @@ public class Menu {
             c.setVisible();
         });
 
-        menu.mnuSeries.addActionListener((e) -> {
-            c.setTipoCatalogo("SERIES");
-            c.getRecords();
-            c.setVisible();
-        });
 
         menu.mnuTiposEstilo.addActionListener((e) -> {
             c.setTipoCatalogo("TIPOS ESTILO");

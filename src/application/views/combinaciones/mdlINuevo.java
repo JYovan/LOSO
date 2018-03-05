@@ -5,6 +5,8 @@
  */
 package application.views.combinaciones;
 
+import application.config.ManejadorTecla;
+
 /**
  *
  * @author Christian
@@ -14,8 +16,13 @@ public class mdlINuevo extends javax.swing.JInternalFrame {
     /**
      * Creates new form mdlINuevo
      */
+    ManejadorTecla manejador = new ManejadorTecla();
     public mdlINuevo() {
         initComponents();
+        this.txtClave.addKeyListener(manejador);
+        this.txtDescripcion.addKeyListener(manejador);
+        this.cmbEstilo.addKeyListener(manejador);
+        this.cmbLinea.addKeyListener(manejador);
     }
 
     /**

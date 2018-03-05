@@ -55,17 +55,21 @@ public class Estilos {
 
     public Estilos(Generic g, JFrame parent) {
         this.g = g;
-        this.menu =  (vMenu)parent;
+        this.menu = (vMenu) parent;
         vestilos = new vEstilos();
-        est = new CtrlEstilos(vestilos, g, this,menu);
-        
+        est = new CtrlEstilos(vestilos, g, this, menu);
+
         vestilos.btnNuevo.addActionListener((e) -> {
+            vestilos.dispose();
+            menu.dpContenedor.remove(vestilos);
             est.setVisible();
         });
         vestilos.btnEditar.addActionListener((e) -> {
             try {
                 if (vestilos.tblEstilos.getSelectedRow() >= 0) {
                     int ID = Integer.parseInt(vestilos.tblEstilos.getValueAt(vestilos.tblEstilos.getSelectedRow(), 0).toString());
+                    vestilos.dispose();
+                    menu.dpContenedor.remove(vestilos);
                     est.onEditar(ID);
                 } else {
                     Toolkit.getDefaultToolkit().beep();

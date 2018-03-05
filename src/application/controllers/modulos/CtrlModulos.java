@@ -25,6 +25,8 @@ import java.util.Date;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
+import javax.swing.event.InternalFrameAdapter;
+import javax.swing.event.InternalFrameEvent;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 /**
@@ -48,15 +50,28 @@ public class CtrlModulos {
         this.g = g;
         this.modulos = modulos;
         this.menu = (vMenu) menu;
+        
+        
+        nuevo.addInternalFrameListener(new InternalFrameAdapter() {
+            @Override
+            public void internalFrameClosing(InternalFrameEvent e) {
+                Modulos mod = modulos;
+                mod.setVisible();
+            }
+        });
+        editar.addInternalFrameListener(new InternalFrameAdapter() {
+            @Override
+            public void internalFrameClosing(InternalFrameEvent e) {
+                Modulos mod = modulos;
+                mod.setVisible();
+            }
+        });
 
         nuevo.btnGuardar.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     onGuardar();
-                }
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    nuevo.dispose();
                 }
             }
 
@@ -83,9 +98,6 @@ public class CtrlModulos {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     onGuardar();
                 }
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    nuevo.dispose();
-                }
             }
 
             @Override
@@ -102,9 +114,6 @@ public class CtrlModulos {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     onModificar();
                 }
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    editar.dispose();
-                }
             }
 
             @Override
@@ -115,14 +124,13 @@ public class CtrlModulos {
             public void keyReleased(KeyEvent e) {
             }
         });
-        /*PLACEHOLDERS*/
-//        TextPrompt placeholders = new TextPrompt("NOMBRE DEL MODULO", nuevo.Modulo);
-//        placeholders.changeAlpha(0.75f);
-//        placeholders.changeStyle(Font.BOLD);
     }
 
     public void setVisible() {
         if (!nuevo.isShowing()) {
+            
+            nuevo.Modulo.setText("");
+            
             menu.dpContenedor.add(nuevo);
             Dimension desktopSize = menu.dpContenedor.getSize();
             Dimension jInternalFrameSize = nuevo.getSize();
@@ -132,6 +140,7 @@ public class CtrlModulos {
             nuevo.show();
             nuevo.toFront();
         }
+        nuevo.Modulo.requestFocus();
     }
 
     public void onGuardar() {
@@ -146,6 +155,8 @@ public class CtrlModulos {
                 JOptionPane.showMessageDialog(null, "MODULO AGREGADO", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
                 nuevo.dispose();
                 modulos.getRecords();
+                menu.dpContenedor.remove(nuevo);
+                modulos.setVisible();
             } else {
                 JOptionPane.showMessageDialog(null, "NO SE HA PODIDO AGREGAR EL MODULO", "NO SE HA PODIDO AGREGAR EL MODULO", JOptionPane.ERROR_MESSAGE);
             }
@@ -173,6 +184,7 @@ public class CtrlModulos {
                     editar.show();
                     editar.toFront();
                 }
+                editar.Modulo.requestFocus();
             } else {
                 JOptionPane.showMessageDialog(null, "NO SE HA PODIDO EDITAR EL MODULO", "ERROR AL EDITAR", JOptionPane.ERROR_MESSAGE);
             }
@@ -190,6 +202,8 @@ public class CtrlModulos {
                 JOptionPane.showMessageDialog(null, "MODULO MODIFICADO", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
                 editar.dispose();
                 modulos.getRecords();
+                menu.dpContenedor.remove(editar);
+                modulos.setVisible();
             } else {
                 JOptionPane.showMessageDialog(null, "NO SE HA PODIDO MODIFICAR EL MODULO", "ERROR AL MODIFICAR EL MODULO", JOptionPane.ERROR_MESSAGE);
             }
