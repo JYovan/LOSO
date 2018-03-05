@@ -1213,6 +1213,23 @@ SET NOCOUNT ON;
 END
 GO
 -- -----------------------------------------------------
+-- procedure SP_MATERIALES_X_COMBINACION_X_ID
+-- -----------------------------------------------------
+IF EXISTS (	SELECT name FROM sysobjects WHERE  name = 'SP_MATERIALES_X_COMBINACION_X_ID' AND TYPE = 'P')
+	DROP PROCEDURE SP_MATERIALES_X_COMBINACION_X_ID
+GO
+CREATE PROCEDURE SP_MATERIALES_X_COMBINACION_X_ID(@IDX INT)
+AS
+BEGIN
+SET NOCOUNT ON; 
+
+	SELECT [ID]
+      ,[Estilo] AS ESTILO
+      ,[Combinacion] AS COMBINACION
+      ,[Pieza] AS PIEZA FROM [MaterialesXCombinacion] AS MXC WHERE MXC.Estatus IN('ACTIVO') AND MXC.ID = @ID;
+END
+GO
+-- -----------------------------------------------------
 -- procedure SP_OBTENER_COMBINACIONES_MXC
 -- -----------------------------------------------------
 IF EXISTS (	SELECT name FROM sysobjects WHERE  name = 'SP_OBTENER_COMBINACIONES_MXC' AND TYPE = 'P')
