@@ -654,15 +654,15 @@ SET NOCOUNT ON;
 SELECT 
 	E.ID, L.Descripcion, E.Clave, E.Descripcion, F.SValue AS FAMILIA, 
 	S.SValue AS SERIE, H.SValue AS HORMA, E.Genero, E.Foto, E.Estatus, 
-	E.Desperdicio, E.Liberado, E.Herramental, M.SValue  AS MAQUILA, E.Notas, 
+	E.Desperdicio, E.Liberado, E.Herramental, M.Nombre  AS MAQUILA, E.Notas, 
 	E.Ano, T.SValue AS TEMPORADA, E.PuntoCentral, TE.SValue  AS TIPO_ESTILO, E.MaquilaPlantilla, 
 	E.TipoDeConstruccion, E.Registro AS REGISTRO 
     FROM Estilos AS E 
+	LEFT JOIN Maquilas AS M ON E.Maquila = M.ID  
     LEFT JOIN Lineas AS L ON E.Linea = L.ID 
     LEFT JOIN Catalogos AS F ON E.Familia = F.ID AND F.FieldId LIKE 'FAMILIAS'
     LEFT JOIN Catalogos AS S ON E.Serie = S.ID  AND S.FieldId LIKE 'SERIES'
     LEFT JOIN Catalogos AS H ON E.Horma = H.ID  AND H.FieldId LIKE 'HORMAS'
-    LEFT JOIN Catalogos AS M ON E.Maquila = M.ID  AND M.FieldId LIKE 'MAQUILAS'
     LEFT JOIN Catalogos AS T ON E.Temporada = T.ID  AND T.FieldId LIKE 'TEMPORADAS'
     LEFT JOIN Catalogos AS TE ON E.Tipo = TE.ID  AND TE.FieldId LIKE 'TIPOS ESTILO'
     WHERE E.ID = @IDX AND E.Estatus IN('ACTIVO','INACTIVO');
