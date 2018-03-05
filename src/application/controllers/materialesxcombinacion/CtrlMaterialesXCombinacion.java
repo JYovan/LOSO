@@ -33,6 +33,8 @@ import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.event.InternalFrameAdapter;
+import javax.swing.event.InternalFrameEvent;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -73,6 +75,13 @@ public class CtrlMaterialesXCombinacion {
         AutoCompleteDecorator.decorate(this.editar.Combinacion);
         AutoCompleteDecorator.decorate(this.editar.Tipo);
         /*NUEVO*/
+        nuevo.addInternalFrameListener(new InternalFrameAdapter() {
+            @Override
+            public void internalFrameClosed(InternalFrameEvent e) {
+                MaterialesXCombinacion mxc = materialesxcombinacion;
+                mxc.setVisible();
+            }
+        });
         nuevo.btnRefrescar.addActionListener((e) -> {
             getMateriales();
         });
@@ -92,14 +101,13 @@ public class CtrlMaterialesXCombinacion {
                 if (Consumo > 0) {
                     int ID = Integer.parseInt(nuevo.tblMateriales.getModel().getValueAt(nuevo.tblMateriales.getSelectedRow(), 0).toString());
                     DefaultTableModel model = (DefaultTableModel) nuevo.tblMaterialesAgregados.getModel();
-                    model.addRow(
-                            new Object[]{
-                                ID/*ID*/,
-                                nuevo.tblMateriales.getValueAt(nuevo.tblMateriales.getSelectedRow(), 0).toString()/*MATERIAL*/,
-                                nuevo.tblMateriales.getValueAt(nuevo.tblMateriales.getSelectedRow(), 1).toString()/*U.M.*/,
-                                nuevo.tblMateriales.getValueAt(nuevo.tblMateriales.getSelectedRow(), 2).toString()/*PRECIO*/,
-                                String.valueOf(nuevo.Consumo.getValue()),
-                                nuevo.Tipo.getSelectedItem().toString()});
+                    model.addRow(new Object[]{
+                        ID/*ID*/,
+                        nuevo.tblMateriales.getValueAt(nuevo.tblMateriales.getSelectedRow(), 0).toString()/*MATERIAL*/,
+                        nuevo.tblMateriales.getValueAt(nuevo.tblMateriales.getSelectedRow(), 1).toString()/*U.M.*/,
+                        nuevo.tblMateriales.getValueAt(nuevo.tblMateriales.getSelectedRow(), 2).toString()/*PRECIO*/,
+                        String.valueOf(nuevo.Consumo.getValue()),
+                        nuevo.Tipo.getSelectedItem().toString()});
                     nuevo.Consumo.setValue(0);
                 } else {
                     JOptionPane.showMessageDialog(null, "DEBE DE ESTABLECER UN CONSUMO", "ATENCIÓN", JOptionPane.WARNING_MESSAGE);
@@ -196,10 +204,39 @@ public class CtrlMaterialesXCombinacion {
                 JOptionPane.showMessageDialog(null, "changeUpdate en la tabla Materiales no sooportada Linea 174");
             }
         });
+        editar.BuscarMateriales.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                String text = editar.BuscarMateriales.getText();
+                if (text.trim().length() == 0) {
+                    filtrador.setRowFilter(null);
+                } else {
+                    filtrador.setRowFilter(RowFilter.regexFilter(text));
+                }
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                String text = editar.BuscarMateriales.getText();
+                if (text.trim().length() == 0) {
+                    filtrador.setRowFilter(null);
+                } else {
+                    filtrador.setRowFilter(RowFilter.regexFilter(text));
+                }
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                JOptionPane.showMessageDialog(null, "changeUpdate en la tabla Materiales no sooportada Linea 174");
+            }
+        });
         /*PLACEHOLDERS*/
-        TextPrompt placeholder = new TextPrompt("BUSCA POR MATERIAL...", nuevo.BuscarMateriales);
-        placeholder.changeAlpha(0.75f);
-        placeholder.changeStyle(Font.ITALIC);
+        TextPrompt pnuevo = new TextPrompt("BUSCA POR MATERIAL...", nuevo.BuscarMateriales);
+        pnuevo.changeAlpha(0.75f);
+        pnuevo.changeStyle(Font.ITALIC);
+        TextPrompt peditar = new TextPrompt("BUSCA POR MATERIAL...", editar.BuscarMateriales);
+        peditar.changeAlpha(0.75f);
+        peditar.changeStyle(Font.ITALIC);
 
         /*INVOCAR METODOS QUE RELLENAN DATOS*/
     }
@@ -252,14 +289,16 @@ public class CtrlMaterialesXCombinacion {
                     System.out.println("* * * DETALLE * * *");
                     for (int i = 0; i < nuevo.tblMaterialesAgregados.getRowCount(); i++) {
 //                        @IDX INT, @Material INT, @Consumo FLOAT, @Tipo INT,@Registro VARCHAR(25)
-                        detalle.add(Integer.parseInt(String.valueOf(ID[0][0])));/*ID*/
-                        detalle.add(Integer.parseInt(nuevo.tblMaterialesAgregados.getValueAt(i, 0).toString()));/*MATERIAL*/
-                        detalle.add(Integer.parseInt(nuevo.tblMaterialesAgregados.getValueAt(i, 1).toString()));
+                        detalle.add(Integer.parseInt(String.valueOf(ID[0][0])));/*ID ENCABEZADO*/
+                        int IDM = Integer.parseInt(nuevo.tblMaterialesAgregados.getModel().getValueAt(i, 0).toString());
+                        detalle.add(IDM);/*ID MATERIAL*/
+                        detalle.add(Float.parseFloat(nuevo.tblMaterialesAgregados.getValueAt(i, 3).toString()));/*CONSUMO*/
                         fechatiempo = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(Calendar.getInstance().getTime());
-                        detalle.add(Integer.parseInt(nuevo.tblMaterialesAgregados.getValueAt(i, 2).toString()));
-                        detalle.add(fechatiempo);
+                        detalle.add(nuevo.tblMaterialesAgregados.getValueAt(i, 2).toString().equals("DIR") ? 1 : 2);
+                        detalle.add(fechatiempo);/*REGISTRO*/
                         if (g.addUpdateOrDelete("SP_AGREGAR_MATERIALES_X_COMBINACION_DETALLE", detalle)) {
-                            JOptionPane.showMessageDialog(null, "MATERIAL POR COMBINACION NO AGREGADO\n", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
+                            detalle.clear();
+                            JOptionPane.showMessageDialog(null, "MATERIAL POR COMBINACION AGREGADO\n", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
                         }
                         System.out.println("ID: " + nuevo.tblMaterialesAgregados.getValueAt(i, 0).toString() + "\tMATERIAL: " + nuevo.tblMaterialesAgregados.getValueAt(i, 1).toString());
                     }
@@ -287,11 +326,8 @@ public class CtrlMaterialesXCombinacion {
             temp = IDX;
             ArrayList<Object> a = new ArrayList<>();
             a.add(IDX);
-            ArrayList<Object[][]> x = g.findByParams("SP_ESTILO_X_ID", a);
-            Object[][] data = x.get(0); 
-//
-//            editar.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("media/96/icons8_Idea_96px.png")));
-//            editar.setLocationRelativeTo(null);
+            ArrayList<Object[][]> x = g.findByParams("SP_MATERIALES_X_COMBINACION_X_ID", a);
+            Object[][] data = x.get(0);
             editar.setVisible(true);
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "NO SE HA PODIDO EDITAR EL ESTILO", "ERROR AL EDITAR", JOptionPane.ERROR_MESSAGE);
@@ -299,101 +335,7 @@ public class CtrlMaterialesXCombinacion {
     }
 
     public void onModificar() {
-//        try {
         ArrayList<Object> a = new ArrayList<>();
-        Object x = null;
-        String Foto = "";
-//            if (!editar.Linea.getSelectedItem().toString().equals("") && !editar.Clave.getText().equals("")) {
-//                a.add(temp);/*ID*/
-//                a.add(getID(lineas, editar.Linea.getSelectedItem().toString()));
-//                a.add((editar.Clave.getText().equals("") ? "" : editar.Clave.getText()));
-//                a.add(editar.Descripcion.getText());
-//                if (editar.Familia.getSelectedIndex() != -1) {
-//                    x = getID(familias, editar.Familia.getSelectedItem().toString());
-//                    if (Integer.parseInt(String.valueOf(x)) != 0) {
-//                        a.add(x);
-//                    } else {
-//                        a.add(null);
-//                    }
-//                } else {
-//                    a.add(null);
-//                }
-//                if (editar.Serie.getSelectedIndex() != -1) {
-//                    x = getID(series, editar.Serie.getSelectedItem().toString());
-//                    if (Integer.parseInt(String.valueOf(x)) != 0) {
-//                        a.add(x);
-//                    } else {
-//                        a.add(null);
-//                    }
-//                } else {
-//                    a.add(null);
-//                }
-//                if (editar.Horma.getSelectedIndex() != -1) {
-//                    x = getID(hormas, editar.Horma.getSelectedItem().toString());
-//                    if (Integer.parseInt(String.valueOf(x)) != 0) {
-//                        a.add(x);
-//                    } else {
-//                        a.add(null);
-//                    }
-//                } else {
-//                    a.add(null);
-//                }
-//                a.add(editar.Genero.getSelectedItem().toString());
-//                if (bufi != null) {
-//                    String ext = FilenameUtils.getExtension(fc.getSelectedFile().getName());
-//                    Foto = "files/" + editar.Clave.getText() + "." + ext;
-//                    a.add(Foto);
-//                    ImageIO.write(bufi, "png", new File(Foto));
-//                } else {
-//                    a.add(0);
-//                }
-//                a.add(editar.Estatus.getSelectedItem().toString());
-//                a.add(editar.Desperdicio.getText());
-//                a.add(editar.Liberado.isSelected() ? 1 : 0);
-//                a.add(editar.Herramental.getText());
-//                if (editar.Maquila.getSelectedIndex() != -1) {
-//                    x = getID(maquilas, editar.Maquila.getSelectedItem().toString());
-//                    if (Integer.parseInt(String.valueOf(x)) != 0) {
-//                        a.add(x);
-//                    } else {
-//                        a.add(null);
-//                    }
-//                } else {
-//                    a.add(null);
-//                }
-//                a.add(editar.Notas.getText());
-//                a.add(editar.Ano.getText().equals("") ? null : Integer.parseInt(editar.Ano.getText()));
-//                if (editar.Temporada.getSelectedIndex() != -1) {
-//                    x = getID(estilos, editar.Temporada.getSelectedItem().toString());
-//                    if (Integer.parseInt(String.valueOf(x)) != 0) {
-//                        a.add(x);
-//                    } else {
-//                        a.add(null);
-//                    }
-//                } else {
-//                    a.add(null);
-//                }
-//                a.add(editar.PuntoCentral.getText().equals("") ? null : Integer.parseInt(editar.PuntoCentral.getText()));
-//
-//                if (editar.Tipo.getSelectedIndex() != -1) {
-//                    x = getID(tipo_materialesxcombinacion, editar.Tipo.getSelectedItem().toString());
-//                    if (Integer.parseInt(String.valueOf(x)) != 0) {
-//                        a.add(x);
-//                    } else {
-//                        a.add(null);
-//                    }
-//                } else {
-//                    a.add(null);
-//                }
-//                a.add(editar.MaquilaPlantilla.getSelectedItem().toString());
-//                a.add(editar.TipoDeConstruccion.getText());
-        if (!files_dir.exists()) {
-            files_dir.mkdir();
-        }
-//                puede servir para testear
-//                for (int i = 0; i < a.size(); i++) {
-//                    System.out.println(i + ".-" + String.valueOf(a.get(i)));
-//                }
         if (g.addUpdateOrDelete("SP_MODIFICAR_ESTILO", a)) {
             JOptionPane.showMessageDialog(null, "ESTILO MODIFICADO", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
             editar.dispose();
@@ -401,19 +343,10 @@ public class CtrlMaterialesXCombinacion {
         } else {
             JOptionPane.showMessageDialog(null, "NO SE HA PODIDO MODIFICAR EL ESTILO", "NO SE HA PODIDO MODIFICAR EL ESTILO", JOptionPane.ERROR_MESSAGE);
         }
-//            } else {
-//                JOptionPane.showMessageDialog(null, "DEBE DE ELEGIR UNA LINEA Y UNA CLAVE", "NO SE HA PODIDO MODIFICAR EL ESTILO", JOptionPane.ERROR_MESSAGE);
-//            }
-//        } catch (HeadlessException e) {
-//            JOptionPane.showMessageDialog(null, "NO SE HA PODIDO MODIFICAR EL ESTILO\n" + e.getMessage(), "ERROR AL GUARDAR", JOptionPane.ERROR_MESSAGE);
-//        } catch (IOException ex) {
-//            JOptionPane.showMessageDialog(null, "NO SE HA PODIDO MODIFICAR EL ESTILO\n" + ex.getMessage(), "ERROR AL GUARDAR", JOptionPane.ERROR_MESSAGE);
-//        }
     }
 
     public void onEliminar(int IDX) {
         try {
-//            HoldOn(vmaterialesxcombinacion.jPanel2);
             ArrayList<Object> a = new ArrayList<>();
             a.add(IDX);
             if (g.addUpdateOrDelete("SP_ELIMINAR_ESTILO", a)) {
@@ -485,7 +418,24 @@ public class CtrlMaterialesXCombinacion {
             nuevo.tblMateriales.setModel(dtm);
             filtrador = new TableRowSorter<>(dtm);
             nuevo.tblMateriales.setRowSorter(filtrador);
+            editar.tblMateriales.setRowSorter(filtrador);
+
+            editar.tblMateriales.removeColumn(editar.tblMateriales.getColumnModel().getColumn(0));
+            editar.tblMaterialesAgregados.setModel(new javax.swing.table.DefaultTableModel(
+                    new Object[][]{},
+                    new String[]{
+                        "ID(OCULTO)", "MATERIAL", "U.M", "PRECIO", "CONSUMO", "TIPO"
+                    }
+            ));
+            editar.tblMaterialesAgregados.removeColumn(nuevo.tblMaterialesAgregados.getColumnModel().getColumn(0));
+
             nuevo.tblMateriales.removeColumn(nuevo.tblMateriales.getColumnModel().getColumn(0));
+            nuevo.tblMaterialesAgregados.setModel(new javax.swing.table.DefaultTableModel(
+                    new Object[][]{},
+                    new String[]{
+                        "ID(OCULTO)", "MATERIAL", "U.M", "PRECIO", "CONSUMO", "TIPO"
+                    }
+            ));
             nuevo.tblMaterialesAgregados.removeColumn(nuevo.tblMaterialesAgregados.getColumnModel().getColumn(0));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());

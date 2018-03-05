@@ -60,12 +60,14 @@ public class MaterialesXCombinacion {
         vmaterialesxcombinacion = new vMaterialesXCombinacion();
         vmaterialesxcombinacion.btnNuevo.addActionListener((e) -> {
             cu.setVisible();
+            vmaterialesxcombinacion.dispose();
         });
-        vmaterialesxcombinacion.btnExportar.addActionListener((e) -> { 
+        vmaterialesxcombinacion.btnExportar.addActionListener((e) -> {
         });
         vmaterialesxcombinacion.btnEditar.addActionListener((e) -> {
             try {
                 if (vmaterialesxcombinacion.tblMaterialesXCombinacion.getSelectedRow() >= 0) {
+
                     int ID = Integer.parseInt(vmaterialesxcombinacion.tblMaterialesXCombinacion.getValueAt(vmaterialesxcombinacion.tblMaterialesXCombinacion.getSelectedRow(), 0).toString());
                     cu.onEditar(ID);
                 } else {
@@ -141,7 +143,7 @@ public class MaterialesXCombinacion {
 
     public void setVisible() {
         if (vmaterialesxcombinacion.isShowing()) {
-            
+
             //mensaje de que está abierto si se desea
         } else {
             mnu.dpContenedor.add(vmaterialesxcombinacion);
@@ -173,6 +175,7 @@ public class MaterialesXCombinacion {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
+
     /*NO EDITAR ESTA PARTE*/
     public static vMaterialesXCombinacion getInstance() {
         return vmaterialesxcombinacion;
