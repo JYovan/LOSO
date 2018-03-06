@@ -156,6 +156,13 @@ public class CtrlMaterialesXCombinacion {
         });
 
         /*EDITAR*/
+        editar.addInternalFrameListener(new InternalFrameAdapter() {
+            @Override
+            public void internalFrameClosed(InternalFrameEvent e) {
+                MaterialesXCombinacion mxc = materialesxcombinacion;
+                mxc.setVisible();
+            }
+        });
         editar.btnRefrescar.addActionListener((e) -> {
             getMateriales();
         });
@@ -269,7 +276,6 @@ public class CtrlMaterialesXCombinacion {
         try {
             ArrayList<Object> encabezado = new ArrayList<>();
             ArrayList<Object> detalle = new ArrayList<>();
-            Object x = null;
             /*ENCABEZADO*/
             if (nuevo.Estilo.getSelectedIndex() != -1
                     && nuevo.Combinacion.getSelectedIndex() != -1
@@ -286,6 +292,7 @@ public class CtrlMaterialesXCombinacion {
                     Object[][] ID = data.get(0);/*OBTENER EL ID DEL ENCABEZADO*/
                     System.out.println("ID " + String.valueOf(ID[0][0]));
                     /*DETALLE*/
+                    int productos_agregados = 0;
                     System.out.println("* * * DETALLE * * *");
                     for (int i = 0; i < nuevo.tblMaterialesAgregados.getRowCount(); i++) {
 //                        @IDX INT, @Material INT, @Consumo FLOAT, @Tipo INT,@Registro VARCHAR(25)
@@ -297,12 +304,13 @@ public class CtrlMaterialesXCombinacion {
                         detalle.add(nuevo.tblMaterialesAgregados.getValueAt(i, 2).toString().equals("DIR") ? 1 : 2);
                         detalle.add(fechatiempo);/*REGISTRO*/
                         if (g.addUpdateOrDelete("SP_AGREGAR_MATERIALES_X_COMBINACION_DETALLE", detalle)) {
+                            productos_agregados++;
                             detalle.clear();
-                            JOptionPane.showMessageDialog(null, "MATERIAL POR COMBINACION AGREGADO\n", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
                         }
                         System.out.println("ID: " + nuevo.tblMaterialesAgregados.getValueAt(i, 0).toString() + "\tMATERIAL: " + nuevo.tblMaterialesAgregados.getValueAt(i, 1).toString());
                     }
-                    System.out.println("* * * FIN DETALLE * * *");
+                    JOptionPane.showMessageDialog(null, productos_agregados + " MATERIALES POR COMBINACION AGREGADOS\n", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
+
 
                     /*FIN DETALLE*/
                     JOptionPane.showMessageDialog(null, "MATERIAL POR COMBINACION AGREGADO", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
@@ -310,7 +318,7 @@ public class CtrlMaterialesXCombinacion {
                     materialesxcombinacion.getRecords();
                     mnu.dpContenedor.remove(nuevo);
                     materialesxcombinacion.setVisible();
-                    
+
                 } else {
                     JOptionPane.showMessageDialog(null, "NO SE HA PODIDO AGREGAR EL MATERIAL POR COMBINACION", "NO SE HA PODIDO AGREGAR EL ESTILO", JOptionPane.ERROR_MESSAGE);
                 }
@@ -331,7 +339,35 @@ public class CtrlMaterialesXCombinacion {
             a.add(IDX);
             ArrayList<Object[][]> x = g.findByParams("SP_MATERIALES_X_COMBINACION_X_ID", a);
             Object[][] data = x.get(0);
-            editar.setVisible(true);
+            if (!editar.isShowing()) {
+                mnu.dpContenedor.add(editar);
+                Dimension desktopSize = mnu.dpContenedor.getSize();
+                Dimension jInternalFrameSize = editar.getSize();
+                editar.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
+                        (desktopSize.height - jInternalFrameSize.height) / 2);
+                editar.setFrameIcon(null);
+                editar.show();
+                editar.toFront();
+                getMateriales();
+                getEstilos();
+                getCombinaciones();
+
+                /*ENCABEZADO*/
+                editar.Estilo.setSelectedItem(String.valueOf(data[0][1]));
+                editar.Combinacion.setSelectedItem(String.valueOf(data[0][2]));
+                /*DETALLE*/
+                try {
+                    ArrayList<Object> o = new ArrayList<>();
+                    o.add(Integer.parseInt(String.valueOf(data[0][0])));
+                    ArrayList<Object[][]> d = g.findByParams("SP_MATERIALES_X_COMBINACION_DETALLE_X_ID", o);
+                    dtm = g.getModelFill(d.get(0), g.getDimensional(d.get(1)));
+                    editar.tblMaterialesAgregados.setModel(dtm);
+                    editar.tblMaterialesAgregados.removeColumn(editar.tblMaterialesAgregados.getColumnModel().getColumn(0));
+
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, e.getMessage());
+                }
+            }
             //mnu.dpContenedor.remove(editar);
             //materialesxcombinacion.setVisible();
         } catch (NumberFormatException e) {
@@ -340,13 +376,37 @@ public class CtrlMaterialesXCombinacion {
     }
 
     public void onModificar() {
-        ArrayList<Object> a = new ArrayList<>();
-        if (g.addUpdateOrDelete("SP_MODIFICAR_ESTILO", a)) {
-            JOptionPane.showMessageDialog(null, "ESTILO MODIFICADO", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
-            editar.dispose();
-            materialesxcombinacion.getRecords();
-        } else {
-            JOptionPane.showMessageDialog(null, "NO SE HA PODIDO MODIFICAR EL ESTILO", "NO SE HA PODIDO MODIFICAR EL ESTILO", JOptionPane.ERROR_MESSAGE);
+        ArrayList<Object> encabezado = new ArrayList<>();
+        ArrayList<Object> detalle = new ArrayList<>();
+        /*ENCABEZADO*/
+        if (editar.Estilo.getSelectedIndex() != -1
+                && editar.Combinacion.getSelectedIndex() != -1
+                && !editar.Estilo.getSelectedItem().toString().equals("")
+                && !editar.Combinacion.getSelectedItem().toString().equals("")) {
+            encabezado.add(temp);/*ID*/
+            encabezado.add(getID(estilos, editar.Estilo.getSelectedItem().toString()));
+            encabezado.add(getID(combinaciones, editar.Combinacion.getSelectedItem().toString()));
+            if (g.addUpdateOrDelete("SP_MODIFICAR_MATERIALES_X_COMBINACION", encabezado)) {
+                JOptionPane.showMessageDialog(null, "MATERIALES X COMBINACION MODIFICADO", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
+                /*DETALLE*/
+                for (int i = 0; i < editar.tblMaterialesAgregados.getRowCount(); i++) {
+//                        (@IDX INT, @Material INT, @Consumo FLOAT, @Tipo INT)
+                    detalle.add(temp);/*ID ENCABEZADO 0*/
+                    int IDM = Integer.parseInt(editar.tblMaterialesAgregados.getModel().getValueAt(i, 0).toString());
+                    detalle.add(IDM);/*ID MATERIAL 1*/
+                    detalle.add(Float.parseFloat(editar.tblMaterialesAgregados.getValueAt(i, 3).toString()));/*CONSUMO 2*/
+                    detalle.add(editar.tblMaterialesAgregados.getValueAt(i, 3).toString().equals("DIR") ? 1 : 2);/*TIPO 3*/
+                    if (g.addUpdateOrDelete("SP_MODIFICAR_MATERIALES_X_COMBINACION_DETALLE", detalle)) {
+                        detalle.clear();
+                    }
+                    System.out.println("ID: " + editar.tblMaterialesAgregados.getValueAt(i, 0).toString() + "\tMATERIAL: " + nuevo.tblMaterialesAgregados.getValueAt(i, 1).toString());
+                }
+
+                editar.dispose();
+                materialesxcombinacion.getRecords();
+            } else {
+                JOptionPane.showMessageDialog(null, "NO SE HA PODIDO MODIFICAR EL ESTILO", "NO SE HA PODIDO MODIFICAR EL ESTILO", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 
@@ -393,9 +453,6 @@ public class CtrlMaterialesXCombinacion {
             nuevo.Combinacion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{""}));/*REINICIA EL MODELO*/
             editar.Combinacion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{""}));/*REINICIA EL MODELO*/
 
-            g.fill("SP_OBTENER_COMBINACIONES_MXC").forEach((t) -> {
-                System.out.println(t);
-            });
             for (Iterator it = g.fill("SP_OBTENER_COMBINACIONES_MXC").iterator(); it.hasNext();) {
                 Object[] item = (Object[]) it.next();
                 combinacion = new Item(Integer.parseInt(String.valueOf(item[0])), String.valueOf(item[1]));
@@ -421,17 +478,13 @@ public class CtrlMaterialesXCombinacion {
             ArrayList<Object[][]> a = g.findByParams("SP_OBTENER_MATERIALES_MXC", o);
             dtm = g.getModelFill(a.get(0), g.getDimensional(a.get(1)));
             nuevo.tblMateriales.setModel(dtm);
+            editar.tblMateriales.setModel(dtm);
             filtrador = new TableRowSorter<>(dtm);
             nuevo.tblMateriales.setRowSorter(filtrador);
             editar.tblMateriales.setRowSorter(filtrador);
 
             editar.tblMateriales.removeColumn(editar.tblMateriales.getColumnModel().getColumn(0));
-            editar.tblMaterialesAgregados.setModel(new javax.swing.table.DefaultTableModel(
-                    new Object[][]{},
-                    new String[]{
-                        "ID(OCULTO)", "MATERIAL", "U.M", "PRECIO", "CONSUMO", "TIPO"
-                    }
-            ));
+
             editar.tblMaterialesAgregados.removeColumn(nuevo.tblMaterialesAgregados.getColumnModel().getColumn(0));
 
             nuevo.tblMateriales.removeColumn(nuevo.tblMateriales.getColumnModel().getColumn(0));
