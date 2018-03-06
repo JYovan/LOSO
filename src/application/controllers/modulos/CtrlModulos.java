@@ -6,16 +6,13 @@
 package application.controllers.modulos;
 
 import application.config.Generic;
-import application.config.TextPrompt;
 import application.controllers.Modulos;
 import application.views.modulos.mdlIEditar;
 import application.views.modulos.mdlINuevo;
 import application.views.vModulos;
 import application.views.vMenu;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.HeadlessException;
-import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.text.DateFormat;
@@ -27,7 +24,6 @@ import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
-import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 /**
  *
@@ -153,6 +149,8 @@ public class CtrlModulos {
 
     public void onEditar(int IDX) {
         try {
+            editar.Modulo.setText("");
+            
             temp = IDX;
             ArrayList<Object> a = new ArrayList<>();
             a.add(IDX);

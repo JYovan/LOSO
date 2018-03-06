@@ -42,15 +42,13 @@ public class CtrlCatalogos {
         this.vcatalogos = (vCatalogos) parent;
         this.g = g;
         this.catalogos = catalogos;
-        
-        
-        
+
         nuevo.addInternalFrameListener(new InternalFrameAdapter() {
             @Override
             public void internalFrameClosing(InternalFrameEvent e) {
                 Catalogos cat = catalogos;
                 cat.setVisible();
-                
+
             }
         });
         editar.addInternalFrameListener(new InternalFrameAdapter() {
@@ -60,8 +58,7 @@ public class CtrlCatalogos {
                 cat.setVisible();
             }
         });
-        
-        
+
         nuevo.btnGuardar.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -81,11 +78,8 @@ public class CtrlCatalogos {
 
         nuevo.btnGuardar.addActionListener((e) -> {
             onGuardar();
-        
 
         });
-        
-        
 
         nuevo.IValue.addKeyListener(new KeyListener() {
             @Override
@@ -139,10 +133,10 @@ public class CtrlCatalogos {
             public void keyReleased(KeyEvent e) {
             }
         });
-        
+
         editar.btnGuardar.addActionListener((e) -> {
             onModificar();
-         
+
         });
 
         editar.IValue.addKeyListener(new KeyListener() {
@@ -160,8 +154,6 @@ public class CtrlCatalogos {
             public void keyReleased(KeyEvent e) {
             }
         });
-
-
 
         editar.Valor_Num.addKeyListener(new KeyListener() {
             @Override
@@ -182,7 +174,6 @@ public class CtrlCatalogos {
             public void keyReleased(KeyEvent e) {
             }
         });
-
 
     }
 
@@ -250,6 +241,14 @@ public class CtrlCatalogos {
 
     public void onEditar(int IDX) {
         try {
+            
+            
+            editar.IValue.setText("");
+            editar.SValue.setText("");
+            editar.Special.setText("");
+            editar.Valor_Num.setText("");
+            editar.Valor_Text.setText("");
+            
             temp = IDX;
             ArrayList<Object> a = new ArrayList<>();
             a.add(IDX);

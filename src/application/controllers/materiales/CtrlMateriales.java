@@ -8,7 +8,6 @@ package application.controllers.materiales;
 import application.config.Generic;
 import application.controllers.Materiales;
 import application.helpers.Item;
-import application.third_party.ImageUtils;
 import application.third_party.WaitLayerUI;
 import application.views.materiales.mdlIEditar;
 import application.views.materiales.mdlINuevo;
@@ -17,27 +16,16 @@ import application.views.vMenu;
 import datechooser.model.exeptions.IncompatibleDataExeption;
 import java.awt.Dimension;
 import java.awt.HeadlessException;
-import java.awt.Image;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
@@ -47,8 +35,6 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import org.apache.commons.io.FilenameUtils;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 /**
@@ -460,6 +446,24 @@ public class CtrlMateriales {
 
     public void onEditar(int IDX) {
         try {
+            
+            editar.Descripcion.setText("");
+            editar.Existencia.setText("");
+            editar.Material.setText("");
+            editar.FechaUltimoInventario.setText("");
+            editar.Maximo.setText("");
+            editar.Minimo.setText("");
+            editar.PrecioLista.setText("");
+            editar.PrecioTope.setText("");
+
+            editar.UnidadCompra.setSelectedIndex(0);
+            editar.UnidadConsumo.setSelectedIndex(0);
+            editar.Departamento.setSelectedIndex(0);
+            editar.Estatus.setSelectedIndex(0);
+            editar.Familia.setSelectedIndex(0);
+            editar.Tipo.setSelectedIndex(0);
+            
+            
             temp = IDX;
             ArrayList<Object> a = new ArrayList<>();
             a.add(IDX);

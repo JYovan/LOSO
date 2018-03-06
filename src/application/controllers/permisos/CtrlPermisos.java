@@ -180,6 +180,18 @@ public class CtrlPermisos {
 
     public void onEditar(int IDX) {
         try {
+            
+            editar.Ver.setSelected(false);
+            editar.Reportes.setSelected(false);
+            editar.Modificar.setSelected(false);
+            editar.Eliminar.setSelected(false);
+            editar.Crear.setSelected(false);
+            editar.Consultar.setSelected(false);
+            editar.Buscar.setSelected(false);
+            editar.Usuario.setText("");
+            editar.Modulo.setSelectedIndex(0);
+            
+            
             temp = IDX;
             ArrayList<Object> a = new ArrayList<>();
             a.add(IDX);

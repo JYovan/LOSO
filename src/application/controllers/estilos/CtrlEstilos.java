@@ -415,7 +415,7 @@ public class CtrlEstilos {
 
     public void onEditar(int IDX) {
         try {
-
+            
             getLineas();
             getSeries();
             getFamilias();
@@ -423,6 +423,30 @@ public class CtrlEstilos {
             getMaquilas();
             getTemporadas();
             getTipoEstilo();
+            
+            editar.Ano.setText("");
+            editar.Clave.setText("");
+            editar.Descripcion.setText("");
+            editar.Desperdicio.setText("");
+            editar.Herramental.setText("");
+            editar.Notas.setText("");
+            editar.PuntoCentral.setText("");
+            editar.TipoDeConstruccion.setText("");
+            editar.Liberado.setSelected(false);
+
+            editar.Estatus.setSelectedIndex(0);
+            editar.Familia.setSelectedIndex(0);
+            editar.Horma.setSelectedIndex(0);
+            editar.Linea.setSelectedIndex(0);
+            editar.Maquila.setSelectedIndex(0);
+            editar.MaquilaPlantilla.setSelectedIndex(0);
+            editar.Serie.setSelectedIndex(0);
+            editar.Temporada.setSelectedIndex(0);
+            editar.Tipo.setSelectedIndex(0);
+            
+
+            
+            
 
             bufi = null;
             temp = IDX;

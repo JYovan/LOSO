@@ -153,6 +153,10 @@ public class CtrlFracciones {
 
     public void onEditar(int IDX) {
         try {
+            editar.txtClave.setText("");
+            editar.txtDescripcion.setText("");
+            editar.cmbDepartamento.setSelectedIndex(0);
+            
             temp = IDX;
             ArrayList<Object> a = new ArrayList<>();
             a.add(IDX);

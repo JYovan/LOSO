@@ -165,6 +165,12 @@ public class CtrlCombinaciones {
 
     public void onEditar(int IDX) {
         try {
+            
+            editar.txtClave.setText("");
+            editar.txtDescripcion.setText("");
+            editar.cmbEstilo.setSelectedIndex(0);
+            editar.cmbLinea.setSelectedIndex(0);
+            
             temp = IDX;
             ArrayList<Object> a = new ArrayList<>();
             a.add(IDX);

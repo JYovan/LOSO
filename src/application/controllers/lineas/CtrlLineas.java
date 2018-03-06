@@ -54,16 +54,14 @@ public class CtrlLineas {
         this.lineas = lineas;
         rsc = new Resources();
         nuevo.cmbTemporada.addActionListener((e) -> {
-           // System.out.println("TEMPORADA: " + getID(temporadas, nuevo.cmbTemporada.getSelectedItem().toString()));
+            // System.out.println("TEMPORADA: " + getID(temporadas, nuevo.cmbTemporada.getSelectedItem().toString()));
         });
 
         //Ayuda en captura combo box
         AutoCompleteDecorator.decorate(this.nuevo.cmbEstatusMuestra);
         AutoCompleteDecorator.decorate(this.editar.cmbEstatusMuestra);
-        
-        
-        
-         nuevo.addInternalFrameListener(new InternalFrameAdapter() {
+
+        nuevo.addInternalFrameListener(new InternalFrameAdapter() {
             @Override
             public void internalFrameClosing(InternalFrameEvent e) {
                 Lineas lin = lineas;
@@ -94,11 +92,11 @@ public class CtrlLineas {
             public void keyReleased(KeyEvent e) {
             }
         });
-        
+
         nuevo.btnGuardar.addActionListener((e) -> {
             onGuardar();
         });
-        
+
         editar.btnGuardar.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -115,14 +113,10 @@ public class CtrlLineas {
             public void keyReleased(KeyEvent e) {
             }
         });
-        
+
         editar.btnGuardar.addActionListener((e) -> {
             onModificar();
         });
-
-  
-
-
 
         getTemporadas();
         getTiposEstilo();
@@ -188,6 +182,13 @@ public class CtrlLineas {
 
     public void onEditar(int IDX) {
         try {
+            editar.txtAno.setText("");
+            editar.txtClave.setText("");
+            editar.txtDescripcion.setText("");
+
+            editar.cmbEstatusMuestra.setSelectedIndex(0);
+            editar.cmbTemporada.setSelectedIndex(0);
+            
             temp = IDX;
             ArrayList<Object> a = new ArrayList<>();
             a.add(IDX);

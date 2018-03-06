@@ -190,6 +190,12 @@ public class CtrlUsuarios {
 
     public void onEditar(int IDX) {
         try {
+            editar.Usuario.setText("");
+            editar.Contrasena.setText("");
+            editar.Correo.setText("");
+            editar.Foto.setText("");
+            editar.Tipo.setSelectedIndex(0);
+            
             temp = IDX;
             ArrayList<Object> a = new ArrayList<>();
             a.add(IDX);

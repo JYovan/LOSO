@@ -152,6 +152,12 @@ public class CtrlMaquilas {
 
     public void onEditar(int IDX) {
         try {
+            editar.txtClave.setText("");
+            editar.txtContacto.setText("");
+            editar.txtDireccion.setText("");
+            editar.txtNombre.setText("");
+            editar.txtTelefono.setText("");
+            
             temp = IDX;
             ArrayList<Object> a = new ArrayList<>();
             a.add(IDX);
