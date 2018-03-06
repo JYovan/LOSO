@@ -1206,10 +1206,14 @@ AS
 BEGIN
 SET NOCOUNT ON; 
 
-	SELECT [ID]
-      ,[Estilo] AS ESTILO
-      ,[Combinacion] AS COMBINACION
-      ,[Pieza] AS PIEZA FROM [MaterialesXCombinacion] AS MXC WHERE MXC.Estatus IN('ACTIVO');
+	SELECT MXC.[ID]
+      ,E.Descripcion AS ESTILO
+      ,C.Descripcion AS COMBINACION
+      ,MXC.Registro AS REGISTRO 
+      FROM [MaterialesXCombinacion] AS MXC 
+      LEFT JOIN Estilos AS E ON MXC.Estilo = E.ID
+      LEFT JOIN Combinaciones AS C ON MXC.Combinacion = C.ID
+WHERE MXC.Estatus IN('ACTIVO');
 END
 GO
 -- -----------------------------------------------------
@@ -1223,10 +1227,41 @@ AS
 BEGIN
 SET NOCOUNT ON; 
 
-	SELECT [ID]
-      ,[Estilo] AS ESTILO
-      ,[Combinacion] AS COMBINACION
-      ,[Pieza] AS PIEZA FROM [MaterialesXCombinacion] AS MXC WHERE MXC.Estatus IN('ACTIVO') AND MXC.ID = @ID;
+	SELECT MXC.[ID] AS ID
+      ,E.Descripcion AS ESTILO
+      ,C.Descripcion AS COMBINACION
+       	  FROM [MaterialesXCombinacion] AS MXC 
+	  INNER JOIN Estilos AS E ON MXC.Estilo = E.ID 
+	  INNER JOIN Combinaciones AS C ON MXC.Combinacion  = C.ID
+	  WHERE MXC.Estatus IN('ACTIVO') AND MXC.ID = @IDX;
+END
+GO
+
+-- -----------------------------------------------------
+-- procedure SP_MATERIALES_X_COMBINACION_DETALLE_X_ID
+-- -----------------------------------------------------
+IF EXISTS (	SELECT name FROM sysobjects WHERE  name = 'SP_MATERIALES_X_COMBINACION_DETALLE_X_ID' AND TYPE = 'P')
+	DROP PROCEDURE SP_MATERIALES_X_COMBINACION_DETALLE_X_ID
+GO
+CREATE PROCEDURE SP_MATERIALES_X_COMBINACION_DETALLE_X_ID(@IDX INT)
+AS
+BEGIN
+SET NOCOUNT ON; 
+
+	SELECT 
+        MXCD.Material ID, 
+        M.Descripcion AS MATERIAL, 
+        C.SValue AS "U.M", 
+        M.PrecioLista AS PRECIO,
+        MXCD.[Consumo] AS CONSUMO,
+	  (CASE 
+	  WHEN MXCD.Tipo = 1 THEN
+		'DIR'
+		ELSE 'IND' 
+	  END) AS TIPO FROM  MaterialesXCombinacionDetalle AS MXCD  
+	  INNER JOIN [Materiales] AS M ON MXCD.Material = M.ID
+          LEFT JOIN Catalogos AS C ON M.UnidadConsumo = C.ID AND C.[FieldId] LIKE 'UNIDADES' AND C.Estatus LIKE 'ACTIVO'
+	  WHERE MXCD.Estatus IN('ACTIVO') AND MXCD.MaterialXCombinacion = @IDX;
 END
 GO
 -- -----------------------------------------------------
@@ -1310,6 +1345,57 @@ CREATE PROCEDURE SP_OBTENER_MATERIALES_MXC(@MAX INT)
 AS
 BEGIN
 SET NOCOUNT ON; 
-    SELECT M.[ID] ,M.[Material] AS MATERIAL, M.[UnidadConsumo] AS "U.M", M.[PrecioLista] AS PRECIO FROM [Materiales] AS M WHERE M.Estatus IN('ACTIVO');
+    SELECT M.[ID] ,M.[Material] AS MATERIAL, C.SValue AS "U.M", M.[PrecioLista] AS PRECIO 
+    FROM [Materiales] AS M 
+    INNER JOIN Catalogos AS C ON M.UnidadConsumo = C.ID AND C.[FieldId] LIKE 'UNIDADES' AND C.Estatus LIKE 'ACTIVO'
+    WHERE M.Estatus IN('ACTIVO');
+END
+GO
+
+
+
+
+-- -----------------------------------------------------
+-- procedure SP_MODIFICAR_MATERIALES_X_COMBINACION
+-- -----------------------------------------------------
+
+IF EXISTS (	SELECT name FROM sysobjects WHERE  name = 'SP_MODIFICAR_MATERIALES_X_COMBINACION' AND TYPE = 'P')
+	DROP PROCEDURE SP_MODIFICAR_MATERIALES_X_COMBINACION
+GO
+CREATE  PROCEDURE SP_MODIFICAR_MATERIALES_X_COMBINACION(@IDX INT, @Estilo INT, @Combinacion INT)
+AS
+BEGIN
+SET NOCOUNT ON;
+ 
+UPDATE [dbo].[MaterialesXCombinacion]
+   SET [Estilo] = @Estilo
+      ,[Combinacion] = @Combinacion
+	WHERE [ID] = @IDX;
+
+UPDATE [dbo].[MaterialesXCombinacionDetalle]
+   SET  [Estatus] = 'INACTIVO' 
+ WHERE MaterialXCombinacion = @IDX;
+
+END
+GO
+
+
+-- -----------------------------------------------------
+-- procedure SP_MODIFICAR_MATERIALES_X_COMBINACION_DETALLE
+-- -----------------------------------------------------
+
+IF EXISTS (	SELECT name FROM sysobjects WHERE  name = 'SP_MODIFICAR_MATERIALES_X_COMBINACION_DETALLE' AND TYPE = 'P')
+	DROP PROCEDURE SP_MODIFICAR_MATERIALES_X_COMBINACION_DETALLE
+GO
+CREATE  PROCEDURE SP_MODIFICAR_MATERIALES_X_COMBINACION_DETALLE(@IDX INT, @Material INT, @Consumo FLOAT, @Tipo INT)
+AS
+BEGIN
+SET NOCOUNT ON;  
+UPDATE [dbo].[MaterialesXCombinacionDetalle]
+   SET  [Material] = @Material
+      ,[Consumo] = @Consumo
+      ,[Tipo] = @Tipo
+      ,[Estatus] = 'ACTIVO' 
+ WHERE ID = @IDX;
 END
 GO

@@ -85,6 +85,12 @@ public class mdlNuevo extends javax.swing.JInternalFrame {
 
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/16/cerrar.png"))); // NOI18N
 
+        Combinacion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                CombinacionKeyPressed(evt);
+            }
+        });
+
         Consumo.setModel(new javax.swing.SpinnerNumberModel(0.0f, 0.0f, null, 1.0f));
 
         Tipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "DIR", "IND" }));
@@ -193,6 +199,11 @@ public class mdlNuevo extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void CombinacionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CombinacionKeyPressed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_CombinacionKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
