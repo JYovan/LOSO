@@ -84,10 +84,8 @@ public class CtrlCatalogos {
         
 
         });
-        editar.btnGuardar.addActionListener((e) -> {
-            onModificar();
-         
-        });
+        
+        
 
         nuevo.IValue.addKeyListener(new KeyListener() {
             @Override
@@ -125,11 +123,11 @@ public class CtrlCatalogos {
             }
         });
 
-        nuevo.Special.addKeyListener(new KeyListener() {
+        editar.btnGuardar.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    onGuardar();
+                    onModificar();
                 }
             }
 
@@ -140,6 +138,11 @@ public class CtrlCatalogos {
             @Override
             public void keyReleased(KeyEvent e) {
             }
+        });
+        
+        editar.btnGuardar.addActionListener((e) -> {
+            onModificar();
+         
         });
 
         editar.IValue.addKeyListener(new KeyListener() {
@@ -158,22 +161,7 @@ public class CtrlCatalogos {
             }
         });
 
-        editar.Special.addKeyListener(new KeyListener() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    onModificar();
-                }
-            }
 
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-        });
 
         editar.Valor_Num.addKeyListener(new KeyListener() {
             @Override

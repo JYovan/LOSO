@@ -92,9 +92,7 @@ public class CtrlUsuarios {
         nuevo.btnGuardar.addActionListener((e) -> {
             onGuardar();
         });
-        editar.btnGuardar.addActionListener((e) -> {
-            onModificar();
-        });
+        
         nuevo.Foto.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -108,25 +106,8 @@ public class CtrlUsuarios {
             }
 
         });
-       
-        nuevo.Correo.addKeyListener(new KeyListener() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    onGuardar();
-                }
-            }
-
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-        });
- 
-        editar.Correo.addKeyListener(new KeyListener() {
+        
+        editar.btnGuardar.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -142,6 +123,11 @@ public class CtrlUsuarios {
             public void keyReleased(KeyEvent e) {
             }
         });
+        editar.btnGuardar.addActionListener((e) -> {
+            onModificar();
+        });
+        
+      
         editar.Foto.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {

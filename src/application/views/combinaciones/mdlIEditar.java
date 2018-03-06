@@ -21,9 +21,11 @@ public class mdlIEditar extends javax.swing.JInternalFrame {
         initComponents();
         this.txtClave.addKeyListener(manejador);
         this.txtDescripcion.addKeyListener(manejador);
-        this.cmbEstilo.addKeyListener(manejador);
-        this.cmbLinea.addKeyListener(manejador);
+        
+        manejador.manejaCombo(cmbEstilo);
+        manejador.manejaCombo(cmbLinea);
         this.cmbEstatus.addKeyListener(manejador);
+      
     }
 
     /**

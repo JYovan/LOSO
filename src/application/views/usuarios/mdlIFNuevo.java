@@ -22,6 +22,7 @@ public class mdlIFNuevo extends javax.swing.JInternalFrame {
         Contrasena.addKeyListener(manejador);
         Correo.addKeyListener(manejador);
         Usuario.addKeyListener(manejador);
+        Tipo.addKeyListener(manejador);
     }
 
     /**
