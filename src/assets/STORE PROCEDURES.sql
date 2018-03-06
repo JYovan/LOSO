@@ -1399,3 +1399,93 @@ UPDATE [dbo].[MaterialesXCombinacionDetalle]
  WHERE ID = @IDX;
 END
 GO
+
+
+
+-- -----------------------------------------------------
+-- procedure SP_SERIES
+-- -----------------------------------------------------
+IF EXISTS (	SELECT name FROM sysobjects WHERE  name = 'SP_SERIES' AND TYPE = 'P')
+	DROP PROCEDURE SP_SERIES
+GO
+CREATE PROCEDURE SP_SERIES(@MAX INT)
+AS
+BEGIN
+SET NOCOUNT ON; 
+	SELECT TOP (@MAX) S.ID AS ID, S.Descripcion AS DESCRIPCION, S.Estatus AS ESTATUS FROM Series AS S WHERE S.Estatus IN('ACTIVO','INACTIVO');
+END
+GO
+
+-- -----------------------------------------------------
+-- procedure SP_AGREGAR_SERIE
+-- -----------------------------------------------------
+IF EXISTS (	SELECT name FROM sysobjects WHERE  name = 'SP_AGREGAR_SERIE' AND TYPE = 'P')
+	DROP PROCEDURE SP_AGREGAR_SERIE
+GO
+CREATE  PROCEDURE SP_AGREGAR_SERIE(
+@Descripcion VARCHAR(90), 
+@PuntoInicial FLOAT, 
+@PuntoFinal FLOAT
+)
+AS
+BEGIN
+SET NOCOUNT ON;
+	INSERT INTO series ([Descripcion],[PuntoInicial],[PuntoFinal],[Estatus]) 
+						VALUES ( @Descripcion, @PuntoInicial,@PuntoFinal,'ACTIVO');
+END
+GO
+
+-- -----------------------------------------------------
+-- procedure SP_SERIE_X_ID
+-- -----------------------------------------------------
+IF EXISTS (	SELECT name FROM sysobjects WHERE  name = 'SP_SERIE_X_ID' AND TYPE = 'P')
+	DROP PROCEDURE SP_SERIE_X_ID
+GO
+CREATE PROCEDURE SP_SERIE_X_ID(@IDX INT)
+AS
+BEGIN
+SET NOCOUNT ON; 
+	SELECT TOP 1 S.ID AS ID, S.DESCRIPCION AS DESCRIPCION, S.PuntoInicial AS PUNTO_INICIAL, S.PuntoFinal AS PUNTO_FINAL,
+		S.Estatus AS ESTATUS
+    FROM Series AS S
+    WHERE S.ID = @IDX AND S.Estatus IN('ACTIVO','INACTIVO') ;
+END
+GO
+
+-- -----------------------------------------------------
+-- procedure SP_MODIFICAR_SERIE
+-- -----------------------------------------------------
+IF EXISTS (	SELECT name FROM sysobjects WHERE  name = 'SP_MODIFICAR_SERIE' AND TYPE = 'P')
+	DROP PROCEDURE SP_MODIFICAR_SERIE
+GO
+CREATE PROCEDURE SP_MODIFICAR_SERIE(
+@IDX INT,  
+@Descripcion VARCHAR(60), 
+@PuntoInicial FLOAT, 
+@PuntoFinal FLOAT, 
+@Estatus VARCHAR(45))
+AS
+BEGIN
+SET NOCOUNT ON; 
+	UPDATE Series
+	SET  [Descripcion] = @Descripcion, [PuntoInicial] = @PuntoInicial, [PuntoFinal] = @PuntoFinal,[Estatus] = @Estatus
+	WHERE [ID] = @IDX; 
+END
+GO
+
+-- -----------------------------------------------------
+-- procedure SP_ELIMINAR_SERIE
+-- -----------------------------------------------------
+
+IF EXISTS (	SELECT name FROM sysobjects WHERE  name = 'SP_ELIMINAR_SERIE' AND TYPE = 'P')
+	DROP PROCEDURE SP_ELIMINAR_SERIE
+GO
+CREATE PROCEDURE SP_ELIMINAR_SERIE(@IDX INT)
+AS
+BEGIN
+SET NOCOUNT ON; 
+	UPDATE Series
+	SET [Estatus] = 'INACTIVO' 
+	WHERE [ID] = @IDX; 
+END
+GO
