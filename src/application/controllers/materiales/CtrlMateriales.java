@@ -655,8 +655,7 @@ public class CtrlMateriales {
     }
 
     public final void getUnidades() {
-        try {
-            familias = new ArrayList<>();
+        try { 
             Item unidades = null;
             nuevo.UnidadCompra.addItem("");
             nuevo.UnidadConsumo.addItem("");
