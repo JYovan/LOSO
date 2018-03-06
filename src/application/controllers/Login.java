@@ -16,9 +16,13 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import java.awt.Font;
 import java.awt.HeadlessException;
+import java.awt.KeyboardFocusManager;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -74,6 +78,11 @@ public class Login {
     }
 
     public static void main(String[] args) {
+
+        //KeyStroke enter = KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0);
+        //Set<KeyStroke> keys = new HashSet<>();
+        //keys.add(enter);
+        //KeyboardFocusManager.getCurrentKeyboardFocusManager().setDefaultFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, keys);
 
         try {
             //UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());

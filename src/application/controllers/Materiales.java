@@ -68,7 +68,6 @@ public class Materiales {
                     int ID = Integer.parseInt(vmateriales.tblMateriales.getValueAt(vmateriales.tblMateriales.getSelectedRow(), 0).toString());
                     vmateriales.dispose();
                     menu.dpContenedor.remove(vmateriales);
-                    mat.setVisible();
                     mat.onEditar(ID);
                 } else {
                     Toolkit.getDefaultToolkit().beep();
@@ -139,7 +138,7 @@ public class Materiales {
         TextPrompt placeholder = new TextPrompt("BUSCAR...", vmateriales.txtBusqueda);
         placeholder.changeAlpha(0.75f);
         placeholder.changeStyle(Font.ITALIC);
-        getRecords();
+       
     }
 
     public void setVisible() {

@@ -144,7 +144,7 @@ public class Maquilas {
         TextPrompt placeholder = new TextPrompt("BUSCA CLAVE, NOMBRE", vmaquilas.txtBusqueda);
         placeholder.changeAlpha(0.75f);
         placeholder.changeStyle(Font.ITALIC);
-        getRecords();
+       
     }
 
     public void setVisible() {
@@ -164,7 +164,7 @@ public class Maquilas {
 
     public final void getRecords() {
         try {
-
+            System.out.println("se ejecuta");
             ArrayList<Object> o = new ArrayList<>();
             if (vmaquilas.cmbTamano.getSelectedItem().toString().equals("TODOS")) {
                 o.add(99999999);

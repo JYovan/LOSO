@@ -140,7 +140,7 @@ public class Catalogos {
         TextPrompt placeholder = new TextPrompt("BUSCA NOMBRE Y DESCRIPCIÓN ", vcatalogos.txtBusqueda);
         placeholder.changeAlpha(0.75f);
         placeholder.changeStyle(Font.ITALIC);
-        getRecords();
+    
 
     }
 

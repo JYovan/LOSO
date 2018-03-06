@@ -141,7 +141,7 @@ public class Modulos {
         TextPrompt placeholder = new TextPrompt("BUSCA POR ID,MODULO", vmodulos.txtBusqueda);
         placeholder.changeAlpha(0.75f);
         placeholder.changeStyle(Font.ITALIC);
-        getRecords();
+       
     }
 
     public void setVisible() {

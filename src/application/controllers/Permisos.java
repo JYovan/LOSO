@@ -69,7 +69,6 @@ public class Permisos {
                     int ID = Integer.parseInt(vpermisos.tblPermisos.getValueAt(vpermisos.tblPermisos.getSelectedRow(), 0).toString());
                     vpermisos.dispose();
                     menu.dpContenedor.remove(vpermisos);
-                    per.setVisible();
                     per.onEditar(ID);
                 } else {
                     Toolkit.getDefaultToolkit().beep();
@@ -140,7 +139,7 @@ public class Permisos {
         TextPrompt placeholder = new TextPrompt("BUSCA POR ID,MODULO,USUARIO", vpermisos.txtBusqueda);
         placeholder.changeAlpha(0.75f);
         placeholder.changeStyle(Font.ITALIC);
-        getRecords();
+       
     }
 
     public void setVisible() {

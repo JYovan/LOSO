@@ -140,7 +140,7 @@ public class Lineas {
         TextPrompt placeholder = new TextPrompt("BUSCA LINEA, DESCRIPCIÓN", vlineas.txtBusqueda);
         placeholder.changeAlpha(0.75f);
         placeholder.changeStyle(Font.ITALIC);
-        getRecords();
+        
     }
 
     public void setVisible() {

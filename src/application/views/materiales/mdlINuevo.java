@@ -17,8 +17,19 @@ public class mdlINuevo extends javax.swing.JInternalFrame {
      * Creates new form mdlINuevo
      */
     ManejadorTecla manejador = new ManejadorTecla();
+
     public mdlINuevo() {
         initComponents();
+   
+        manejador.manejaCombo(Departamento);
+        manejador.manejaCombo(Familia);
+        manejador.manejaCombo(UnidadCompra);
+        manejador.manejaCombo(UnidadConsumo);
+        manejador.manejaCombo(Tipo);
+        manejador.manejaCombo(Estatus);
+        
+        
+
         this.Departamento.addKeyListener(manejador);
         this.Descripcion.addKeyListener(manejador);
         this.Estatus.addKeyListener(manejador);
@@ -97,6 +108,8 @@ public class mdlINuevo extends javax.swing.JInternalFrame {
         jLabel3.setText("Descripción");
 
         btnGuardar.setText("Guardar");
+
+        Departamento.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         Descripcion.setColumns(20);
         Descripcion.setRows(5);

@@ -142,7 +142,7 @@ public class Usuarios {
         TextPrompt placeholder = new TextPrompt("BUSCA POR ID,USUARIO,CORREO,ETC", vusuarios.txtBusqueda);
         placeholder.changeAlpha(0.75f);
         placeholder.changeStyle(Font.ITALIC);
-        getRecords();
+        
     }
 
     public void setVisible() {

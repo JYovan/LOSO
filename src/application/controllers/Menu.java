@@ -192,12 +192,16 @@ public class Menu {
         });
 
         menu.mnuModulos.addActionListener((e) -> {
+            m.getRecords();
             m.setVisible();
+            
         });
         menu.mnuUsuarios.addActionListener((e) -> {
+            u.getRecords();
             u.setVisible();
         });
         menu.mnuPermisos.addActionListener((e) -> {
+            p.getRecords();
             p.setVisible();
         });
     }

@@ -140,7 +140,7 @@ public class Estilos {
         TextPrompt placeholder = new TextPrompt("BUSCAR...", vestilos.txtBusqueda);
         placeholder.changeAlpha(0.75f);
         placeholder.changeStyle(Font.ITALIC);
-        getRecords();
+        
     }
 
     public void setVisible() {

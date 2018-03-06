@@ -19,6 +19,14 @@ public class mdlIEditar extends javax.swing.JInternalFrame {
     ManejadorTecla manejador = new ManejadorTecla();
     public mdlIEditar() {
         initComponents();
+        
+        manejador.manejaCombo(Departamento);
+        manejador.manejaCombo(Familia);
+        manejador.manejaCombo(UnidadCompra);
+        manejador.manejaCombo(UnidadConsumo);
+        manejador.manejaCombo(Tipo);
+        manejador.manejaCombo(Estatus);
+
         this.Departamento.addKeyListener(manejador);
         this.Descripcion.addKeyListener(manejador);
         this.Estatus.addKeyListener(manejador);
