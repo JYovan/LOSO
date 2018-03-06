@@ -54,7 +54,7 @@ public class CtrlLineas {
         this.lineas = lineas;
         rsc = new Resources();
         nuevo.cmbTemporada.addActionListener((e) -> {
-            System.out.println("TEMPORADA: " + getID(temporadas, nuevo.cmbTemporada.getSelectedItem().toString()));
+           // System.out.println("TEMPORADA: " + getID(temporadas, nuevo.cmbTemporada.getSelectedItem().toString()));
         });
 
         //Ayuda en captura combo box

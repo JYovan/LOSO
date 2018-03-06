@@ -114,6 +114,105 @@ public class CtrlMateriales {
         });
 
         /*NUEVO*/
+        nuevo.PrecioTope.addKeyListener(new KeyListener() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+            }
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if (((e.getKeyChar() < '0') || (e.getKeyChar() > '9'))
+                        && (e.getKeyChar() != KeyEvent.VK_BACK_SPACE)
+                        && (e.getKeyChar() != '.' || nuevo.PrecioTope.getText().contains("."))) {
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });
+
+        nuevo.PrecioLista.addKeyListener(new KeyListener() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if (((e.getKeyChar() < '0') || (e.getKeyChar() > '9'))
+                        && (e.getKeyChar() != KeyEvent.VK_BACK_SPACE)
+                        && (e.getKeyChar() != '.' || nuevo.PrecioLista.getText().contains("."))) {
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });
+
+        nuevo.Minimo.addKeyListener(new KeyListener() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if (((e.getKeyChar() < '0') || (e.getKeyChar() > '9'))
+                        && (e.getKeyChar() != KeyEvent.VK_BACK_SPACE)
+                        && (e.getKeyChar() != '.' || nuevo.Minimo.getText().contains("."))) {
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });
+
+        nuevo.Maximo.addKeyListener(new KeyListener() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if (((e.getKeyChar() < '0') || (e.getKeyChar() > '9'))
+                        && (e.getKeyChar() != KeyEvent.VK_BACK_SPACE)
+                        && (e.getKeyChar() != '.' || nuevo.Maximo.getText().contains("."))) {
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });
+
+        nuevo.Existencia.addKeyListener(new KeyListener() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if (((e.getKeyChar() < '0') || (e.getKeyChar() > '9'))
+                        && (e.getKeyChar() != KeyEvent.VK_BACK_SPACE)
+                        && (e.getKeyChar() != '.' || nuevo.Existencia.getText().contains("."))) {
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });
+
         nuevo.btnGuardar.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -136,7 +235,105 @@ public class CtrlMateriales {
 
 
         /*EDITAR*/
-        
+        editar.PrecioTope.addKeyListener(new KeyListener() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+            }
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if (((e.getKeyChar() < '0') || (e.getKeyChar() > '9'))
+                        && (e.getKeyChar() != KeyEvent.VK_BACK_SPACE)
+                        && (e.getKeyChar() != '.' || editar.PrecioTope.getText().contains("."))) {
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });
+
+        editar.PrecioLista.addKeyListener(new KeyListener() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if (((e.getKeyChar() < '0') || (e.getKeyChar() > '9'))
+                        && (e.getKeyChar() != KeyEvent.VK_BACK_SPACE)
+                        && (e.getKeyChar() != '.' || editar.PrecioLista.getText().contains("."))) {
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });
+
+        editar.Minimo.addKeyListener(new KeyListener() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if (((e.getKeyChar() < '0') || (e.getKeyChar() > '9'))
+                        && (e.getKeyChar() != KeyEvent.VK_BACK_SPACE)
+                        && (e.getKeyChar() != '.' || editar.Minimo.getText().contains("."))) {
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });
+
+        editar.Maximo.addKeyListener(new KeyListener() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if (((e.getKeyChar() < '0') || (e.getKeyChar() > '9'))
+                        && (e.getKeyChar() != KeyEvent.VK_BACK_SPACE)
+                        && (e.getKeyChar() != '.' || editar.Maximo.getText().contains("."))) {
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });
+
+        editar.Existencia.addKeyListener(new KeyListener() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if (((e.getKeyChar() < '0') || (e.getKeyChar() > '9'))
+                        && (e.getKeyChar() != KeyEvent.VK_BACK_SPACE)
+                        && (e.getKeyChar() != '.' || editar.Existencia.getText().contains("."))) {
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });
+
         editar.btnGuardar.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -153,7 +350,7 @@ public class CtrlMateriales {
             public void keyReleased(KeyEvent e) {
             }
         });
-        
+
         editar.btnGuardar.addActionListener((e) -> {
             onModificar();
         });
@@ -161,8 +358,8 @@ public class CtrlMateriales {
         /*PLACEHOLDERS*/
 
  /*INVOCAR METODOS QUE RELLENAN DATOS*/
-        getDepartamentos();
         getFamilias();
+        getDepartamentos();
         getUnidades();
     }
 
@@ -170,13 +367,13 @@ public class CtrlMateriales {
         if (!nuevo.isShowing()) {
 
             nuevo.Descripcion.setText("");
-            nuevo.Existencia.setValue(0);
+            nuevo.Existencia.setText("");
             nuevo.Material.setText("");
             nuevo.FechaUltimoInventario.setText("");
-            nuevo.Maximo.setValue(0);
-            nuevo.Minimo.setValue(0);
-            nuevo.PrecioLista.setValue(0);
-            nuevo.PrecioTope.setValue(0);
+            nuevo.Maximo.setText("");
+            nuevo.Minimo.setText("");
+            nuevo.PrecioLista.setText("");
+            nuevo.PrecioTope.setText("");
 
             nuevo.UnidadCompra.setSelectedIndex(0);
             nuevo.UnidadConsumo.setSelectedIndex(0);
@@ -236,12 +433,12 @@ public class CtrlMateriales {
                     a.add(null);
                 }
                 a.add(nuevo.Tipo.getSelectedItem().toString());
-                a.add(nuevo.Minimo.getValue().toString().equals("") ? 0 : Float.parseFloat(nuevo.Minimo.getValue().toString()));
-                a.add(nuevo.Maximo.getValue().toString().equals("") ? 0 : Float.parseFloat(nuevo.Maximo.getValue().toString()));
-                a.add(nuevo.PrecioLista.getValue().toString().equals("") ? 0 : Float.parseFloat(nuevo.PrecioLista.getValue().toString()));
-                a.add(nuevo.PrecioTope.getValue().toString().equals("") ? 0 : Float.parseFloat(nuevo.PrecioTope.getValue().toString()));
+                a.add(nuevo.Minimo.getText().equals("") ? 0 : Float.parseFloat(nuevo.Minimo.getText()));
+                a.add(nuevo.Maximo.getText().equals("") ? 0 : Float.parseFloat(nuevo.Maximo.getText()));
+                a.add(nuevo.PrecioLista.getText().equals("") ? 0 : Float.parseFloat(nuevo.PrecioLista.getText()));
+                a.add(nuevo.PrecioTope.getText().equals("") ? 0 : Float.parseFloat(nuevo.PrecioTope.getText()));
                 a.add(nuevo.FechaUltimoInventario.getText());
-                a.add(nuevo.Existencia.getValue().toString().equals("") ? 0 : Float.parseFloat(nuevo.Existencia.getValue().toString()));
+                a.add(nuevo.Existencia.getText().equals("") ? 0 : Float.parseFloat(nuevo.Existencia.getText()));
                 a.add(nuevo.Estatus.getSelectedItem().toString());
                 if (g.addUpdateOrDelete("SP_AGREGAR_MATERIAL", a)) {
                     JOptionPane.showMessageDialog(null, "MATERIAL AGREGADO", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
@@ -286,16 +483,16 @@ public class CtrlMateriales {
                 editar.Tipo.getModel().setSelectedItem(data[0][7]);
             }
             if (!String.valueOf(data[0][8]).equals("")) {
-                editar.Minimo.setValue(Float.parseFloat(String.valueOf(data[0][8])));
+                editar.Minimo.setText(String.valueOf(data[0][8]));
             }
             if (!String.valueOf(data[0][9]).equals("")) {
-                editar.Maximo.setValue(Float.parseFloat(String.valueOf(data[0][9])));
+                editar.Maximo.setText(String.valueOf(data[0][9]));
             }
             if (!String.valueOf(data[0][10]).equals("")) {
-                editar.PrecioLista.setValue(Float.parseFloat(String.valueOf(data[0][10])));
+                editar.PrecioLista.setText(String.valueOf(data[0][10]));
             }
             if (!String.valueOf(data[0][11]).equals("")) {
-                editar.PrecioTope.setValue(Float.parseFloat(String.valueOf(data[0][11])));
+                editar.PrecioTope.setText(String.valueOf(data[0][11]));
             }
             String fecha = String.valueOf(data[0][12]);
             String[] partes = fecha.split("/");/*0 = dias, 1 = meses, 2 = años*/
@@ -304,7 +501,7 @@ public class CtrlMateriales {
                     new java.util.GregorianCalendar(Integer.parseInt(partes[2]), Integer.parseInt(partes[1]) - 1, Integer.parseInt(partes[0])),
                     new java.util.GregorianCalendar(Integer.parseInt(partes[2]), Integer.parseInt(partes[1]) - 1, Integer.parseInt(partes[0])))));
 
-            editar.Existencia.setValue(Float.parseFloat(String.valueOf(data[0][13])));
+            editar.Existencia.setText(String.valueOf(data[0][13]));
             if (data[0][14] != null) {
                 editar.Estatus.getModel().setSelectedItem(data[0][14]);
             }
@@ -345,7 +542,9 @@ public class CtrlMateriales {
                 a.add(null);
             }
             if (editar.Familia.getSelectedIndex() != -1) {
+
                 x = getID(familias, editar.Familia.getSelectedItem().toString());
+               
                 if (Integer.parseInt(String.valueOf(x)) != 0) {
                     a.add(x);
                 } else {
@@ -376,19 +575,19 @@ public class CtrlMateriales {
                 a.add(null);
             }
             a.add(editar.Tipo.getSelectedItem().toString());
-            a.add(editar.Minimo.getValue().toString().equals("") ? 0 : Float.parseFloat(editar.Minimo.getValue().toString()));
-            a.add(editar.Maximo.getValue().toString().equals("") ? 0 : Float.parseFloat(editar.Maximo.getValue().toString()));
-            a.add(editar.PrecioLista.getValue().toString().equals("") ? 0 : Float.parseFloat(editar.PrecioLista.getValue().toString()));
-            a.add(editar.PrecioTope.getValue().toString().equals("") ? 0 : Float.parseFloat(editar.PrecioTope.getValue().toString()));
+            a.add(editar.Minimo.getText().equals("") ? 0 : Float.parseFloat(editar.Minimo.getText()));
+            a.add(editar.Maximo.getText().equals("") ? 0 : Float.parseFloat(editar.Maximo.getText()));
+            a.add(editar.PrecioLista.getText().equals("") ? 0 : Float.parseFloat(editar.PrecioLista.getText()));
+            a.add(editar.PrecioTope.getText().equals("") ? 0 : Float.parseFloat(editar.PrecioTope.getText()));
             a.add(editar.FechaUltimoInventario.getText());
-            a.add(editar.Existencia.getValue().toString().equals("") ? 0 : Float.parseFloat(editar.Existencia.getValue().toString()));
+            a.add(editar.Existencia.getText().equals("") ? 0 : Float.parseFloat(editar.Existencia.getText()));
             a.add(editar.Estatus.getSelectedItem().toString());
         }
 
 //                puede servir para testear
-        for (int i = 0; i < a.size(); i++) {
-            System.out.println(i + ".-" + String.valueOf(a.get(i)));
-        }
+//        for (int i = 0; i < a.size(); i++) {
+//            System.out.println(i + ".-" + String.valueOf(a.get(i)));
+//        }
         if (g.addUpdateOrDelete("SP_MODIFICAR_MATERIAL", a)) {
             JOptionPane.showMessageDialog(null, "MATERIAL MODIFICADO", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
             editar.dispose();
@@ -418,13 +617,13 @@ public class CtrlMateriales {
     public final void getDepartamentos() {
         try {
             departamentos = new ArrayList<>();
-            Item linea = null;
+            Item departamento = null;
             nuevo.Departamento.addItem("");
             editar.Departamento.addItem("");
             for (Iterator it = g.fill("SP_OBTENER_DEPARTAMENTOS").iterator(); it.hasNext();) {
                 Object[] item = (Object[]) it.next();
-                linea = new Item(Integer.parseInt(String.valueOf(item[0])), String.valueOf(item[1]));
-                departamentos.add(linea);
+                departamento = new Item(Integer.parseInt(String.valueOf(item[0])), String.valueOf(item[1]));
+                departamentos.add(departamento);
                 nuevo.Departamento.addItem(String.valueOf(item[1]));
                 editar.Departamento.addItem(String.valueOf(item[1]));
             }
@@ -448,9 +647,8 @@ public class CtrlMateriales {
                 nuevo.Familia.addItem(String.valueOf(item[1]));
                 editar.Familia.addItem(String.valueOf(item[1]));
             }
-        } catch (NumberFormatException e) {
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "NO SE HAN PODIDO OBTENER FAMILIAS", "ERROR AL OBTENER", JOptionPane.ERROR_MESSAGE);
-
             System.out.println("ERROR\n" + e.getMessage());
             e.printStackTrace();/*INDICA LA LINEA DONDE OCURRE EL PROBLEMA*/
         }
@@ -483,6 +681,7 @@ public class CtrlMateriales {
     }
 
     public int getID(ArrayList<Item> x, String selected_item) {
+
         int id = 0;
         if (!selected_item.equals("")) {
             for (Item o : x) {

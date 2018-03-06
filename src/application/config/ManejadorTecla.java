@@ -38,15 +38,7 @@ public class ManejadorTecla implements KeyListener {
     }
     @Override
     public void keyReleased(KeyEvent e) {
-        Robot Tecla;
-        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-            try {
-                Tecla = new Robot();
-                Tecla.keyPress(KeyEvent.VK_TAB);
-            } catch (AWTException e1) {
-                e1.printStackTrace();
-            }
-        }
+        
     }
     @Override
     public void keyTyped(KeyEvent e) {
