@@ -5,6 +5,8 @@
  */
 package application.views.permisos;
 
+import application.config.ManejadorTecla;
+
 /**
  *
  * @author Christian
@@ -14,8 +16,19 @@ public class mdlINuevo extends javax.swing.JInternalFrame {
     /**
      * Creates new form mdlINuevo
      */
+    ManejadorTecla manejador =  new ManejadorTecla();
     public mdlINuevo() {
         initComponents();
+        manejador.manejaCombo(Modulo);
+        manejador.manejaCombo(Usuario);
+        
+         this.Buscar.addKeyListener(manejador);
+        this.Consultar.addKeyListener(manejador);
+        this.Crear.addKeyListener(manejador);
+        this.Eliminar.addKeyListener(manejador);
+        this.Modificar.addKeyListener(manejador);
+        this.Reportes.addKeyListener(manejador);
+        this.Ver.addKeyListener(manejador);
     }
 
     /**

@@ -21,7 +21,7 @@ public class mdlINuevo extends javax.swing.JInternalFrame {
         initComponents();
         this.txtClave.addKeyListener(manejador);
         this.txtDescripcion.addKeyListener(manejador);
-        this.cmbDepartamento.addKeyListener(manejador);
+        manejador.manejaCombo(cmbDepartamento);
     }
 
     /**

@@ -87,28 +87,8 @@ public class CtrlModulos {
         nuevo.btnGuardar.addActionListener((e) -> {
             onGuardar();
         });
-
-        editar.btnGuardar.addActionListener((e) -> {
-            onModificar();
-        });
-
-        nuevo.Modulo.addKeyListener(new KeyListener() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    onGuardar();
-                }
-            }
-
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-        });
-        editar.Modulo.addKeyListener(new KeyListener() {
+        
+        editar.btnGuardar.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -124,6 +104,12 @@ public class CtrlModulos {
             public void keyReleased(KeyEvent e) {
             }
         });
+
+        editar.btnGuardar.addActionListener((e) -> {
+            onModificar();
+        });
+
+     
     }
 
     public void setVisible() {

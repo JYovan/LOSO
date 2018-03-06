@@ -190,7 +190,7 @@ SET NOCOUNT ON;
     P.Ver AS VER, P.Crear AS CREAR, P.Modificar AS MODIFICAR, P.Eliminar AS ELIMINAR, P.Consultar AS CONSULTAR, 
     P.Reportes AS REPORTES, P.Buscar AS BUSCAR, P.Estatus  AS ESTATUS, P.Registro AS REGISTRO 
     FROM Permisos AS P 
-    WHERE P.Estatus IN('ACTIVO','INACTIVO');
+    WHERE P.Estatus IN('ACTIVO');
 END
 GO
 

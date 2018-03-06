@@ -80,30 +80,7 @@ public class CtrlFracciones {
         nuevo.btnGuardar.addActionListener((e) -> {
             onGuardar();
         });
-        editar.btnGuardar.addActionListener((e) -> {
-            onModificar();
-        });
-
-
-        nuevo.cmbDepartamento.addKeyListener(new KeyListener() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    onGuardar();
-                }
-            }
-
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-        });
-   
-
-        editar.cmbEstatus.addKeyListener(new KeyListener() {
+        editar.btnGuardar.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -118,6 +95,9 @@ public class CtrlFracciones {
             @Override
             public void keyReleased(KeyEvent e) {
             }
+        });
+        editar.btnGuardar.addActionListener((e) -> {
+            onModificar();
         });
 
         getDepartamentos();

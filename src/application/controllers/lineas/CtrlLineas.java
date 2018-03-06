@@ -84,9 +84,6 @@ public class CtrlLineas {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     onGuardar();
                 }
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    nuevo.dispose();
-                }
             }
 
             @Override
@@ -97,115 +94,17 @@ public class CtrlLineas {
             public void keyReleased(KeyEvent e) {
             }
         });
+        
         nuevo.btnGuardar.addActionListener((e) -> {
             onGuardar();
         });
-        editar.btnGuardar.addActionListener((e) -> {
-            onModificar();
-        });
-
-        nuevo.txtClave.addKeyListener(new KeyListener() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    nuevo.dispose();
-                }
-            }
-
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-        });
-
-        nuevo.txtAno.addKeyListener(new KeyListener() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    editar.dispose();
-                }
-            }
-
-            @Override
-            public void keyTyped(KeyEvent e) {
-                rsc.setOnlyNumbers(e);
-
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-        });
-
-        nuevo.txtDescripcion.addKeyListener(new KeyListener() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    onGuardar();
-                }
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    nuevo.dispose();
-                }
-            }
-
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-        });
-        editar.txtClave.addKeyListener(new KeyListener() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    editar.dispose();
-                }
-            }
-
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-        });
-
-        editar.txtAno.addKeyListener(new KeyListener() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    editar.dispose();
-                }
-            }
-
-            @Override
-            public void keyTyped(KeyEvent e) {
-                rsc.setOnlyNumbers(e);
-
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-        });
-
-        editar.txtDescripcion.addKeyListener(new KeyListener() {
+        
+        editar.btnGuardar.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     onModificar();
                 }
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    editar.dispose();
-                }
             }
 
             @Override
@@ -216,6 +115,13 @@ public class CtrlLineas {
             public void keyReleased(KeyEvent e) {
             }
         });
+        
+        editar.btnGuardar.addActionListener((e) -> {
+            onModificar();
+        });
+
+  
+
 
 
         getTemporadas();

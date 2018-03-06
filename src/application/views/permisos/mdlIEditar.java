@@ -5,6 +5,8 @@
  */
 package application.views.permisos;
 
+import application.config.ManejadorTecla;
+
 /**
  *
  * @author Christian
@@ -14,8 +16,21 @@ public class mdlIEditar extends javax.swing.JInternalFrame {
     /**
      * Creates new form mdlIEditar
      */
+    ManejadorTecla manejador =  new ManejadorTecla();
     public mdlIEditar() {
         initComponents();
+        
+        manejador.manejaCombo(Modulo);
+        Usuario.addKeyListener(manejador);
+        
+        this.Buscar.addKeyListener(manejador);
+        this.Consultar.addKeyListener(manejador);
+        this.Crear.addKeyListener(manejador);
+        this.Eliminar.addKeyListener(manejador);
+        this.Modificar.addKeyListener(manejador);
+        this.Reportes.addKeyListener(manejador);
+        this.Ver.addKeyListener(manejador);
+        
     }
 
     /**
@@ -29,8 +44,6 @@ public class mdlIEditar extends javax.swing.JInternalFrame {
 
         jPanel1 = new javax.swing.JPanel();
         btnGuardar = new javax.swing.JButton();
-        Modulo = new javax.swing.JComboBox<>();
-        Usuario = new javax.swing.JComboBox<>();
         Ver = new javax.swing.JCheckBox();
         Crear = new javax.swing.JCheckBox();
         Modificar = new javax.swing.JCheckBox();
@@ -40,6 +53,8 @@ public class mdlIEditar extends javax.swing.JInternalFrame {
         Buscar = new javax.swing.JCheckBox();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        Usuario = new javax.swing.JTextField();
+        Modulo = new javax.swing.JComboBox<>();
 
         setClosable(true);
         setIconifiable(true);
@@ -81,15 +96,18 @@ public class mdlIEditar extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Módulo");
 
+        Usuario.setEditable(false);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(Usuario, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(Ver)
                                 .addComponent(Modificar)
@@ -102,13 +120,11 @@ public class mdlIEditar extends javax.swing.JInternalFrame {
                             .addGap(18, 18, 18)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(Reportes)
-                                .addComponent(btnGuardar))
-                            .addGap(61, 61, 61))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(Modulo, javax.swing.GroupLayout.Alignment.LEADING, 0, 281, Short.MAX_VALUE)
-                            .addComponent(Usuario, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)))
+                                .addComponent(btnGuardar)))
+                        .addComponent(jLabel1)
+                        .addComponent(jLabel2))
+                    .addComponent(Modulo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -119,9 +135,9 @@ public class mdlIEditar extends javax.swing.JInternalFrame {
                 .addComponent(Modulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Usuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(Usuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Ver)
                     .addComponent(Consultar)
@@ -144,7 +160,7 @@ public class mdlIEditar extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 323, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
@@ -164,7 +180,7 @@ public class mdlIEditar extends javax.swing.JInternalFrame {
     public javax.swing.JCheckBox Modificar;
     public javax.swing.JComboBox<String> Modulo;
     public javax.swing.JCheckBox Reportes;
-    public javax.swing.JComboBox<String> Usuario;
+    public javax.swing.JTextField Usuario;
     public javax.swing.JCheckBox Ver;
     public javax.swing.JButton btnGuardar;
     private javax.swing.JLabel jLabel1;

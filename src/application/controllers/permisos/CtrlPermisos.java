@@ -54,6 +54,7 @@ public class CtrlPermisos {
         this.permisos = permisos;
         AutoCompleteDecorator.decorate(this.nuevo.Modulo);
         AutoCompleteDecorator.decorate(this.nuevo.Usuario);
+        AutoCompleteDecorator.decorate(this.editar.Modulo);
         
         nuevo.addInternalFrameListener(new InternalFrameAdapter() {
             @Override
@@ -97,6 +98,22 @@ public class CtrlPermisos {
         });
         nuevo.btnGuardar.addActionListener((e) -> {
             onGuardar();
+        });
+        editar.btnGuardar.addKeyListener(new KeyListener() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    onModificar();
+                }
+            }
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
         });
         editar.btnGuardar.addActionListener((e) -> {
             onModificar();
@@ -168,7 +185,7 @@ public class CtrlPermisos {
             a.add(IDX);
             ArrayList<Object[][]> x = g.findByParams("SP_PERMISO_X_ID", a);
             Object[][] data = x.get(0);
-            editar.Usuario.getModel().setSelectedItem(data[0][1]);
+            editar.Usuario.setText(data[0][1].toString());
             editar.Modulo.getModel().setSelectedItem(data[0][2]);
             editar.Ver.setSelected((data[0][3] != null) ? (String.valueOf(data[0][3]).equals("1")) : false);
             editar.Crear.setSelected((data[0][4] != null) ? (String.valueOf(data[0][4]).equals("1")) : false);
@@ -204,7 +221,7 @@ public class CtrlPermisos {
             a.add(editar.Consultar.isSelected() ? 1 : 0);
             a.add(editar.Reportes.isSelected() ? 1 : 0);
             a.add(editar.Buscar.isSelected() ? 1 : 0);
-            if (!editar.Modulo.getSelectedItem().toString().equals("") && !editar.Usuario.getSelectedItem().toString().equals("") && g.addUpdateOrDelete("SP_MODIFICAR_PERMISO", a)) {
+            if (!editar.Modulo.getSelectedItem().toString().equals("") && !editar.Usuario.getText().equals("") && g.addUpdateOrDelete("SP_MODIFICAR_PERMISO", a)) {
                 JOptionPane.showMessageDialog(null, "PERMISO MODIFICADO", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
                 editar.dispose();
                 permisos.getRecords();
@@ -238,7 +255,7 @@ public class CtrlPermisos {
             for (Iterator it = g.fill("SP_OBTENER_USUARIOS").iterator(); it.hasNext();) {
                 Object[] item = (Object[]) it.next();
                 nuevo.Usuario.addItem(String.valueOf(item[1]));
-                editar.Usuario.addItem(String.valueOf(item[1]));
+                editar.Usuario.setText(String.valueOf(item[1]));
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "NO SE HAN PODIDO OBTENER LOS USUARIOS", "ERROR AL ELIMINAR", JOptionPane.ERROR_MESSAGE);
