@@ -221,7 +221,7 @@ public class CtrlCatalogos {
             a.add((nuevo.IValue.getText().equals("")) ? 0 : Integer.parseInt(nuevo.IValue.getText()));
             a.add(nuevo.SValue.getText());
             a.add(nuevo.Special.getText());
-            a.add((nuevo.Valor_Num.getText().equals("")) ? 0.00 : Float.parseFloat(nuevo.Valor_Num.getText()));
+            a.add((nuevo.Valor_Num.getText().equals("")) ? 0.00 : nuevo.Valor_Num.getText());
             a.add(nuevo.Valor_Text.getText());
 
             if (!nuevo.SValue.getText().equals("") && g.addUpdateOrDelete("SP_AGREGAR_CATALOGO", a)) {
@@ -283,7 +283,7 @@ public class CtrlCatalogos {
             a.add(temp);
             a.add((editar.IValue.getText().equals("")) ? 0 : Integer.parseInt(editar.IValue.getText()));
             a.add((editar.SValue.getText() != null) ? editar.SValue.getText() : "");
-            a.add((editar.Valor_Num.getText().equals("")) ? 0.00 : Float.parseFloat(editar.Valor_Num.getText()));
+            a.add((editar.Valor_Num.getText().equals("")) ? 0.00 : editar.Valor_Num.getText());
             a.add((editar.Valor_Text.getText() != null) ? editar.Valor_Text.getText() : "");
             a.add((editar.Special.getText() != null) ? editar.Special.getText() : "");
             a.add(editar.cmbEstatus.getSelectedItem().toString());

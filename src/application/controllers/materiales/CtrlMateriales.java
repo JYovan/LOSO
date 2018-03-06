@@ -419,12 +419,12 @@ public class CtrlMateriales {
                     a.add(null);
                 }
                 a.add(nuevo.Tipo.getSelectedItem().toString());
-                a.add(nuevo.Minimo.getText().equals("") ? 0 : Float.parseFloat(nuevo.Minimo.getText()));
-                a.add(nuevo.Maximo.getText().equals("") ? 0 : Float.parseFloat(nuevo.Maximo.getText()));
-                a.add(nuevo.PrecioLista.getText().equals("") ? 0 : Float.parseFloat(nuevo.PrecioLista.getText()));
-                a.add(nuevo.PrecioTope.getText().equals("") ? 0 : Float.parseFloat(nuevo.PrecioTope.getText()));
+                a.add(nuevo.Minimo.getText().equals("") ? 0 : nuevo.Minimo.getText());
+                a.add(nuevo.Maximo.getText().equals("") ? 0 : nuevo.Maximo.getText());
+                a.add(nuevo.PrecioLista.getText().equals("") ? 0 : nuevo.PrecioLista.getText());
+                a.add(nuevo.PrecioTope.getText().equals("") ? 0 : nuevo.PrecioTope.getText());
                 a.add(nuevo.FechaUltimoInventario.getText());
-                a.add(nuevo.Existencia.getText().equals("") ? 0 : Float.parseFloat(nuevo.Existencia.getText()));
+                a.add(nuevo.Existencia.getText().equals("") ? 0 : nuevo.Existencia.getText());
                 a.add(nuevo.Estatus.getSelectedItem().toString());
                 if (g.addUpdateOrDelete("SP_AGREGAR_MATERIAL", a)) {
                     JOptionPane.showMessageDialog(null, "MATERIAL AGREGADO", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
@@ -579,12 +579,12 @@ public class CtrlMateriales {
                 a.add(null);
             }
             a.add(editar.Tipo.getSelectedItem().toString());
-            a.add(editar.Minimo.getText().equals("") ? 0 : Float.parseFloat(editar.Minimo.getText()));
-            a.add(editar.Maximo.getText().equals("") ? 0 : Float.parseFloat(editar.Maximo.getText()));
-            a.add(editar.PrecioLista.getText().equals("") ? 0 : Float.parseFloat(editar.PrecioLista.getText()));
-            a.add(editar.PrecioTope.getText().equals("") ? 0 : Float.parseFloat(editar.PrecioTope.getText()));
+            a.add(editar.Minimo.getText().equals("") ? 0 : editar.Minimo.getText());
+            a.add(editar.Maximo.getText().equals("") ? 0 : editar.Maximo.getText());
+            a.add(editar.PrecioLista.getText().equals("") ? 0 : editar.PrecioLista.getText());
+            a.add(editar.PrecioTope.getText().equals("") ? 0 : editar.PrecioTope.getText());
             a.add(editar.FechaUltimoInventario.getText());
-            a.add(editar.Existencia.getText().equals("") ? 0 : Float.parseFloat(editar.Existencia.getText()));
+            a.add(editar.Existencia.getText().equals("") ? 0 : (editar.Existencia.getText()));
             a.add(editar.Estatus.getSelectedItem().toString());
         }
 
