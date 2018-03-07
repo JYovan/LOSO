@@ -97,20 +97,34 @@ public class CtrlMaterialesXCombinacion {
         nuevo.btnAgregar.addActionListener((e) -> {
             int row = nuevo.tblMateriales.getSelectedRow();
             if (row != -1) {
-                Float Consumo = Float.parseFloat(nuevo.Consumo.getValue().toString());
-                if (Consumo > 0) {
-                    int ID = Integer.parseInt(nuevo.tblMateriales.getModel().getValueAt(nuevo.tblMateriales.getSelectedRow(), 0).toString());
-                    DefaultTableModel model = (DefaultTableModel) nuevo.tblMaterialesAgregados.getModel();
-                    model.addRow(new Object[]{
-                        ID/*ID*/,
-                        nuevo.tblMateriales.getValueAt(nuevo.tblMateriales.getSelectedRow(), 0).toString()/*MATERIAL*/,
-                        nuevo.tblMateriales.getValueAt(nuevo.tblMateriales.getSelectedRow(), 1).toString()/*U.M.*/,
-                        nuevo.tblMateriales.getValueAt(nuevo.tblMateriales.getSelectedRow(), 2).toString()/*PRECIO*/,
-                        String.valueOf(nuevo.Consumo.getValue()),
-                        nuevo.Tipo.getSelectedItem().toString()});
-                    nuevo.Consumo.setValue(0);
+                /*COMPROBAR QUE EL MATERIAL NO HAYA SIDO AGREGADO ANTERIORMENTE*/
+                boolean agregado = false;
+                for (int i = 0; i < nuevo.tblMaterialesAgregados.getRowCount(); i++) {
+                    String M = (nuevo.tblMateriales.getValueAt(nuevo.tblMateriales.getSelectedRow(), 0).toString());
+                    String MM = (nuevo.tblMaterialesAgregados.getValueAt(i, 0).toString());
+                    if (M.equals(MM)) {
+                        agregado = true;
+                        break;
+                    }
+                }
+                if (!agregado) {
+                    Float Consumo = Float.parseFloat(nuevo.Consumo.getValue().toString());
+                    if (Consumo > 0) {
+                        int ID = Integer.parseInt(nuevo.tblMateriales.getModel().getValueAt(nuevo.tblMateriales.getSelectedRow(), 0).toString());
+                        DefaultTableModel model = (DefaultTableModel) nuevo.tblMaterialesAgregados.getModel();
+                        model.addRow(new Object[]{
+                            ID/*ID*/,
+                            nuevo.tblMateriales.getValueAt(nuevo.tblMateriales.getSelectedRow(), 0).toString()/*MATERIAL*/,
+                            nuevo.tblMateriales.getValueAt(nuevo.tblMateriales.getSelectedRow(), 2).toString()/*U.M.*/,
+                            nuevo.tblMateriales.getValueAt(nuevo.tblMateriales.getSelectedRow(), 3).toString()/*PRECIO*/,
+                            String.valueOf(nuevo.Consumo.getValue()),
+                            nuevo.Tipo.getSelectedItem().toString()});
+                        nuevo.Consumo.setValue(0);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "DEBE DE ESTABLECER UN CONSUMO", "ATENCIÓN", JOptionPane.WARNING_MESSAGE);
+                    }
                 } else {
-                    JOptionPane.showMessageDialog(null, "DEBE DE ESTABLECER UN CONSUMO", "ATENCIÓN", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "YA HA AGREGADO EL MATERIAL", "ATENCIÓN", JOptionPane.WARNING_MESSAGE);
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "DEBE DE SELECCIONAR UN MATERIAL", "ATENCIÓN", JOptionPane.WARNING_MESSAGE);
@@ -163,8 +177,53 @@ public class CtrlMaterialesXCombinacion {
                 mxc.setVisible();
             }
         });
+        editar.btnEliminar.addActionListener((e) -> {
+            int row = editar.tblMaterialesAgregados.getSelectedRow();
+            if (row != -1) {
+                DefaultTableModel model = (DefaultTableModel) editar.tblMaterialesAgregados.getModel();
+                IntStream.of(editar.tblMaterialesAgregados.getSelectedRows()).boxed().sorted(Collections.reverseOrder()).forEach(model::removeRow);
+            } else {
+                JOptionPane.showMessageDialog(null, "DEBE DE SELECCIONAR UN MATERIAL AGREGADO", "ATENCIÓN", JOptionPane.WARNING_MESSAGE);
+            }
+        });
         editar.btnRefrescar.addActionListener((e) -> {
             getMateriales();
+        });
+        editar.btnAgregar.addActionListener((e) -> {
+            int row = editar.tblMateriales.getSelectedRow();
+            if (row != -1) {
+                /*COMPROBAR QUE EL MATERIAL NO HAYA SIDO AGREGADO ANTERIORMENTE*/
+                boolean agregado = false;
+                for (int i = 0; i < editar.tblMaterialesAgregados.getRowCount(); i++) {
+                    String M = (editar.tblMateriales.getValueAt(editar.tblMateriales.getSelectedRow(), 0).toString());
+                    String MM = (editar.tblMaterialesAgregados.getValueAt(i, 0).toString());
+                    if (M.equals(MM)) {
+                        agregado = true;
+                        break;
+                    }
+                }
+                if (!agregado) {
+                    Float Consumo = Float.parseFloat(editar.Consumo.getValue().toString());
+                    if (Consumo > 0) {
+                        int ID = Integer.parseInt(editar.tblMateriales.getModel().getValueAt(editar.tblMateriales.getSelectedRow(), 0).toString());
+                        DefaultTableModel model = (DefaultTableModel) editar.tblMaterialesAgregados.getModel();
+                        model.addRow(new Object[]{
+                            ID/*ID*/,
+                            editar.tblMateriales.getValueAt(editar.tblMateriales.getSelectedRow(), 0).toString()/*MATERIAL*/,
+                            editar.tblMateriales.getValueAt(editar.tblMateriales.getSelectedRow(), 2).toString()/*U.M.*/,
+                            editar.tblMateriales.getValueAt(editar.tblMateriales.getSelectedRow(), 3).toString()/*PRECIO*/,
+                            String.valueOf(editar.Consumo.getValue()),
+                            editar.Tipo.getSelectedItem().toString()});
+                        editar.Consumo.setValue(0);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "DEBE DE ESTABLECER UN CONSUMO", "ATENCIÓN", JOptionPane.WARNING_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "YA HA AGREGADO EL MATERIAL", "ATENCIÓN", JOptionPane.WARNING_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "DEBE DE SELECCIONAR UN MATERIAL", "ATENCIÓN", JOptionPane.WARNING_MESSAGE);
+            }
         });
         editar.btnGuardar.addActionListener((e) -> {
             onModificar();
@@ -295,30 +354,27 @@ public class CtrlMaterialesXCombinacion {
                     int productos_agregados = 0;
                     System.out.println("* * * DETALLE * * *");
                     for (int i = 0; i < nuevo.tblMaterialesAgregados.getRowCount(); i++) {
-//                        @IDX INT, @Material INT, @Consumo FLOAT, @Tipo INT,@Registro VARCHAR(25)
+//                        @IDX INT, @Material INT, @Consumo FLOAT, @Tipo INT,@Registro VARCHAR(25),@Precio 
                         detalle.add(Integer.parseInt(String.valueOf(ID[0][0])));/*ID ENCABEZADO*/
                         int IDM = Integer.parseInt(nuevo.tblMaterialesAgregados.getModel().getValueAt(i, 0).toString());
                         detalle.add(IDM);/*ID MATERIAL*/
                         detalle.add(Float.parseFloat(nuevo.tblMaterialesAgregados.getValueAt(i, 3).toString()));/*CONSUMO*/
                         fechatiempo = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(Calendar.getInstance().getTime());
-                        detalle.add(nuevo.tblMaterialesAgregados.getValueAt(i, 2).toString().equals("DIR") ? 1 : 2);
+                        detalle.add(nuevo.tblMaterialesAgregados.getValueAt(i, 4).toString().equals("DIR") ? 1 : 2);/*TIPO*/
                         detalle.add(fechatiempo);/*REGISTRO*/
+                        detalle.add(nuevo.tblMaterialesAgregados.getValueAt(i, 2).toString());/*PRECIO*/
                         if (g.addUpdateOrDelete("SP_AGREGAR_MATERIALES_X_COMBINACION_DETALLE", detalle)) {
                             productos_agregados++;
                             detalle.clear();
                         }
                         System.out.println("ID: " + nuevo.tblMaterialesAgregados.getValueAt(i, 0).toString() + "\tMATERIAL: " + nuevo.tblMaterialesAgregados.getValueAt(i, 1).toString());
                     }
-                    JOptionPane.showMessageDialog(null, productos_agregados + " MATERIALES POR COMBINACION AGREGADOS\n", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
-
-
                     /*FIN DETALLE*/
-                    JOptionPane.showMessageDialog(null, "MATERIAL POR COMBINACION AGREGADO", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "MATERIAL POR COMBINACION AGREGADO\n " + productos_agregados + " MATERIALES POR COMBINACION AGREGADOS", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
                     nuevo.dispose();
                     materialesxcombinacion.getRecords();
                     mnu.dpContenedor.remove(nuevo);
                     materialesxcombinacion.setVisible();
-
                 } else {
                     JOptionPane.showMessageDialog(null, "NO SE HA PODIDO AGREGAR EL MATERIAL POR COMBINACION", "NO SE HA PODIDO AGREGAR EL ESTILO", JOptionPane.ERROR_MESSAGE);
                 }
@@ -395,11 +451,14 @@ public class CtrlMaterialesXCombinacion {
                     int IDM = Integer.parseInt(editar.tblMaterialesAgregados.getModel().getValueAt(i, 0).toString());
                     detalle.add(IDM);/*ID MATERIAL 1*/
                     detalle.add(Float.parseFloat(editar.tblMaterialesAgregados.getValueAt(i, 3).toString()));/*CONSUMO 2*/
-                    detalle.add(editar.tblMaterialesAgregados.getValueAt(i, 3).toString().equals("DIR") ? 1 : 2);/*TIPO 3*/
+                    detalle.add(editar.tblMaterialesAgregados.getValueAt(i, 4).toString().equals("DIR") ? 1 : 2);/*TIPO 3*/
+                    detalle.add(editar.tblMaterialesAgregados.getValueAt(i, 2).toString());/*PRECIO*/ 
+                    String fechatiempo = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(Calendar.getInstance().getTime());
+                    detalle.add(fechatiempo);/*REGISTRO*/
                     if (g.addUpdateOrDelete("SP_MODIFICAR_MATERIALES_X_COMBINACION_DETALLE", detalle)) {
                         detalle.clear();
                     }
-                    System.out.println("ID: " + editar.tblMaterialesAgregados.getValueAt(i, 0).toString() + "\tMATERIAL: " + nuevo.tblMaterialesAgregados.getValueAt(i, 1).toString());
+                    System.out.println("ID: " + editar.tblMaterialesAgregados.getValueAt(i, 0).toString() + "\tMATERIAL: " + editar.tblMaterialesAgregados.getValueAt(i, 1).toString());
                 }
 
                 editar.dispose();

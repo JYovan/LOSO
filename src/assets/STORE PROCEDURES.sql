@@ -1250,7 +1250,7 @@ SET NOCOUNT ON;
 
 	SELECT 
         MXCD.Material ID, 
-        M.Descripcion AS MATERIAL, 
+        M.Material AS MATERIAL, 
         C.SValue AS "U.M", 
         M.PrecioLista AS PRECIO,
         MXCD.[Consumo] AS CONSUMO,
@@ -1318,18 +1318,18 @@ GO
 IF EXISTS (	SELECT name FROM sysobjects WHERE  name = 'SP_AGREGAR_MATERIALES_X_COMBINACION_DETALLE' AND TYPE = 'P')
 	DROP PROCEDURE SP_AGREGAR_MATERIALES_X_COMBINACION_DETALLE
 GO
-CREATE PROCEDURE SP_AGREGAR_MATERIALES_X_COMBINACION_DETALLE(@IDX INT, @Material INT, @Consumo FLOAT, @Tipo INT,@Registro VARCHAR(25))
+CREATE PROCEDURE SP_AGREGAR_MATERIALES_X_COMBINACION_DETALLE(@IDX INT, @Material INT, @Consumo FLOAT, @Tipo INT,@Registro VARCHAR(25), @Precio VARCHAR(15))
 AS
 BEGIN
 SET NOCOUNT ON;   
 INSERT INTO [dbo].[MaterialesXCombinacionDetalle]
-           ([MaterialXCombinacion],[Material],[Consumo],[Tipo],[Estatus],[Registro])
+           ([MaterialXCombinacion],[Material],[Consumo],[Tipo],[Estatus],[Registro],[Precio])
      VALUES
            (@IDX
            ,@Material
            ,@Consumo
            ,@Tipo
-           ,'ACTIVO',@Registro );
+           ,'ACTIVO',@Registro,@Precio );
 
 END
 GO
@@ -1345,7 +1345,7 @@ CREATE PROCEDURE SP_OBTENER_MATERIALES_MXC(@MAX INT)
 AS
 BEGIN
 SET NOCOUNT ON; 
-    SELECT M.[ID] ,M.[Material] AS MATERIAL, C.SValue AS "U.M", M.[PrecioLista] AS PRECIO 
+    SELECT M.[ID] ,M.[Material] AS MATERIAL,M.Descripcion AS "DESCRIPCIÓN",  C.SValue AS "U.M", M.[PrecioLista] AS PRECIO 
     FROM [Materiales] AS M 
     INNER JOIN Catalogos AS C ON M.UnidadConsumo = C.ID AND C.[FieldId] LIKE 'UNIDADES' AND C.Estatus LIKE 'ACTIVO'
     WHERE M.Estatus IN('ACTIVO');
@@ -1379,7 +1379,7 @@ UPDATE [dbo].[MaterialesXCombinacionDetalle]
 END
 GO
 
-
+USE LOBO;
 -- -----------------------------------------------------
 -- procedure SP_MODIFICAR_MATERIALES_X_COMBINACION_DETALLE
 -- -----------------------------------------------------
@@ -1387,16 +1387,30 @@ GO
 IF EXISTS (	SELECT name FROM sysobjects WHERE  name = 'SP_MODIFICAR_MATERIALES_X_COMBINACION_DETALLE' AND TYPE = 'P')
 	DROP PROCEDURE SP_MODIFICAR_MATERIALES_X_COMBINACION_DETALLE
 GO
-CREATE  PROCEDURE SP_MODIFICAR_MATERIALES_X_COMBINACION_DETALLE(@IDX INT, @Material INT, @Consumo FLOAT, @Tipo INT)
+CREATE  PROCEDURE SP_MODIFICAR_MATERIALES_X_COMBINACION_DETALLE(@IDX INT, @Material INT, @Consumo FLOAT, @Tipo INT, @Precio VARCHAR(15), @Registro VARCHAR(25))
 AS
 BEGIN
 SET NOCOUNT ON;  
+    DECLARE @EXISTE INT;
+    SET @EXISTE = (SELECT COUNT(*) FROM [dbo].[MaterialesXCombinacionDetalle] AS MXCE 
+                    WHERE MXCE.Material = @Material  AND MaterialXCombinacion = @IDX) ;
+IF @EXISTE > 0 BEGIN
 UPDATE [dbo].[MaterialesXCombinacionDetalle]
    SET  [Material] = @Material
       ,[Consumo] = @Consumo
       ,[Tipo] = @Tipo
       ,[Estatus] = 'ACTIVO' 
- WHERE ID = @IDX;
+ WHERE Material = @Material AND MaterialXCombinacion = @IDX;
+ END
+ELSE
+BEGIN
+    INSERT INTO [dbo].[MaterialesXCombinacionDetalle]
+           ([MaterialXCombinacion],[Material],[Consumo],[Tipo],[Estatus],[Registro],[Precio])
+     VALUES
+           (@IDX            ,@Material
+           ,@Consumo           ,@Tipo
+           ,'ACTIVO',@Registro,@Precio );
+END
 END
 GO
 
