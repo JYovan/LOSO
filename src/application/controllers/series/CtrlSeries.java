@@ -22,6 +22,7 @@ import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -37,6 +38,7 @@ public class CtrlSeries {
     int temp = 0;
     Resources rsc;
     vMenu menu;
+    DefaultTableModel dtm;
 
     public CtrlSeries(JInternalFrame parent, Generic g, Series series, JFrame menu) {
         this.menu = (vMenu) menu;
@@ -100,6 +102,25 @@ public class CtrlSeries {
             public void keyReleased(KeyEvent e) {
             }
         });
+        
+         nuevo.txtPuntoFinal.addKeyListener(new KeyListener() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+            }
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if (((e.getKeyChar() < '0') || (e.getKeyChar() > '9'))
+                        && (e.getKeyChar() != KeyEvent.VK_BACK_SPACE)
+                        && (e.getKeyChar() != '.' || nuevo.txtPuntoFinal.getText().contains("."))) {
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });
 
         editar.txtPuntoInicial.addKeyListener(new KeyListener() {
             @Override
@@ -111,6 +132,25 @@ public class CtrlSeries {
                 if (((e.getKeyChar() < '0') || (e.getKeyChar() > '9'))
                         && (e.getKeyChar() != KeyEvent.VK_BACK_SPACE)
                         && (e.getKeyChar() != '.' || editar.txtPuntoInicial.getText().contains("."))) {
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });
+        
+        editar.txtPuntoFinal.addKeyListener(new KeyListener() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+            }
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if (((e.getKeyChar() < '0') || (e.getKeyChar() > '9'))
+                        && (e.getKeyChar() != KeyEvent.VK_BACK_SPACE)
+                        && (e.getKeyChar() != '.' || editar.txtPuntoFinal.getText().contains("."))) {
                     e.consume();
                 }
             }
@@ -202,23 +242,57 @@ public class CtrlSeries {
     public void onGuardar() {
         try {
             ArrayList<Object> a = new ArrayList<>();
+            ArrayList<Object> detalle = new ArrayList<>();
+            int temp_ID=0;
+
             Object x = null;
             a.add(nuevo.txtDescripcion.getText());
 
             a.add(nuevo.txtPuntoInicial.getText().equals("") ? 0.0 : nuevo.txtPuntoInicial.getText());
             a.add(nuevo.txtPuntoFinal.getText().equals("") ? 0.0 : nuevo.txtPuntoFinal.getText());
 
-            if (Double.parseDouble(nuevo.txtPuntoInicial.getText()) < Double.parseDouble(nuevo.txtPuntoFinal.getText())) {
-                if (!nuevo.txtDescripcion.getText().equals("") && !nuevo.txtPuntoInicial.getText().equals("") && !nuevo.txtPuntoFinal.getText().equals("") && g.addUpdateOrDelete("SP_AGREGAR_SERIE", a)) {
+            Double limite = Double.parseDouble(nuevo.txtPuntoFinal.getText());
+            Double total = Double.parseDouble(nuevo.txtPuntoInicial.getText());
+
+            if (Double.parseDouble(nuevo.txtPuntoInicial.getText())
+                    < Double.parseDouble(nuevo.txtPuntoFinal.getText())) {
+
+                if (!nuevo.txtDescripcion.getText().equals("")
+                        && !nuevo.txtPuntoInicial.getText().equals("")
+                        && !nuevo.txtPuntoFinal.getText().equals("")) {
+                    //&& g.addUpdateOrDelete("SP_AGREGAR_SERIE", a)
+                    ArrayList<Object[][]> data = g.addUpdateOrDeleteAndGetLastId("SP_AGREGAR_SERIE", a);
+
+                    if (data.size() > 0) {
+                        Object[][] ID = data.get(0);/*OBTENER EL ID DEL ENCABEZADO*/
+                        System.out.println("ID " + String.valueOf(ID[0][0]));
+                        
+                        temp_ID = Integer.parseInt(String.valueOf(ID[0][0]));
+                        /*DETALLE*/
+
+                        while (total <= limite) {
+                            detalle.add(temp_ID);
+                            detalle.add(total);
+                            detalle.add(0);
+                            if (g.addUpdateOrDelete("SP_AGREGAR_SERIE_DETALLE", detalle)) {
+                                detalle.clear();
+                            }
+                            total = total + 0.5;
+                        }
+                        /*FIN DETALLE*/
+                    } else {
+                        JOptionPane.showMessageDialog(null, "NO SE HA PODIDO AGREGAR EL REGISTRO", "NO SE HA PODIDO AGREGAR EL REGISTRO", JOptionPane.ERROR_MESSAGE);
+                    }
+
                     JOptionPane.showMessageDialog(null, "REGISTRO AGREGADO", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
                     nuevo.dispose();
                     series.getRecords();
                     menu.dpContenedor.remove(nuevo);
-                    series.setVisible();
+                    //series.setVisible();
+                    onEditar(temp_ID);
                 } else {
-                    JOptionPane.showMessageDialog(null, "NO SE HA PODIDO AGREGAR EL REGISTRO", "NO SE HA PODIDO AGREGAR EL REGISTRO", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "DEBE DE LLENAR TODOS LOS CAMPOS", "ERROR EN CAPTURA", JOptionPane.ERROR_MESSAGE);
                 }
-
             } else {
                 JOptionPane.showMessageDialog(null, "EL PUNTO INICIAL NO DEBE SER MAYOR AL PUNTO FINAL", "ERROR EN CAPTURA", JOptionPane.ERROR_MESSAGE);
             }
@@ -243,6 +317,13 @@ public class CtrlSeries {
             editar.txtPuntoInicial.setText(String.valueOf((data[0][2] != null) ? data[0][2] : ""));
             editar.txtPuntoFinal.setText(String.valueOf((data[0][3] != null) ? data[0][3] : ""));
             editar.cmbEstatus.getModel().setSelectedItem(data[0][4]);
+            
+            ArrayList<Object> parametrosDetalle = new ArrayList<>();
+            parametrosDetalle.add(IDX);
+            ArrayList<Object[][]> det = g.findByParams("SP_SERIES_DETALLE", parametrosDetalle);
+            dtm = g.getModelFill(det.get(0), g.getDimensional(det.get(1)));
+            editar.tblSerieDetalle.setModel(dtm);
+            
 
             if (!editar.isShowing()) {
                 menu.dpContenedor.add(editar);

@@ -64,13 +64,12 @@ public class mdlNuevo extends javax.swing.JInternalFrame {
 
         tblSerieDetalle.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null},
+                {null, null},
+                {null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "TALLA", "CANTIDAD"
             }
         ));
         jScrollPane1.setViewportView(tblSerieDetalle);

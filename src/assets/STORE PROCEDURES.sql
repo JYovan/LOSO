@@ -1426,7 +1426,9 @@ CREATE PROCEDURE SP_SERIES(@MAX INT)
 AS
 BEGIN
 SET NOCOUNT ON; 
-	SELECT TOP (@MAX) S.ID AS ID, S.Descripcion AS DESCRIPCION, S.Estatus AS ESTATUS FROM Series AS S WHERE S.Estatus IN('ACTIVO','INACTIVO');
+	SELECT TOP (@MAX) S.ID AS ID, S.Descripcion AS DESCRIPCION, S.Estatus AS ESTATUS FROM Series AS S 
+	WHERE S.Estatus IN('ACTIVO','INACTIVO')
+	ORDER BY ID ASC;
 END
 GO
 
@@ -1446,6 +1448,7 @@ BEGIN
 SET NOCOUNT ON;
 	INSERT INTO series ([Descripcion],[PuntoInicial],[PuntoFinal],[Estatus]) 
 						VALUES ( @Descripcion, @PuntoInicial,@PuntoFinal,'ACTIVO');
+			SELECT SCOPE_IDENTITY() AS ULTIMO_ID
 END
 GO
 
@@ -1501,5 +1504,39 @@ SET NOCOUNT ON;
 	UPDATE Series
 	SET [Estatus] = 'INACTIVO' 
 	WHERE [ID] = @IDX; 
+END
+GO
+
+
+-- -----------------------------------------------------
+-- procedure SP_SERIES_DETALLE
+-- -----------------------------------------------------
+IF EXISTS (	SELECT name FROM sysobjects WHERE  name = 'SP_SERIES_DETALLE' AND TYPE = 'P')
+	DROP PROCEDURE SP_SERIES_DETALLE
+GO
+CREATE PROCEDURE SP_SERIES_DETALLE(@IDX INT)
+AS
+BEGIN
+SET NOCOUNT ON; 
+	SELECT  SD.Talla AS TALLA, SD.Cantidad AS CANTIDAD FROM SeriesDetalle AS SD WHERE SD.Serie_ID = @IDX ORDER BY SD.ID ASC;
+END
+GO
+
+-- -----------------------------------------------------
+-- procedure SP_AGREGAR_SERIE_DETALLE
+-- -----------------------------------------------------
+IF EXISTS (	SELECT name FROM sysobjects WHERE  name = 'SP_AGREGAR_SERIE_DETALLE' AND TYPE = 'P')
+	DROP PROCEDURE SP_AGREGAR_SERIE_DETALLE
+GO
+CREATE  PROCEDURE SP_AGREGAR_SERIE_DETALLE(
+@Serie_ID INT, 
+@Talla FLOAT, 
+@Cantidad INT
+)
+AS
+BEGIN
+SET NOCOUNT ON;
+	INSERT INTO SeriesDetalle([Serie_ID],[Talla],[Cantidad]) 
+						VALUES ( @Serie_ID, @Talla,@Cantidad);
 END
 GO

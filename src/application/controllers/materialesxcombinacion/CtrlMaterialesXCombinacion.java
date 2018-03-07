@@ -376,7 +376,7 @@ public class CtrlMaterialesXCombinacion {
                     mnu.dpContenedor.remove(nuevo);
                     materialesxcombinacion.setVisible();
                 } else {
-                    JOptionPane.showMessageDialog(null, "NO SE HA PODIDO AGREGAR EL MATERIAL POR COMBINACION", "NO SE HA PODIDO AGREGAR EL ESTILO", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "NO SE HA PODIDO AGREGAR EL REGISTRO", "NO SE HA PODIDO AGREGAR EL REGISTRO", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "DEBE DE SELECCIONAR UN ESTILO Y UNA COMBINACIÓN", "ATENCIÓN", JOptionPane.WARNING_MESSAGE);
