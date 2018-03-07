@@ -44,6 +44,7 @@ public class Menu {
     Materiales mat;
     Fracciones fra;
     MaterialesXCombinacion mxc;
+    Series ser;
 
     public Menu(Generic g) {
         this.g = g;
@@ -60,6 +61,7 @@ public class Menu {
         mat = new Materiales(g, menu);
         fra = new Fracciones(g, menu);
         mxc = new MaterialesXCombinacion(g, menu);
+        ser = new Series(g,menu);
 
         src.toSysTray(menu);
         menu.mSalir.addMouseListener(new MouseAdapter() {
@@ -70,6 +72,11 @@ public class Menu {
                     System.exit(0);
                 }
             }
+        });
+        
+        menu.mnuSeries.addActionListener((e) -> {
+            ser.getRecords();
+            ser.setVisible();
         });
 
         menu.mnuMatxCombinacion.addActionListener((e) -> {
