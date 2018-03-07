@@ -20,6 +20,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -57,6 +58,7 @@ public class CtrlMaterialesXCombinacion {
     ArrayList<Item> combinaciones = new ArrayList<>();
     JFileChooser fc;
     vMenu mnu;
+    BigDecimal importe_total = new BigDecimal(0.0);
 
     public CtrlMaterialesXCombinacion(JInternalFrame parent, Generic g, MaterialesXCombinacion materialesxcombinacion, JFrame menu) {
         /*NO SE DEBE DE LLAMAR NADA SI NO SE DEFINEN ESTAS ASIGNACIONES*/
@@ -75,6 +77,7 @@ public class CtrlMaterialesXCombinacion {
         AutoCompleteDecorator.decorate(this.editar.Combinacion);
         AutoCompleteDecorator.decorate(this.editar.Tipo);
         /*NUEVO*/
+
         nuevo.addInternalFrameListener(new InternalFrameAdapter() {
             @Override
             public void internalFrameClosed(InternalFrameEvent e) {
@@ -90,6 +93,7 @@ public class CtrlMaterialesXCombinacion {
             if (row != -1) {
                 DefaultTableModel model = (DefaultTableModel) nuevo.tblMaterialesAgregados.getModel();
                 IntStream.of(nuevo.tblMaterialesAgregados.getSelectedRows()).boxed().sorted(Collections.reverseOrder()).forEach(model::removeRow);
+                nuevo.Total.setText("TOTAL $ " + java.text.NumberFormat.getInstance().format(getTotal(nuevo.tblMaterialesAgregados, nuevo.Total, 5)));
             } else {
                 JOptionPane.showMessageDialog(null, "DEBE DE SELECCIONAR UN MATERIAL AGREGADO", "ATENCIÓN", JOptionPane.WARNING_MESSAGE);
             }
@@ -112,14 +116,21 @@ public class CtrlMaterialesXCombinacion {
                     if (Consumo > 0) {
                         int ID = Integer.parseInt(nuevo.tblMateriales.getModel().getValueAt(nuevo.tblMateriales.getSelectedRow(), 0).toString());
                         DefaultTableModel model = (DefaultTableModel) nuevo.tblMaterialesAgregados.getModel();
+
+                        java.math.BigDecimal importe = new java.math.BigDecimal(Double.parseDouble(nuevo.tblMateriales.getValueAt(nuevo.tblMateriales.getSelectedRow(), 3).toString())
+                                * Double.parseDouble(String.valueOf(nuevo.Consumo.getValue())));
                         model.addRow(new Object[]{
                             ID/*ID*/,
                             nuevo.tblMateriales.getValueAt(nuevo.tblMateriales.getSelectedRow(), 0).toString()/*MATERIAL*/,
                             nuevo.tblMateriales.getValueAt(nuevo.tblMateriales.getSelectedRow(), 2).toString()/*U.M.*/,
                             nuevo.tblMateriales.getValueAt(nuevo.tblMateriales.getSelectedRow(), 3).toString()/*PRECIO*/,
                             String.valueOf(nuevo.Consumo.getValue()),
-                            nuevo.Tipo.getSelectedItem().toString()});
+                            nuevo.Tipo.getSelectedItem().toString(),
+                            importe.setScale(12, BigDecimal.ROUND_HALF_UP)
+                        });
+                        BigDecimal bd = importe_total.add(importe).setScale(12, BigDecimal.ROUND_HALF_UP);
                         nuevo.Consumo.setValue(0);
+                        nuevo.Total.setText("TOTAL $ " + java.text.NumberFormat.getInstance().format(getTotal(nuevo.tblMaterialesAgregados, nuevo.Total, 5)));
                     } else {
                         JOptionPane.showMessageDialog(null, "DEBE DE ESTABLECER UN CONSUMO", "ATENCIÓN", JOptionPane.WARNING_MESSAGE);
                     }
@@ -180,8 +191,8 @@ public class CtrlMaterialesXCombinacion {
         editar.btnEliminar.addActionListener((e) -> {
             int row = editar.tblMaterialesAgregados.getSelectedRow();
             if (row != -1) {
-                DefaultTableModel model = (DefaultTableModel) editar.tblMaterialesAgregados.getModel();
-                IntStream.of(editar.tblMaterialesAgregados.getSelectedRows()).boxed().sorted(Collections.reverseOrder()).forEach(model::removeRow);
+                IntStream.of(editar.tblMaterialesAgregados.getSelectedRows()).boxed().sorted(Collections.reverseOrder()).forEach(((DefaultTableModel) editar.tblMaterialesAgregados.getModel())::removeRow);
+                editar.Total.setText("TOTAL $ " + java.text.NumberFormat.getInstance().format(getTotal(editar.tblMaterialesAgregados, editar.Total, 5)));
             } else {
                 JOptionPane.showMessageDialog(null, "DEBE DE SELECCIONAR UN MATERIAL AGREGADO", "ATENCIÓN", JOptionPane.WARNING_MESSAGE);
             }
@@ -207,14 +218,22 @@ public class CtrlMaterialesXCombinacion {
                     if (Consumo > 0) {
                         int ID = Integer.parseInt(editar.tblMateriales.getModel().getValueAt(editar.tblMateriales.getSelectedRow(), 0).toString());
                         DefaultTableModel model = (DefaultTableModel) editar.tblMaterialesAgregados.getModel();
+
+                        java.math.BigDecimal importe = new java.math.BigDecimal(Double.parseDouble(editar.tblMateriales.getValueAt(editar.tblMateriales.getSelectedRow(), 3).toString())
+                                * Double.parseDouble(String.valueOf(editar.Consumo.getValue())));
                         model.addRow(new Object[]{
                             ID/*ID*/,
                             editar.tblMateriales.getValueAt(editar.tblMateriales.getSelectedRow(), 0).toString()/*MATERIAL*/,
                             editar.tblMateriales.getValueAt(editar.tblMateriales.getSelectedRow(), 2).toString()/*U.M.*/,
                             editar.tblMateriales.getValueAt(editar.tblMateriales.getSelectedRow(), 3).toString()/*PRECIO*/,
                             String.valueOf(editar.Consumo.getValue()),
-                            editar.Tipo.getSelectedItem().toString()});
+                            editar.Tipo.getSelectedItem().toString(),
+                            importe.setScale(12, BigDecimal.ROUND_HALF_UP)
+                        });
                         editar.Consumo.setValue(0);
+                        BigDecimal bd = importe_total.add(importe).setScale(12, BigDecimal.ROUND_HALF_UP);
+                        editar.Consumo.setValue(0);
+                        editar.Total.setText("TOTAL $ " + java.text.NumberFormat.getInstance().format(getTotal(editar.tblMaterialesAgregados, editar.Total, 5)));
                     } else {
                         JOptionPane.showMessageDialog(null, "DEBE DE ESTABLECER UN CONSUMO", "ATENCIÓN", JOptionPane.WARNING_MESSAGE);
                     }
@@ -419,7 +438,11 @@ public class CtrlMaterialesXCombinacion {
                     dtm = g.getModelFill(d.get(0), g.getDimensional(d.get(1)));
                     editar.tblMaterialesAgregados.setModel(dtm);
                     editar.tblMaterialesAgregados.removeColumn(editar.tblMaterialesAgregados.getColumnModel().getColumn(0));
-
+                    double bd = 0.0;
+                    for (int i = 0; i < editar.tblMaterialesAgregados.getRowCount(); i++) {
+                        bd += Double.parseDouble(editar.tblMaterialesAgregados.getValueAt(i, 5).toString());
+                    }
+                    editar.Total.setText("TOTAL $ " + java.text.NumberFormat.getInstance().format(bd));
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, e.getMessage());
                 }
@@ -452,7 +475,7 @@ public class CtrlMaterialesXCombinacion {
                     detalle.add(IDM);/*ID MATERIAL 1*/
                     detalle.add(Float.parseFloat(editar.tblMaterialesAgregados.getValueAt(i, 3).toString()));/*CONSUMO 2*/
                     detalle.add(editar.tblMaterialesAgregados.getValueAt(i, 4).toString().equals("DIR") ? 1 : 2);/*TIPO 3*/
-                    detalle.add(editar.tblMaterialesAgregados.getValueAt(i, 2).toString());/*PRECIO*/ 
+                    detalle.add(editar.tblMaterialesAgregados.getValueAt(i, 2).toString());/*PRECIO*/
                     String fechatiempo = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(Calendar.getInstance().getTime());
                     detalle.add(fechatiempo);/*REGISTRO*/
                     if (g.addUpdateOrDelete("SP_MODIFICAR_MATERIALES_X_COMBINACION_DETALLE", detalle)) {
@@ -550,7 +573,7 @@ public class CtrlMaterialesXCombinacion {
             nuevo.tblMaterialesAgregados.setModel(new javax.swing.table.DefaultTableModel(
                     new Object[][]{},
                     new String[]{
-                        "ID(OCULTO)", "MATERIAL", "U.M", "PRECIO", "CONSUMO", "TIPO"
+                        "ID(OCULTO)", "MATERIAL", "U.M", "PRECIO", "CONSUMO", "TIPO", "IMPORTE"
                     }
             ));
             nuevo.tblMaterialesAgregados.removeColumn(nuevo.tblMaterialesAgregados.getColumnModel().getColumn(0));
@@ -570,5 +593,14 @@ public class CtrlMaterialesXCombinacion {
             }
         }
         return id;
+    }
+
+    public double getTotal(javax.swing.JTable tbl, javax.swing.JLabel resultado, int columna) {
+
+        double total = 0.0;
+        for (int i = 0; i < tbl.getRowCount(); i++) {
+            total += Double.parseDouble(tbl.getValueAt(i, columna).toString());
+        }
+        return total;
     }
 }

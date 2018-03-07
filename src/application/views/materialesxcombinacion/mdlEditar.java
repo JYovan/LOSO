@@ -45,6 +45,7 @@ public class mdlEditar extends javax.swing.JInternalFrame {
         btnRefrescar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        Total = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
@@ -72,7 +73,7 @@ public class mdlEditar extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "ID(OCULTO)", "MATERIAL", "U.M", "PRECIO", "CONSUMO", "TIPO"
+                "ID(OCULTO)", "MATERIAL", "U.M", "PRECIO", "CONSUMO", "TIPO", "IMPORTE"
             }
         ));
         jScrollPane2.setViewportView(tblMaterialesAgregados);
@@ -82,6 +83,12 @@ public class mdlEditar extends javax.swing.JInternalFrame {
         btnAgregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/16/delante.png"))); // NOI18N
 
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/16/cerrar.png"))); // NOI18N
+
+        Combinacion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                CombinacionKeyPressed(evt);
+            }
+        });
 
         Consumo.setModel(new javax.swing.SpinnerNumberModel(0.0f, 0.0f, null, 1.0f));
 
@@ -93,14 +100,14 @@ public class mdlEditar extends javax.swing.JInternalFrame {
 
         jLabel4.setText("Consumo");
 
+        Total.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        Total.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        Total.setText("TOTAL $ 0.0");
+
         javax.swing.GroupLayout pnlContenedorLayout = new javax.swing.GroupLayout(pnlContenedor);
         pnlContenedor.setLayout(pnlContenedorLayout);
         pnlContenedorLayout.setHorizontalGroup(
             pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlContenedorLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnGuardar)
-                .addContainerGap())
             .addGroup(pnlContenedorLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -121,25 +128,26 @@ public class mdlEditar extends javax.swing.JInternalFrame {
                 .addGroup(pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlContenedorLayout.createSequentialGroup()
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
                         .addComponent(jLabel3)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlContenedorLayout.createSequentialGroup()
                         .addGroup(pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(Total, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(pnlContenedorLayout.createSequentialGroup()
-                                .addComponent(Consumo, javax.swing.GroupLayout.DEFAULT_SIZE, 334, Short.MAX_VALUE)
+                                .addComponent(Consumo, javax.swing.GroupLayout.DEFAULT_SIZE, 326, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(Tipo, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(Tipo, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlContenedorLayout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 401, Short.MAX_VALUE)
                             .addComponent(Combinacion, javax.swing.GroupLayout.Alignment.LEADING, 0, 401, Short.MAX_VALUE))
-                        .addGap(13, 13, 13))))
+                        .addGap(13, 13, 13))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlContenedorLayout.createSequentialGroup()
+                        .addComponent(btnGuardar)
+                        .addContainerGap())))
         );
-
-        pnlContenedorLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {Tipo, jLabel3});
-
         pnlContenedorLayout.setVerticalGroup(
             pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlContenedorLayout.createSequentialGroup()
@@ -170,12 +178,16 @@ public class mdlEditar extends javax.swing.JInternalFrame {
                                 .addComponent(btnEliminar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnRefrescar)
-                                .addGap(0, 97, Short.MAX_VALUE))
+                                .addGap(0, 83, Short.MAX_VALUE))
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnGuardar))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap())
+                        .addComponent(Total)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnGuardar)
+                        .addGap(8, 8, 8))
+                    .addGroup(pnlContenedorLayout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -192,6 +204,11 @@ public class mdlEditar extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void CombinacionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CombinacionKeyPressed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_CombinacionKeyPressed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JTextField BuscarMateriales;
@@ -199,6 +216,7 @@ public class mdlEditar extends javax.swing.JInternalFrame {
     public javax.swing.JSpinner Consumo;
     public javax.swing.JComboBox<String> Estilo;
     public javax.swing.JComboBox<String> Tipo;
+    public javax.swing.JLabel Total;
     public javax.swing.JButton btnAgregar;
     public javax.swing.JButton btnEliminar;
     public javax.swing.JButton btnGuardar;

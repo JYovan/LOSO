@@ -45,6 +45,7 @@ public class mdlNuevo extends javax.swing.JInternalFrame {
         btnRefrescar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        Total = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
@@ -74,7 +75,7 @@ public class mdlNuevo extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "ID(OCULTO)", "MATERIAL", "U.M", "PRECIO", "CONSUMO", "TIPO"
+                "ID(OCULTO)", "MATERIAL", "U.M", "PRECIO", "CONSUMO", "TIPO", "IMPORTE"
             }
         ));
         jScrollPane2.setViewportView(tblMaterialesAgregados);
@@ -101,14 +102,14 @@ public class mdlNuevo extends javax.swing.JInternalFrame {
 
         jLabel4.setText("Consumo");
 
+        Total.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        Total.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        Total.setText("TOTAL $ 0.0");
+
         javax.swing.GroupLayout pnlContenedorLayout = new javax.swing.GroupLayout(pnlContenedor);
         pnlContenedor.setLayout(pnlContenedorLayout);
         pnlContenedorLayout.setHorizontalGroup(
             pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlContenedorLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnGuardar)
-                .addContainerGap())
             .addGroup(pnlContenedorLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -118,7 +119,7 @@ public class mdlNuevo extends javax.swing.JInternalFrame {
                     .addGroup(pnlContenedorLayout.createSequentialGroup()
                         .addGroup(pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(Estilo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 405, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 401, Short.MAX_VALUE)
                             .addComponent(BuscarMateriales))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -129,11 +130,12 @@ public class mdlNuevo extends javax.swing.JInternalFrame {
                 .addGroup(pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlContenedorLayout.createSequentialGroup()
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                         .addComponent(jLabel3)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlContenedorLayout.createSequentialGroup()
                         .addGroup(pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(Total, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(pnlContenedorLayout.createSequentialGroup()
                                 .addComponent(Consumo, javax.swing.GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -143,7 +145,11 @@ public class mdlNuevo extends javax.swing.JInternalFrame {
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 397, Short.MAX_VALUE)
                             .addComponent(Combinacion, javax.swing.GroupLayout.Alignment.LEADING, 0, 397, Short.MAX_VALUE))
-                        .addGap(13, 13, 13))))
+                        .addGap(13, 13, 13))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlContenedorLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnGuardar)
+                        .addContainerGap())))
         );
 
         pnlContenedorLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {Tipo, jLabel3});
@@ -178,12 +184,16 @@ public class mdlNuevo extends javax.swing.JInternalFrame {
                                 .addComponent(btnEliminar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnRefrescar)
-                                .addGap(0, 99, Short.MAX_VALUE))
+                                .addGap(0, 40, Short.MAX_VALUE))
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnGuardar))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap())
+                        .addComponent(Total)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnGuardar)
+                        .addGap(8, 8, 8))
+                    .addGroup(pnlContenedorLayout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -212,6 +222,7 @@ public class mdlNuevo extends javax.swing.JInternalFrame {
     public javax.swing.JSpinner Consumo;
     public javax.swing.JComboBox<String> Estilo;
     public javax.swing.JComboBox<String> Tipo;
+    public javax.swing.JLabel Total;
     public javax.swing.JButton btnAgregar;
     public javax.swing.JButton btnEliminar;
     public javax.swing.JButton btnGuardar;

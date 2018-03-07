@@ -1258,7 +1258,7 @@ SET NOCOUNT ON;
 	  WHEN MXCD.Tipo = 1 THEN
 		'DIR'
 		ELSE 'IND' 
-	  END) AS TIPO FROM  MaterialesXCombinacionDetalle AS MXCD  
+	  END) AS TIPO,  (M.PrecioLista * MXCD.Consumo) AS IMPORTE FROM  MaterialesXCombinacionDetalle AS MXCD  
 	  INNER JOIN [Materiales] AS M ON MXCD.Material = M.ID
           LEFT JOIN Catalogos AS C ON M.UnidadConsumo = C.ID AND C.[FieldId] LIKE 'UNIDADES' AND C.Estatus LIKE 'ACTIVO'
 	  WHERE MXCD.Estatus IN('ACTIVO') AND MXCD.MaterialXCombinacion = @IDX;
