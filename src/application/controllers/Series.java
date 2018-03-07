@@ -7,6 +7,7 @@ package application.controllers;
 
 import application.config.Generic;
 import application.config.TextPrompt;
+import application.controllers.series.CtrlSeries;
 import application.views.vMenu;
 import application.views.vSeries;
 import java.awt.Dimension;
@@ -37,7 +38,7 @@ public class Series {
     Generic g;
 
     vMenu menu;
-    //CtrlSeries lin;
+    CtrlSeries ser;
 
     private TableRowSorter<TableModel> filtrador;
     
@@ -46,42 +47,42 @@ public class Series {
         this.g = g;
         vseries = new vSeries();
         this.menu = (vMenu) parent;
-//        lin = new CtrlSeries(vseries, g, this, menu);
-//        vseries.btnNuevo.addActionListener((e) -> {
-//            vseries.dispose();
-//            menu.dpContenedor.remove(vseries);
-//            lin.setVisible();
-//        });
-//      
-//        vseries.btnEditar.addActionListener((e) -> {
-//            try {
-//                if (vseries.tblSeries.getSelectedRow() >= 0) {
-//                    int ID = Integer.parseInt(vseries.tblSeries.getValueAt(vseries.tblSeries.getSelectedRow(), 0).toString());
-//                    vseries.dispose();
-//                    menu.dpContenedor.remove(vseries);
-//                    lin.onEditar(ID);
-//                } else {
-//                    Toolkit.getDefaultToolkit().beep();
-//                    JOptionPane.showMessageDialog(null, "DEBE DE SELECCIONAR UN REGISTRO", "ATENCIÓN", JOptionPane.WARNING_MESSAGE);
-//                }
-//            } catch (HeadlessException | NumberFormatException ex) {
-//                JOptionPane.showMessageDialog(null, "DEBE DE COLOCAR EL ID AL INICIO", "ATENCIÓN", JOptionPane.WARNING_MESSAGE);
-//            }
-//
-//        });
-//        vseries.btnEliminar.addActionListener((e) -> {
-//            if (vseries.tblSeries.getSelectedRow() >= 0) {
-//
-//                int i = JOptionPane.showConfirmDialog(null, "¿Estás Seguro?", "Confirmar Eliminar", JOptionPane.YES_NO_OPTION);
-//                if (i == 0) {
-//                    int ID = Integer.parseInt(vseries.tblSeries.getValueAt(vseries.tblSeries.getSelectedRow(), 0).toString());
-//                    lin.onEliminar(ID);
-//                }
-//
-//            } else {
-//                JOptionPane.showMessageDialog(null, "DEBE DE SELECCIONAR UN REGISTRO", "ATENCIÓN", JOptionPane.WARNING_MESSAGE);
-//            }
-//        });
+        ser = new CtrlSeries(vseries, g, this, menu);
+        vseries.btnNuevo.addActionListener((e) -> {
+            vseries.dispose();
+            menu.dpContenedor.remove(vseries);
+            ser.setVisible();
+        });
+      
+        vseries.btnEditar.addActionListener((e) -> {
+            try {
+                if (vseries.tblSeries.getSelectedRow() >= 0) {
+                    int ID = Integer.parseInt(vseries.tblSeries.getValueAt(vseries.tblSeries.getSelectedRow(), 0).toString());
+                    vseries.dispose();
+                    menu.dpContenedor.remove(vseries);
+                    ser.onEditar(ID);
+                } else {
+                    Toolkit.getDefaultToolkit().beep();
+                    JOptionPane.showMessageDialog(null, "DEBE DE SELECCIONAR UN REGISTRO", "ATENCIÓN", JOptionPane.WARNING_MESSAGE);
+                }
+            } catch (HeadlessException | NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "DEBE DE COLOCAR EL ID AL INICIO", "ATENCIÓN", JOptionPane.WARNING_MESSAGE);
+            }
+
+        });
+        vseries.btnEliminar.addActionListener((e) -> {
+            if (vseries.tblSeries.getSelectedRow() >= 0) {
+
+                int i = JOptionPane.showConfirmDialog(null, "¿Estás Seguro?", "Confirmar Eliminar", JOptionPane.YES_NO_OPTION);
+                if (i == 0) {
+                    int ID = Integer.parseInt(vseries.tblSeries.getValueAt(vseries.tblSeries.getSelectedRow(), 0).toString());
+                    ser.onEliminar(ID);
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(null, "DEBE DE SELECCIONAR UN REGISTRO", "ATENCIÓN", JOptionPane.WARNING_MESSAGE);
+            }
+        });
         vseries.btnRefrescar.addActionListener((e) -> {
             getRecords();
         });
