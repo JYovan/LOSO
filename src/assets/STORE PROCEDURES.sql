@@ -1518,7 +1518,7 @@ CREATE PROCEDURE SP_SERIES_DETALLE(@IDX INT)
 AS
 BEGIN
 SET NOCOUNT ON; 
-	SELECT  SD.Talla AS TALLA, SD.Cantidad AS CANTIDAD FROM SeriesDetalle AS SD WHERE SD.Serie_ID = @IDX ORDER BY SD.ID ASC;
+	SELECT SD.ID AS ID, SD.Talla AS TALLA, SD.Cantidad AS CANTIDAD FROM SeriesDetalle AS SD WHERE SD.Serie_ID = @IDX ORDER BY SD.ID ASC;
 END
 GO
 
@@ -1538,5 +1538,20 @@ BEGIN
 SET NOCOUNT ON;
 	INSERT INTO SeriesDetalle([Serie_ID],[Talla],[Cantidad]) 
 						VALUES ( @Serie_ID, @Talla,@Cantidad);
+END
+GO
+-- -----------------------------------------------------
+-- procedure SP_MODIFICAR_SERIE_DETALLE
+-- -----------------------------------------------------
+IF EXISTS (	SELECT name FROM sysobjects WHERE  name = 'SP_MODIFICAR_SERIE_DETALLE' AND TYPE = 'P')
+	DROP PROCEDURE SP_MODIFICAR_SERIE_DETALLE
+GO
+CREATE  PROCEDURE SP_MODIFICAR_SERIE_DETALLE(@IDX INT,@Cantidad INT)
+AS
+BEGIN
+SET NOCOUNT ON;
+    UPDATE SeriesDetalle 
+        SET Cantidad = @Cantidad 
+    WHERE ID = @IDX; 
 END
 GO

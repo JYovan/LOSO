@@ -14,6 +14,7 @@ import application.views.vMenu;
 import application.views.vSeries;
 import java.awt.Dimension;
 import java.awt.HeadlessException;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
@@ -39,6 +40,7 @@ public class CtrlSeries {
     Resources rsc;
     vMenu menu;
     DefaultTableModel dtm;
+    int f2 = 113, suprimir = 127, mas = 107, menos = 109;
 
     public CtrlSeries(JInternalFrame parent, Generic g, Series series, JFrame menu) {
         this.menu = (vMenu) menu;
@@ -48,7 +50,36 @@ public class CtrlSeries {
         this.g = g;
         this.series = series;
         rsc = new Resources();
+        nuevo.tblSerieDetalle.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == f2) {
+                    int selected = nuevo.tblSerieDetalle.getSelectedRow();
+                    if (selected >= 0) {
+                        System.out.println("FILA " + selected);
 
+                    } else {
+                        JOptionPane.showMessageDialog(null, "DEBE DE SELECCIONAR UN REGISTRO");
+                    }
+                }
+            }
+        });
+        editar.tblSerieDetalle.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                System.out.println(e.getKeyCode());
+                int selected = editar.tblSerieDetalle.getSelectedRow();
+                if (e.getKeyCode() == f2) {
+                    if (selected >= 0) {
+                        System.out.println("FILA " + selected);
+                        editar.tblSerieDetalle.isCellEditable(selected, 1);
+                        editar.tblSerieDetalle.editCellAt(selected, 1);
+                    } else {
+                        JOptionPane.showConfirmDialog(null, "DEBE DE SELECCIONAR UN REGISTRO");
+                    }
+                }
+            }
+        });
         nuevo.addInternalFrameListener(new InternalFrameAdapter() {
             @Override
             public void internalFrameClosing(InternalFrameEvent e) {
@@ -102,8 +133,8 @@ public class CtrlSeries {
             public void keyReleased(KeyEvent e) {
             }
         });
-        
-         nuevo.txtPuntoFinal.addKeyListener(new KeyListener() {
+
+        nuevo.txtPuntoFinal.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
             }
@@ -140,7 +171,7 @@ public class CtrlSeries {
             public void keyReleased(KeyEvent e) {
             }
         });
-        
+
         editar.txtPuntoFinal.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -243,7 +274,7 @@ public class CtrlSeries {
         try {
             ArrayList<Object> a = new ArrayList<>();
             ArrayList<Object> detalle = new ArrayList<>();
-            int temp_ID=0;
+            int temp_ID = 0;
 
             Object x = null;
             a.add(nuevo.txtDescripcion.getText());
@@ -266,7 +297,7 @@ public class CtrlSeries {
                     if (data.size() > 0) {
                         Object[][] ID = data.get(0);/*OBTENER EL ID DEL ENCABEZADO*/
                         System.out.println("ID " + String.valueOf(ID[0][0]));
-                        
+
                         temp_ID = Integer.parseInt(String.valueOf(ID[0][0]));
                         /*DETALLE*/
 
@@ -317,14 +348,13 @@ public class CtrlSeries {
             editar.txtPuntoInicial.setText(String.valueOf((data[0][2] != null) ? data[0][2] : ""));
             editar.txtPuntoFinal.setText(String.valueOf((data[0][3] != null) ? data[0][3] : ""));
             editar.cmbEstatus.getModel().setSelectedItem(data[0][4]);
-            
+
             ArrayList<Object> parametrosDetalle = new ArrayList<>();
             parametrosDetalle.add(IDX);
             ArrayList<Object[][]> det = g.findByParams("SP_SERIES_DETALLE", parametrosDetalle);
-            dtm = g.getModelFill(det.get(0), g.getDimensional(det.get(1)));
+            dtm = g.getModelFillEditable(det.get(0), g.getDimensional(det.get(1)));
             editar.tblSerieDetalle.setModel(dtm);
-            
-
+            editar.tblSerieDetalle.removeColumn(editar.tblSerieDetalle.getColumnModel().getColumn(0));
             if (!editar.isShowing()) {
                 menu.dpContenedor.add(editar);
                 Dimension desktopSize = menu.dpContenedor.getSize();
@@ -354,6 +384,20 @@ public class CtrlSeries {
             if (Double.parseDouble(editar.txtPuntoInicial.getText()) < Double.parseDouble(editar.txtPuntoFinal.getText())) {
                 if (!editar.txtDescripcion.getText().equals("") && !editar.txtPuntoInicial.getText().equals("") && !editar.txtPuntoFinal.getText().equals("") && g.addUpdateOrDelete("SP_MODIFICAR_SERIE", a)) {
                     JOptionPane.showMessageDialog(null, "REGISTRO MODIFICADO", "INFORMACIÓN DEL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
+                    /*MODIFICAR SERIE DETALLE*/
+                    int n = 0;
+                    a.clear();
+                    for (int i = 0; i < editar.tblSerieDetalle.getRowCount(); i++) {
+                        a.add(editar.tblSerieDetalle.getModel().getValueAt(i, 0).toString());
+                        a.add(editar.tblSerieDetalle.getValueAt(i, 1).toString());
+                        if (g.addUpdateOrDelete("SP_MODIFICAR_SERIE_DETALLE", a)) {
+//                            System.out.println("IDSD "+editar.tblSerieDetalle.getModel().getValueAt(i, 0).toString());
+                            n++;
+                            a.clear();
+                        }
+                    }
+                    JOptionPane.showMessageDialog(null, n + " TALLAS MODIFICADAS");
+                    /*FIN MODIFICAR SERIE DETALLE*/
                     editar.dispose();
                     series.getRecords();
                     menu.dpContenedor.remove(editar);
